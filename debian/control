@@ -13,6 +13,8 @@ Homepage: https://github.com/minios-linux/minios-live-config
 Package: minios-live-config
 Architecture: all
 Depends: minios-live-config-systemd | minios-live-config-backend,
+         bash,
+         perl,
          ${misc:Depends}
 Recommends: iproute2 | iproute,
             keyboard-configuration,
@@ -22,7 +24,14 @@ Recommends: iproute2 | iproute,
             sudo,
             user-setup
 Suggests: pciutils,
-          wget
+          wget,
+          shared-mime-info,
+          gdk-pixbuf2.0-bin,
+          libgtk-3-bin,
+          glib-2.0-bin,
+          desktop-file-utils,
+          xfonts-utils,
+          fontconfig
 Conflicts: live-config
 Description: Live System Configuration Components
  The Debian Live project maintains the components to build Debian based Live
