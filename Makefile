@@ -60,7 +60,7 @@ install:
 	# Installing frontend and components
 	mkdir -p $(DESTDIR)/usr/bin $(DESTDIR)/usr/lib/live/config
 	cp frontend/live-* $(DESTDIR)/usr/bin
-	cp frontend/minios-* $(DESTDIR)/usr/bin
+	cp frontend/minios-* $(DESTDIR)/usr/sbin
 	cp frontend/*.sh $(DESTDIR)/usr/lib/live/
 	cp components/* $(DESTDIR)/usr/lib/live/config
 
