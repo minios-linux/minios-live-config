@@ -30,16 +30,16 @@ Cmdline() {
             echo "Username: ${LIVE_USERNAME}"
             ;;
         live-config.root-password=* | root-password=*)
-            LIVE_ROOT_PASSWORD_PLAIN="${_PARAMETER#*root-password=}"
-            echo "Root password: ${LIVE_ROOT_PASSWORD_PLAIN}"
+            LIVE_ROOT_PASSWORD="${_PARAMETER#*root-password=}"
+            echo "Root password: ${LIVE_ROOT_PASSWORD}"
             ;;
         live-config.root-password-crypted=* | root-password-crypted=*)
             LIVE_ROOT_PASSWORD_CRYPTED="${_PARAMETER#*root-password-crypted=}"
             echo "Root password (crypted): ${LIVE_ROOT_PASSWORD_CRYPTED}"
             ;;
         live-config.user-password=* | user-password=*)
-            LIVE_USER_PASSWORD_PLAIN="${_PARAMETER#*user-password=}"
-            echo "User password: ${LIVE_USER_PASSWORD_PLAIN}"
+            LIVE_USER_PASSWORD="${_PARAMETER#*user-password=}"
+            echo "User password: ${LIVE_USER_PASSWORD}"
             ;;
         live-config.user-password-crypted=* | user-password-crypted=*)
             LIVE_USER_PASSWORD_CRYPTED="${_PARAMETER#*user-password-crypted=}"
@@ -87,14 +87,14 @@ Config() {
     esac
 
     # Determine root password input method
-    if [ -n "${LIVE_ROOT_PASSWORD_PLAIN}" ]; then
+    if [ -n "${LIVE_ROOT_PASSWORD}" ]; then
         ROOT_PASS_TYPE="plain"
     elif [ -n "${LIVE_ROOT_PASSWORD_CRYPTED}" ]; then
         ROOT_PASS_TYPE="crypted"
     fi
 
     # Determine user password input method
-    if [ -n "${LIVE_USER_PASSWORD_PLAIN}" ]; then
+    if [ -n "${LIVE_USER_PASSWORD}" ]; then
         USER_PASS_TYPE="plain"
     elif [ -n "${LIVE_USER_PASSWORD_CRYPTED}" ]; then
         USER_PASS_TYPE="crypted"
@@ -109,15 +109,15 @@ EOF
     case "${ROOT_PASS_TYPE}" in
     plain)
         cat >>/tmp/live-config.cfg <<EOF
-user-setup passwd/root-password string ${LIVE_ROOT_PASSWORD_PLAIN}
-user-setup passwd/root-password-again string ${LIVE_ROOT_PASSWORD_PLAIN}
-user-setup passwd/root-password-crypted string 
+user-setup passwd/root-password string ${LIVE_ROOT_PASSWORD}
+user-setup passwd/root-password-again string ${LIVE_ROOT_PASSWORD}
+user-setup passwd/root-password-crypted string
 EOF
         ;;
     crypted)
         cat >>/tmp/live-config.cfg <<EOF
-user-setup passwd/root-password string 
-user-setup passwd/root-password-again string 
+user-setup passwd/root-password string
+user-setup passwd/root-password-again string
 user-setup passwd/root-password-crypted string ${LIVE_ROOT_PASSWORD_CRYPTED}
 EOF
         ;;
@@ -127,15 +127,15 @@ EOF
     case "${USER_PASS_TYPE}" in
     plain)
         cat >>/tmp/live-config.cfg <<EOF
-user-setup passwd/user-password string ${LIVE_USER_PASSWORD_PLAIN}
-user-setup passwd/user-password-again string ${LIVE_USER_PASSWORD_PLAIN}
-user-setup passwd/user-password-crypted string 
+user-setup passwd/user-password string ${LIVE_USER_PASSWORD}
+user-setup passwd/user-password-again string ${LIVE_USER_PASSWORD}
+user-setup passwd/user-password-crypted string
 EOF
         ;;
     crypted)
         cat >>/tmp/live-config.cfg <<EOF
-user-setup passwd/user-password string 
-user-setup passwd/user-password-again string 
+user-setup passwd/user-password string
+user-setup passwd/user-password-again string
 user-setup passwd/user-password-crypted string ${LIVE_USER_PASSWORD_CRYPTED}
 EOF
         ;;
