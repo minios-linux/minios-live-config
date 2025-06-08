@@ -47,7 +47,7 @@ component_was_executed() {
 
 is_virtual() {
     local VM_TYPE="$1"
-    if [[ -z "$VM_TYPE" ]]; then
+    if [ -z "$VM_TYPE" ]; then
         if grep -qEi "(VirtualBox|VMware|KVM|QEMU|Xen|microsoft corporation|Bochs)" /sys/class/dmi/id/product_name 2>/dev/null || grep -qEi "(Oracle|microsoft corporation|Bochs)" /sys/class/dmi/id/sys_vendor 2>/dev/null; then
             return 0
         else
