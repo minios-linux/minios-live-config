@@ -1,6 +1,7 @@
 .\" live-config(7) - System Configuration Components
 .\" Copyright (C) 2016-2020 The Debian Live team
 .\" Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
+.\" Copyright (C) 2025 crims0n <crims0n@minios.dev>
 .\"
 .\" This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 .\" This is free software, and you are welcome to redistribute it
@@ -12,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2015\-09\-23 5.0~a5\-1 "Live システムプロジェクト"
+.TH LIVE\-CONFIG 7 2025\-06\-08 11.0.5 "MiniOS Live プロジェクト"
 
 .SH 名前
 \fBlive\-config\fP \- システム設定構成要素
@@ -36,7 +37,8 @@
 構成要素は全て実行されます。これは Live イメージのデフォルトです。
 .IP "\fBlive\-config.components\fP=\fI構成要素1\fP,\fI構成要素2\fP, ... \fI構成要素n\fP | \fBcomponents\fP=\fI構成要素1\fP,\fI構成要素2\fP, ... \fI構成要素n\fP" 4
 指定した構成要素だけが実行されます。順序が重要であることに注意してください。例えば「live\-config.components=sudo,user\-setup」は、sudo
-の設定前にユーザを追加しておく必要があるため機能しません。実行順については /usr/lib/live/config にある構成要素のファイル名を見てください。
+の設定前にユーザを追加しておく必要があるため機能しません。実行順については /usr/lib/live/config
+にある構成要素のファイル名を見てください。
 .IP "\fBlive\-config.nocomponents\fP | \fBnocomponents\fP" 4
 構成要素は何も実行されません。これは「live\-config.components」や「live\-config.nocomponents」を何も指定しないのと同じです。
 .IP "\fBlive\-config.nocomponents\fP=\fI構成要素1\fP,\fI構成要素2\fP, ... \fI構成要素n\fP | \fBnocomponents\fP=\fI構成要素1\fP,\fI構成要素2\fP, ... \fI構成要素n\fP" 4
@@ -46,15 +48,14 @@
 個々の構成要素の一部はブートパラメータにより挙動を変更できます。
 
 .IP "\fBlive\-config.debconf\-preseed\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBdebconf\-preseed\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
-Allows one to fetch and apply one or more debconf preseed files to be
-applied to the debconf database. Note that the URLs must be fetchable by
-wget (http, ftp or file://).
+debconf データベースに適用する debconf の preseed ファイルを取得、適用します。URL は wget により取得できるもの
+(http、 ftp、 file:// のどれか) でないといけないことに注意してください
 .br
 ファイルが Live メディア上にある場合は file:///lib/live/mount/medium/\fIファイル\fP、Live
 システム自体のルートファイルシステムにある場合は file:///\fIファイル\fP で取得できます。
 .br
-「filesystem」というキーワードを使って、Live システムのルートファイルシステム中の /usr/lib/live/config\-preseed/
-にある preseed ファイルを全て自動的に有効化できます。
+「filesystem」というキーワードを使って、Live システムのルートファイルシステム中の
+/usr/lib/live/config\-preseed/ にある preseed ファイルを全て自動的に有効化できます。
 .br
 「medium」というキーワードを使って、Live メディアの /live/config\-preseed/ にある preseed
 ファイルを全て自動的に有効化できます。
@@ -62,66 +63,58 @@ wget (http, ftp or file://).
 複数の仕組みを組み合わせた場合はファイルシステムの preseed ファイルがまず適用され、それからメディアの preseed
 ファイル、最後にネットワークの preseed ファイルが適用されます。
 .IP "\fBlive\-config.hostname\fP=\fIホスト名\fP | \fBhostname\fP=\fIホスト名\fP" 4
-Allows one to set the hostname of the system. The default is 'debian'.
+システムのホスト名をセットします。デフォルトは「debian」です。
 .IP "\fBlive\-config.username\fP=\fIユーザ名\fP | \fBusername\fP=\fIユーザ名\fP" 4
-Allows one to set the username that gets created for autologin. The default
-is 'user'.
+自動ログイン用に作成するユーザの名前をセットします。デフォルトは「user」です。
 .IP "\fBlive\-config.user\-default\-groups\fP=\fIグループ1\fP,\fIグループ2\fP ... \fIグループn\fP | \fBuser\-default\-groups\fP=\fIグループ1\fP,\fIグループ2\fP ... \fIグループn\fP" 4
-Allows one to set the default groups of the users that gets created for
-autologin is member of. The default is 'audio cdrom dip floppy video plugdev
-netdev powerdev scanner bluetooth'.
+自動ログイン用に作成するユーザがメンバーとなるデフォルトのグループをセットします。デフォルトは「audio cdrom dip floppy video
+plugdev netdev powerdev scanner bluetooth」です。
 .IP "\fBlive\-config.user\-fullname\fP=\(dq\fIユーザのフルネーム\fP\(dq | \fBuser\-fullname\fP=\(dq\fIユーザのフルネーム\fP\(dq" 4
-Allows one to set the fullname of the users that gets created for
-autologin. On Debian the default is 'Debian Live user'.
+自動ログイン用に作成するユーザのフルネームをセットします。Debian でのデフォルトは「Debian Live user」です。
+.IP "\fBlive\-config.root\-password\fP=\fIパスワード\fP | \fBroot\-password\fP=\fIパスワード\fP" 4
+root パスワードを平文で設定できます。
+.IP "\fBlive\-config.root\-password\-crypted\fP=\fIパスワード\fP | \fBroot\-password\-crypted\fP=\fIパスワード\fP" 4
+root パスワードを暗号化された形式で設定できます。
+.IP "\fBlive\-config.user\-password\fP=\fIパスワード\fP | \fBuser\-password\fP=\fIパスワード\fP" 4
+ユーザパスワードを平文で設定できます。
+.IP "\fBlive\-config.user\-password\-crypted\fP=\fIパスワード\fP | \fBuser\-password\-crypted\fP=\fIパスワード\fP" 4
+ユーザパスワードを暗号化された形式で設定できます。
 .IP "\fBlive\-config.locales\fP=\fIロケール1\fP,\fIロケール2\fP ... \fIロケールn\fP | \fBlocales\fP=\fIロケール1\fP,\fIロケール2\fP ... \fIロケールn\fP" 4
-Allows one to set the locale of the system, e.g. 'de_CH.UTF\-8'. The default
-is 'en_US.UTF\-8'. In case the selected locale is not already available on
-the system, it is automatically generated on the fly.
+システムのロケール、例えば「de_CH.UTF\-8」をセットします。デフォルトは「en_US.UTF\-8」です。選択したロケールが既に利用できるようになっていない場合はその場で自動的に生成されます。
 .IP "\fBlive\-config.timezone\fP=\fIタイムゾーン\fP | \fBtimezone\fP=\fIタイムゾーン\fP" 4
-Allows one to set the timezone of the system, e.g. 'Europe/Zurich'. The
-default is 'UTC'.
+システムのタイムゾーン、例えば「Europe/Zurich」をセットします。デフォルトは「UTC」です。
 .IP "\fBlive\-config.keyboard\-model\fP=\fIキーボードの種類\fP | \fBkeyboard\-model\fP=\fIキーボードの種類\fP" 4
-Allows one to change the keyboard model. There is no default value set.
+キーボードの種類を変更します。デフォルト値はセットされていません。
 .IP "\fBlive\-config.keyboard\-layouts\fP=\fIキーボードレイアウト1\fP,\fIキーボードレイアウト2\fP ... \fIキーボードレイアウトn\fP | \fBkeyboard\-layouts\fP=\fIキーボードレイアウト1\fP,\fIキーボードレイアウト2\fP ... \fIキーボードレイアウトn\fP" 4
-Allows one to change the keyboard layouts. If more than one is specified,
-the tools of the desktop environment will allow one to switch it under
-X11. There is no default value set.
+キーボードレイアウトを変更します。複数指定した場合は X11
+からデスクトップ環境のツールを使うと切り替えることができます。デフォルト値はセットされていません。
 .IP "\fBlive\-config.keyboard\-variants\fP=\fIキーボード配列1\fP,\fIキーボード配列2\fP ... \fIキーボード配列n\fP | \fBkeyboard\-variants\fP=\fIキーボード配列1\fP,\fIキーボード配列2\fP ... \fIキーボード配列n\fP" 4
-Allows one to change the keyboard variants. If more than one is specified,
-the same number of values as keyboard\-layouts values should be specified as
-they will be matched one\-to\-one in the order specified. Blank values are
-allowed. The tools of the desktop environment will allow one to switch
-between each layout and variant pair under X11. There is no default value
-set.
+キーボード配列を変更します。複数指定する場合は指定した順にキーボードレイアウトの設定と一対一で対応するため、値をそれぞれ同数指定するようにしてください。空白を指定できます。X11
+からデスクトップ環境のツールを使うとレイアウトと配列のそれぞれの組を切り替えることができます。デフォルト値はセットされていません。
 .IP "\fBlive\-config.keyboard\-options\fP=\fIキーボードオプション\fP | \fBkeyboard\-options\fP=\fIキーボードオプション\fP" 4
-Allows one to change the keyboard options. There is no default value set.
+キーボードオプションを変更します。デフォルト値はセットされていません。
 .IP "\fBlive\-config.sysv\-rc\fP=\fIサービス1\fP,\fIサービス2\fP ... \fIサービスn\fP | \fBsysv\-rc\fP=\fIサービス1\fP,\fIサービス2\fP ... \fIサービスn\fP" 4
-Allows one to disable sysv services through update\-rc.d.
+update\-rc.d から sysv サービスを無効化します。
 .IP "\fBlive\-config.utc\fP=\fByes\fP|no | \fButc\fP=\fByes\fP|no" 4
-Allows one to change if the system is assuming that the hardware clock is
-set to UTC or not. The default is 'yes'.
+ハードウェア時刻が UTC でセットされているとシステムが仮定するか否かを変更します。デフォルトは「yes」です。
 .IP "\fBlive\-config.x\-session\-manager=\fP\fIXセッションマネージャ\fP | \fBx\-session\-manager\fP=\fIXセッションマネージャ\fP" 4
-Allows one to set the x\-session\-manager through update\-alternatives.
+update\-alternatives から x\-session\-manager をセットします。
 .IP "\fBlive\-config.xorg\-driver\fP=\fIXORGドライバ\fP | \fBxorg\-driver\fP=\fIXORGドライバ\fP" 4
-Allows one to set xorg driver instead of autodetecting it. If a PCI ID is
-specified in /usr/share/live/config/xserver\-xorg/\fIDRIVER\fP.ids within the
-live system, the \fIDRIVER\fP is enforced for these devices. If both a boot
-parameter and an override are found, the boot parameter takes precedence.
+xorg ドライバを自動検出に代えてセットします。Live システム内の
+/usr/share/live/config/xserver\-xorg/\fIドライバ\fP.ids で PCI ID
+が指定された場合は対象デバイスについてその\fIドライバ\fPを強制的に使います。ブートパラメータと別の設定が両方ともある場合はブートパラメータが優先されます。
 .IP "\fBlive\-config.xorg\-resolution\fP=\fIXORG解像度\fP | \fBxorg\-resolution\fP=\fIXORG解像度\fP" 4
-Allows one to set xorg resolution instead of autodetecting it,
-e.g. 1024x768.
+xorg 解像度を自動検出に代えてセットします。例えば 1024x768。
 .IP "\fBlive\-config.wlan\-driver\fP=\fIWLANドライバ\fP | \fBwlan\-driver\fP=\fIWLANドライバ\fP" 4
-Allows one to set WLAN driver instead of autodetecting it. If a PCI ID is
-specified in /usr/share/live/config/broadcom\-sta/\fIDRIVER\fP.ids within the
-live system, the \fIDRIVER\fP is enforced for these devices. If both a boot
-parameter and an override are found, the boot parameter takes precedence.
+WLAN ドライバを自動検出に代えてセットします。Live システム内の
+/usr/share/live/config/broadcom\-sta/\fIドライバ\fP.ids で PCI ID
+が指定された場合は対象デバイスについてその\fIドライバ\fPを強制的に使います。ブートパラメータと別の設定が両方ともある場合はブートパラメータが優先されます。
 .IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
-Allows one to fetch and execute one or more arbitrary files. Note that the
-URLs must be fetchable by wget (http, ftp or file://), the files are
-executed in /tmp of the running live system, and that the files needs their
-dependencies, if any, already installed, e.g. if a python script should be
-executed the system needs python installed. Some hooks for some common
-use\-cases are available at /usr/share/doc/live\-config/examples/hooks/.
+任意のファイルを取得、実行します。URL は wget により取得できるもの (http、 ftp、 file:// のどれか)
+でないといけないことと、そのファイルは実行中の Live システムの /tmp
+で実行されること、そのファイルが何かに依存している場合はそれが既にインストールされている必要があることに注意してください。例えば python
+スクリプトを実行するのであればそのシステムには python がインストールされている必要があります。一般的な活用事例の一部について、そのためのフックが
+/usr/share/doc/live\-config/examples/hooks/ からいくらか利用できるようになっています。
 .br
 ファイルが Live メディア上にある場合は file:///lib/live/mount/medium/\fIファイル\fP、Live
 システム自体のルートファイルシステムにある場合は file:///\fIファイル\fP で取得できます。
@@ -148,7 +141,7 @@ sudo と policykit を無効にします。ユーザがそのシステムの roo
 あらゆるディスプレイマネージャによる自動化でのログインを無効にします。tty の自動ログインには影響しません。
 
 .SS "ブートパラメータ (特別なオプション)"
-For special use cases there are some special boot parameters.
+特定用途向けに特別なブートパラメータがいくつかあります。
 
 .IP "\fBlive\-config.debug\fP | \fBdebug\fP" 4
 live\-config のデバッグ用出力を有効化します。
@@ -166,11 +159,8 @@ live\-config のデバッグ用出力を有効化します。
 live/config.conf.d/*.conf)
 に配置できます。特定のオプションについて両方に配置されている場合はルートファイルシステムにあるものよりも Live メディアにあるものを優先します。
 .PP
-Although the configuration files placed in the configuration directories do
-not require a particular name, it is suggested for consistency reasons to
-either use 'vendor.conf' or 'project.conf' as a naming scheme (whereas
-\&'vendor' or 'project' is replaced with the actual name, resulting in a
-filename like 'progress\-linux.conf').
+設定ディレクトリに置かれる設定ファイルには特定の名前が要求されるわけではありませんが、命名規則を整合性のため「vendor.conf」や「project.conf」のようにすることを提案します
+(「vendor」や「project」は実際の名前に置き換え、ファイル名は「progress\-linux.conf」のようになります)。
 .PP
 設定ファイルの実際の内容は以下の変数 (群) で構成されます。
 
@@ -193,6 +183,15 @@ filename like 'progress\-linux.conf').
 \&... \fIグループn\fP"」パラメータに相当します。
 .IP \fBLIVE_USER_FULLNAME\fP=\(dq\fIユーザのフルネーム\fP\(dq 4
 この変数は「\fBlive\-config.user\-fullname\fP="\fIユーザのフルネーム\fP"」パラメータに相当します。
+.IP \fBLIVE_ROOT_PASSWORD\fP=\fIパスワード\fP 4
+この変数は「\fBlive\-config.root\-password\fP=\fIパスワード\fP」パラメータに相当します。root パスワードを平文で指定します。
+.IP \fBLIVE_ROOT_PASSWORD_CRYPTED\fP=\fIパスワード\fP 4
+この変数は「\fBlive\-config.root\-password\-crypted\fP=\fIパスワード\fP」パラメータに相当します。root
+パスワードを暗号化された形式で指定します。
+.IP \fBLIVE_USER_PASSWORD\fP=\fIパスワード\fP 4
+この変数は「\fBlive\-config.user\-password\fP=\fIパスワード\fP」パラメータに相当します。ユーザパスワードを平文で指定します。
+.IP \fBLIVE_USER_PASSWORD_CRYPTED\fP=\fIパスワード\fP 4
+この変数は「\fBlive\-config.user\-password\-crypted\fP=\fIパスワード\fP」パラメータに相当します。ユーザパスワードを暗号化された形式で指定します。
 .IP "\fBLIVE_LOCALES\fP=\fIロケール1\fP,\fIロケール2\fP ... \fIロケールn\fP" 4
 この変数は「\fBlive\-config.locales\fP=\fIロケール1\fP,\fIロケール2\fP ... \fIロケールn\fP」パラメータに相当します。
 .IP \fBLIVE_TIMEZONE\fP=\fIタイムゾーン\fP 4
@@ -224,6 +223,12 @@ filename like 'progress\-linux.conf').
 \&... |\fIURLn\fP」パラメータに相当します。
 .IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
 この変数は「\fBlive\-config.debug\fP」パラメータに相当します。
+.IP \fBLIVE_LINK_USER_DIRS\fP=true|false 4
+この変数は「\fBlive\-config.link\-user\-dirs\fP=true|false」パラメータに相当します。ユーザディレクトリのシンボリックリンクの作成を有効または無効にします。
+.IP \fBLIVE_BIND_USER_DIRS\fP=true|false 4
+この変数は「\fBlive\-config.bind\-user\-dirs\fP=true|false」パラメータに相当します。ユーザディレクトリのバインドマウントを有効または無効にします。
+.IP \fBLIVE_USER_DIRS_PATH\fP=\fIパス\fP 4
+この変数は「\fBlive\-config.user\-dirs\-path\fP=\fIパス\fP」パラメータに相当します。メディア上のユーザディレクトリのパスを指定します。
 
 .SH 独自化
 \fBlive\-config\fP は下流プロジェクトやローカル用途向けに簡単に独自化できます。
@@ -236,12 +241,10 @@ filename like 'progress\-linux.conf').
 /usr/share/doc/live\-config/examples にあります。
 
 .SS 既存の設定構成要素の削除
-It is not really possible to remove components itself in a sane way yet
-without requiring either to ship a locally modified \fBlive\-config\fP package
-or using dpkg\-divert. However, the same can be achieved by disabling the
-respective components through the live\-config.nocomponents mechanism, see
-above. To avoid to always need specifying disabled components through the
-boot parameter, a configuration file should be used, see above.
+独自に改変した \fBlive\-config\fP パッケージの作成や dpkg\-divert
+の利用を要求せずに健全な方法で構成要素自体を実際に削除することは今のところできません。しかし、上記で説明した
+live\-config.nocomponents
+の仕組みにより該当する構成要素を無効にすれば同じことが実現できます。無効にする構成要素を常にブートパラメータから指定しないといけないということを避けるためには、上記で説明した設定ファイルを使うようにしてください。
 .PP
 Live システム自体の設定ファイルは自分の Debian パッケージに配置するのが最善です。設定例を収録した見本のパッケージが
 /usr/share/doc/live\-config/examples にあります。
@@ -250,12 +253,15 @@ Live システム自体の設定ファイルは自分の Debian パッケージ�
 \fBlive\-config\fP では /usr/lib/live/config 中の以下の構成要素が現在有効です。
 
 .IP \fBdebconf\fP 4
-allows one to apply arbitrary preseed files placed on the live media or an
-http/ftp server.
+Live メディアや http/ftp サーバに置かれた任意の preseed ファイルを適用します。
 .IP \fBhostname\fP 4
 /etc/hostname 及び /etc/hosts を設定します。
 .IP \fBuser\-setup\fP 4
 Live ユーザアカウントを追加します。
+.IP \fBuser‑media\fP 4
+メディアのマウントと、永続データ用のユーザディレクトリのリンクまたはバインドを設定します。
+.IP \fBissue‑setup\fP 4
+/etc/issue ファイルをウェルカムバナーとディストリビューション情報で設定します。
 .IP \fBsudo\fP 4
 Live ユーザに sudo 権限を与えます。
 .IP \fBlocales\fP 4
@@ -291,7 +297,7 @@ lastlog を無効にします。
 .IP \fBapport\fP 4
 apport を無効にします。
 .IP \fBgnome\-panel\-data\fP 4
-を無効にします。
+画面のロックボタンを無効にします。
 .IP \fBgnome\-power\-manager\fP 4
 ハイバネーションを無効にします。
 .IP \fBgnome\-screensaver\fP 4
@@ -304,6 +310,8 @@ KDE 移行ウイザードを無効にします (squeeze 以降)。
 policykit を使ってユーザ権限を与えます。
 .IP \fBssl\-cert\fP 4
 SSL の snake\-oil 証明書を再生成します。
+.IP \fBxrdp\fP 4
+リモートデスクトップ接続のために xrdp を設定します。
 .IP \fBanacron\fP 4
 anacron を無効にします。
 .IP \fButil\-linux\fP 4
@@ -320,9 +328,15 @@ openssh\-server のホストキーを再生成します。
 xfce4\-panel をデフォルト設定にします。
 .IP \fBxscreensaver\fP 4
 画面をロックするスクリーンセーバーを無効にします。
+.IP \fBxhyper‑v\fP 4
+configures X11 settings to improve compatibility on Microsoft Hyper‑V
+platforms.
+.IP \fBntfs3\fP 4
+NTFS3 サポートのための udev ルールを管理します。
+.IP \fBconfig\-module‑mode\fP 4
+システムモジュールモードを設定し、キャッシュ、ユーザー設定、および dpkg を更新します。
 .IP \fBhooks\fP 4
-allows one to run arbitrary commands from a file placed on the live media or
-an http/ftp server.
+Live メディアや http/ftp サーバに置かれたファイルから任意の任意のコマンドを実行します。
 
 .SH ファイル
 .IP \fB/etc/live/config.conf\fP 4
@@ -347,14 +361,16 @@ an http/ftp server.
 \fIlive\-tools\fP(7)
 
 .SH ホームページ
-live\-config 及び Live
-システムプロジェクトについてのさらなる情報は、<\fIhttps://wiki.debian.org/DebianLive\fP> のホームページや
-<\fIhttps://live-team.pages.debian.net/live-manual/\fP> のマニュアルにあります。
+live\-config および Debian Live
+プロジェクトに関する詳細情報は、<\fIhttps://wiki.debian.org/DebianLive\fP> のホームページと
+<\fIhttps://live\-team.pages.debian.net/live\-manual/\fP> のマニュアルで確認できます。
 
 .SH バグ
 バグは <\fIhttp://bugs.debian.org/\fP> にあるバグ追跡システムに live\-config
-パッケージのバグ報告として提出するか、<\fIdebian\-live@lists.debian.org\fP> にある Live
-システムのメーリングリスト宛てにメールを書くことにより報告できます。
+パッケージのバグ報告として提出するか、<\fIdebian\-live@lists.debian.org\fP> にある Debian Live
+のメーリングリスト宛てにメールを書くことにより報告できます。
 
 .SH 作者
-live\-config was originally written by Daniel Baumann <\fImail@daniel-baumann.ch\fR>. Since 2016 development has been continued by the Debian Live team.
+live\-config は Daniel Baumann <\fImail@daniel\-baumann.ch\fP>
+によって書かれました。2016 年から Debian Live チームが開発を継続しています。2025 年からは、変更されたバージョンの開発が
+MiniOS Live チームによって継続されています。

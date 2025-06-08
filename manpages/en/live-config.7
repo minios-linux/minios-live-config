@@ -1,13 +1,14 @@
 .\" live-config(7) - System Configuration Components
 .\" Copyright (C) 2016-2020 The Debian Live team
 .\" Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
+.\" Copyright (C) 2025 crims0n <crims0n@minios.dev>
 .\"
 .\" This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 .\" This is free software, and you are welcome to redistribute it
 .\" under certain conditions; see COPYING for details.
 .\"
 .\"
-.TH LIVE\-CONFIG 7 2015\-09\-23 5.0~a5-1 "Debian Live Project"
+.TH LIVE\-CONFIG 7 2025\-06\-08 11.0.5 "MiniOS Live Project"
 
 .SH NAME
 \fBlive\-config\fR \- System Configuration Components
@@ -53,6 +54,14 @@ Allows one to set the username that gets created for autologin. The default is '
 Allows one to set the default groups of the users that gets created for autologin is member of. The default is 'audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth'.
 .IP "\fBlive\-config.user\-fullname\fR=""\fIUSER FULLNAME\fR"" | \fBuser\-fullname\fR=""\fIUSER FULLNAME\fR""" 4
 Allows one to set the fullname of the users that gets created for autologin. On Debian the default is 'Debian Live user'.
+.IP "\fBlive-config.root-password\fR=\fIPASSWORD\fR | \fBroot-password\fR=\fIPASSWORD\fR" 4
+Allows setting the root password in plain text.
+.IP "\fBlive-config.root-password-crypted\fR=\fIPASSWORD\fR | \fBroot-password-crypted\fR=\fIPASSWORD\fR" 4
+Allows setting the root password in crypted form.
+.IP "\fBlive-config.user-password\fR=\fIPASSWORD\fR | \fBuser-password\fR=\fIPASSWORD\fR" 4
+Allows setting the user password in plain text.
+.IP "\fBlive-config.user-password-crypted\fR=\fIPASSWORD\fR | \fBuser-password-crypted\fR=\fIPASSWORD\fR" 4
+Allows setting the user password in crypted form.
 .IP "\fBlive\-config.locales\fR=\fILOCALE1\fR,\fILOCALE2\fR ... \fILOCALEn\fR | \fBlocales\fR=\fILOCALE1\fR,\fILOCALE2\fR ... \fILOCALEn\fR" 4
 Allows one to set the locale of the system, e.g. 'de_CH.UTF\-8'. The default is 'en_US.UTF\-8'. In case the selected locale is not already available on the system, it is automatically generated on the fly.
 .IP "\fBlive\-config.timezone\fR=\fITIMEZONE\fR | \fBtimezone\fR=\fITIMEZONE\fR" 4
@@ -111,7 +120,7 @@ Enables debug output in live\-config.
 .PP
 \fBNote:\fR If configuration files are used, either (preferably) all boot parameters should be put into the \fBLIVE_CONFIG_CMDLINE\fR variable, or individual variables can be set. If individual variables are used, the user is required to ensure that all the necessary variables are set to create a valid configuration.
 .PP
-Configuration files can be placed either in the root filesystem itself (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), or on the live media (live/config.conf, live/config.conf.d/*.conf). If both places are used for a certain option, the ones from the live media take precedence over the ones from the root filesystem.
+Configuration files can be placed either in the root filesystem itself (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), or on the live media (minios/config.conf, minios/config.conf.d/*.conf). If both places are used for a certain option, the ones from the live media take precedence over the ones from the root filesystem.
 .PP
 Although the configuration files placed in the configuration directories do not require a particular name, it is suggested for consistency reasons to either use 'vendor.conf' or 'project.conf' as a naming scheme (whereas 'vendor' or 'project' is replaced with the actual name, resulting in a filename like 'progress\-linux.conf').
 .PP
@@ -133,6 +142,14 @@ This variable corresponds to the '\fBlive\-config.username\fR=\fIUSERNAME\fR' pa
 This variable corresponds to the '\fBlive\-config.user\-default\-groups\fR="\fIGROUP1\fR,\fIGROUP2\fR ... \fIGROUPn\fR"' parameter.
 .IP "\fBLIVE_USER_FULLNAME\fR=""\fIUSER FULLNAME\fR""" 4
 This variable corresponds to the '\fBlive\-config.user\-fullname\fR="\fIUSER FULLNAME\fR"' parameter.
+.IP "\fBLIVE_ROOT_PASSWORD\fR=\fIPASSWORD\fR" 4
+This variable corresponds to the '\fBlive\-config.root\-password\fR=\fIPASSWORD\fR' parameter. It specifies the root password in plain text.
+.IP "\fBLIVE_ROOT_PASSWORD_CRYPTED\fR=\fIPASSWORD\fR" 4
+This variable corresponds to the '\fBlive\-config.root\-password\-crypted\fR=\fIPASSWORD\fR' parameter. It specifies the root password in crypted form.
+.IP "\fBLIVE_USER_PASSWORD\fR=\fIPASSWORD\fR" 4
+This variable corresponds to the '\fBlive\-config.user\-password\fR=\fIPASSWORD\fR' parameter. It specifies the user password in plain text.
+.IP "\fBLIVE_USER_PASSWORD_CRYPTED\fR=\fIPASSWORD\fR" 4
+This variable corresponds to the '\fBlive\-config.user\-password\-crypted\fR=\fIPASSWORD\fR' parameter. It specifies the user password in crypted form.
 .IP "\fBLIVE_LOCALES\fR=\fILOCALE1\fR,\fILOCALE2\fR ... \fILOCALEn\fR" 4
 This variable corresponds to the '\fBlive\-config.locales\fR=\fILOCALE1\fR,\fILOCALE2\fR ... \fILOCALEn\fR' parameter.
 .IP "\fBLIVE_TIMEZONE\fR=\fITIMEZONE\fR" 4
@@ -161,6 +178,12 @@ This variable corresponds to the '\fBlive\-config.wlan\-driver\fR=\fIWLAN_DRIVER
 This variable corresponds to the '\fBlive\-config.hooks\fR=filesystem|medium|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR' parameter.
 .IP "\fBLIVE_CONFIG_DEBUG\fR=true|false" 4
 This variable corresponds to the '\fBlive\-config.debug\fR' parameter.
+.IP "\fBLIVE_LINK_USER_DIRS\fR=true|false" 4
+This variable corresponds to the '\fBlive\-config.link\-user\-dirs\fR=true|false' parameter. It enables or disables creation of symbolic links for user directories.
+.IP "\fBLIVE_BIND_USER_DIRS\fR=true|false" 4
+This variable corresponds to the '\fBlive\-config.bind\-user\-dirs\fR=true|false' parameter. It enables or disables bind-mounting for user directories.
+.IP "\fBLIVE_USER_DIRS_PATH\fR=\fIPATH\fR" 4
+This variable corresponds to the '\fBlive\-config.user\-dirs\-path\fR=\fIPATH\fR' parameter. It specifies the path for user directories on the media.
 
 .SH CUSTOMIZATION
 \fBlive\-config\fR can be easily customized for downstream projects or local usage.
@@ -184,6 +207,10 @@ allows one to apply arbitrary preseed files placed on the live media or an http/
 configures /etc/hostname and /etc/hosts.
 .IP "\fBuser\-setup\fR" 4
 adds a live user account.
+.IP "\fBuser‑media\fR" 4
+configures mounting of media and linking or binding of user directories for persistent data.
+.IP "\fBissue‑setup\fR" 4
+sets up the /etc/issue file with a welcome banner and distribution information.
 .IP "\fBsudo\fR" 4
 grants sudo privileges to the live user.
 .IP "\fBlocales\fR" 4
@@ -232,6 +259,8 @@ disables some unwanted KDE services (squeeze and newer).
 grant user privilegies through policykit.
 .IP "\fBssl\-cert\fR" 4
 regenerating ssl snake\-oil certificates.
+.IP "\fBxrdp\fR" 4
+configures xrdp for remote desktop connectivity.
 .IP "\fBanacron\fR" 4
 disables anacron.
 .IP "\fButil-linux\fR" 4
@@ -248,6 +277,12 @@ recreates openssh-server host keys.
 configures xfce4\-panel to default settings.
 .IP "\fBxscreensaver\fR" 4
 disables the screensaver locking the screen.
+.IP "\fBxhyper‑v\fR" 4
+configures X11 settings to improve compatibility on Microsoft Hyper‑V platforms.
+.IP "\fBntfs3\fR" 4
+manages udev rules for NTFS3 support.
+.IP "\fBconfig-module‑mode\fR" 4
+configures system module mode and updates caches, user settings, and dpkg.
 .IP "\fBhooks\fR" 4
 allows one to run arbitrary commands from a file placed on the live media or an http/ftp server.
 
@@ -280,4 +315,4 @@ More information about live\-config and the Debian Live project can be found on 
 Bugs can be reported by submitting a bugreport for the live\-config package in the Bug Tracking System at <\fIhttp://bugs.debian.org/\fR> or by writing a mail to the Debian Live mailing list at <\fIdebian\-live@lists.debian.org\fR>.
 
 .SH AUTHOR
-live\-config was originally written by Daniel Baumann <\fImail@daniel-baumann.ch\fR>. Since 2016 development has been continued by the Debian Live team.
+live\-config was originally written by Daniel Baumann <\fImail@daniel-baumann.ch\fR>. Since 2016 development has been continued by the Debian Live team. Since 2025 development of the modified version has been continued by the MiniOS Live team.

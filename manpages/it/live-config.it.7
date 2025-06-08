@@ -1,6 +1,7 @@
 .\" live-config(7) - System Configuration Components
 .\" Copyright (C) 2016-2020 The Debian Live team
 .\" Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
+.\" Copyright (C) 2025 crims0n <crims0n@minios.dev>
 .\"
 .\" This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 .\" This is free software, and you are welcome to redistribute it
@@ -12,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2015\-09\-23 5.0~a5\-1 "Progetto Debian Live"
+.TH LIVE\-CONFIG 7 2025\-06\-08 11.0.5 "Progetto MiniOS Live"
 
 .SH NOME
 \fBlive\-config\fP \- Componenti di configurazione del sistema
@@ -48,7 +49,7 @@ Vengono eseguiti solo gli script specificati. Si noti che l'ordine è
 importante, ad esempio "live\-config=sudo,user\-setup" non funzionerebbe in
 quanto prima di poter configurare l'utente per sudo è necessario
 aggiungerlo. Per l'ordinamento numerico vedere i nomi degli script in
-/lib/live/config.
+/usr/lib/live/config.
 .IP "\fBlive\-config.nocomponents\fP | \fBnocomponents\fP" 4
 Non viene eseguito alcun componente, equivale a non utilizzare nessun
 parametro di "live\-config.components" o "live\-config.nocomponents".
@@ -60,17 +61,17 @@ Alcuni singoli componenti possono modificare il loro comportamento in base a
 un parametro di avvio.
 
 .IP "\fBlive\-config.debconf\-preseed\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBdebconf\-preseed\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
-Allows one to fetch and apply one or more debconf preseed files to be
-applied to the debconf database. Note that the URLs must be fetchable by
-wget (http, ftp or file://).
+Permette di prelevare e applicare uno o più file debconf di
+preconfigurazione da applicare al database debconf. Si noti che gli URL
+devono essere scaricabili da wget (http, ftp o file://).
 .br
 Se il file è posizionato sul supporto live, questo  può essere prelevato con
 file:///lib/live/mount/medium/\fIFILE\fP, o con file:///\fIFILE\fP se è nella
 radice del filesystem del sistema live stesso.
 .br
-Tutti i file di preconfigurazione in /usr/lib/live/config\-preseed/ nella radice
-del sistema live possono essere abilitati automaticamente con la parola
-chiave "filesystem".
+Tutti i file di preconfigurazione in /usr/lib/live/config\-preseed/ nella
+radice del sistema live possono essere abilitati automaticamente con la
+parola chiave "filesystem".
 .br
 Tutti i file di preconfigurazione in /live/config\-preseed/ sul supporto live
 possono essere abilitati automaticamente con la parola chiave "medium".
@@ -79,66 +80,79 @@ Se vengono congiunti diversi meccanismi i file di preconfigurazione di tipo
 filesystem vengono applicati per primi, seguiti dalla tipologia medium e
 quindi da quelli network.
 .IP "\fBlive\-config.hostname\fP=\fIHOSTNAME\fP | \fBhostname\fP=\fIHOSTNAME\fP" 4
-Allows one to set the hostname of the system. The default is 'debian'.
+Permette di impostare l'hostname del sistema, il predefinito è "debian".
 .IP "\fBlive\-config.username\fP=\fINOMEUTENTE\fP | \fBusername\fP=\fINOMEUTENTE\fP" 4
-Allows one to set the username that gets created for autologin. The default
-is 'user'.
+Permette di impostare il nome utente che viene creato per il login
+automatico, il predefinito è "user".
 .IP "\fBlive\-config.user\-default\-groups\fP=\fIGRUPPO\fP,\fIGRUPPO2\fP ... \fIGRUPPOn\fP | \fBuser\-default\-groups\fP=\fIGRUPPO1\fP,\fIGRUPPO2\fP ... \fIGRUPPOn\fP" 4
-Allows one to set the default groups of the users that gets created for
-autologin is member of. The default is 'audio cdrom dip floppy video plugdev
-netdev powerdev scanner bluetooth'.
+Permette di impostare i gruppi dei quali fanno parte gli utenti creati per
+il login automatico. Il valore predefinito è "audio cdrom dip floppy video
+plugdev netdev powerdev scanner bluetooth".
 .IP "\fBlive\-config.user\-fullname\fP=\(dq\fINOME COMPLETO UTENTE\fP\(dq | \fBuser\-fullname\fP=\(dq\fINOME COMPLETO UTENTE\fP\(dq" 4
-Allows one to set the fullname of the users that gets created for
-autologin. On Debian the default is 'Debian Live user'.
+Permette di impostare il nome utente completo che viene creato per il login
+automatico, il predefinito di Debian è "Debian Live user".
+.IP "\fBlive\-config.root\-password\fP=\fIPASSWORD\fP | \fBroot\-password\fP=\fIPASSWORD\fP" 4
+Permette di impostare la password di root in testo semplice.
+.IP "\fBlive\-config.root\-password\-crypted\fP=\fIPASSWORD\fP | \fBroot\-password\-crypted\fP=\fIPASSWORD\fP" 4
+Permette di impostare la password di root in forma criptata.
+.IP "\fBlive\-config.user\-password\fP=\fIPASSWORD\fP | \fBuser\-password\fP=\fIPASSWORD\fP" 4
+Permette di impostare la password utente in testo semplice.
+.IP "\fBlive\-config.user\-password\-crypted\fP=\fIPASSWORD\fP | \fBuser\-password\-crypted\fP=\fIPASSWORD\fP" 4
+Permette di impostare la password utente in forma criptata.
 .IP "\fBlive\-config.locales\fP=\fILOCALIZZAZIONE1\fP,\fILOCALIZZAZIONE2\fP ... \fILOCALIZZAZIONEn\fP | \fBlocales\fP=\fILOCALIZZAZIONE1\fP,\fILOCALIZZAZIONE2\fP ... \fILOCALIZZAZIONEn\fP" 4
-Allows one to set the locale of the system, e.g. 'de_CH.UTF\-8'. The default
-is 'en_US.UTF\-8'. In case the selected locale is not already available on
-the system, it is automatically generated on the fly.
+Permette di impostare la localizzazione del sistema, ad esempio
+"it_IT.UTF\-8", il predefinito è "en_US.UTF\-8". Se la localizzazione
+selezionata non è già disponibile viene generata al volo automaticamente.
 .IP "\fBlive\-config.timezone\fP=\fIFUSO ORARIO\fP | \fBtimezone\fP=\fIFUSO ORARIO\fP" 4
-Allows one to set the timezone of the system, e.g. 'Europe/Zurich'. The
-default is 'UTC'.
+Permette di impostare il fuso orario del sistema, ad esempio "Europe/Rome";
+il predefinito è "UTC".
 .IP "\fBlive\-config.keyboard\-model\fP=\fIMODELLO_TASTIERA\fP | \fBkeyboard\-model\fP=\fIMODELLO_TASTIERA\fP" 4
-Allows one to change the keyboard model. There is no default value set.
+Permette di scegliere il modello della tastiera, non è impostato alcun
+valore predefinito.
 .IP "\fBlive\-config.keyboard\-layouts\fP=\fILAYOUT_TASTIERA1\fP,\fILAYOUT_TASTIERA2\fP ... \fILAYOUT_TASTIERAn\fP | \fBkeyboard\-layouts\fP=\fILAYOUT_TASTIERA1\fP,\fILAYOUT_TASTIERA2\fP ... \fILAYOUT_TASTIERAn\fP" 4
-Allows one to change the keyboard layouts. If more than one is specified,
-the tools of the desktop environment will allow one to switch it under
-X11. There is no default value set.
+Permette di modificare i layout della tastiera. Se ne viene specificato più
+di uno gli strumenti dell'ambiente desktop consentiranno di cambiarlo in
+X11. Non è impostato alcun valore predefinito.
 .IP "\fBlive\-config.keyboard\-variants\fP=\fISCHEMA_TASTIERA1\fP,\fISCHEMA_TASTIERA2\fP ... \fISCHEMA_TASTIERAn\fP | \fBkeyboard\-variants\fP=\fISCHEMA_TASTIERA1\fP,\fISCHEMA_TASTIERA2\fP ... \fISCHEMA_TASTIERAn\fP" 4
-Allows one to change the keyboard variants. If more than one is specified,
-the same number of values as keyboard\-layouts values should be specified as
-they will be matched one\-to\-one in the order specified. Blank values are
-allowed. The tools of the desktop environment will allow one to switch
-between each layout and variant pair under X11. There is no default value
-set.
+Permette di modificare gli schemi della tastiera (es. qwerty, qWERTZ,
+AZERTY, ecc.). Se ne viene specificato più di uno è necessario indicare lo
+stesso numero di valori dei layout della tastiera che verranno abbinati ad
+uno schema nell'ordine definito. Sono ammessi valori vuoti. Gli strumenti
+dell'ambiente desktop consentiranno di passare da uno all'altro in X11. Non
+è impostato alcun valore predefinito.
 .IP "\fBlive\-config.keyboard\-options\fP=\fIOPZIONI_TASTIERA\fP | \fBkeyboard\-options\fP=\fIOPZIONI_TASTIERA\fP" 4
-Allows one to change the keyboard options. There is no default value set.
+Permette di modificare le opzioni della tastiera, non è impostato alcun
+valore predefinito.
 .IP "\fBlive\-config.sysv\-rc\fP=\fISERVIZIO1\fP,\fISERVIZIO2\fP ... \fISERVIZIOn\fP | \fBsysv\-rc\fP=\fISERVIZIO1\fP,\fISERVIZIO2\fP ... \fISERVIZIOn\fP" 4
-Allows one to disable sysv services through update\-rc.d.
+Permette di disabilitare i servizi di sysv tramite update\-rc.d.
 .IP "\fBlive\-config.utc\fP=\fByes\fP|no | \fButc\fP=\fByes\fP|no" 4
-Allows one to change if the system is assuming that the hardware clock is
-set to UTC or not. The default is 'yes'.
+Permette di scegliere se il sistema debba supporre che l'orologio hardware
+sia impostato o meno su UTC, il valore predefinito è "yes".
 .IP "\fBlive\-config.x\-session\-manager=\fP\fIX_SESSION_MANAGER\fP | \fBx\-session\-manager\fP=\fIX_SESSION_MANAGER\fP" 4
-Allows one to set the x\-session\-manager through update\-alternatives.
+Permette di impostare x\-session\-manager tramite update\-alternatives.
 .IP "\fBlive\-config.xorg\-driver\fP=\fIDRIVER_XORG\fP | \fBxorg\-driver\fP=\fIDRIVER_XORG\fP" 4
-Allows one to set xorg driver instead of autodetecting it. If a PCI ID is
-specified in /usr/share/live/config/xserver\-xorg/\fIDRIVER\fP.ids within the
-live system, the \fIDRIVER\fP is enforced for these devices. If both a boot
-parameter and an override are found, the boot parameter takes precedence.
+Permette di impostare il driver per xorg invece di riconoscerlo
+automaticamente. Se un ID PCI viene specificato in
+/usr/share/live/config/xserver\-xorg/\fIDRIVER\fP.ids all'interno del sistema
+live, \fIDRIVER\fP viene applicato a questi device. Se viene trovato sia un
+parametro di boot sia uno imposto, quello di boot ha la precedenza.
 .IP "\fBlive\-config.xorg\-resolution\fP=\fIRISOLUZIONE_XORG\fP | \fBxorg\-resolution\fP=\fIRISOLUZIONE_XORG\fP" 4
-Allows one to set xorg resolution instead of autodetecting it,
-e.g. 1024x768.
+Permette di impostare la risoluzione per xorg invece di riconoscerla
+automaticamente, ad esempio 1024x768.
 .IP "\fBlive\-config.wlan\-driver\fP=\fIDRIVER_WLAN\fP | \fBwlan\-driver\fP=\fIDRIVER_WLAN\fP" 4
-Allows one to set WLAN driver instead of autodetecting it. If a PCI ID is
-specified in /usr/share/live/config/broadcom\-sta/\fIDRIVER\fP.ids within the
-live system, the \fIDRIVER\fP is enforced for these devices. If both a boot
-parameter and an override are found, the boot parameter takes precedence.
+Permette di impostare il driver per WLAN invece di riconoscerlo
+automaticamente. Se un ID PCI viene specificato in
+/usr/share/live/config/broadcom\-sta/\fIDRIVER\fP.ids all'interno del sistema
+live, \fIDRIVER\fP viene applicato a questi device. Se viene trovato sia un
+parametro di boot sia uno imposto, quello di boot ha la precedenza.
 .IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
-Allows one to fetch and execute one or more arbitrary files. Note that the
-URLs must be fetchable by wget (http, ftp or file://), the files are
-executed in /tmp of the running live system, and that the files needs their
-dependencies, if any, already installed, e.g. if a python script should be
-executed the system needs python installed. Some hooks for some common
-use\-cases are available at /usr/share/doc/live\-config/examples/hooks/.
+Permette di prelevare ed eseguire uno o più file arbitrari. Si noti che gli
+URL devono essere scaricabili da wget (http, ftp o file://), i file vengono
+eseguiti nella directory /tmp del sistema in esecuzione, e che tali file
+necessitano delle loro dipendenze già installate; ad esempio se bisogna
+eseguire uno script python il sistema ha bisogno di python installato. Sono
+disponibili alcuni hook per i casi d'uso più comuni in
+/usr/share/doc/live\-config/examples/hooks/.
 .br
 Se il file è posizionato sul supporto live, questo  può essere prelevato con
 file:///lib/live/mount/medium/\fIFILE\fP, o con file:///\fIFILE\fP se è nella
@@ -172,7 +186,7 @@ Disabilita il login automatico con qualsiasi gestore grafico senza
 coinvolgere quello in tty.
 
 .SS "Parametri di avvio (opzioni speciali)"
-For special use cases there are some special boot parameters.
+Per casi particolari ci sono alcuni parametri speciali.
 
 .IP "\fBlive\-config.debug\fP | \fBdebug\fP" 4
 Abilita l'output di debug in live\-config.
@@ -192,15 +206,15 @@ che l'utente si accerti che siano impostate tutte le variabili necessarie.
 .PP
 I file di configurazione sono collocabili sia nello stesso filesystem di
 root (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), sia nel
-supporto live (live/config.conf, live/config.conf.d/*.conf). Se per una
+supporto live (minios/config.conf, minios/config.conf.d/*.conf). Se per una
 certa opzione si usano entrambe le destinazioni, avrà la precedenza quello
 del supporto live.
 .PP
-Although the configuration files placed in the configuration directories do
-not require a particular name, it is suggested for consistency reasons to
-either use 'vendor.conf' or 'project.conf' as a naming scheme (whereas
-\&'vendor' or 'project' is replaced with the actual name, resulting in a
-filename like 'progress\-linux.conf').
+Sebbene i file di configurazione messi nelle directory di configurazione non
+richiedano un nome particolare, per coerenza è suggerito di usare
+"vendor.conf"o "project.conf" come schema di denominazione (laddove "vendor"
+o "project" è sostituito con un nome reale, risultando in un nome di file
+come "progress\-linux.conf").
 .PP
 Il contenuto effettivo dei file di configurazione è costituito da una o più
 delle seguenti variabili.
@@ -230,13 +244,28 @@ Questa variabile corrisponde al parametro
 .IP "\fBLIVE_USER_FULLNAME\fP=\(dq\fINOME COMPLETO UTENTE\fP\(dq" 4
 Questa variabile corrisponde al parametro
 "\fBlive\-config.user\-fullname\fP="\fINOME COMPLETO UTENTE\fP".
+.IP \fBLIVE_ROOT_PASSWORD\fP=\fIPASSWORD\fP 4
+Questa variabile corrisponde al parametro
+"\fBlive\-config.root\-password\fP=\fIPASSWORD\fP". Specifica la password di root in
+testo semplice.
+.IP \fBLIVE_ROOT_PASSWORD_CRYPTED\fP=\fIPASSWORD\fP 4
+Questa variabile corrisponde al parametro
+"\fBlive\-config.root\-password\-crypted\fP=\fIPASSWORD\fP". Specifica la password di
+root in forma criptata.
+.IP \fBLIVE_USER_PASSWORD\fP=\fIPASSWORD\fP 4
+Questa variabile corrisponde al parametro
+"\fBlive\-config.user\-password\fP=\fIPASSWORD\fP". Specifica la password utente in
+testo semplice.
+.IP \fBLIVE_USER_PASSWORD_CRYPTED\fP=\fIPASSWORD\fP 4
+Questa variabile corrisponde al parametro
+"\fBlive\-config.user\-password\-crypted\fP=\fIPASSWORD\fP". Specifica la password
+utente in forma criptata.
 .IP "\fBLIVE_LOCALES\fP=\fILOCALIZZAZIONE1\fP,\fILOCALIZZAZIONE2\fP ... \fILOCALIZZAZIONEn\fP" 4
 Questa variabile corrisponde al parametro
 "\fBlive\-config.locales\fP=\fILOCALIZZAZIONE1\fP,\fILOCALIZZAZIONE2\fP
 \&... \fILOCALIZZAZIONEn\fP".
 .IP "\fBLIVE_TIMEZONE\fP=\fIFUSO ORARIO\fP" 4
-Questa variabile corrisponde al parametro "\fBlive\-config.timezone\fP=\fIFUSO
-ORARIO\fP".
+Questa variabile corrisponde al parametro "\fBlive\-config.timezone\fP=\fIFUSO ORARIO\fP".
 .IP \fBLIVE_KEYBOARD_MODEL\fP=\fIMODELLO_TASTIERA\fP 4
 Questa variabile corrisponde al parametro
 "\fBlive\-config.keyboard\-model\fP=\fIMODELLO_TASTIERA\fP".
@@ -273,6 +302,18 @@ Questa variabile corrisponde al parametro
 "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP".
 .IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
 Questa variabile corrisponde al parametro "\fBlive\-config.debug\fP".
+.IP \fBLIVE_LINK_USER_DIRS\fP=true|false 4
+Questa variabile corrisponde al parametro
+\&'\fBlive\-config.link\-user\-dirs\fP=true|false'. Abilita o disabilita la
+creazione di collegamenti simbolici per le directory utente.
+.IP \fBLIVE_BIND_USER_DIRS\fP=true|false 4
+Questa variabile corrisponde al parametro
+\&'\fBlive\-config.bind\-user\-dirs\fP=true|false'. Abilita o disabilita il
+bind\-mounting per le directory utente.
+.IP \fBLIVE_USER_DIRS_PATH\fP=\fIPATH\fP 4
+Questa variabile corrisponde al parametro
+\&'\fBlive\-config.user\-dirs\-path\fP=\fIPATH\fP'. Specifica il percorso per le
+directory utente sui media.
 
 .SH PERSONALIZZAZIONE
 \fBlive\-config\fP può essere facilmente personalizzato per progetti downstream
@@ -280,34 +321,42 @@ o utilizzo locale.
 
 .SS "Aggiungere nuovi componenti config"
 I progetti downstream possono inserire i loro componenti nella directory
-/lib/live/config senza la necessità di fare altro, i componenti saranno
+/usr/lib/live/config senza la necessità di fare altro, i componenti saranno
 richiamati automaticamente durante il boot.
 .PP
 È consigliato mettere tali componenti in un pacchetto debian dedicato. Si
 può trovare un esempio in /usr/share/doc/live\-config/examples.
 
 .SS "Rimuovere componenti config esistenti"
-It is not really possible to remove components itself in a sane way yet
-without requiring either to ship a locally modified \fBlive\-config\fP package
-or using dpkg\-divert. However, the same can be achieved by disabling the
-respective components through the live\-config.nocomponents mechanism, see
-above. To avoid to always need specifying disabled components through the
-boot parameter, a configuration file should be used, see above.
+Non è ancora realmente possibile rimuovere i componenti in un modo sensato
+che non richieda di fornire un pacchetto di \fBlive\-config\fP modificato
+localmente o l'uso di dpkg\-divert. Tuttavia la stessa cosa si può ottenere
+disabilitando i rispettivi componenti tramite il meccanismo di
+live\-config.nocomponents come spiegato prima. Per evitare di dover
+specificare ogni volta con parametri di boot i componenti da disabilitare,
+usare un file di configurazione come mostrato in precedenza.
 .PP
 È consigliato mettere i file di configurazione per il sistema live in un
 pacchetto debian dedicato. Si può trovare un esempio in
 /usr/share/doc/live\-config/examples.
 
 .SH COMPONENTI
-\fBlive\-config\fP attualmente offre i seguenti componenti in /usr/lib/live/config.
+\fBlive\-config\fP attualmente offre i seguenti componenti in
+/usr/lib/live/config.
 
 .IP \fBdebconf\fP 4
-allows one to apply arbitrary preseed files placed on the live media or an
-http/ftp server.
+permette di applicare file di preconfigurazione arbitrai situati sul
+supporto live o su un server http/ftp.
 .IP \fBhostname\fP 4
 configura i file /etc/hostname e /etc/hosts.
 .IP \fBuser\-setup\fP 4
 aggiunge un account per l'utente live.
+.IP \fBuser‑media\fP 4
+Configura il montaggio dei media e il collegamento o il bind\-mounting delle
+directory utente per i dati persistenti.
+.IP \fBissue‑setup\fP 4
+Imposta il file /etc/issue con un banner di benvenuto e informazioni sulla
+distribuzione.
 .IP \fBsudo\fP 4
 concede i privilegi per sudo all'utente live.
 .IP \fBlocales\fP 4
@@ -356,6 +405,8 @@ disabilita i servizi di KDE non voluti (squeeze e successive).
 concede i privilegi per l'utente tramite policykit.
 .IP \fBssl\-cert\fP 4
 rigenera certificati ssl snake\-oil.
+.IP \fBxrdp\fP 4
+Configura xrdp per la connettività del desktop remoto.
 .IP \fBanacron\fP 4
 disabilita anacron.
 .IP \fButil\-linux\fP 4
@@ -372,9 +423,17 @@ ricrea le chiavi di openssh\-server.
 configura xfce4\-panel con le impostazioni predefinite.
 .IP \fBxscreensaver\fP 4
 disabilita lo screensaver che blocca lo schermo.
+.IP \fBxhyper‑v\fP 4
+configures X11 settings to improve compatibility on Microsoft Hyper‑V
+platforms.
+.IP \fBntfs3\fP 4
+Gestisce le regole udev per il supporto NTFS3.
+.IP \fBconfig\-module‑mode\fP 4
+Configura la modalità modulo di sistema e aggiorna le cache, le impostazioni
+utente e dpkg.
 .IP \fBhooks\fP 4
-allows one to run arbitrary commands from a file placed on the live media or
-an http/ftp server.
+permette di eseguire comandi arbitrari da un file situato sul supporto live
+o su un server http/ftp.
 
 .SH FILE
 .IP \fB/etc/live/config.conf\fP 4
@@ -399,15 +458,19 @@ an http/ftp server.
 \fIlive\-tools\fP(7)
 
 .SH HOMEPAGE
-Si possono trovare ulteriori informazioni su live\-config e il progetto Live
-Systems sulla homepage <\fIhttps://wiki.debian.org/DebianLive\fP> e nel manuale
-all'indirizzo <\fIhttps://live-team.pages.debian.net/live-manual/\fP>.
+Si possono trovare ulteriori informazioni su live\-config e il progetto
+Debian Live sulla homepage <\fIhttps://wiki.debian.org/DebianLive\fP> e
+nel manuale all'indirizzo
+<\fIhttps://live\-team.pages.debian.net/live\-manual/\fP>.
 
 .SH BUG
 I bug possono essere segnalati presentando un bugreport per il pacchetto
 live\-config sul Bug Tracking System all'indirizzo
 <\fIhttp://bugs.debian.org/\fP> o inviando un'email alla mailing list
-di Live Sistems <\fIdebian\-live@lists.debian.org\fP>.
+di Debian Live <\fIdebian\-live@lists.debian.org\fP>.
 
 .SH AUTORE
-live\-config was originally written by Daniel Baumann <\fImail@daniel-baumann.ch\fR>. Since 2016 development has been continued by the Debian Live team.
+live\-config è stato originariamente scritto da Daniel Baumann
+<\fImail@daniel\-baumann.ch\fP>. Dal 2016 lo sviluppo è continuato dal
+team Debian Live. Dal 2025 lo sviluppo della versione modificata è
+continuato dal team MiniOS Live.

@@ -1,0 +1,475 @@
+.\" live-config(7) - System Configuration Components
+.\" Copyright (C) 2016-2020 The Debian Live team
+.\" Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
+.\" Copyright (C) 2025 crims0n <crims0n@minios.dev>
+.\"
+.\" This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+.\" This is free software, and you are welcome to redistribute it
+.\" under certain conditions; see COPYING for details.
+.\"
+.\"
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH LIVE\-CONFIG 7 2025\-06\-08 11.0.5 "Proyek MiniOS Live"
+
+.SH NAMA
+\fBlive\-config\fP \- Komponen Konfigurasi Sistem
+
+.SH DESKRIPSI
+\fBlive\-config\fP berisi komponen\-komponen yang mengonfigurasi sistem live
+selama proses boot (userspace akhir).
+
+.SH KONFIGURASI
+\fBlive\-config\fP dapat dikonfigurasi melalui parameter boot atau file
+konfigurasi. Jika kedua mekanisme digunakan untuk opsi tertentu, parameter
+boot akan mengambil prioritas di atas file konfigurasi. Saat menggunakan
+persistensi, komponen \fBlive\-config\fP hanya akan dijalankan sekali.
+.PP
+Jika \fIlive\-build\fP(7) digunakan untuk membangun sistem live, parameter
+live\-config yang digunakan secara default dapat diatur melalui opsi
+\-\-bootappend\-live, lihat halaman manual \fIlb_config\fP(1).
+
+.SS "Parameter Boot (komponen)"
+\fBlive\-config\fP hanya diaktifkan jika 'boot=live' digunakan sebagai parameter
+boot. Selain itu, \fBlive\-config\fP perlu diberitahu komponen mana yang akan
+dijalankan melalui parameter 'live\-config.components' atau komponen mana
+yang tidak akan dijalankan melalui parameter
+\&'live\-config.nocomponents'. Jika kedua 'live\-config.components' dan
+\&'live\-config.nocomponents' digunakan, atau, jika salah satunya ditentukan
+beberapa kali, selalu yang terakhir yang lebih diutamakan daripada yang
+sebelumnya.
+
+.IP "\fBlive\-config.components\fP | \fBcomponents\fP" 4
+Semua komponen dijalankan. Ini adalah apa yang digunakan oleh citra live
+secara default.
+.IP "\fBlive\-config.components\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP | \fBcomponents\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP" 4
+Hanya komponen yang ditentukan yang dijalankan. Perlu diperhatikan bahwa
+urutan penting, misalnya 'live\-config.components=sudo,user\-setup' tidak akan
+berfungsi karena pengguna perlu ditambahkan sebelum dapat dikonfigurasi
+untuk sudo. Lihat nama file komponen di /usr/lib/live/config untuk nomor
+urutannya.
+.IP "\fBlive\-config.nocomponents\fP | \fBnocomponents\fP" 4
+Tidak ada komponen yang dijalankan. Ini sama dengan tidak menggunakan
+\&'live\-config.components' atau 'live\-config.nocomponents'.
+.IP "\fBlive\-config.nocomponents\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP | \fBnocomponents\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP" 4
+Semua komponen dijalankan, kecuali yang ditentukan.
+
+.SS "Parameter Boot (opsi)"
+Beberapa komponen individu dapat mengubah perilakunya berdasarkan parameter
+boot.
+
+.IP "\fBlive\-config.debconf\-preseed\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBdebconf\-preseed\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
+Memungkinkan untuk mengambil dan menerapkan satu atau lebih file preseed
+debconf untuk diterapkan ke database debconf. Perhatikan bahwa URL harus
+dapat diambil oleh wget (http, ftp, atau file://).
+.br
+Jika file ditempatkan pada media live, ia dapat diambil dengan
+file:///lib/live/mount/medium/\fIFILE\fP, atau dengan file:///\fIFILE\fP jika
+berada di sistem berkas root dari sistem live itu sendiri.
+.br
+Semua file preseed di /usr/lib/live/config\-preseed/ di sistem berkas root
+sistem live dapat diaktifkan secara otomatis dengan kata kunci 'filesystem'.
+.br
+Semua file preseed di /live/config\-preseed/ dari media live dapat diaktifkan
+secara otomatis dengan kata kunci 'medium'.
+.br
+Jika beberapa mekanisme digabungkan, maka file preseed sistem file
+diterapkan pertama, kemudian file preseed media, dan terakhir file preseed
+jaringan.
+.IP "\fBlive\-config.hostname\fP=\fINAMA HOST\fP | \fBhostname\fP=\fINAMA HOST\fP" 4
+Memungkinkan seseorang untuk mengatur nama host sistem. Defaultnya adalah
+\&'debian'.
+.IP "\fBlive\-config.username\fP=\fINAMA PENGGUNA\fP | \fBusername\fP=\fINAMA PENGGUNA\fP" 4
+Memungkinkan seseorang untuk mengatur nama pengguna yang dibuat untuk
+autologin. Defaultnya adalah 'user'.
+.IP "\fBlive\-config.user\-default\-groups\fP=\fIGRUP1\fP,\fIGRUP2\fP ... \fIGRUPn\fP | \fBuser\-default\-groups\fP=\fIGRUP1\fP,\fIGRUP2\fP ... \fIGRUPn\fP" 4
+Memungkinkan untuk mengatur grup default dari pengguna yang dibuat untuk
+autologin. Defaultnya adalah 'audio cdrom dip floppy video plugdev netdev
+powerdev scanner bluetooth'.
+.IP "\fBlive\-config.user\-fullname\fP=\(dq\fINAMA LENGKAP PENGGUNA\fP\(dq | \fBuser\-fullname\fP=\(dq\fINAMA LENGKAP PENGGUNA\fP\(dq" 4
+Memungkinkan seseorang untuk mengatur nama lengkap pengguna yang dibuat
+untuk autologin. Di Debian, defaultnya adalah 'Debian Live user'.
+.IP "\fBlive\-config.root\-password\fP=\fIKATA SANDI\fP | \fBroot\-password\fP=\fIKATA SANDI\fP" 4
+Memungkinkan pengaturan kata sandi root dalam teks biasa.
+.IP "\fBlive\-config.root\-password\-crypted\fP=\fIKATA SANDI\fP | \fBroot\-password\-crypted\fP=\fIKATA SANDI\fP" 4
+Memungkinkan pengaturan kata sandi root dalam bentuk terenkripsi.
+.IP "\fBlive\-config.user\-password\fP=\fIKATA SANDI\fP | \fBuser\-password\fP=\fIKATA SANDI\fP" 4
+Memungkinkan pengaturan kata sandi pengguna dalam teks biasa.
+.IP "\fBlive\-config.user\-password\-crypted\fP=\fIKATA SANDI\fP | \fBuser\-password\-crypted\fP=\fIKATA SANDI\fP" 4
+Memungkinkan pengaturan kata sandi pengguna dalam bentuk terenkripsi.
+.IP "\fBlive\-config.locales\fP=\fILOKAL1\fP,\fILOKAL2\fP ... \fILOKALn\fP | \fBlocales\fP=\fILOKAL1\fP,\fILOKAL2\fP ... \fILOKALn\fP" 4
+Memungkinkan seseorang untuk mengatur lokal sistem, misalnya
+\&'de_CH.UTF\-8'. Defaultnya adalah 'en_US.UTF\-8'. Jika lokal yang dipilih
+belum tersedia di sistem, ia akan secara otomatis dibuat saat itu juga.
+.IP "\fBlive\-config.timezone\fP=\fIZONA_WAKTU\fP | \fBtimezone\fP=\fIZONA_WAKTU\fP" 4
+Memungkinkan seseorang untuk mengatur zona waktu sistem, misalnya
+\&'Europe/Zurich'. Defaultnya adalah 'UTC'.
+.IP "\fBlive\-config.keyboard\-model\fP=\fIMODEL_KEYBOARD\fP | \fBkeyboard\-model\fP=\fIMODEL_KEYBOARD\fP" 4
+Memungkinkan seseorang untuk mengubah model keyboard. Tidak ada nilai
+default yang diatur.
+.IP "\fBlive\-config.keyboard\-layouts\fP=\fILAYOUT_KEYBOARD1\fP,\fILAYOUT_KEYBOARD2\fP ... \fILAYOUT_KEYBOARDn\fP | \fBkeyboard\-layouts\fP=\fILAYOUT_KEYBOARD1\fP,\fILAYOUT_KEYBOARD2\fP ... \fILAYOUT_KEYBOARDn\fP" 4
+Memungkinkan seseorang untuk mengubah layout keyboard. Jika lebih dari satu
+ditentukan, alat lingkungan desktop akan memungkinkan untuk beralih di bawah
+X11. Tidak ada nilai default yang diatur.
+.IP "\fBlive\-config.keyboard\-variants\fP=\fIVARIAN_KEYBOARD1\fP,\fIVARIAN_KEYBOARD2\fP ... \fIVARIAN_KEYBOARDn\fP | \fBkeyboard\-variants\fP=\fIVARIAN_KEYBOARD1\fP,\fIVARIAN_KEYBOARD2\fP ... \fIVARIAN_KEYBOARDn\fP" 4
+Memungkinkan seseorang untuk mengubah varian keyboard. Jika lebih dari satu
+ditentukan, jumlah nilai yang sama dengan nilai keyboard\-layouts harus
+ditentukan karena akan dicocokkan satu\-ke\-satu dalam urutan yang
+ditentukan. Nilai kosong diizinkan. Alat\-alat lingkungan desktop akan
+memungkinkan untuk beralih antara setiap pasangan tata letak dan varian di
+bawah X11. Tidak ada nilai default yang diatur.
+.IP "\fBlive\-config.keyboard\-options\fP=\fIOPSI_KEYBOARD\fP | \fBkeyboard\-options\fP=\fIOPSI_KEYBOARD\fP" 4
+Memungkinkan seseorang untuk mengubah opsi keyboard. Tidak ada nilai default
+yang diatur.
+.IP "\fBlive\-config.sysv\-rc\fP=\fILAYANAN1\fP,\fILAYANAN2\fP ... \fILAYANANn\fP | \fBsysv\-rc\fP=\fILAYANAN1\fP,\fILAYANAN2\fP ... \fILAYANANn\fP" 4
+Memungkinkan seseorang untuk menonaktifkan layanan sysv melalui update\-rc.d.
+.IP "\fBlive\-config.utc\fP=\fBya\fP|tidak | \fButc\fP=\fBya\fP|tidak" 4
+Memungkinkan seseorang untuk mengubah apakah sistem mengasumsikan bahwa jam
+perangkat keras diatur ke UTC atau tidak. Defaultnya adalah 'ya'.
+.IP "\fBlive\-config.x\-session\-manager=\fP\fIMANAJER_SESI_X\fP | \fBx\-session\-manager\fP=\fIMANAJER_SESI_X\fP" 4
+Memungkinkan seseorang untuk mengatur manajer sesi X melalui
+update\-alternatives.
+.IP "\fBlive\-config.xorg\-driver\fP=\fIDRIVER_XORG\fP | \fBxorg\-driver\fP=\fIDRIVER_XORG\fP" 4
+Memungkinkan seseorang untuk mengatur driver xorg alih\-alih mendeteksinya
+secara otomatis. Jika ID PCI ditentukan dalam
+/usr/share/live/config/xserver\-xorg/\fIDRIVER\fP.ids dalam sistem live,
+\fIDRIVER\fP diberlakukan untuk perangkat ini. Jika parameter boot dan override
+ditemukan, parameter boot yang diutamakan.
+.IP "\fBlive\-config.xorg\-resolution\fP=\fIRESOLUSI_XORG\fP | \fBxorg\-resolution\fP=\fIRESOLUSI_XORG\fP" 4
+Memungkinkan seseorang untuk mengatur resolusi xorg alih\-alih mendeteksinya
+secara otomatis, misalnya 1024x768.
+.IP "\fBlive\-config.wlan\-driver\fP=\fIDRIVER_WLAN\fP | \fBwlan\-driver\fP=\fIDRIVER_WLAN\fP" 4
+Memungkinkan seseorang untuk mengatur driver WLAN alih\-alih mendeteksinya
+secara otomatis. Jika ID PCI ditentukan dalam
+/usr/share/live/config/broadcom\-sta/\fIDRIVER\fP.ids dalam sistem live,
+\fIDRIVER\fP diberlakukan untuk perangkat ini. Jika parameter boot dan override
+ditemukan, parameter boot yang diutamakan.
+.IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
+Memungkinkan seseorang untuk mengambil dan menjalankan satu atau lebih file
+arbitrer. Perhatikan bahwa URL harus dapat diambil oleh wget (http, ftp atau
+file://), file dijalankan di /tmp sistem live yang sedang berjalan, dan file
+tersebut membutuhkan dependensinya, jika ada, sudah terinstal, misalnya jika
+skrip python harus dijalankan, sistem membutuhkan python terinstal. Beberapa
+kait untuk kasus penggunaan umum tersedia di
+/usr/share/doc/live\-config/examples/hooks/.
+.br
+Jika file ditempatkan pada media live, ia dapat diambil dengan
+file:///lib/live/mount/medium/\fIFILE\fP, atau dengan file:///\fIFILE\fP jika
+berada di sistem berkas root dari sistem live itu sendiri.
+.br
+Semua kait di /usr/lib/live/config\-hooks/ di sistem berkas root sistem live
+dapat diaktifkan secara otomatis dengan kata kunci 'filesystem'.
+.br
+Semua kait di /live/config\-hooks/ dari media live dapat diaktifkan secara
+otomatis dengan kata kunci 'medium'.
+.br
+Jika beberapa mekanisme digabungkan, maka kait sistem berkas dieksekusi
+terlebih dahulu, kemudian kait media, dan terakhir kait jaringan.
+
+.SS "Parameter Boot (pintasan)"
+Untuk beberapa kasus penggunaan umum di mana dibutuhkan kombinasi beberapa
+parameter individual, \fBlive\-config\fP menyediakan pintasan. Ini memungkinkan
+untuk memiliki granularitas penuh atas semua opsi, serta menjaga semuanya
+tetap sederhana.
+
+.IP "\fBlive\-config.noroot\fP | \fBnoroot\fP" 4
+Menonaktifkan sudo dan policykit, pengguna tidak dapat memperoleh hak
+istimewa root di sistem.
+.IP "\fBlive\-config.noautologin\fP | \fBnoautologin\fP" 4
+Menonaktifkan login konsol otomatis dan autologin grafis.
+.IP "\fBlive\-config.nottyautologin\fP | \fBnottyautologin\fP" 4
+Menonaktifkan login otomatis di konsol, tidak memengaruhi autologin grafis.
+.IP "\fBlive\-config.nox11autologin\fP | \fBnox11autologin\fP" 4
+Menonaktifkan login otomatis dengan manajer tampilan apa pun, tidak
+memengaruhi autologin tty.
+
+.SS "Parameter Boot (opsi khusus)"
+Untuk kasus penggunaan khusus ada beberapa parameter boot khusus.
+
+.IP "\fBlive\-config.debug\fP | \fBdebug\fP" 4
+Mengaktifkan output debug di live\-config.
+
+.SS "File Konfigurasi"
+\fBlive\-config\fP dapat dikonfigurasi (tetapi tidak diaktifkan) melalui file
+konfigurasi. Segala sesuatu kecuali pintasan yang dapat dikonfigurasi dengan
+parameter boot juga dapat dikonfigurasi melalui satu atau lebih file. Jika
+file konfigurasi digunakan, parameter 'boot=live' masih diperlukan untuk
+mengaktifkan \fBlive\-config\fP.
+.PP
+\fBCatatan:\fP Jika file konfigurasi digunakan, sebaiknya semua parameter boot
+harus ditempatkan dalam variabel \fBLIVE_CONFIG_CMDLINE\fP, atau variabel
+individual dapat diatur. Jika variabel individual digunakan, pengguna
+diwajibkan untuk memastikan bahwa semua variabel yang diperlukan diatur
+untuk membuat konfigurasi yang valid.
+.PP
+File konfigurasi dapat ditempatkan baik di sistem file root itu sendiri
+(/etc/live/config.conf, /etc/live/config.conf.d/*.conf), atau di media live
+(minios/config.conf, minios/config.conf.d/*.conf). Jika kedua lokasi
+digunakan untuk opsi tertentu, yang dari media live lebih diutamakan
+daripada yang dari sistem file root.
+.PP
+Meskipun file konfigurasi yang ditempatkan di direktori konfigurasi tidak
+memerlukan nama tertentu, disarankan untuk alasan konsistensi untuk
+menggunakan 'vendor.conf' atau 'project.conf' sebagai skema penamaan (di
+mana 'vendor' atau 'project' diganti dengan nama sebenarnya, menghasilkan
+nama file seperti 'progress\-linux.conf').
+.PP
+Konten aktual dari file konfigurasi terdiri dari satu atau lebih variabel
+berikut.
+
+.IP "\fBLIVE_CONFIG_CMDLINE\fP=\fIPARAMETER1\fP \fIPARAMETER2\fP ... \fIPARAMETERn\fP" 4
+Variabel ini sesuai dengan baris perintah bootloader.
+.IP "\fBLIVE_CONFIG_COMPONENTS\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.components\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP'.
+.IP "\fBLIVE_CONFIG_NOCOMPONENTS\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.nocomponents\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP'.
+.IP "\fBLIVE_DEBCONF_PRESEED\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.debconf\-preseed\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP|
+\&... |\fIURLn\fP'.
+.IP "\fBLIVE_HOSTNAME\fP=\fINAMA HOST\fP" 4
+Variabel ini sesuai dengan parameter '\fBlive\-config.hostname\fP=\fINAMA_HOST\fP'.
+.IP "\fBLIVE_USERNAME\fP=\fINAMA PENGGUNA\fP" 4
+Variabel ini sesuai dengan parameter '\fBlive\-config.username\fP=\fIUSERNAME\fP'.
+.IP "\fBLIVE_USER_DEFAULT_GROUPS\fP=\fIGROUP1\fP,\fIGROUP2\fP ... \fIGROUPn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.user\-default\-groups\fP="\fIGROUP1\fP,\fIGROUP2\fP ... \fIGROUPn\fP"'.
+.IP "\fBLIVE_USER_FULLNAME\fP=\(dq\fINAMA LENGKAP PENGGUNA\fP\(dq" 4
+Variabel ini sesuai dengan parameter '\fBlive\-config.user\-fullname\fP="\fINAMA LENGKAP PENGGUNA\fP"'.
+.IP "\fBLIVE_ROOT_PASSWORD\fP=\fIKATA SANDI\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.root\-password\fP=\fIPASSWORD\fP'. Variabel ini menentukan kata
+sandi root dalam teks biasa.
+.IP "\fBLIVE_ROOT_PASSWORD_CRYPTED\fP=\fIKATA SANDI\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.root\-password\-crypted\fP=\fIPASSWORD\fP'. Variabel ini menentukan
+kata sandi root dalam bentuk terenkripsi.
+.IP "\fBLIVE_USER_PASSWORD\fP=\fIKATA SANDI\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.user\-password\fP=\fIPASSWORD\fP'. Variabel ini menentukan kata
+sandi pengguna dalam teks biasa.
+.IP "\fBLIVE_USER_PASSWORD_CRYPTED\fP=\fIKATA SANDI\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.user\-password\-crypted\fP=\fIPASSWORD\fP'. Variabel ini menentukan
+kata sandi pengguna dalam bentuk terenkripsi.
+.IP "\fBLIVE_LOCALES\fP=\fILOKAL1\fP,\fILOKAL2\fP ... \fILOKALn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.locales\fP=\fILOKAL1\fP,\fILOKAL2\fP ... \fILOKALn\fP'.
+.IP \fBLIVE_TIMEZONE\fP=\fIZONA_WAKTU\fP 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.timezone\fP=\fIZONA_WAKTU\fP'.
+.IP \fBLIVE_KEYBOARD_MODEL\fP=\fIMODEL_KEYBOARD\fP 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.keyboard\-model\fP=\fIMODEL_KEYBOARD\fP'.
+.IP "\fBLIVE_KEYBOARD_LAYOUTS\fP=\fILAYOUT_KEYBOARD1\fP,\fILAYOUT_KEYBOARD2\fP ... \fILAYOUT_KEYBOARDn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.keyboard\-layouts\fP=\fILAYOUT_KEYBOARD1\fP,\fILAYOUT_KEYBOARD2\fP
+\&... \fILAYOUT_KEYBOARDn\fP'.
+.IP "\fBLIVE_KEYBOARD_VARIANTS\fP=\fIVARIAN_KEYBOARD1\fP,\fIVARIAN_KEYBOARD2\fP ... \fIVARIAN_KEYBOARDn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.keyboard\-variants\fP=\fIVARIAN_KEYBOARD1\fP,\fIVARIAN_KEYBOARD2\fP
+\&... \fIVARIAN_KEYBOARDn\fP'.
+.IP \fBLIVE_KEYBOARD_OPTIONS\fP=\fIOPSI_KEYBOARD\fP 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.keyboard\-options\fP=\fIOPSI_KEYBOARD\fP'.
+.IP "\fBLIVE_SYSV_RC\fP=\fILAYANAN1\fP,\fILAYANAN2\fP ... \fILAYANANn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.sysv\-rc\fP=\fILAYANAN1\fP,\fILAYANAN2\fP ... \fILAYANANn\fP'.
+.IP \fBLIVE_UTC\fP=\fBya\fP|tidak 4
+Variabel ini sesuai dengan parameter '\fBlive\-config.utc\fP=\fBya\fP|tidak'.
+.IP \fBLIVE_X_SESSION_MANAGER\fP=\fIMANAJER_SESI_X\fP 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.x\-session\-manager\fP=\fIMANAJER_SESI_X\fP'.
+.IP \fBLIVE_XORG_DRIVER\fP=\fIDRIVER_XORG\fP 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.xorg\-driver\fP=\fIDRIVER_XORG\fP'.
+.IP \fBLIVE_XORG_RESOLUTION\fP=\fIRESOLUSI_XORG\fP 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.xorg\-resolution\fP=\fIRESOLUSI_XORG\fP'.
+.IP \fBLIVE_WLAN_DRIVER\fP=\fIDRIVER_WLAN\fP 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.wlan\-driver\fP=\fIDRIVER_WLAN\fP'.
+.IP "\fBLIVE_HOOKS\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP'.
+.IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
+Variabel ini sesuai dengan parameter '\fBlive\-config.debug\fP'.
+.IP \fBLIVE_LINK_USER_DIRS\fP=true|false 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.link\-user\-dirs\fP=true|false'. Ini mengaktifkan atau
+menonaktifkan pembuatan tautan simbolis untuk direktori pengguna.
+.IP \fBLIVE_BIND_USER_DIRS\fP=true|false 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.bind\-user\-dirs\fP=true|false'. Ini mengaktifkan atau
+menonaktifkan pemasangan ikatan untuk direktori pengguna.
+.IP \fBLIVE_USER_DIRS_PATH\fP=\fIJALUR\fP 4
+Variabel ini sesuai dengan parameter
+\&'\fBlive\-config.user\-dirs\-path\fP=\fIJALUR\fP'. Variabel ini menentukan jalur
+untuk direktori pengguna di media.
+
+.SH KUSTOMISASI
+\fBlive\-config\fP dapat dengan mudah disesuaikan untuk proyek\-proyek hilir atau
+penggunaan lokal.
+
+.SS "Menambahkan komponen konfigurasi baru"
+Proyek hilir dapat menempatkan komponen mereka ke dalam /usr/lib/live/config
+dan tidak perlu melakukan hal lain, komponen akan dipanggil secara otomatis
+saat boot.
+.PP
+Komponen\-komponen tersebut sebaiknya dimasukkan ke dalam paket debian
+sendiri. Contoh paket yang berisi komponen contoh dapat ditemukan di
+/usr/share/doc/live\-config/examples.
+
+.SS "Menghapus komponen konfigurasi yang ada"
+Sebenarnya tidak mungkin untuk menghapus komponen itu sendiri dengan cara
+yang baik tanpa memerlukan pengiriman paket \fBlive\-config\fP yang dimodifikasi
+secara lokal atau menggunakan dpkg\-divert. Namun, hal yang sama dapat
+dicapai dengan menonaktifkan komponen yang bersangkutan melalui mekanisme
+live\-config.nocomponents, lihat di atas. Untuk menghindari keharusan selalu
+menentukan komponen yang dinonaktifkan melalui parameter boot, file
+konfigurasi harus digunakan, lihat di atas.
+.PP
+File\-file konfigurasi untuk sistem live itu sendiri sebaiknya dimasukkan ke
+dalam paket debian sendiri. Contoh paket yang berisi konfigurasi contoh
+dapat ditemukan di /usr/share/doc/live\-config/examples.
+
+.SH KOMPONEN
+\fBlive\-config\fP saat ini memiliki komponen\-komponen berikut di
+/usr/lib/live/config.
+
+.IP \fBdebconf\fP 4
+Memungkinkan seseorang untuk menerapkan file preseed arbitrer yang
+ditempatkan di media live atau server http/ftp.
+.IP \fBhostname\fP 4
+Mengonfigurasi /etc/hostname dan /etc/hosts.
+.IP \fBuser\-setup\fP 4
+Menambahkan akun pengguna live.
+.IP \fBuser‑media\fP 4
+Mengonfigurasi pemasangan media dan tautan atau pengikatan direktori
+pengguna untuk data persisten.
+.IP \fBissue‑setup\fP 4
+Mengatur file /etc/issue dengan spanduk selamat datang dan informasi
+distribusi.
+.IP \fBsudo\fP 4
+Memberikan hak istimewa sudo kepada pengguna live.
+.IP \fBlocales\fP 4
+Mengonfigurasi lokal.
+.IP \fBlocales\-all\fP 4
+Mengonfigurasi semua lokal.
+.IP \fBtzdata\fP 4
+Mengonfigurasi /etc/timezone.
+.IP \fBgdm3\fP 4
+Mengonfigurasi autologin di gdm3.
+.IP \fBkdm\fP 4
+Mengonfigurasi autologin di kdm.
+.IP \fBlightdm\fP 4
+Mengonfigurasi autologin di lightdm.
+.IP \fBlxdm\fP 4
+Mengonfigurasi autologin di lxdm.
+.IP \fBnodm\fP 4
+Mengonfigurasi autologin di nodm.
+.IP \fBslim\fP 4
+Mengonfigurasi autologin di slim.
+.IP \fBxinit\fP 4
+Mengonfigurasi autologin dengan xinit.
+.IP \fBkeyboard\-configuration\fP 4
+Mengonfigurasi keyboard.
+.IP \fBsystemd\fP 4
+Mengonfigurasi autologin systemd.
+.IP \fBsysvinit\fP 4
+Mengonfigurasi sysvinit.
+.IP \fBsysv\-rc\fP 4
+Mengonfigurasi sysv\-rc dengan menonaktifkan layanan yang terdaftar.
+.IP \fBlogin\fP 4
+Menonaktifkan lastlog.
+.IP \fBapport\fP 4
+Menonaktifkan apport.
+.IP \fBgnome\-panel\-data\fP 4
+Menonaktifkan tombol kunci untuk layar.
+.IP \fBgnome\-power\-manager\fP 4
+Menonaktifkan hibernasi.
+.IP \fBgnome\-screensaver\fP 4
+Menonaktifkan pengunci layar oleh screensaver.
+.IP \fBkaboom\fP 4
+Menonaktifkan wizard migrasi KDE (squeeze dan yang lebih baru).
+.IP \fBkde\-services\fP 4
+Menonaktifkan beberapa layanan KDE yang tidak diinginkan (squeeze dan yang
+lebih baru).
+.IP \fBpolicykit\fP 4
+Memberikan hak istimewa pengguna melalui policykit.
+.IP \fBssl\-cert\fP 4
+Meregenerasi sertifikat SSL snake\-oil.
+.IP \fBxrdp\fP 4
+Mengonfigurasi xrdp untuk konektivitas desktop jarak jauh.
+.IP \fBanacron\fP 4
+Menonaktifkan anacron.
+.IP \fButil\-linux\fP 4
+Menonaktifkan hwclock util\-linux.
+.IP \fBlogin\fP 4
+Menonaktifkan lastlog.
+.IP \fBxserver\-xorg\fP 4
+Mengonfigurasi xserver\-xorg.
+.IP \fBbroadcom\-sta\fP 4
+Mengonfigurasi driver WLAN broadcom\-sta.
+.IP \fBopenssh\-server\fP 4
+Menciptakan kembali kunci host openssh\-server.
+.IP \fBxfce4\-panel\fP 4
+Mengonfigurasi xfce4\-panel ke pengaturan default.
+.IP \fBxscreensaver\fP 4
+Menonaktifkan pengunci layar oleh screensaver.
+.IP \fBxhyper‑v\fP 4
+configures X11 settings to improve compatibility on Microsoft Hyper‑V
+platforms.
+.IP \fBntfs3\fP 4
+Mengelola aturan udev untuk dukungan NTFS3.
+.IP \fBconfig\-module‑mode\fP 4
+Mengonfigurasi mode modul sistem dan memperbarui cache, pengaturan pengguna,
+dan dpkg.
+.IP \fBhooks\fP 4
+Memungkinkan seseorang untuk menjalankan perintah arbitrer dari sebuah file
+yang ditempatkan di media live atau server http/ftp.
+
+.SH FILE
+.IP \fB/etc/live/config.conf\fP 4
+.IP \fB/etc/live/config.conf.d/*.conf\fP 4
+.IP \fBlive/config.conf\fP 4
+.IP \fBlive/config.conf.d/*.conf\fP 4
+.IP \fB/lib/live/config.sh\fP 4
+.IP \fB/lib/live/config/\fP 4
+.IP \fB/var/lib/live/config/\fP 4
+.IP \fB/var/log/live/config.log\fP 4
+.PP
+.IP \fB/live/config\-hooks/*\fP 4
+.IP \fBlive/config\-hooks/*\fP 4
+.IP \fB/live/config\-preseed/*\fP 4
+.IP "\fBlive/config\-preseed/* \fP" 4
+
+.SH "LIHAT JUGA"
+\fIlive\-boot\fP(7)
+.PP
+\fIlive\-build\fP(7)
+.PP
+\fIlive\-tools\fP(7)
+
+.SH "HALAMAN UTAMA"
+Informasi lebih lanjut tentang live\-config dan proyek Debian Live dapat
+ditemukan di halaman utama di
+<\fIhttps://wiki.debian.org/DebianLive\fP> dan di manual di
+<\fIhttps://live\-team.pages.debian.net/live\-manual/\fP>.
+
+.SH BUG
+Bug dapat dilaporkan dengan mengirimkan laporan bug untuk paket live\-config
+di Sistem Pelacak Bug di <\fIhttp://bugs.debian.org/\fP> atau dengan
+menulis email ke daftar milis Debian Live di
+<\fIdebian\-live@lists.debian.org\fP>.
+
+.SH PENULIS
+live\-config awalnya ditulis oleh Daniel Baumann
+<\fImail@daniel\-baumann.ch\fP>. Sejak 2016, pengembangan dilanjutkan
+oleh tim Debian Live. Sejak 2025, pengembangan versi modifikasi dilanjutkan
+oleh tim MiniOS Live.
