@@ -22,28 +22,11 @@ test:
 
 	@for SCRIPT in $(SCRIPTS); \
 	do \
-		sh -n $${SCRIPT}; \
+		bash -n $${SCRIPT}; \
 		echo -n "."; \
 	done
 
 	@echo " done."
-
-	@if [ -x "$$(which checkbashisms 2>/dev/null)" ]; \
-	then \
-		echo -n "Checking for bashisms"; \
-		for SCRIPT in $(SCRIPTS); \
-		do \
-			checkbashisms -f -x $${SCRIPT}; \
-			echo -n "."; \
-		done; \
-		echo " done."; \
-	else \
-		echo "W: checkbashisms - command not found"; \
-		echo "I: checkbashisms can be obtained from: "; \
-		echo "I:   http://git.debian.org/?p=devscripts/devscripts.git"; \
-		echo "I: On Debian based systems, checkbashisms can be installed with:"; \
-		echo "I:   apt-get install devscripts"; \
-	fi
 
 build:
 	@echo "Nothing to build."
@@ -58,7 +41,7 @@ install:
 	cp backend/systemd/live-config-getty-generator $(DESTDIR)/usr/lib/systemd/system-generators/
 
 	# Installing frontend and components
-	mkdir -p $(DESTDIR)/usr/bin $(DESTDIR)/usr/lib/live/config
+	mkdir -p $(DESTDIR)/usr/bin $(DESTDIR)/usr/sbin $(DESTDIR)/usr/lib/live/config
 	cp frontend/live-* $(DESTDIR)/usr/bin
 	cp frontend/minios-* $(DESTDIR)/usr/sbin
 	cp frontend/*.sh $(DESTDIR)/usr/lib/live/

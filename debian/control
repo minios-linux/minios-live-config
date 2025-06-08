@@ -13,7 +13,7 @@ Homepage: https://github.com/minios-linux/minios-live-config
 Package: minios-live-config
 Architecture: all
 Depends: minios-live-config-systemd | minios-live-config-backend,
-         bash,
+         bash (>= 4.0),
          perl,
          ${misc:Depends}
 Recommends: iproute2 | iproute,
