@@ -18,6 +18,7 @@ ConditionKernelCommandLine=boot=live
 [Service]
 Type=oneshot
 RemainAfterExit=yes
+ExecStartPre=/bin/sh -c "if [ -f /run/initramfs/memory/data/minios/config.conf ] && [ ! -f /etc/live/config.conf ]; then cp -fp /run/initramfs/memory/data/minios/config.conf /etc/live/config.conf; fi; sync"
 ExecStart=/usr/bin/live-config
 
 [Install]

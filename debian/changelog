@@ -1,6 +1,12 @@
 minios-live-config (11.0.5) unstable; urgency=medium
 
-  * MiniOS Live Config 11.0.5
+  * Redefine logic of live-config so that configuration file supplements command
+    line parameters instead of replacing them
+  * Add minios-specific functions to config.sh function library
+  * Replace default values with minios-specific values
+  * Modify some component scripts for compatibility with minios
+  * Add minios-specific component scripts
+  * Add scripts for combining data from different modules
 
  -- crims0n <crims0n@minios.dev>  Sun, 08 Jun 2025 19:26:59 +0300
 

@@ -1,13 +1,13 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: live-config
-Upstream-Contact: Debian Live Project <debian-live@lists.debian.org>
+Upstream-Name: minios-live-config
+Upstream-Contact: MiniOS Live Team <team@minios.dev>
 
 Files: *
 Copyright:
  2016-2020 The Debian Live team
  2016-2017 Raphaël Hertzog <hertzog@debian.org>
  2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
- 2025-2025 crims0n <crims0n@minios.dev>
+ 2025 crims0n <crims0n@minios.dev>
 License: GPL-3+
 
 License: GPL-3+

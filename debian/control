@@ -6,9 +6,9 @@ Build-Depends: debhelper-compat (= 13)
 Build-Depends-Indep: lsb-release
 Rules-Requires-Root: no
 Standards-Version: 4.7.0
-Vcs-Browser: https://salsa.debian.org/live-team/live-config
-Vcs-Git: https://salsa.debian.org/live-team/live-config.git
-Homepage: https://salsa.debian.org/live-team/live-config
+Vcs-Browser: https://github.com/minios-linux/minios-live-config
+Vcs-Git: https://github.com/minios-linux/minios-live-config.git
+Homepage: https://github.com/minios-linux/minios-live-config
 
 Package: minios-live-config
 Architecture: all

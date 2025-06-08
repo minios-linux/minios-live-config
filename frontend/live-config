@@ -3,6 +3,7 @@
 ## live-config(7) - System Configuration Components
 ## Copyright (C) 2016-2020 The Debian Live team
 ## Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
+## Copyright (C) 2025 MiniOS <https://minios.dev>
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -119,7 +120,7 @@ Main ()
 		mount -n -t proc -o${_PROC_OPTIONS} -odefaults proc /proc
 	fi
 
-	LIVE_CONFIG_CMDLINE="${LIVE_CONFIG_CMDLINE:-$(cat /proc/cmdline)}"
+	LIVE_CONFIG_CMDLINE="${LIVE_CONFIG_CMDLINE:+$LIVE_CONFIG_CMDLINE }$(cat /proc/cmdline)"
 	export LIVE_CONFIG_CMDLINE
 
 	if ! echo ${LIVE_CONFIG_CMDLINE} | grep -qs "boot=live"
