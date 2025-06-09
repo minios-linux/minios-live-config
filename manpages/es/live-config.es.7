@@ -150,6 +150,11 @@ automática. Si se especifica un PCI ID en
 vivo,  se aplica \fIDRIVER\fP para estos dispositivos. Si se encuentran juntos
 un parámetro de arranque y un override, el parámetro de arranque tiene
 prioridad.
+.IP "\fBlive\-config.module\-mode\fP=\fIMODE\fP | \fBmodule\-mode\fP=\fIMODE\fP" 4
+Permite especificar el modo del módulo para la configuración en vivo. Cuando
+se establece en "merged", el sistema actualizará las cuentas de usuario,
+reconstruirá las memorias caché y actualizará la configuración de paquetes
+para que los cambios se integren dinámicamente en el sistema en ejecución.
 .IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
 Permite buscar y ejecutar uno o más ficheros de forma arbitraria. Tener en
 cuenta que las URLs deben ser descargadas usando wget (http, ftp o file://),
@@ -300,8 +305,6 @@ Esta variable corresponde al parámetro
 .IP "\fBLIVE_HOOKS\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
 Esta variable corresponde al parámetro
 \&'\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP'
-.IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
-Esta variable corresponde al parámetro '\fBlive\-config.debug\fP'
 .IP \fBLIVE_LINK_USER_DIRS\fP=true|false 4
 Esta variable corresponde al parámetro
 \&'\fBlive\-config.link\-user\-dirs\fP=true|false'. Habilita o deshabilita la
@@ -314,6 +317,14 @@ montaje de enlace para los directorios de usuario.
 Esta variable corresponde al parámetro
 \&'\fBlive\-config.user\-dirs\-path\fP=\fIRUTA\fP'. Especifica la ruta para los
 directorios de usuario en el medio.
+.IP \fBLIVE_MODULE_MODE\fP 4
+Esta variable contiene el estado especificado por el parámetro
+\&'live\-config.module\-mode' (o 'module\-mode'). Cuando está configurada como
+"merged", el sistema en vivo aplica actualizaciones (a través de
+minios\-update\-users, minios\-update\-cache y minios\-update\-dpkg) para combinar
+las configuraciones personalizadas con el entorno base.
+.IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
+Esta variable corresponde al parámetro '\fBlive\-config.debug\fP'
 
 .SH PERSONALIZACIÓN
 \fBlive\-config\fP puede ser fácilmente personalizado para proyectos derivados o
