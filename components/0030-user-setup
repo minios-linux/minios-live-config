@@ -19,35 +19,21 @@ Cmdline() {
         # User/group settings
         live-config.user-default-groups=* | user-default-groups=*)
             LIVE_USER_DEFAULT_GROUPS="${_PARAMETER#*user-default-groups=}"
-            echo "User default groups: ${LIVE_USER_DEFAULT_GROUPS}"
             ;;
         live-config.user-fullname=* | user-fullname=*)
             LIVE_USER_FULLNAME="${_PARAMETER#*user-fullname=}"
-            echo "User full name: ${LIVE_USER_FULLNAME}"
             ;;
         live-config.username=* | username=*)
             LIVE_USERNAME="${_PARAMETER#*username=}"
-            echo "Username: ${LIVE_USERNAME}"
-            ;;
-        live-config.root-password=* | root-password=*)
-            LIVE_ROOT_PASSWORD="${_PARAMETER#*root-password=}"
-            echo "Root password: ${LIVE_ROOT_PASSWORD}"
-            ;;
-        live-config.root-password-crypted=* | root-password-crypted=*)
-            LIVE_ROOT_PASSWORD_CRYPTED="${_PARAMETER#*root-password-crypted=}"
-            echo "Root password (crypted): ${LIVE_ROOT_PASSWORD_CRYPTED}"
             ;;
         live-config.user-password=* | user-password=*)
             LIVE_USER_PASSWORD="${_PARAMETER#*user-password=}"
-            echo "User password: ${LIVE_USER_PASSWORD}"
             ;;
         live-config.user-password-crypted=* | user-password-crypted=*)
             LIVE_USER_PASSWORD_CRYPTED="${_PARAMETER#*user-password-crypted=}"
-            echo "User password (crypted): ${LIVE_USER_PASSWORD_CRYPTED}"
             ;;
         live-config.debug | debug)
             LIVE_CONFIG_DEBUG=true
-            echo "Debug mode enabled"
             ;;
         esac
     done
@@ -86,13 +72,6 @@ Config() {
         ;;
     esac
 
-    # Determine root password input method
-    if [ -n "${LIVE_ROOT_PASSWORD}" ]; then
-        ROOT_PASS_TYPE="plain"
-    elif [ -n "${LIVE_ROOT_PASSWORD_CRYPTED}" ]; then
-        ROOT_PASS_TYPE="crypted"
-    fi
-
     # Determine user password input method
     if [ -n "${LIVE_USER_PASSWORD}" ]; then
         USER_PASS_TYPE="plain"
@@ -104,24 +83,6 @@ Config() {
     cat >/tmp/live-config.cfg <<EOF
 user-setup passwd/make-user boolean true
 EOF
-
-    # Root password selections
-    case "${ROOT_PASS_TYPE}" in
-    plain)
-        cat >>/tmp/live-config.cfg <<EOF
-user-setup passwd/root-password string ${LIVE_ROOT_PASSWORD}
-user-setup passwd/root-password-again string ${LIVE_ROOT_PASSWORD}
-user-setup passwd/root-password-crypted string
-EOF
-        ;;
-    crypted)
-        cat >>/tmp/live-config.cfg <<EOF
-user-setup passwd/root-password string
-user-setup passwd/root-password-again string
-user-setup passwd/root-password-crypted string ${LIVE_ROOT_PASSWORD_CRYPTED}
-EOF
-        ;;
-    esac
 
     # User password selections
     case "${USER_PASS_TYPE}" in
@@ -166,17 +127,6 @@ EOF
     fi
     chown 1000:1000 /home/${LIVE_USERNAME} || echo "Failed to set ownership for /home/${LIVE_USERNAME}"
     chown -R 1000:1000 /home/${LIVE_USERNAME} || echo "Failed to set ownership recursively for /home/${LIVE_USERNAME}"
-
-    # Setting up 'root' user environment
-    cp -rT /etc/skel /root || echo "Failed to copy skeleton files to /root."
-    if [ -d /root ]; then
-        for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos; do
-            mkdir -p "/root/$DIR" || echo "Failed to create /root/$DIR"
-        done
-    fi
-    chown 0:0 /root || echo "Failed to set ownership for /root"
-    chown -R 0:0 /root || echo "Failed to set ownership recursively for /root"
-    sed -i 's,01;32m,01;31m,g' /root/.bashrc || echo "Failed to update /root/.bashrc"
 
     # Creating state file
     touch /var/lib/live/config/user-setup

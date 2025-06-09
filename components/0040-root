@@ -1,0 +1,107 @@
+#!/bin/sh
+
+. /usr/lib/live/config.sh
+
+## live-config(7) - System Configuration Components
+## Copyright (C) 2016-2020 The Debian Live team
+## Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
+##
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+#set -e
+
+Cmdline() {
+	# Reading kernel command line
+	for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
+		case "${_PARAMETER}" in
+		live-config.noroot | noroot)
+			LIVE_CONFIG_NOROOT="true"
+			;;
+		live-config.root-password=* | root-password=*)
+			LIVE_ROOT_PASSWORD="${_PARAMETER#*root-password=}"
+			;;
+		live-config.root-password-crypted=* | root-password-crypted=*)
+			LIVE_ROOT_PASSWORD_CRYPTED="${_PARAMETER#*root-password-crypted=}"
+			;;
+		esac
+	done
+}
+
+Init() {
+	# Setting debug mode if enabled
+	if [ "${LIVE_CONFIG_DEBUG}" = true ]; then
+		set -x
+	fi
+
+	# Disable root access, no matter what mechanism
+	case "${LIVE_CONFIG_NOROOT}" in
+	true)
+		exit 0
+		;;
+	esac
+
+	# Checking if package is installed or already configured
+	if ! pkg_is_installed "user-setup" ||
+		component_was_executed "root"; then
+		exit 0
+	fi
+
+	echo -n " root"
+
+}
+
+Config() {
+	# Determine root password input method
+	if [ -n "${LIVE_ROOT_PASSWORD}" ]; then
+		ROOT_PASS_TYPE="plain"
+	elif [ -n "${LIVE_ROOT_PASSWORD_CRYPTED}" ]; then
+		ROOT_PASS_TYPE="crypted"
+	fi
+
+	# Root password selections
+	case "${ROOT_PASS_TYPE}" in
+	plain)
+		cat >/tmp/live-config.cfg <<EOF
+user-setup passwd/root-password string ${LIVE_ROOT_PASSWORD}
+user-setup passwd/root-password-again string ${LIVE_ROOT_PASSWORD}
+user-setup passwd/root-password-crypted string
+EOF
+		;;
+	crypted)
+		cat >/tmp/live-config.cfg <<EOF
+user-setup passwd/root-password string
+user-setup passwd/root-password-again string
+user-setup passwd/root-password-crypted string ${LIVE_ROOT_PASSWORD_CRYPTED}
+EOF
+		;;
+	esac
+
+	debconf-set-selections </tmp/live-config.cfg
+	rm -f /tmp/live-config.cfg
+
+	# Workaround for bug in shadow
+	set +e
+	/usr/lib/user-setup/user-setup-apply 2>&1 |
+		grep -v "Shadow passwords are now on"
+	set -e
+
+	# Setting up 'root' user environment
+	cp -rT /etc/skel /root || echo "Failed to copy skeleton files to /root."
+	if [ -d /root ]; then
+		for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+			mkdir -p "/root/$DIR" || echo "Failed to create /root/$DIR"
+		done
+	fi
+	chown 0:0 /root || echo "Failed to set ownership for /root"
+	chown -R 0:0 /root || echo "Failed to set ownership recursively for /root"
+	sed -i 's,01;32m,01;31m,g' /root/.bashrc || echo "Failed to update /root/.bashrc"
+
+	# Creating state file
+	touch /var/lib/live/config/root
+}
+
+Cmdline
+Init
+Config
