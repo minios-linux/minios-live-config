@@ -21,27 +21,21 @@ Cmdline() {
         case "${_PARAMETER}" in
         from=*)
             FROM="${_PARAMETER#*from=}"
-            echo "From: ${FROM}"
             ;;
         toram)
             TORAM="true"
-            echo "TORAM mode enabled"
             ;;
         live-config.link-user-dirs | link-user-dirs)
-            LINK_USER_DIRS="true"
-            echo "Link user directories enabled"
+            LIVE_LINK_USER_DIRS="true"
             ;;
         live-config.bind-user-dirs | bind-user-dirs)
-            BIND_USER_DIRS="true"
-            echo "Bind user directories enabled"
+            LIVE_BIND_USER_DIRS="true"
             ;;
         live-config.user-dirs-path | user-dirs-path)
-            USER_DIRS_PATH="${_PARAMETER#*user-dirs-path=}"
-            echo "User directories path: ${USER_DIRS_PATH}"
+            LIVE_USER_DIRS_PATH="${_PARAMETER#*user-dirs-path=}"
             ;;
         live-config.debug | debug)
             LIVE_CONFIG_DEBUG=true
-            echo "Debug mode enabled"
             ;;
         esac
     done
@@ -106,20 +100,20 @@ Config() {
     if [ "${WRITABLE}" = "true" ]; then
         case "$FS_TYPE" in
         vfat | ntfs | exfat)
-            USER_DIRS_PATH="${USER_DIRS_PATH:-/minios/userdata}"
-            USER_DIRS_ABS_PATH="${MEDIA_ROOT}${USER_DIRS_PATH}"
+            LIVE_USER_DIRS_PATH="${LIVE_USER_DIRS_PATH:-/minios/userdata}"
+            USER_DIRS_ABS_PATH="${MEDIA_ROOT}${LIVE_USER_DIRS_PATH}"
             for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos; do
                 MTD="${USER_DIRS_ABS_PATH}/${DIR}"
                 TARGET="/home/${LIVE_USERNAME}/${DIR}"
                 BACKUP="${TARGET}.backup"
 
                 # If both options are set, prefer link-user-dirs
-                if [ "${BIND_USER_DIRS}" = "true" ] && [ "${LINK_USER_DIRS}" = "true" ]; then
+                if [ "${LIVE_BIND_USER_DIRS}" = "true" ] && [ "${LIVE_LINK_USER_DIRS}" = "true" ]; then
                     echo "Both bind-user-dirs and link-user-dirs are set. Using link-user-dirs."
-                    BIND_USER_DIRS="false"
+                    LIVE_BIND_USER_DIRS="false"
                 fi
 
-                if [ "${BIND_USER_DIRS}" = "true" ]; then
+                if [ "${LIVE_BIND_USER_DIRS}" = "true" ]; then
                     # Ensure media folder exists
                     mkdir -p "${MTD}"
 
@@ -142,7 +136,7 @@ Config() {
                     mount --bind "${MTD}" "${TARGET}" ||
                         echo "Failed to bind-mount ${MTD} → ${TARGET}"
 
-                elif [ "${LINK_USER_DIRS}" = "true" ]; then
+                elif [ "${LIVE_LINK_USER_DIRS}" = "true" ]; then
                     # Ensure media folder exists
                     mkdir -p "${MTD}"
 
