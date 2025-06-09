@@ -17,8 +17,8 @@ Cmdline() {
     for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
         case "${_PARAMETER}" in
         live-config.module-mode=* | module-mode=*)
-            MODULE_MODE="${_PARAMETER#*module-mode=}"
-            echo "Module mode: ${MODULE_MODE}"
+            LIVE_MODULE_MODE="${_PARAMETER#*module-mode=}"
+            echo "Module mode: ${LIVE_MODULE_MODE}"
             ;;
         live-config.debug | debug)
             LIVE_CONFIG_DEBUG=true
@@ -46,7 +46,7 @@ Config() {
     fi
 
     # Configuring the system to operate in 'merged' mode
-    if [ "$MODULE_MODE" = "merged" ]; then
+    if [ "$LIVE_MODULE_MODE" = "merged" ]; then
         echo "Configuring the system to operate in 'merged' mode."
 
         if [ -x /usr/sbin/minios-update-users ]; then
