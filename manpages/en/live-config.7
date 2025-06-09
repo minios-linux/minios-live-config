@@ -86,6 +86,8 @@ Allows one to set xorg driver instead of autodetecting it. If a PCI ID is specif
 Allows one to set xorg resolution instead of autodetecting it, e.g. 1024x768.
 .IP "\fBlive\-config.wlan\-driver\fR=\fIWLAN_DRIVER\fR | \fBwlan\-driver\fR=\fIWLAN_DRIVER\fR" 4
 Allows one to set WLAN driver instead of autodetecting it. If a PCI ID is specified in /usr/share/live/config/broadcom-sta/\fIDRIVER\fR.ids within the live system, the \fIDRIVER\fR is enforced for these devices. If both a boot parameter and an override are found, the boot parameter takes precedence.
+.IP "\fBlive\-config.module\-mode\fR=\fIMODE\fR | \fBmodule\-mode\fR=\fIMODE\fR" 4
+Allows you to specify the module mode for live configuration. When set to "merged", the system will update user accounts, rebuild caches, and refresh package settings so that configuration changes are dynamically integrated into the running system.
 .IP "\fBlive\-config.hooks\fR=filesystem|medium|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR | \fBhooks\fR=medium|filesystem|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR" 4
 Allows one to fetch and execute one or more arbitrary files. Note that the URLs must be fetchable by wget (http, ftp or file://), the files are executed in /tmp of the running live system, and that the files needs their dependencies, if any, already installed, e.g. if a python script should be executed the system needs python installed. Some hooks for some common use-cases are available at /usr/share/doc/live-config/examples/hooks/.
 .br
@@ -176,14 +178,16 @@ This variable corresponds to the '\fBlive\-config.xorg\-resolution\fR=\fIXORG_RE
 This variable corresponds to the '\fBlive\-config.wlan\-driver\fR=\fIWLAN_DRIVER\fR' parameter.
 .IP "\fBLIVE_HOOKS\fR=filesystem|medium|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR" 4
 This variable corresponds to the '\fBlive\-config.hooks\fR=filesystem|medium|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR' parameter.
-.IP "\fBLIVE_CONFIG_DEBUG\fR=true|false" 4
-This variable corresponds to the '\fBlive\-config.debug\fR' parameter.
 .IP "\fBLIVE_LINK_USER_DIRS\fR=true|false" 4
 This variable corresponds to the '\fBlive\-config.link\-user\-dirs\fR=true|false' parameter. It enables or disables creation of symbolic links for user directories.
 .IP "\fBLIVE_BIND_USER_DIRS\fR=true|false" 4
 This variable corresponds to the '\fBlive\-config.bind\-user\-dirs\fR=true|false' parameter. It enables or disables bind-mounting for user directories.
 .IP "\fBLIVE_USER_DIRS_PATH\fR=\fIPATH\fR" 4
 This variable corresponds to the '\fBlive\-config.user\-dirs\-path\fR=\fIPATH\fR' parameter. It specifies the path for user directories on the media.
+.IP "\fBLIVE_MODULE_MODE\fR" 4
+This variable holds the state specified by the 'live-config.module-mode' (or 'module-mode') parameter. When it is set to "merged", the live system applies updates (via minios-update-users, minios-update-cache, and minios-update-dpkg) to merge custom configurations with the base environment.
+.IP "\fBLIVE_CONFIG_DEBUG\fR=true|false" 4
+This variable corresponds to the '\fBlive\-config.debug\fR' parameter.
 
 .SH CUSTOMIZATION
 \fBlive\-config\fR can be easily customized for downstream projects or local usage.
