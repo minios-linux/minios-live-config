@@ -1,4 +1,4 @@
-minios-live-config (11.0.5) unstable; urgency=medium
+minios-live-config (11.0.5.0) unstable; urgency=medium
 
   * Redefine logic of live-config so that configuration file supplements command
     line parameters instead of replacing them

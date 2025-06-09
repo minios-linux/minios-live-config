@@ -4,10 +4,12 @@ set -e
 
 case "$1" in
 configure)
-    if [ -x /usr/bin/deb-systemd-helper ]; then
+    if command -v deb-systemd-helper >/dev/null; then
         deb-systemd-helper enable live-config.service >/dev/null || true
     fi
     ;;
 esac
+
+#DEBHELPER#
 
 exit 0
