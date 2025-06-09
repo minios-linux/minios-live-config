@@ -54,7 +54,7 @@ Config ()
 	dpkg-reconfigure -f noninteractive -p critical tzdata
 
 	# Creating state file
-	touch /var/lib/live/config/tzdata
+	#touch /var/lib/live/config/tzdata
 }
 
 Cmdline

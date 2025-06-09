@@ -84,7 +84,7 @@ Config ()
 	then
 		debconf-set-selections < /tmp/live-config.cfg
 		rm -f /tmp/live-config.cfg
-		
+
 		if [ -x $(which setupcon 2>/dev/null) ]; then
 			setupcon -k
 		fi
@@ -93,7 +93,7 @@ Config ()
 		udevadm trigger --subsystem-match=input --action=change
 
 		# Creating state file
-		touch /var/lib/live/config/keyboard-configuration
+		#touch /var/lib/live/config/keyboard-configuration
 	fi
 }
 

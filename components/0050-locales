@@ -74,7 +74,7 @@ Config ()
 	locale-gen --keep-existing > /dev/null 2>&1
 
 	# Creating state file
-	touch /var/lib/live/config/locales
+	#touch /var/lib/live/config/locales
 }
 
 Cmdline

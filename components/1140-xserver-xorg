@@ -225,7 +225,7 @@ EOF
 			| grep -v "file; backup in /etc/X11/xorg.conf" || true
 
 		# Creating state file
-		touch /var/lib/live/config/xserver-xorg
+		#touch /var/lib/live/config/xserver-xorg
 	fi
 }
 
