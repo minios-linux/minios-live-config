@@ -14,60 +14,52 @@
 
 #set -e
 
-Cmdline ()
-{
+Cmdline() {
 	# Reading kernel command line
-	for _PARAMETER in ${LIVE_CONFIG_CMDLINE}
-	do
+	for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
 		case "${_PARAMETER}" in
-			live-config.hooks=*|hooks=*)
-				LIVE_HOOKS="${_PARAMETER#*hooks=}"
-				;;
+		live-config.hooks=* | hooks=*)
+			LIVE_HOOKS="${_PARAMETER#*hooks=}"
+			;;
 		esac
 	done
 }
 
-Init ()
-{
-	if [ -z "${LIVE_HOOKS}" ]
-	then
+Init() {
+	if [ -z "${LIVE_HOOKS}" ]; then
 		exit 0
 	fi
 
 	echo -n " hooks"
 }
 
-Config ()
-{
-	for _HOOK in $(echo ${LIVE_HOOKS} | sed -e 's/|/ /g')
-	do
+Config() {
+	for _HOOK in $(echo ${LIVE_HOOKS} | sed -e 's/|/ /g'); do
 		case "${_HOOK}" in
-			filesystem)
-				if ls /usr/lib/live/config-hooks/* 2>&1
-				then
-					_HOOKS="${_HOOKS} $(for _FILE in /usr/lib/live/config-hooks/*; do echo file://${_FILE}; done)"
-				fi
-				;;
+		filesystem)
+			if ls /usr/lib/live/config-hooks/* 2>&1; then
+				_HOOKS="${_HOOKS} $(for _FILE in /usr/lib/live/config-hooks/*; do echo file://${_FILE}; done)"
+			fi
+			;;
 
-			medium)
-				if ls /lib/live/mount/medium/live/config-hooks/* 2>&1
-				then
-					_HOOKS="${_HOOKS} $(for _FILE in /lib/live/mount/medium/live/config-hooks/*; do echo file://${_FILE}; done)"
-				fi
-				;;
+		medium)
+			if ls /run/initramfs/memory/data/minios/config-hooks/* 2>&1; then
+				_HOOKS="${_HOOKS} $(for _FILE in /run/initramfs/memory/data/minios/config-hooks/*; do echo file://${_FILE}; done)"
+			elif ls /run/initramfs/memory/iso/minios/config-hooks/* 2>&1; then
+				_HOOKS="${_HOOKS} $(for _FILE in /run/initramfs/memory/iso/minios/config-hooks/*; do echo file://${_FILE}; done)"
+			fi
+			;;
 
-			*)
-				_HOOKS="${_HOOKS} ${_HOOK}"
-				;;
+		*)
+			_HOOKS="${_HOOKS} ${_HOOK}"
+			;;
 		esac
 	done
 
-	for _HOOK in ${_HOOKS}
-	do
+	for _HOOK in ${_HOOKS}; do
 		_TMPFILE="$(mktemp -t live-config.XXXXXXXX)"
 
-		if echo "${_HOOK}" | grep -qs file://
-		then
+		if echo "${_HOOK}" | grep -qs file://; then
 			# local file
 			cp $(echo ${_HOOK} | sed 's|file://||') "${_TMPFILE}"
 		else
