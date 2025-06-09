@@ -19,7 +19,6 @@ Depends: minios-live-config-systemd | minios-live-config-backend,
 Recommends: iproute2 | iproute,
             keyboard-configuration,
             minios-live-config-doc,
-            live-tools,
             locales | locales-all,
             sudo,
             user-setup
