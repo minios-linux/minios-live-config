@@ -25,6 +25,9 @@ Cmdline() {
         toram)
             TORAM="true"
             ;;
+        live-config.username=* | username=*)
+            LIVE_USERNAME="${_PARAMETER#*username=}"
+            ;;
         live-config.link-user-dirs | link-user-dirs)
             LIVE_LINK_USER_DIRS="true"
             ;;
@@ -57,6 +60,15 @@ Init() {
 }
 
 Config() {
+    case "${LIVE_USERNAME}" in
+    root)
+        HOME_DIR="/root"
+        ;;
+    *)
+        HOME_DIR="/home/${LIVE_USERNAME}"
+        ;;
+    esac
+
     if [ -z "$FROM" ] || echo "$FROM" | grep 'http://' || [ -d "/run/initramfs/memory/iso" ]; then
         FROM="minios"
     elif [ -f /run/initramfs/var/log/from.log ]; then
@@ -87,24 +99,24 @@ Config() {
     fi
 
     if [ "${WRITABLE}" = "true" ]; then
-        case "$FS_TYPE" in
+        case "${FS_TYPE}" in
         vfat | ntfs | exfat)
-            chmod 777 "$MEDIA_ROOT"
-            mkdir -p "/media/$DEVICE_NAME"
-            mount "$DEVICE" "/media/$DEVICE_NAME"
-            MEDIA_ROOT="/media/$DEVICE_NAME"
+            chmod 777 "${MEDIA_ROOT}"
+            mkdir -p "/media/${DEVICE_NAME}"
+            mount "${DEVICE}" "/media/${DEVICE_NAME}"
+            MEDIA_ROOT="/media/${DEVICE_NAME}"
             ;;
         esac
     fi
 
     if [ "${WRITABLE}" = "true" ]; then
-        case "$FS_TYPE" in
+        case "${FS_TYPE}" in
         vfat | ntfs | exfat)
             LIVE_USER_DIRS_PATH="${LIVE_USER_DIRS_PATH:-/minios/userdata}"
             USER_DIRS_ABS_PATH="${MEDIA_ROOT}${LIVE_USER_DIRS_PATH}"
             for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos; do
                 MTD="${USER_DIRS_ABS_PATH}/${DIR}"
-                TARGET="/home/${LIVE_USERNAME}/${DIR}"
+                TARGET="${HOME_DIR}/${DIR}"
                 BACKUP="${TARGET}.backup"
 
                 # If both options are set, prefer link-user-dirs
