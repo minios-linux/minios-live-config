@@ -1,0 +1,130 @@
+#!/bin/sh
+
+. /usr/lib/live/config.sh
+
+## live-config(7) - System Configuration Components
+## Copyright (C) 2016-2020 The Debian Live team
+## Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
+## Copyright (C) 2025 MiniOS <https://minios.dev>
+##
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+#set -e
+
+BEXT="sb"
+
+Cmdline() {
+    # Reading kernel command line
+    for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
+        case "${_PARAMETER}" in
+        from=*)
+            FROM="${_PARAMETER#*from=}"
+            ;;
+        toram)
+            TORAM="true"
+            ;;
+        live-config.username=* | username=*)
+            LIVE_USERNAME="${_PARAMETER#*username=}"
+            ;;
+        live-config.link-user-dirs | link-user-dirs)
+            LIVE_LINK_USER_DIRS="true"
+            ;;
+        live-config.bind-user-dirs | bind-user-dirs)
+            LIVE_BIND_USER_DIRS="true"
+            ;;
+        live-config.user-dirs-path | user-dirs-path)
+            LIVE_USER_DIRS_PATH="${_PARAMETER#*user-dirs-path=}"
+            ;;
+        live-config.debug | debug)
+            LIVE_CONFIG_DEBUG=true
+            ;;
+        esac
+    done
+}
+
+Init() {
+    # Setting debug mode if enabled
+    if [ "${LIVE_CONFIG_DEBUG}" = true ]; then
+        set -x
+    fi
+
+    # Checking if package is installed or already configured
+    if ! pkg_is_installed "user-setup" ||
+        ! component_was_executed "user-setup"; then
+        exit 0
+    fi
+
+    echo -n " user-ssh"
+}
+
+Config() {
+    case "${LIVE_USERNAME}" in
+    root)
+        HOME_DIR="/root"
+        ;;
+    *)
+        HOME_DIR="/home/$LIVE_USERNAME"
+        ;;
+    esac
+
+    if [ -z "$FROM" ] || echo "$FROM" | grep 'http://' || [ -d "/run/initramfs/memory/iso" ]; then
+        FROM="minios"
+    elif [ -f /run/initramfs/var/log/from.log ]; then
+        FROM=$(cat /run/initramfs/var/log/from.log)
+    fi
+
+    # search for bundles in the mounted directory
+    if [ "$(find "/run/initramfs/memory/data/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
+        # we found at least one bundle/module here
+        FROM=$(echo "/run/initramfs/memory/data/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
+    elif [ "$(find "/run/initramfs/memory/iso/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
+        FROM=$(echo "/run/initramfs/memory/iso/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
+    fi
+    MEDIA="$FROM"
+
+    echo "Checking if the media is writable or if TORAM mode is enabled"
+    if ! test -w "$MEDIA" || [ "$TORAM" = "true" ]; then
+        WRITABLE="false"
+        echo "The media is not writable or the system is running in TORAM mode."
+    else
+        WRITABLE="true"
+        echo "The media is writable."
+    fi
+
+    # Prepare SSH directory in target.
+    if [ ! -d "$HOME_DIR/.ssh" ]; then
+        echo "Preparing SSH directory"
+        mkdir -p "$HOME_DIR/.ssh" || {
+            echo "ERROR: Failed to create directory '$HOME_DIR/.ssh'"
+            # Continue, SSH may be optional
+        }
+        chmod 700 "$HOME_DIR/.ssh" 2>/dev/null || true
+    fi
+
+    # Two-way copy of authorized_keys based on file modification time and WRITABLE flag.
+    echo "Syncing authorized_keys between '$MEDIA/authorized_keys' and '$HOME_DIR/.ssh/authorized_keys'"
+
+    if [ -f "$MEDIA/authorized_keys" ] && ([ ! -f "$HOME_DIR/.ssh/authorized_keys" ] || [ "$MEDIA/authorized_keys" -nt "$HOME_DIR/.ssh/authorized_keys" ]); then
+        echo "Copying newer '$MEDIA/authorized_keys' to '$HOME_DIR/.ssh/authorized_keys'"
+        mkdir -p "$HOME_DIR/.ssh"
+        cp -fp "$MEDIA/authorized_keys" "$HOME_DIR/.ssh/authorized_keys" || {
+            echo "ERROR: Failed to copy '$MEDIA/authorized_keys' to '$HOME_DIR/.ssh/authorized_keys'"
+            return 1
+        }
+    elif [ "$WRITABLE" = "true" ] && [ -f "$HOME_DIR/.ssh/authorized_keys" ] && ([ ! -f "$MEDIA/authorized_keys" ] || [ "$HOME_DIR/.ssh/authorized_keys" -nt "$MEDIA/authorized_keys" ]); then
+        echo "Copying newer '$HOME_DIR/.ssh/authorized_keys' to '$MEDIA/authorized_keys'"
+        cp -fp "$HOME_DIR/.ssh/authorized_keys" "$MEDIA/authorized_keys" || {
+            echo "ERROR: Failed to copy '$HOME_DIR/.ssh/authorized_keys' to '$MEDIA/authorized_keys'"
+            return 1
+        }
+    fi
+
+    # Creating state file
+    #touch /var/lib/live/config/user-ssh
+}
+
+Cmdline
+Init
+Config
