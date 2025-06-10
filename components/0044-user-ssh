@@ -103,23 +103,61 @@ Config() {
         chmod 700 "$HOME_DIR/.ssh" 2>/dev/null || true
     fi
 
-    # Two-way copy of authorized_keys based on file modification time and WRITABLE flag.
-    echo "Syncing authorized_keys between '$MEDIA/authorized_keys' and '$HOME_DIR/.ssh/authorized_keys'"
+    # Path to the marker file for storing last authkeys sync time
+    STATE_FILE="$MEDIA/var/lib/live/config/last-authkeys-sync-time"
 
-    if [ -f "$MEDIA/authorized_keys" ] && ([ ! -f "$HOME_DIR/.ssh/authorized_keys" ] || [ "$MEDIA/authorized_keys" -nt "$HOME_DIR/.ssh/authorized_keys" ]); then
-        echo "Copying newer '$MEDIA/authorized_keys' to '$HOME_DIR/.ssh/authorized_keys'"
+    # Get current time in seconds since epoch
+    NOW=$(date +%s)
+
+    # Flag indicating that system time is incorrect (has been reset)
+    SKIP_TIME_CHECK=false
+
+    # Check the marker of the previous synchronization
+    if [ -f "$STATE_FILE" ]; then
+        LAST_SYNC=$(cat "$STATE_FILE")
+        if [ "$NOW" -lt "$LAST_SYNC" ]; then
+            echo "ERROR: System time appears wrong. Skipping timestamp-based authkeys sync."
+            SKIP_TIME_CHECK=true
+        fi
+    fi
+
+    echo "Starting two-way sync of authorized_keys"
+
+    # --- Function: determine whether to copy src ($1) to dst ($2)
+    should_copy() {
+        # $1 = source path, $2 = destination path
+        if [ "$SKIP_TIME_CHECK" = true ]; then
+            # if time is reset — only copy when destination does not exist
+            [ ! -f "$2" ]
+        else
+            # otherwise — copy if dst missing or src is newer than dst
+            [ ! -f "$2" ] || [ "$1" -nt "$2" ]
+        fi
+    }
+
+    # --- Sync from media to home ---
+    if [ -f "$MEDIA/authorized_keys" ] && should_copy "$MEDIA/authorized_keys" "$HOME_DIR/.ssh/authorized_keys"; then
+        echo "Copying $MEDIA/authorized_keys -> $HOME_DIR/.ssh/authorized_keys"
         mkdir -p "$HOME_DIR/.ssh"
         cp -fp "$MEDIA/authorized_keys" "$HOME_DIR/.ssh/authorized_keys" || {
-            echo "ERROR: Failed to copy '$MEDIA/authorized_keys' to '$HOME_DIR/.ssh/authorized_keys'"
+            echo "ERROR: copy failed"
             return 1
         }
-    elif [ "$WRITABLE" = "true" ] && [ -f "$HOME_DIR/.ssh/authorized_keys" ] && ([ ! -f "$MEDIA/authorized_keys" ] || [ "$HOME_DIR/.ssh/authorized_keys" -nt "$MEDIA/authorized_keys" ]); then
-        echo "Copying newer '$HOME_DIR/.ssh/authorized_keys' to '$MEDIA/authorized_keys'"
+    # --- If writable, sync back from home to media ---
+    elif [ "$WRITABLE" = "true" ] && [ -f "$HOME_DIR/.ssh/authorized_keys" ] && should_copy "$HOME_DIR/.ssh/authorized_keys" "$MEDIA/authorized_keys"; then
+        echo "Copying $HOME_DIR/.ssh/authorized_keys -> $MEDIA/authorized_keys"
         cp -fp "$HOME_DIR/.ssh/authorized_keys" "$MEDIA/authorized_keys" || {
-            echo "ERROR: Failed to copy '$HOME_DIR/.ssh/authorized_keys' to '$MEDIA/authorized_keys'"
+            echo "ERROR: copy failed"
             return 1
         }
     fi
+
+    # Update the marker if the system time is valid
+    if [ "$SKIP_TIME_CHECK" = "false" ]; then
+        echo "$NOW" >"$STATE_FILE" || echo "WARNING: Could not write authkeys state file"
+    fi
+
+    echo "Sync completed"
 
     # Creating state file
     #touch /var/lib/live/config/user-ssh
