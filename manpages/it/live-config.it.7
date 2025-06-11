@@ -66,15 +66,15 @@ preconfigurazione da applicare al database debconf. Si noti che gli URL
 devono essere scaricabili da wget (http, ftp o file://).
 .br
 Se il file è posizionato sul supporto live, questo  può essere prelevato con
-file:///lib/live/mount/medium/\fIFILE\fP, o con file:///\fIFILE\fP se è nella
+file:///run/initramfs/memory/data/\fIFILE\fP, o con file:///\fIFILE\fP se è nella
 radice del filesystem del sistema live stesso.
 .br
 Tutti i file di preconfigurazione in /usr/lib/live/config\-preseed/ nella
 radice del sistema live possono essere abilitati automaticamente con la
 parola chiave "filesystem".
 .br
-Tutti i file di preconfigurazione in /live/config\-preseed/ sul supporto live
-possono essere abilitati automaticamente con la parola chiave "medium".
+Tutti i file di preconfigurazione in /minios/config\-preseed/ sul supporto
+live possono essere abilitati automaticamente con la parola chiave "medium".
 .br
 Se vengono congiunti diversi meccanismi i file di preconfigurazione di tipo
 filesystem vengono applicati per primi, seguiti dalla tipologia medium e
@@ -161,14 +161,14 @@ disponibili alcuni hook per i casi d'uso più comuni in
 /usr/share/doc/live\-config/examples/hooks/.
 .br
 Se il file è posizionato sul supporto live, questo  può essere prelevato con
-file:///lib/live/mount/medium/\fIFILE\fP, o con file:///\fIFILE\fP se è nella
+file:///run/initramfs/memory/data/\fIFILE\fP, o con file:///\fIFILE\fP se è nella
 radice del filesystem del sistema live stesso.
 .br
 Tutti gli hook nella directory /usr/lib/live/config\-hooks/ del sistema live
 possono essere abilitati automaticamente con la parola chiave "filesystem".
 .br
-Tutti gli hook nella directory /live/config\-hooks/ del sistema live possono
-essere abilitati automaticamente con la parola chiave "medium".
+Tutti gli hook nella directory /minios/config\-hooks/ del sistema live
+possono essere abilitati automaticamente con la parola chiave "medium".
 .br
 Se vengono congiunti svariati meccanismi, gli hook di tipo filesystem
 vengono applicati per primi, seguiti dalla tipologia medium e quindi da
@@ -356,25 +356,33 @@ pacchetto debian dedicato. Si può trovare un esempio in
 \fBlive\-config\fP attualmente offre i seguenti componenti in
 /usr/lib/live/config.
 
+.IP \fBnss\-systemd\fP 4
+rimuove o ripristina il modulo NSS di systemd in /etc/nsswitch.conf per
+ovviare a un noto problema di systemd.
 .IP \fBdebconf\fP 4
 permette di applicare file di preconfigurazione arbitrai situati sul
 supporto live o su un server http/ftp.
 .IP \fBhostname\fP 4
 configura i file /etc/hostname e /etc/hosts.
-.IP \fBuser\-setup\fP 4
-aggiunge un account per l'utente live.
-.IP \fBuser‑media\fP 4
-Configura il montaggio dei media e il collegamento o il bind\-mounting delle
-directory utente per i dati persistenti.
-.IP \fBissue‑setup\fP 4
+.IP \fBissue\-setup\fP 4
 Imposta il file /etc/issue con un banner di benvenuto e informazioni sulla
 distribuzione.
+.IP "\fBlive\-debconfig (passwd)\fP" 4
+Configura le password di utente e root tramite live\-debconfig.
+.IP \fBuser\-setup\fP 4
+aggiunge un account per l'utente live.
+.IP \fBroot\-setup\fP 4
+imposta o aggiorna la password di root e configura l'ambiente utente root.
 .IP \fBsudo\fP 4
 concede i privilegi per sudo all'utente live.
+.IP \fBuser\-media\fP 4
+Configura il montaggio dei media e il collegamento o il bind\-mounting delle
+directory utente per i dati persistenti.
+.IP \fBuser\-ssh\fP 4
+sincronizza le chiavi SSH authorized_keys tra il media live e la directory
+home dell'utente.
 .IP \fBlocales\fP 4
 configura la localizzazione.
-.IP \fBlocales\-all\fP 4
-configura locales\-all.
 .IP \fBtzdata\fP 4
 configura il file /etc/timezone.
 .IP \fBgdm3\fP 4
@@ -393,14 +401,16 @@ configura il login automatico per slim.
 configura il login automatico con xinit.
 .IP \fBkeyboard\-configuration\fP 4
 configura la tastiera.
-.IP \fBsystemd\fP 4
-configura il login automatico con systemd.
 .IP \fBsysvinit\fP 4
 configura sysvinit.
 .IP \fBsysv\-rc\fP 4
 configura sysv\-rc disabilitando i servizi elencati.
 .IP \fBlogin\fP 4
 disabilita lastlog.
+.IP \fBanacron\fP 4
+disabilita anacron.
+.IP \fButil\-linux\fP 4
+disabilita hwclock (parte di util\-linux).
 .IP \fBapport\fP 4
 disabilita apport.
 .IP \fBgnome\-panel\-data\fP 4
@@ -419,30 +429,24 @@ concede i privilegi per l'utente tramite policykit.
 rigenera certificati ssl snake\-oil.
 .IP \fBxrdp\fP 4
 Configura xrdp per la connettività del desktop remoto.
-.IP \fBanacron\fP 4
-disabilita anacron.
-.IP \fButil\-linux\fP 4
-disabilita hwclock (parte di util\-linux).
-.IP \fBlogin\fP 4
-disabilita lastlog.
-.IP \fBxserver\-xorg\fP 4
-configura xserver\-xorg.
-.IP \fBbroadcom\-sta\fP 4
-configura il driver per broadcom\-sta WLAN.
-.IP \fBopenssh\-server\fP 4
-ricrea le chiavi di openssh\-server.
 .IP \fBxfce4\-panel\fP 4
 configura xfce4\-panel con le impostazioni predefinite.
 .IP \fBxscreensaver\fP 4
 disabilita lo screensaver che blocca lo schermo.
-.IP \fBxhyper‑v\fP 4
-configures X11 settings to improve compatibility on Microsoft Hyper‑V
+.IP \fBbroadcom\-sta\fP 4
+configura il driver per broadcom\-sta WLAN.
+.IP \fBxserver\-xorg\fP 4
+configura xserver\-xorg.
+.IP \fBopenssh\-server\fP 4
+ricrea le chiavi di openssh\-server.
+.IP \fBxhyper\-v\fP 4
+configures X11 settings to improve compatibility on Microsoft Hyper\-V
 platforms.
 .IP \fBntfs3\fP 4
 Gestisce le regole udev per il supporto NTFS3.
-.IP \fBconfig\-module‑mode\fP 4
-Configura la modalità modulo di sistema e aggiorna le cache, le impostazioni
-utente e dpkg.
+.IP \fBconfig\-module\-mode\fP 4
+Configura la modalità del modulo di sistema e aggiorna le cache, le
+impostazioni utente e dpkg.
 .IP \fBhooks\fP 4
 permette di eseguire comandi arbitrari da un file situato sul supporto live
 o su un server http/ftp.

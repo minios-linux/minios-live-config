@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2025-06-09 13:25+0300\n"
+"POT-Creation-Date: 2025-06-11 19:25+0300\n"
 "PO-Revision-Date: 2015-08-21 11:45+0100\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
@@ -217,8 +217,8 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:43 en/live-config.7:95
 msgid ""
-"If the file is placed on the live medium, it can be fetched with file:///lib/"
-"live/mount/medium/I<FILE>, or with file:///I<FILE> if it is in the root "
+"If the file is placed on the live medium, it can be fetched with file:///run/"
+"initramfs/memory/data/I<FILE>, or with file:///I<FILE> if it is in the root "
 "filesystem of the live system itself."
 msgstr ""
 "Si el fichero está en el medio en vivo, se puede obtener con file:///lib/"
@@ -238,10 +238,10 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:47
 msgid ""
-"All preseed files in /live/config-preseed/ of the live medium can be "
+"All preseed files in /minios/config-preseed/ of the live medium can be "
 "automatically enabled with the keyword 'medium'."
 msgstr ""
-"Todos los ficheros en /live/config-preseed/ del medio en vivo pueden "
+"Todos los ficheros en /minios/config-preseed/ del medio en vivo pueden "
 "activarse automáticamente con la palabra clave «medium»."
 
 #. type: Plain text
@@ -545,10 +545,9 @@ msgstr ""
 
 #. type: IP
 #: en/live-config.7:89
-#, fuzzy, no-wrap
-#| msgid "B<live-config.timezone>=I<TIMEZONE> | B<timezone>=I<TIMEZONE>"
+#, no-wrap
 msgid "B<live-config.module-mode>=I<MODE> | B<module-mode>=I<MODE>"
-msgstr "B<live-config.timezone>=I<ZONA HORARIA> | B<timezone>=I<ZONA HORARIA>"
+msgstr "B<live-config.module-mode>=I<MODO> | B<module-mode>=I<MODO>"
 
 #. type: Plain text
 #: en/live-config.7:91
@@ -599,10 +598,10 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:99
 msgid ""
-"All hooks in /live/config-hooks/ of the live medium can be automatically "
+"All hooks in /minios/config-hooks/ of the live medium can be automatically "
 "enabled with the keyword 'medium'."
 msgstr ""
-"Todos los scripts gancho de /live/config-hooks/ del medio en vivo pueden "
+"Todos los scripts gancho de /minios/config-hooks/ del medio en vivo pueden "
 "activarse con la palabra clave «medium»."
 
 #. type: Plain text
@@ -1213,10 +1212,9 @@ msgstr ""
 
 #. type: IP
 #: en/live-config.7:187
-#, fuzzy, no-wrap
-#| msgid "B<LIVE_KEYBOARD_MODEL>=I<KEYBOARD_MODEL>"
+#, no-wrap
 msgid "B<LIVE_MODULE_MODE>"
-msgstr "B<LIVE_KEYBOARD_MODEL>=I<MODELO DE TECLADO>"
+msgstr "B<LIVE_MODULE_MODE>"
 
 #. type: Plain text
 #: en/live-config.7:189
@@ -1339,11 +1337,26 @@ msgstr ""
 #. type: IP
 #: en/live-config.7:208
 #, no-wrap
+msgid "B<nss-systemd>"
+msgstr "B<nss-systemd>"
+
+#. type: Plain text
+#: en/live-config.7:210
+msgid ""
+"removes or restores the systemd NSS module in /etc/nsswitch.conf to work "
+"around a known systemd issue."
+msgstr ""
+"Elimina o restaura el módulo NSS de systemd en /etc/nsswitch.conf para "
+"resolver un problema conocido de systemd."
+
+#. type: IP
+#: en/live-config.7:210
+#, no-wrap
 msgid "B<debconf>"
 msgstr "B<debconf>"
 
 #. type: Plain text
-#: en/live-config.7:210
+#: en/live-config.7:212
 msgid ""
 "allows one to apply arbitrary preseed files placed on the live media or an "
 "http/ftp server."
@@ -1352,51 +1365,24 @@ msgstr ""
 "el medios en vivo o en un servidor http/ftp."
 
 #. type: IP
-#: en/live-config.7:210
+#: en/live-config.7:212
 #, no-wrap
 msgid "B<hostname>"
 msgstr "B<hostname>"
 
 #. type: Plain text
-#: en/live-config.7:212
+#: en/live-config.7:214
 msgid "configures /etc/hostname and /etc/hosts."
 msgstr "configura /etc/hostname y /etc/hosts."
 
 #. type: IP
-#: en/live-config.7:212
+#: en/live-config.7:214
 #, no-wrap
-msgid "B<user-setup>"
-msgstr "B<user-setup>"
-
-#. type: Plain text
-#: en/live-config.7:214
-msgid "adds a live user account."
-msgstr "Añade una cuenta de usuario en vivo."
-
-#. type: IP
-#: en/live-config.7:214
-#, fuzzy, no-wrap
-#| msgid "B<user-media>"
-msgid "B<user‑media>"
-msgstr "B<user-media>"
-
-#. type: Plain text
-#: en/live-config.7:216
-msgid ""
-"configures mounting of media and linking or binding of user directories for "
-"persistent data."
-msgstr ""
-"Configura el montaje de medios y el enlace o enlace de directorios de "
-"usuario para datos persistentes."
-
-#. type: IP
-#: en/live-config.7:216
-#, fuzzy, no-wrap
-msgid "B<issue‑setup>"
+msgid "B<issue-setup>"
 msgstr "B<issue-setup>"
 
 #. type: Plain text
-#: en/live-config.7:218
+#: en/live-config.7:216
 msgid ""
 "sets up the /etc/issue file with a welcome banner and distribution "
 "information."
@@ -1405,392 +1391,431 @@ msgstr ""
 "la distribución."
 
 #. type: IP
+#: en/live-config.7:216
+#, no-wrap
+msgid "B<live-debconfig (passwd)>"
+msgstr "B<live-debconfig (passwd)>"
+
+#. type: Plain text
 #: en/live-config.7:218
+msgid "configures user and root passwords via live-debconfig."
+msgstr ""
+"Configura las contraseñas de usuario y root a través de live-debconfig."
+
+#. type: IP
+#: en/live-config.7:218
+#, no-wrap
+msgid "B<user-setup>"
+msgstr "B<user-setup>"
+
+#. type: Plain text
+#: en/live-config.7:220
+msgid "adds a live user account."
+msgstr "Añade una cuenta de usuario en vivo."
+
+#. type: IP
+#: en/live-config.7:220
+#, no-wrap
+msgid "B<root-setup>"
+msgstr "B<root-setup>"
+
+#. type: Plain text
+#: en/live-config.7:222
+msgid ""
+"sets or updates the root password and configures the root user environment."
+msgstr ""
+"Establece o actualiza la contraseña de root y configura el entorno de "
+"usuario root."
+
+#. type: IP
+#: en/live-config.7:222
 #, no-wrap
 msgid "B<sudo>"
 msgstr "B<sudo>"
 
 #. type: Plain text
-#: en/live-config.7:220
+#: en/live-config.7:224
 msgid "grants sudo privileges to the live user."
 msgstr "garantiza privilegios de sudo al usuario del sistema en vivo."
 
 #. type: IP
-#: en/live-config.7:220
+#: en/live-config.7:224
+#, no-wrap
+msgid "B<user-media>"
+msgstr "B<user-media>"
+
+#. type: Plain text
+#: en/live-config.7:226
+msgid ""
+"configures mounting of media and linking or binding of user directories for "
+"persistent data."
+msgstr ""
+"Configura el montaje de medios y el enlace o enlace de directorios de "
+"usuario para datos persistentes."
+
+#. type: IP
+#: en/live-config.7:226
+#, no-wrap
+msgid "B<user-ssh>"
+msgstr "B<user-ssh>"
+
+#. type: Plain text
+#: en/live-config.7:228
+msgid ""
+"synchronizes SSH authorized_keys between the live media and the user’s home "
+"directory."
+msgstr ""
+"Sincroniza las claves SSH authorized_keys entre el medio en vivo y el "
+"directorio de inicio del usuario."
+
+#. type: IP
+#: en/live-config.7:228
 #, no-wrap
 msgid "B<locales>"
 msgstr "B<locales>"
 
 #. type: Plain text
-#: en/live-config.7:222
+#: en/live-config.7:230
 msgid "configures locales."
 msgstr "configura las variantes locales."
 
 #. type: IP
-#: en/live-config.7:222
-#, no-wrap
-msgid "B<locales-all>"
-msgstr "B<locales-all>"
-
-#. type: Plain text
-#: en/live-config.7:224
-msgid "configures locales-all."
-msgstr "configura las variantes locales-all."
-
-#. type: IP
-#: en/live-config.7:224
+#: en/live-config.7:230
 #, no-wrap
 msgid "B<tzdata>"
 msgstr "B<tzdata>"
 
 #. type: Plain text
-#: en/live-config.7:226
+#: en/live-config.7:232
 msgid "configures /etc/timezone."
 msgstr "configura /etc/timezone."
 
 #. type: IP
-#: en/live-config.7:226
+#: en/live-config.7:232
 #, no-wrap
 msgid "B<gdm3>"
 msgstr "B<gdm3>"
 
 #. type: Plain text
-#: en/live-config.7:228
+#: en/live-config.7:234
 msgid "configures autologin in gdm3."
 msgstr "configura el inicio de sesión automático en gdm3."
 
 #. type: IP
-#: en/live-config.7:228
+#: en/live-config.7:234
 #, no-wrap
 msgid "B<kdm>"
 msgstr "B<kdm>"
 
 #. type: Plain text
-#: en/live-config.7:230
+#: en/live-config.7:236
 msgid "configures autologin in kdm."
 msgstr "configura el inicio de sesión automático en kdm."
 
 #. type: IP
-#: en/live-config.7:230
+#: en/live-config.7:236
 #, no-wrap
 msgid "B<lightdm>"
 msgstr "B<lightdm>"
 
 #. type: Plain text
-#: en/live-config.7:232
+#: en/live-config.7:238
 msgid "configures autologin in lightdm."
 msgstr "configura el inicio de sesión automático en lightdm."
 
 #. type: IP
-#: en/live-config.7:232
+#: en/live-config.7:238
 #, no-wrap
 msgid "B<lxdm>"
 msgstr "B<lxdm>"
 
 #. type: Plain text
-#: en/live-config.7:234
+#: en/live-config.7:240
 msgid "configures autologin in lxdm."
 msgstr "configura el inicio de sesión automático en lxdm."
 
 #. type: IP
-#: en/live-config.7:234
+#: en/live-config.7:240
 #, no-wrap
 msgid "B<nodm>"
 msgstr "B<nodm>"
 
 #. type: Plain text
-#: en/live-config.7:236
+#: en/live-config.7:242
 msgid "configures autologin in nodm."
 msgstr "configura el inicio de sesión automático en nodm."
 
 #. type: IP
-#: en/live-config.7:236
+#: en/live-config.7:242
 #, no-wrap
 msgid "B<slim>"
 msgstr "B<slim>"
 
 #. type: Plain text
-#: en/live-config.7:238
+#: en/live-config.7:244
 msgid "configures autologin in slim."
 msgstr "configura el inicio de sesión automático en slim."
 
 #. type: IP
-#: en/live-config.7:238
+#: en/live-config.7:244
 #, no-wrap
 msgid "B<xinit>"
 msgstr "B<xinit>"
 
 #. type: Plain text
-#: en/live-config.7:240
+#: en/live-config.7:246
 msgid "configures autologin with xinit."
 msgstr "configura el inicio de sesión automático con xinit."
 
 #. type: IP
-#: en/live-config.7:240
+#: en/live-config.7:246
 #, no-wrap
 msgid "B<keyboard-configuration>"
 msgstr "B<keyboard-configuration>"
 
 #. type: Plain text
-#: en/live-config.7:242
+#: en/live-config.7:248
 msgid "configures the keyboard."
 msgstr "configura el teclado."
 
 #. type: IP
-#: en/live-config.7:242
-#, no-wrap
-msgid "B<systemd>"
-msgstr "B<systemd>"
-
-#. type: Plain text
-#: en/live-config.7:244
-msgid "configures systemd autologin."
-msgstr "configura el inicio de sesión automático con systemd."
-
-#. type: IP
-#: en/live-config.7:244
+#: en/live-config.7:248
 #, no-wrap
 msgid "B<sysvinit>"
 msgstr "B<sysvinit>"
 
 #. type: Plain text
-#: en/live-config.7:246
+#: en/live-config.7:250
 msgid "configures sysvinit."
 msgstr "configura sysvinit."
 
 #. type: IP
-#: en/live-config.7:246
+#: en/live-config.7:250
 #, no-wrap
 msgid "B<sysv-rc>"
 msgstr "B<sysv-rc>"
 
 #. type: Plain text
-#: en/live-config.7:248
+#: en/live-config.7:252
 msgid "configures sysv-rc by disabling listed services."
 msgstr "configura sysv-rc desactivando los sevicios listados."
 
 #. type: IP
-#: en/live-config.7:248 en/live-config.7:272
+#: en/live-config.7:252
 #, no-wrap
 msgid "B<login>"
 msgstr "B<login>"
 
 #. type: Plain text
-#: en/live-config.7:250 en/live-config.7:274
+#: en/live-config.7:254
 msgid "disables lastlog."
 msgstr "Desactiva lastlog."
 
 #. type: IP
-#: en/live-config.7:250
-#, no-wrap
-msgid "B<apport>"
-msgstr "B<apport>"
-
-#. type: Plain text
-#: en/live-config.7:252
-msgid "disables apport."
-msgstr "Desactiva apport."
-
-#. type: IP
-#: en/live-config.7:252
-#, no-wrap
-msgid "B<gnome-panel-data>"
-msgstr "B<gnome-panel-data>"
-
-#. type: Plain text
 #: en/live-config.7:254
-msgid "disables lock button for the screen."
-msgstr "Desactiva el botón de bloqueo de la pantalla."
-
-#. type: IP
-#: en/live-config.7:254
-#, no-wrap
-msgid "B<gnome-power-manager>"
-msgstr "B<gnome-power-manager>"
-
-#. type: Plain text
-#: en/live-config.7:256
-msgid "disables hibernation."
-msgstr "Desactiva la hibernación."
-
-#. type: IP
-#: en/live-config.7:256
-#, no-wrap
-msgid "B<gnome-screensaver>"
-msgstr "B<gnome-screensaver>"
-
-#. type: Plain text
-#: en/live-config.7:258 en/live-config.7:284
-msgid "disables the screensaver locking the screen."
-msgstr "Impide que el salvapantallas bloquee la pantalla."
-
-#. type: IP
-#: en/live-config.7:258
-#, no-wrap
-msgid "B<kaboom>"
-msgstr "B<kaboom>"
-
-#. type: Plain text
-#: en/live-config.7:260
-msgid "disables KDE migration wizard (squeeze and newer)."
-msgstr "Desactiva el asistente de migración de KDE (Squeeze y superior)."
-
-#. type: IP
-#: en/live-config.7:260
-#, no-wrap
-msgid "B<kde-services>"
-msgstr "B<kde-services>"
-
-#. type: Plain text
-#: en/live-config.7:262
-msgid "disables some unwanted KDE services (squeeze and newer)."
-msgstr "Desactiva algunos servicios de KDE no deseados (squeeze y superior)."
-
-#. type: IP
-#: en/live-config.7:262
-#, no-wrap
-msgid "B<policykit>"
-msgstr "B<policykit>"
-
-#. type: Plain text
-#: en/live-config.7:264
-msgid "grant user privilegies through policykit."
-msgstr "garantiza privilegios de usuario mediante policykit."
-
-#. type: IP
-#: en/live-config.7:264
-#, no-wrap
-msgid "B<ssl-cert>"
-msgstr "B<ssl-cert>"
-
-#. type: Plain text
-#: en/live-config.7:266
-msgid "regenerating ssl snake-oil certificates."
-msgstr "Regenera los certificados ssl snake-oil."
-
-#. type: IP
-#: en/live-config.7:266
-#, no-wrap
-msgid "B<xrdp>"
-msgstr "B<xrdp>"
-
-#. type: Plain text
-#: en/live-config.7:268
-msgid "configures xrdp for remote desktop connectivity."
-msgstr "Configura xrdp para la conectividad de escritorio remoto."
-
-#. type: IP
-#: en/live-config.7:268
 #, no-wrap
 msgid "B<anacron>"
 msgstr "B<anacron>"
 
 #. type: Plain text
-#: en/live-config.7:270
+#: en/live-config.7:256
 msgid "disables anacron."
 msgstr "Desactiva anacron."
 
 #. type: IP
-#: en/live-config.7:270
+#: en/live-config.7:256
 #, no-wrap
 msgid "B<util-linux>"
 msgstr "B<util-linux>"
 
 #. type: Plain text
-#: en/live-config.7:272
+#: en/live-config.7:258
 msgid "disables util-linux' hwclock."
 msgstr "Desactiva util-linux' hwclock."
 
 #. type: IP
+#: en/live-config.7:258
+#, no-wrap
+msgid "B<apport>"
+msgstr "B<apport>"
+
+#. type: Plain text
+#: en/live-config.7:260
+msgid "disables apport."
+msgstr "Desactiva apport."
+
+#. type: IP
+#: en/live-config.7:260
+#, no-wrap
+msgid "B<gnome-panel-data>"
+msgstr "B<gnome-panel-data>"
+
+#. type: Plain text
+#: en/live-config.7:262
+msgid "disables lock button for the screen."
+msgstr "Desactiva el botón de bloqueo de la pantalla."
+
+#. type: IP
+#: en/live-config.7:262
+#, no-wrap
+msgid "B<gnome-power-manager>"
+msgstr "B<gnome-power-manager>"
+
+#. type: Plain text
+#: en/live-config.7:264
+msgid "disables hibernation."
+msgstr "Desactiva la hibernación."
+
+#. type: IP
+#: en/live-config.7:264
+#, no-wrap
+msgid "B<gnome-screensaver>"
+msgstr "B<gnome-screensaver>"
+
+#. type: Plain text
+#: en/live-config.7:266 en/live-config.7:280
+msgid "disables the screensaver locking the screen."
+msgstr "Impide que el salvapantallas bloquee la pantalla."
+
+#. type: IP
+#: en/live-config.7:266
+#, no-wrap
+msgid "B<kaboom>"
+msgstr "B<kaboom>"
+
+#. type: Plain text
+#: en/live-config.7:268
+msgid "disables KDE migration wizard (squeeze and newer)."
+msgstr "Desactiva el asistente de migración de KDE (Squeeze y superior)."
+
+#. type: IP
+#: en/live-config.7:268
+#, no-wrap
+msgid "B<kde-services>"
+msgstr "B<kde-services>"
+
+#. type: Plain text
+#: en/live-config.7:270
+msgid "disables some unwanted KDE services (squeeze and newer)."
+msgstr "Desactiva algunos servicios de KDE no deseados (squeeze y superior)."
+
+#. type: IP
+#: en/live-config.7:270
+#, no-wrap
+msgid "B<policykit>"
+msgstr "B<policykit>"
+
+#. type: Plain text
+#: en/live-config.7:272
+msgid "grant user privilegies through policykit."
+msgstr "garantiza privilegios de usuario mediante policykit."
+
+#. type: IP
+#: en/live-config.7:272
+#, no-wrap
+msgid "B<ssl-cert>"
+msgstr "B<ssl-cert>"
+
+#. type: Plain text
+#: en/live-config.7:274
+msgid "regenerating ssl snake-oil certificates."
+msgstr "Regenera los certificados ssl snake-oil."
+
+#. type: IP
 #: en/live-config.7:274
 #, no-wrap
-msgid "B<xserver-xorg>"
-msgstr "B<xserver-xorg>"
+msgid "B<xrdp>"
+msgstr "B<xrdp>"
 
 #. type: Plain text
 #: en/live-config.7:276
-msgid "configures xserver-xorg."
-msgstr "configura xserver-xorg."
+msgid "configures xrdp for remote desktop connectivity."
+msgstr "Configura xrdp para la conectividad de escritorio remoto."
 
 #. type: IP
 #: en/live-config.7:276
-#, no-wrap
-msgid "B<broadcom-sta>"
-msgstr "B<broadcom-sta>"
-
-#. type: Plain text
-#: en/live-config.7:278
-msgid "configures broadcom-sta WLAN drivers."
-msgstr "configura el controlador broadcom-sta WLAN."
-
-#. type: IP
-#: en/live-config.7:278
-#, no-wrap
-msgid "B<openssh-server>"
-msgstr "B<openssh-server>"
-
-#. type: Plain text
-#: en/live-config.7:280
-msgid "recreates openssh-server host keys."
-msgstr "Recrea las claves del host openssh-server."
-
-#. type: IP
-#: en/live-config.7:280
 #, no-wrap
 msgid "B<xfce4-panel>"
 msgstr "B<xfce4-panel>"
 
 #. type: Plain text
-#: en/live-config.7:282
+#: en/live-config.7:278
 msgid "configures xfce4-panel to default settings."
 msgstr "configura xfce4-panel utilizando las opciones por defecto."
 
 #. type: IP
-#: en/live-config.7:282
+#: en/live-config.7:278
 #, no-wrap
 msgid "B<xscreensaver>"
 msgstr "B<xscreensaver>"
 
 #. type: IP
+#: en/live-config.7:280
+#, no-wrap
+msgid "B<broadcom-sta>"
+msgstr "B<broadcom-sta>"
+
+#. type: Plain text
+#: en/live-config.7:282
+msgid "configures broadcom-sta WLAN drivers."
+msgstr "configura el controlador broadcom-sta WLAN."
+
+#. type: IP
+#: en/live-config.7:282
+#, no-wrap
+msgid "B<xserver-xorg>"
+msgstr "B<xserver-xorg>"
+
+#. type: Plain text
 #: en/live-config.7:284
-#, fuzzy, no-wrap
-#| msgid "B<xhyper-v>"
-msgid "B<xhyper‑v>"
-msgstr "B<xhyper-v>"
+msgid "configures xserver-xorg."
+msgstr "configura xserver-xorg."
+
+#. type: IP
+#: en/live-config.7:284
+#, no-wrap
+msgid "B<openssh-server>"
+msgstr "B<openssh-server>"
 
 #. type: Plain text
 #: en/live-config.7:286
-#, fuzzy
-#| msgid ""
-#| "configures X11 settings to improve compatibility on Microsoft Hyper-V "
-#| "platforms."
+msgid "recreates openssh-server host keys."
+msgstr "Recrea las claves del host openssh-server."
+
+#. type: IP
+#: en/live-config.7:286
+#, no-wrap
+msgid "B<xhyper-v>"
+msgstr "B<xhyper-v>"
+
+#. type: Plain text
+#: en/live-config.7:288
 msgid ""
-"configures X11 settings to improve compatibility on Microsoft Hyper‑V "
+"configures X11 settings to improve compatibility on Microsoft Hyper-V "
 "platforms."
 msgstr ""
 "Configura los ajustes de X11 para mejorar la compatibilidad en las "
 "plataformas Microsoft Hyper-V."
 
 #. type: IP
-#: en/live-config.7:286
+#: en/live-config.7:288
 #, no-wrap
 msgid "B<ntfs3>"
 msgstr "B<ntfs3>"
 
 #. type: Plain text
-#: en/live-config.7:288
+#: en/live-config.7:290
 msgid "manages udev rules for NTFS3 support."
 msgstr "Gestiona las reglas udev para el soporte NTFS3."
 
 #. type: IP
-#: en/live-config.7:288
-#, fuzzy, no-wrap
-#| msgid "B<config-module-mode>"
-msgid "B<config-module‑mode>"
+#: en/live-config.7:290
+#, no-wrap
+msgid "B<config-module-mode>"
 msgstr "B<config-module-mode>"
 
 #. type: Plain text
-#: en/live-config.7:290
+#: en/live-config.7:292
 msgid ""
 "configures system module mode and updates caches, user settings, and dpkg."
 msgstr ""
@@ -1798,13 +1823,13 @@ msgstr ""
 "configuración de usuario y dpkg."
 
 #. type: IP
-#: en/live-config.7:290
+#: en/live-config.7:292
 #, no-wrap
 msgid "B<hooks>"
 msgstr "B<hooks>"
 
 #. type: Plain text
-#: en/live-config.7:292
+#: en/live-config.7:294
 msgid ""
 "allows one to run arbitrary commands from a file placed on the live media or "
 "an http/ftp server."
@@ -1813,112 +1838,112 @@ msgstr ""
 "el medio en vivo o en un servidor http/ftp."
 
 #. type: SH
-#: en/live-config.7:293
+#: en/live-config.7:295
 #, no-wrap
 msgid "FILES"
 msgstr "FICHEROS"
 
 #. type: IP
-#: en/live-config.7:294
+#: en/live-config.7:296
 #, no-wrap
 msgid "B</etc/live/config.conf>"
 msgstr "B</etc/live/config.conf>"
 
 #. type: IP
-#: en/live-config.7:295
+#: en/live-config.7:297
 #, no-wrap
 msgid "B</etc/live/config.conf.d/*.conf>"
 msgstr "B</etc/live/config.conf.d/*.conf>"
 
 #. type: IP
-#: en/live-config.7:296
+#: en/live-config.7:298
 #, no-wrap
 msgid "B<live/config.conf>"
 msgstr "B<live/config.conf>"
 
 #. type: IP
-#: en/live-config.7:297
+#: en/live-config.7:299
 #, no-wrap
 msgid "B<live/config.conf.d/*.conf>"
 msgstr "B<live/config.conf.d/*.conf>"
 
 #. type: IP
-#: en/live-config.7:298
+#: en/live-config.7:300
 #, no-wrap
 msgid "B</lib/live/config.sh>"
 msgstr "B</lib/live/config.sh>"
 
 #. type: IP
-#: en/live-config.7:299
+#: en/live-config.7:301
 #, no-wrap
 msgid "B</lib/live/config/>"
 msgstr "B</lib/live/config/>"
 
 #. type: IP
-#: en/live-config.7:300
+#: en/live-config.7:302
 #, no-wrap
 msgid "B</var/lib/live/config/>"
 msgstr "B</var/lib/live/config/>"
 
 #. type: IP
-#: en/live-config.7:301
+#: en/live-config.7:303
 #, no-wrap
 msgid "B</var/log/live/config.log>"
 msgstr "B</var/log/live/config.log>"
 
 #. type: IP
-#: en/live-config.7:303
+#: en/live-config.7:305
 #, no-wrap
 msgid "B</live/config-hooks/*>"
 msgstr "B</live/config-hooks/*>"
 
 #. type: IP
-#: en/live-config.7:304
+#: en/live-config.7:306
 #, no-wrap
 msgid "B<live/config-hooks/*>"
 msgstr "B<live/config-hooks/*>"
 
 #. type: IP
-#: en/live-config.7:305
+#: en/live-config.7:307
 #, no-wrap
 msgid "B</live/config-preseed/*>"
 msgstr "B</live/config-preseed/*>"
 
 #. type: IP
-#: en/live-config.7:306
+#: en/live-config.7:308
 #, no-wrap
 msgid "B<live/config-preseed/* >"
 msgstr "B<live/config-preseed/* >"
 
 #. type: SH
-#: en/live-config.7:308
+#: en/live-config.7:310
 #, no-wrap
 msgid "SEE ALSO"
 msgstr "VER ADEMÁS"
 
 #. type: Plain text
-#: en/live-config.7:310
+#: en/live-config.7:312
 msgid "I<live-boot>(7)"
 msgstr "I<live-boot>(7)"
 
 #. type: Plain text
-#: en/live-config.7:312
+#: en/live-config.7:314
 msgid "I<live-build>(7)"
 msgstr "I<live-build>(7)"
 
 #. type: Plain text
-#: en/live-config.7:314
+#: en/live-config.7:316
 msgid "I<live-tools>(7)"
 msgstr "I<live-tools>(7)"
 
 #. type: SH
-#: en/live-config.7:315
+#: en/live-config.7:317
 #, no-wrap
 msgid "HOMEPAGE"
 msgstr "PÁGINA PRINCIPAL"
 
 #. type: Plain text
-#: en/live-config.7:317
+#: en/live-config.7:319
 msgid ""
 "More information about live-config and the Debian Live project can be found "
 "on the homepage at E<lt>I<https://wiki.debian.org/DebianLive>E<gt> and in "
@@ -1930,13 +1955,13 @@ msgstr ""
 "live-manual/>E<gt>."
 
 #. type: SH
-#: en/live-config.7:318
+#: en/live-config.7:320
 #, no-wrap
 msgid "BUGS"
 msgstr "ERRORES"
 
 #. type: Plain text
-#: en/live-config.7:320
+#: en/live-config.7:322
 msgid ""
 "Bugs can be reported by submitting a bugreport for the live-config package "
 "in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by "
@@ -1949,13 +1974,13 @@ msgstr ""
 "Debian Live a la dirección E<lt>I<debian-live@lists.debian.org>E<gt>."
 
 #. type: SH
-#: en/live-config.7:321
+#: en/live-config.7:323
 #, no-wrap
 msgid "AUTHOR"
 msgstr "AUTOR"
 
 #. type: Plain text
-#: en/live-config.7:322
+#: en/live-config.7:324
 msgid ""
 "live-config was originally written by Daniel Baumann E<lt>I<mail@daniel-"
 "baumann.ch>E<gt>. Since 2016 development has been continued by the Debian "

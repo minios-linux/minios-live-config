@@ -75,7 +75,7 @@ Todos os arquivos preseed em /usr/lib/live/config\-preseed/ no sistema de
 arquivos raiz do sistema live podem ser automaticamente ativados com a
 palavra\-chave 'filesystem'.
 .br
-Todos os arquivos preseed em /live/config\-preseed/ do meio live podem ser
+Todos os arquivos preseed em /minios/config\-preseed/ do meio live podem ser
 automaticamente ativados com a palavra\-chave 'medium'.
 .br
 Se vários mecanismos forem combinados, os arquivos preseed do sistema de
@@ -127,7 +127,7 @@ Permite desabilitar serviços sysv através do update\-rc.d.
 .IP "\fBlive\-config.utc\fP=\fBsim\fP|não | \fButc\fP=\fBsim\fP|não" 4
 Permite alterar se o sistema assume que o relógio de hardware está definido
 para UTC ou não. O padrão é 'sim'.
-.IP "\fBlive\-config.x\-session\-manager=\fP\fIX_SESSION_MANAGER\fP | \fBx\-session\-manager\fP=\fIX_SESSION_MANAGER\fP" 4
+.IP "\fBlive\-config.x\-session\-manager=\fP\fIGERENCIADOR_DE_SESSÃO_X\fP | \fBx\-session\-manager\fP=\fIGERENCIADOR_DE_SESSÃO_X\fP" 4
 Permite definir o x\-session\-manager através de update\-alternatives.
 .IP "\fBlive\-config.xorg\-driver\fP=\fIDRIVER_XORG\fP | \fBxorg\-driver\fP=\fIDRIVER_XORG\fP" 4
 Permite definir o driver xorg em vez de autodetectar. Se um ID PCI for
@@ -145,8 +145,8 @@ sistema live, o \fIDRIVER\fP é forçado para esses dispositivos. Se um parâmet
 de inicialização e uma substituição forem encontrados, o parâmetro de
 inicialização tem precedência.
 .IP "\fBlive\-config.module\-mode\fP=\fIMODE\fP | \fBmodule\-mode\fP=\fIMODE\fP" 4
-Permite especificar o modo do módulo para configuração ao vivo. Quando
-definido como "merged", o sistema atualizará as contas de usuário,
+Permite especificar o modo de módulo para configuração ao vivo. Quando
+definido como "mesclado", o sistema atualizará as contas de usuário,
 reconstruirá os caches e atualizará as configurações dos pacotes para que as
 alterações de configuração sejam integradas dinamicamente ao sistema em
 execução.
@@ -167,8 +167,8 @@ Todos os hooks em /usr/lib/live/config\-hooks/ no sistema de arquivos raiz do
 sistema live podem ser automaticamente ativados com a palavra\-chave
 \&'filesystem'.
 .br
-Todos os hooks em /live/config\-hooks/ do meio live podem ser automaticamente
-ativados com a palavra\-chave 'medium'.
+Todos os hooks em /minios/config\-hooks/ do meio live podem ser
+automaticamente ativados com a palavra\-chave 'medium'.
 .br
 Se vários mecanismos forem combinados, os hooks do sistema de arquivos são
 executados primeiro, depois os hooks do meio e, por último, os hooks de
@@ -218,11 +218,11 @@ live (minios/config.conf, minios/config.conf.d/*.conf). Se ambos os locais
 forem usados para uma determinada opção, os da mídia live têm precedência
 sobre os do sistema de arquivos raiz.
 .PP
-Embora os arquivos de configuração colocados nos diretórios de configuração
-não exijam um nome particular, sugere\-se, por motivos de consistência, usar
-\&'vendor.conf' ou 'project.conf' como esquema de nomes (onde 'vendor' ou
-\&'project' são substituídos pelo nome real, resultando em um nome de arquivo
-como 'progress\-linux.conf').
+Although the configuration files placed in the configuration directories do
+not require a particular name, it is suggested for consistency reasons to
+either use 'vendor.conf' or 'project.conf' as a naming scheme (whereas
+\&'vendor' or 'project' is replaced with the actual name, resulting in a
+filename like 'progress\-linux.conf').
 .PP
 O conteúdo real dos arquivos de configuração consiste em uma ou mais das
 seguintes variáveis.
@@ -329,7 +329,7 @@ personalizadas com o ambiente base.
 .IP \fBLIVE_CONFIG_DEBUG\fP=verdadeiro|falso 4
 Esta variável corresponde ao parâmetro '\fBlive\-config.debug\fP'.
 
-.SH PERSONALIZAÇÃO
+.SH CUSTOMIZAÇÃO
 \fBlive\-config\fP pode ser facilmente personalizado para projetos downstream ou
 uso local.
 
@@ -359,25 +359,33 @@ de exemplo pode ser encontrado em /usr/share/doc/live\-config/examples.
 \fBlive\-config\fP atualmente apresenta os seguintes componentes em
 /usr/lib/live/config.
 
+.IP \fBnss\-systemd\fP 4
+Remove ou restaura o módulo NSS do systemd em /etc/nsswitch.conf para
+contornar um problema conhecido do systemd.
 .IP \fBdebconf\fP 4
 Permite aplicar arquivos preseed arbitrários colocados na mídia live ou em
 um servidor http/ftp.
 .IP \fBhostname\fP 4
 Configura /etc/hostname e /etc/hosts.
-.IP \fBuser\-setup\fP 4
-Adiciona uma conta de usuário live.
-.IP \fBuser‑media\fP 4
-Configura a montagem de mídia e a vinculação ou ligação de diretórios de
-usuário para dados persistentes.
-.IP \fBissue‑setup\fP 4
+.IP \fBissue\-setup\fP 4
 Configura o arquivo /etc/issue com um banner de boas\-vindas e informações da
 distribuição.
+.IP "\fBlive\-debconfig (passwd)\fP" 4
+Configura as senhas de usuário e root via live\-debconfig.
+.IP \fBuser\-setup\fP 4
+Adiciona uma conta de usuário live.
+.IP \fBroot\-setup\fP 4
+Define ou atualiza a senha de root e configura o ambiente de usuário root.
 .IP \fBsudo\fP 4
 Concede privilégios sudo ao usuário live.
+.IP \fBuser\-media\fP 4
+Configura a montagem de mídia e a vinculação ou ligação de diretórios de
+usuário para dados persistentes.
+.IP \fBuser\-ssh\fP 4
+Sincroniza as chaves SSH authorized_keys entre a mídia live e o diretório
+home do usuário.
 .IP \fBlocales\fP 4
 Configura os locais.
-.IP \fBlocales\-all\fP 4
-Configura todos os locais.
 .IP \fBtzdata\fP 4
 Configura /etc/timezone.
 .IP \fBgdm3\fP 4
@@ -396,14 +404,16 @@ Configura o autologin no slim.
 Configura o autologin com xinit.
 .IP \fBkeyboard\-configuration\fP 4
 Configura o teclado.
-.IP \fBsystemd\fP 4
-Configura o autologin do systemd.
 .IP \fBsysvinit\fP 4
 Configura o sysvinit.
 .IP \fBsysv\-rc\fP 4
-Configura o sysv\-rc desativando os serviços listados.
+Configura sysv\-rc desabilitando os serviços listados.
 .IP \fBlogin\fP 4
-Desabilita lastlog.
+Desabilita o lastlog.
+.IP \fBanacron\fP 4
+Desabilita anacron.
+.IP \fButil\-linux\fP 4
+Desabilita o hwclock do util\-linux.
 .IP \fBapport\fP 4
 Desabilita apport.
 .IP \fBgnome\-panel\-data\fP 4
@@ -422,28 +432,22 @@ Concede privilégios de usuário através do policykit.
 Regenerando certificados ssl snake\-oil.
 .IP \fBxrdp\fP 4
 Configura o xrdp para conectividade de área de trabalho remota.
-.IP \fBanacron\fP 4
-Desabilita anacron.
-.IP \fButil\-linux\fP 4
-Desabilita o hwclock do util\-linux.
-.IP \fBlogin\fP 4
-Desabilita lastlog.
-.IP \fBxserver\-xorg\fP 4
-Configura o xserver\-xorg.
-.IP \fBbroadcom\-sta\fP 4
-Configura os drivers WLAN broadcom\-sta.
-.IP \fBopenssh\-server\fP 4
-Recria as chaves de host do openssh\-server.
 .IP \fBxfce4\-panel\fP 4
 Configura o xfce4\-panel para as configurações padrão.
 .IP \fBxscreensaver\fP 4
 Desabilita o protetor de tela bloqueando a tela.
-.IP \fBxhyper‑v\fP 4
-configures X11 settings to improve compatibility on Microsoft Hyper‑V
+.IP \fBbroadcom\-sta\fP 4
+Configura os drivers WLAN broadcom\-sta.
+.IP \fBxserver\-xorg\fP 4
+Configura o xserver\-xorg.
+.IP \fBopenssh\-server\fP 4
+Recria as chaves de host do openssh\-server.
+.IP \fBxhyper\-v\fP 4
+configures X11 settings to improve compatibility on Microsoft Hyper\-V
 platforms.
 .IP \fBntfs3\fP 4
 Gerencia as regras do udev para suporte a NTFS3.
-.IP \fBconfig\-module‑mode\fP 4
+.IP \fBconfig\-module\-mode\fP 4
 Configura o modo de módulo do sistema e atualiza caches, configurações do
 usuário e dpkg.
 .IP \fBhooks\fP 4

@@ -78,7 +78,7 @@ Alle Preseed\-Dateien in /usr/lib/live/config\-preseed/ im Root\-Dateisystem
 des Live\-Systems können automatisch mit dem Schlüsselwort 'filesystem'
 aktiviert werden.
 .br
-Alle Preseed\-Dateien in /live/config\-preseed/ des Live\-Mediums können
+Alle Preseed\-Dateien in /minios/config\-preseed/ des Live\-Mediums können
 automatisch mit dem Schlüsselwort 'medium' aktiviert werden.
 .br
 Werden mehrere Mechanismen kombiniert, werden zuerst
@@ -155,7 +155,7 @@ Erkennung. Wenn eine PCI\-ID in
 Live\-Systems angegeben ist, wird der \fITREIBER\fP für diese Geräte
 erzwungen. Wenn sowohl ein Boot\-Parameter als auch eine Überschreibung
 gefunden werden, hat der Boot\-Parameter Vorrang.
-.IP "\fBlive\-config.module\-mode\fP=\fIMODE\fP | \fBmodule\-mode\fP=\fIMODE\fP" 4
+.IP "\fBlive\-config.module\-mode\fP=\fIMODUS\fP | \fBmodule\-mode\fP=\fIMODUS\fP" 4
 Ermöglicht es, den Modus des Moduls für die Live\-Konfiguration
 anzugeben. Wenn auf "merged" gesetzt, aktualisiert das System
 Benutzerkonten, baut Zwischenspeicher neu auf und aktualisiert
@@ -180,7 +180,7 @@ Alle Hooks in /usr/lib/live/config\-hooks/ im Root\-Dateisystem des
 Live\-Systems können automatisch mit dem Schlüsselwort 'filesystem' aktiviert
 werden.
 .br
-Alle Hooks in /live/config\-hooks/ des Live\-Mediums können automatisch mit
+Alle Hooks in /minios/config\-hooks/ des Live\-Mediums können automatisch mit
 dem Schlüsselwort 'medium' aktiviert werden.
 .br
 Werden mehrere Mechanismen kombiniert, werden zuerst Dateisystem\-Hooks
@@ -379,25 +379,34 @@ Beispielkonfiguration enthält, finden Sie unter
 \fBlive\-config\fP verfügt derzeit über die folgenden Komponenten in
 /usr/lib/live/config.
 
+.IP \fBnss\-systemd\fP 4
+Entfernt oder stellt das systemd NSS\-Modul in /etc/nsswitch.conf wieder her,
+um ein bekanntes systemd\-Problem zu umgehen.
 .IP \fBdebconf\fP 4
 ermöglicht das Anwenden beliebiger Preseed\-Dateien, die sich auf den
 Live\-Medien oder einem HTTP\-/FTP\-Server befinden.
 .IP \fBhostname\fP 4
 konfiguriert /etc/hostname und /etc/hosts.
-.IP \fBuser\-setup\fP 4
-fügt ein Live\-Benutzerkonto hinzu.
-.IP \fBuser‑media\fP 4
-Konfiguriert das Mounten von Medien und das Verknüpfen oder Binden von
-Benutzerverzeichnissen für persistente Daten.
-.IP \fBissue‑setup\fP 4
+.IP \fBissue\-setup\fP 4
 Richtet die Datei /etc/issue mit einem Willkommensbanner und
 Distributionsinformationen ein.
+.IP "\fBlive\-debconfig (passwd)\fP" 4
+Konfiguriert Benutzer\- und Root\-Passwörter über live\-debconfig.
+.IP \fBuser\-setup\fP 4
+fügt ein Live\-Benutzerkonto hinzu.
+.IP \fBroot\-setup\fP 4
+Legt das Root\-Passwort fest oder aktualisiert es und konfiguriert die
+Root\-Benutzerumgebung.
 .IP \fBsudo\fP 4
 erteilt dem Live\-Benutzer sudo\-Berechtigungen.
+.IP \fBuser\-media\fP 4
+Konfiguriert das Mounten von Medien und das Verknüpfen oder Binden von
+Benutzerverzeichnissen für persistente Daten.
+.IP \fBuser\-ssh\fP 4
+Synchronisiert SSH authorized_keys zwischen dem Live\-Medium und dem
+Home\-Verzeichnis des Benutzers.
 .IP \fBlocales\fP 4
 konfiguriert Gebietsschemas.
-.IP \fBlocales\-all\fP 4
-konfiguriert alle Gebietsschemas.
 .IP \fBtzdata\fP 4
 konfiguriert /etc/timezone.
 .IP \fBgdm3\fP 4
@@ -416,14 +425,16 @@ konfiguriert Autologin in slim.
 konfiguriert Autologin mit xinit.
 .IP \fBkeyboard\-configuration\fP 4
 konfiguriert die Tastatur.
-.IP \fBsystemd\fP 4
-konfiguriert systemd autologin.
 .IP \fBsysvinit\fP 4
 konfiguriert sysvinit.
 .IP \fBsysv\-rc\fP 4
 konfiguriert sysv\-rc durch Deaktivierung gelisteter Dienste.
 .IP \fBlogin\fP 4
 deaktiviert lastlog.
+.IP \fBanacron\fP 4
+deaktiviert anacron.
+.IP \fButil\-linux\fP 4
+deaktiviert util\-linux' hwclock.
 .IP \fBapport\fP 4
 deaktiviert apport.
 .IP \fBgnome\-panel\-data\fP 4
@@ -442,29 +453,23 @@ erteilt Benutzerberechtigungen über PolicyKit.
 regeneriert SSL\-Snake\-Oil\-Zertifikate.
 .IP \fBxrdp\fP 4
 konfiguriert xrdp für Remote\-Desktop\-Konnektivität.
-.IP \fBanacron\fP 4
-deaktiviert anacron.
-.IP \fButil\-linux\fP 4
-deaktiviert util\-linux' hwclock.
-.IP \fBlogin\fP 4
-deaktiviert lastlog.
-.IP \fBxserver\-xorg\fP 4
-konfiguriert xserver\-xorg.
-.IP \fBbroadcom\-sta\fP 4
-konfiguriert Broadcom\-STA\-WLAN\-Treiber.
-.IP \fBopenssh\-server\fP 4
-erstellt Openssh\-Server\-Hostschlüssel neu.
 .IP \fBxfce4\-panel\fP 4
 konfiguriert xfce4\-panel auf Standardeinstellungen.
 .IP \fBxscreensaver\fP 4
 deaktiviert den Bildschirmschoner, der den Bildschirm sperrt.
-.IP \fBxhyper‑v\fP 4
-configures X11 settings to improve compatibility on Microsoft Hyper‑V
-platforms.
+.IP \fBbroadcom\-sta\fP 4
+konfiguriert Broadcom\-STA\-WLAN\-Treiber.
+.IP \fBxserver\-xorg\fP 4
+konfiguriert xserver\-xorg.
+.IP \fBopenssh\-server\fP 4
+erstellt Openssh\-Server\-Hostschlüssel neu.
+.IP \fBxhyper\-v\fP 4
+Konfiguriert X11\-Einstellungen zur Verbesserung der Kompatibilität auf
+Microsoft Hyper\-V\-Plattformen.
 .IP \fBntfs3\fP 4
 verwaltet udev\-Regeln für NTFS3\-Unterstützung.
-.IP \fBconfig\-module‑mode\fP 4
-konfiguriert den Systemmodulmodus und aktualisiert Caches,
+.IP \fBconfig\-module\-mode\fP 4
+Konfiguriert den Systemmodulmodus und aktualisiert Caches,
 Benutzereinstellungen und dpkg.
 .IP \fBhooks\fP 4
 ermöglicht das Ausführen beliebiger Befehle aus einer Datei, die sich auf

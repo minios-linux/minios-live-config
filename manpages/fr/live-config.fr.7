@@ -67,14 +67,14 @@ pré\-configuration debconf à la base de données debconf. Notez que les URLs
 doivent pouvoir être utilisables par wget (http, ftp ou file://).
 .br
 Si le fichier est placé dans le dispositif live, il peut être utilisé avec
-file:///lib/live/mount/medium/\fIFILE\fP, ou bien avec file:///\fIFILE\fP s'il est
-placé à la racine du système de fichiers du système live.
+file:///run/initramfs/memory/data/\fIFILE\fP, ou bien avec file:///\fIFILE\fP s'il
+est placé à la racine du système de fichiers du système live.
 .br
 Tous les fichiers de pré\-configuration dans /usr/lib/live/config\-preseed/
 dans le système de fichiers racine du système live peuvent être
 automatiquement activés avec le mot clé 'filesystem'.
 .br
-Tous les fichiers de pré\-configuration dans /live/config\-preseed/ du
+Tous les fichiers de pré\-configuration dans /minios/config\-preseed/ du
 dispositif live peuvent être automatiquement activés avec le mot clé
 \&'medium'
 .br
@@ -160,25 +160,22 @@ comptes utilisateurs, reconstruira les caches et actualisera les paramètres
 des paquets afin que les modifications de configuration soient intégrées
 dynamiquement au système en cours d'exécution.
 .IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
-Permet d'aller chercher et d'exécuter un ou plusieurs fichiers
-spécifiques. Notez que les URLs doivent pouvoir être téléchargées par wget
-(http, ftp ou file://), que les fichiers sont exécutés dans /tmp du système
-live en fonctionnement, et que les dépendances des fichiers doivent être
-préalablement installées; par exemple, si vous devez exécuter un script
-python, vous devez préalablement installer l'interpréteur python sur le
-système. Quelques hooks pour certains cas d'utilisation communs sont
-disponibles dans /usr/share/doc/live\-config/examples/hooks/ et sur
-<\fIhttp://live.debian.net/other/hooks\fP>.
+Allows one to fetch and execute one or more arbitrary files. Note that the
+URLs must be fetchable by wget (http, ftp or file://), the files are
+executed in /tmp of the running live system, and that the files needs their
+dependencies, if any, already installed, e.g. if a python script should be
+executed the system needs python installed. Some hooks for some common
+use\-cases are available at /usr/share/doc/live\-config/examples/hooks/.
 .br
 Si le fichier est placé dans le dispositif live, il peut être utilisé avec
-file:///lib/live/mount/medium/\fIFILE\fP, ou bien avec file:///\fIFILE\fP s'il est
-placé à la racine du système de fichiers du système live.
+file:///run/initramfs/memory/data/\fIFILE\fP, ou bien avec file:///\fIFILE\fP s'il
+est placé à la racine du système de fichiers du système live.
 .br
 Tous les hooks, placés dans /usr/lib/live/config\-hooks/ à la racine du
 système de fichiers, peuvent être automatiquement activés avec le mot clé
 \&'filesystem'.
 .br
-Tous les hooks dans /live/config\-hooks/ du dispositif live peuvent être
+Tous les hooks dans /minios/config\-hooks/ du dispositif live peuvent être
 automatiquement activés avec le mot clé 'medium'.
 .br
 Si plusieurs mécanismes sont combinés, alors les hooks du système de
@@ -374,25 +371,34 @@ démonstration contenant un exemple de configuration est proposé dans
 \fBlive\-config\fP fournit actuellement les composants suivants dans
 /lib/live/config.
 
+.IP \fBnss\-systemd\fP 4
+supprime ou restaure le module NSS de systemd dans /etc/nsswitch.conf pour
+contourner un problème connu de systemd.
 .IP \fBdebconf\fP 4
 permet d'appliquer des fichiers de pré\-configuration arbitraires placés sur
 les média live ou un serveur http/ftp.
 .IP \fBhostname\fP 4
 configure /etc/hostname et /etc/hosts.
-.IP \fBuser\-setup\fP 4
-ajoute un compte d'utilisateur live.
-.IP \fBuser‑media\fP 4
-configure le montage des médias et la liaison ou le montage de liaison des
-répertoires d'utilisateurs pour les données persistantes.
-.IP \fBissue‑setup\fP 4
+.IP \fBissue\-setup\fP 4
 configure le fichier /etc/issue avec une bannière de bienvenue et des
 informations de distribution.
+.IP "\fBlive\-debconfig (passwd)\fP" 4
+configure les mots de passe de l'utilisateur et de root via live\-debconfig.
+.IP \fBuser\-setup\fP 4
+ajoute un compte d'utilisateur live.
+.IP \fBroot\-setup\fP 4
+définit ou met à jour le mot de passe de root et configure l'environnement
+de l'utilisateur root.
 .IP \fBsudo\fP 4
 offre les privilèges sudo à l'utilisateur live.
+.IP \fBuser\-media\fP 4
+configure le montage des médias et la liaison ou le montage de liaison des
+répertoires d'utilisateurs pour les données persistantes.
+.IP \fBuser\-ssh\fP 4
+synchronise les clés SSH authorized_keys entre les médias live et le
+répertoire personnel de l'utilisateur.
 .IP \fBlocales\fP 4
 configure les locales.
-.IP \fBlocales\-all\fP 4
-configure les locales\-all.
 .IP \fBtzdata\fP 4
 configure /etc/timezone.
 .IP \fBgdm3\fP 4
@@ -411,14 +417,16 @@ configure l'auto\-login dans slim.
 configure l'auto\-login avec xinit.
 .IP \fBkeyboard\-configuration\fP 4
 configure le clavier.
-.IP \fBsystemd\fP 4
-configure l'auto\-login avec systemd.
 .IP \fBsysvinit\fP 4
 configure sysvinit.
 .IP \fBsysv\-rc\fP 4
 configure sysv\-rc en désactivant les services listés.
 .IP \fBlogin\fP 4
 désactive lastlog.
+.IP \fBanacron\fP 4
+désactive anacron.
+.IP \fButil\-linux\fP 4
+désactive hwclock d'util\-linux.
 .IP \fBapport\fP 4
 désactive apport.
 .IP \fBgnome\-panel\-data\fP 4
@@ -437,28 +445,22 @@ accorde à l'utilisateur des privilèges via le policykit.
 regénère les certificats snake\-oil ssl.
 .IP \fBxrdp\fP 4
 configure xrdp pour la connectivité au bureau à distance.
-.IP \fBanacron\fP 4
-désactive anacron.
-.IP \fButil\-linux\fP 4
-désactive util\-linux' hwclock.
-.IP \fBlogin\fP 4
-désactive lastlog.
-.IP \fBxserver\-xorg\fP 4
-configure xserver\-xorg.
-.IP \fBbroadcom\-sta\fP 4
-configure les pilotes WLAN broadcom\-sta.
-.IP \fBopenssh\-server\fP 4
-regénère les clés de l'hôte openssh\-server.
 .IP \fBxfce4\-panel\fP 4
 configure xfce4\-panel avec les réglages par défaut.
 .IP \fBxscreensaver\fP 4
 désactive le verrouillage de session par l'économiseur d'écran.
-.IP \fBxhyper‑v\fP 4
-configures X11 settings to improve compatibility on Microsoft Hyper‑V
-platforms.
+.IP \fBbroadcom\-sta\fP 4
+configure les pilotes WLAN broadcom\-sta.
+.IP \fBxserver\-xorg\fP 4
+configure xserver\-xorg.
+.IP \fBopenssh\-server\fP 4
+regénère les clés de l'hôte openssh\-server.
+.IP \fBxhyper\-v\fP 4
+configure les paramètres X11 pour améliorer la compatibilité sur les
+plateformes Microsoft Hyper\-V.
 .IP \fBntfs3\fP 4
 gère les règles udev pour le support NTFS3.
-.IP \fBconfig\-module‑mode\fP 4
+.IP \fBconfig\-module\-mode\fP 4
 configure le mode module système et met à jour les caches, les paramètres
 utilisateur et dpkg.
 .IP \fBhooks\fP 4

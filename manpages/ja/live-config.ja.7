@@ -51,13 +51,13 @@
 debconf データベースに適用する debconf の preseed ファイルを取得、適用します。URL は wget により取得できるもの
 (http、 ftp、 file:// のどれか) でないといけないことに注意してください
 .br
-ファイルが Live メディア上にある場合は file:///lib/live/mount/medium/\fIファイル\fP、Live
+ファイルが Live メディア上にある場合は file:///run/initramfs/memory/data/\fIファイル\fP、Live
 システム自体のルートファイルシステムにある場合は file:///\fIファイル\fP で取得できます。
 .br
 「filesystem」というキーワードを使って、Live システムのルートファイルシステム中の
 /usr/lib/live/config\-preseed/ にある preseed ファイルを全て自動的に有効化できます。
 .br
-「medium」というキーワードを使って、Live メディアの /live/config\-preseed/ にある preseed
+「medium」というキーワードを使って、Live メディアの /minios/config\-preseed/ にある preseed
 ファイルを全て自動的に有効化できます。
 .br
 複数の仕組みを組み合わせた場合はファイルシステムの preseed ファイルがまず適用され、それからメディアの preseed
@@ -118,13 +118,13 @@ WLAN ドライバを自動検出に代えてセットします。Live システ�
 スクリプトを実行するのであればそのシステムには python がインストールされている必要があります。一般的な活用事例の一部について、そのためのフックが
 /usr/share/doc/live\-config/examples/hooks/ からいくらか利用できるようになっています。
 .br
-ファイルが Live メディア上にある場合は file:///lib/live/mount/medium/\fIファイル\fP、Live
+ファイルが Live メディア上にある場合は file:///run/initramfs/memory/data/\fIファイル\fP、Live
 システム自体のルートファイルシステムにある場合は file:///\fIファイル\fP で取得できます。
 .br
 「filesystem」というキーワードにより、Live システムのルートファイルシステムの /usr/lib/live/config\-hooks/
 にあるフックを全て自動的に有効化することができます。
 .br
-「medium」というキーワードにより、Live メディアの /live/config\-hooks/
+「medium」というキーワードにより、Live メディアの /minios/config\-hooks/
 にあるフックを全て自動的に有効化することができます。
 .br
 複数の仕組みを組み合わせた場合はファイルシステムのフックがまず実行され、それからメディアのフック、最後にネットワークのフックが実行されます。
@@ -258,22 +258,28 @@ Live システム自体の設定ファイルは自分の Debian パッケージ�
 .SH 構成要素
 \fBlive\-config\fP では /usr/lib/live/config 中の以下の構成要素が現在有効です。
 
+.IP \fBnss\-systemd\fP 4
+/etc/nsswitch.conf にある systemd NSS モジュールを削除または復元し、既知の systemd の問題を回避します。
 .IP \fBdebconf\fP 4
 Live メディアや http/ftp サーバに置かれた任意の preseed ファイルを適用します。
 .IP \fBhostname\fP 4
 /etc/hostname 及び /etc/hosts を設定します。
+.IP \fBissue\-setup\fP 4
+/etc/issue ファイルをウェルカムバナーとディストリビューション情報で設定します。
+.IP "\fBlive\-debconfig (passwd)\fP" 4
+live\-debconfig を介してユーザーパスワードと root パスワードを設定します。
 .IP \fBuser\-setup\fP 4
 Live ユーザアカウントを追加します。
-.IP \fBuser‑media\fP 4
-メディアのマウントと、永続データ用のユーザディレクトリのリンクまたはバインドを設定します。
-.IP \fBissue‑setup\fP 4
-/etc/issue ファイルをウェルカムバナーとディストリビューション情報で設定します。
+.IP \fBroot\-setup\fP 4
+root パスワードを設定または更新し、root ユーザー環境を設定します。
 .IP \fBsudo\fP 4
 Live ユーザに sudo 権限を与えます。
+.IP \fBuser\-media\fP 4
+メディアのマウントと、永続データ用のユーザディレクトリのリンクまたはバインドを設定します。
+.IP \fBuser\-ssh\fP 4
+ライブメディアとユーザーのホームディレクトリ間で SSH authorized_keys を同期します。
 .IP \fBlocales\fP 4
 ロケールを設定します。
-.IP \fBlocales\-all\fP 4
-locales\-all を設定します。
 .IP \fBtzdata\fP 4
 /etc/timezone を設定します。
 .IP \fBgdm3\fP 4
@@ -292,14 +298,16 @@ slim の自動ログインを設定します。
 xinit を使って自動ログインを設定します。
 .IP \fBkeyboard\-configuration\fP 4
 キーボードを設定します。
-.IP \fBsystemd\fP 4
-systemd の自動ログインを設定します。
 .IP \fBsysvinit\fP 4
 sysvinit を設定します。
 .IP \fBsysv\-rc\fP 4
 一覧にあるサービスを無効にして sysv\-rc を設定します。
 .IP \fBlogin\fP 4
 lastlog を無効にします。
+.IP \fBanacron\fP 4
+anacron を無効にします。
+.IP \fButil\-linux\fP 4
+util\-linux の hwclock を無効にします。
 .IP \fBapport\fP 4
 apport を無効にします。
 .IP \fBgnome\-panel\-data\fP 4
@@ -318,28 +326,22 @@ policykit を使ってユーザ権限を与えます。
 SSL の snake\-oil 証明書を再生成します。
 .IP \fBxrdp\fP 4
 リモートデスクトップ接続のために xrdp を設定します。
-.IP \fBanacron\fP 4
-anacron を無効にします。
-.IP \fButil\-linux\fP 4
-util\-linux の hwclock を無効にします。
-.IP \fBlogin\fP 4
-lastlog を無効にします。
-.IP \fBxserver\-xorg\fP 4
-xserver\-xorg を設定します。
-.IP \fBbroadcom\-sta\fP 4
-broadcom\-sta WLAN ドライバを設定します。
-.IP \fBopenssh\-server\fP 4
-openssh\-server のホストキーを再生成します。
 .IP \fBxfce4\-panel\fP 4
 xfce4\-panel をデフォルト設定にします。
 .IP \fBxscreensaver\fP 4
 画面をロックするスクリーンセーバーを無効にします。
-.IP \fBxhyper‑v\fP 4
-configures X11 settings to improve compatibility on Microsoft Hyper‑V
+.IP \fBbroadcom\-sta\fP 4
+broadcom\-sta WLAN ドライバを設定します。
+.IP \fBxserver\-xorg\fP 4
+xserver\-xorg を設定します。
+.IP \fBopenssh\-server\fP 4
+openssh\-server のホストキーを再生成します。
+.IP \fBxhyper\-v\fP 4
+configures X11 settings to improve compatibility on Microsoft Hyper\-V
 platforms.
 .IP \fBntfs3\fP 4
 NTFS3 サポートのための udev ルールを管理します。
-.IP \fBconfig\-module‑mode\fP 4
+.IP \fBconfig\-module\-mode\fP 4
 システムモジュールモードを設定し、キャッシュ、ユーザー設定、および dpkg を更新します。
 .IP \fBhooks\fP 4
 Live メディアや http/ftp サーバに置かれたファイルから任意の任意のコマンドを実行します。

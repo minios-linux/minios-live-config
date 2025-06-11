@@ -39,11 +39,11 @@ Some individual components can change their behaviour upon a boot parameter.
 .IP "\fBlive\-config.debconf\-preseed\fR=filesystem|medium|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR | \fBdebconf\-preseed\fR=medium|filesystem|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR" 4
 Allows one to fetch and apply one or more debconf preseed files to be applied to the debconf database. Note that the URLs must be fetchable by wget (http, ftp or file://).
 .br
-If the file is placed on the live medium, it can be fetched with file:///lib/live/mount/medium/\fIFILE\fR, or with file:///\fIFILE\fR if it is in the root filesystem of the live system itself.
+If the file is placed on the live medium, it can be fetched with file:///run/initramfs/memory/data/\fIFILE\fR, or with file:///\fIFILE\fR if it is in the root filesystem of the live system itself.
 .br
 All preseed files in /usr/lib/live/config\-preseed/ in the root filesystem of the live system can be automatically enabled with the keyword 'filesystem'.
 .br
-All preseed files in /live/config\-preseed/ of the live medium can be automatically enabled with the keyword 'medium'.
+All preseed files in /minios/config\-preseed/ of the live medium can be automatically enabled with the keyword 'medium'.
 .br
 If several mechanisms are combined, then filesystem preseed files are applied first, then medium preseed files, and last the network preseed files.
 .IP "\fBlive\-config.hostname\fR=\fIHOSTNAME\fR | \fBhostname\fR=\fIHOSTNAME\fR" 4
@@ -91,11 +91,11 @@ Allows you to specify the module mode for live configuration. When set to "merge
 .IP "\fBlive\-config.hooks\fR=filesystem|medium|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR | \fBhooks\fR=medium|filesystem|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR" 4
 Allows one to fetch and execute one or more arbitrary files. Note that the URLs must be fetchable by wget (http, ftp or file://), the files are executed in /tmp of the running live system, and that the files needs their dependencies, if any, already installed, e.g. if a python script should be executed the system needs python installed. Some hooks for some common use-cases are available at /usr/share/doc/live-config/examples/hooks/.
 .br
-If the file is placed on the live medium, it can be fetched with file:///lib/live/mount/medium/\fIFILE\fR, or with file:///\fIFILE\fR if it is in the root filesystem of the live system itself.
+If the file is placed on the live medium, it can be fetched with file:///run/initramfs/memory/data/\fIFILE\fR, or with file:///\fIFILE\fR if it is in the root filesystem of the live system itself.
 .br
 All hooks in /usr/lib/live/config\-hooks/ in the root filesystem of the live system can be automatically enabled with the keyword 'filesystem'.
 .br
-All hooks in /live/config\-hooks/ of the live medium can be automatically enabled with the keyword 'medium'.
+All hooks in /minios/config\-hooks/ of the live medium can be automatically enabled with the keyword 'medium'.
 .br
 If several mechanisms are combined, then filesystem hooks are executed first, then medium hooks, and last the network hooks.
 
@@ -205,22 +205,28 @@ The configuration files for the live system itself are best put into an own debi
 .SH COMPONENTS
 \fBlive\-config\fR currently features the following components in /usr/lib/live/config.
 
+.IP "\fBnss-systemd\fR" 4
+removes or restores the systemd NSS module in /etc/nsswitch.conf to work around a known systemd issue.
 .IP "\fBdebconf\fR" 4
 allows one to apply arbitrary preseed files placed on the live media or an http/ftp server.
 .IP "\fBhostname\fR" 4
 configures /etc/hostname and /etc/hosts.
-.IP "\fBuser\-setup\fR" 4
-adds a live user account.
-.IP "\fBuser‑media\fR" 4
-configures mounting of media and linking or binding of user directories for persistent data.
-.IP "\fBissue‑setup\fR" 4
+.IP "\fBissue-setup\fR" 4
 sets up the /etc/issue file with a welcome banner and distribution information.
+.IP "\fBlive-debconfig (passwd)\fR" 4
+configures user and root passwords via live-debconfig.
+.IP "\fBuser-setup\fR" 4
+adds a live user account.
+.IP "\fBroot-setup\fR" 4
+sets or updates the root password and configures the root user environment.
 .IP "\fBsudo\fR" 4
 grants sudo privileges to the live user.
+.IP "\fBuser-media\fR" 4
+configures mounting of media and linking or binding of user directories for persistent data.
+.IP "\fBuser-ssh\fR" 4
+synchronizes SSH authorized_keys between the live media and the user’s home directory.
 .IP "\fBlocales\fR" 4
 configures locales.
-.IP "\fBlocales\-all\fR" 4
-configures locales\-all.
 .IP "\fBtzdata\fR" 4
 configures /etc/timezone.
 .IP "\fBgdm3\fR" 4
@@ -237,55 +243,51 @@ configures autologin in nodm.
 configures autologin in slim.
 .IP "\fBxinit\fR" 4
 configures autologin with xinit.
-.IP "\fBkeyboard\-configuration\fR" 4
+.IP "\fBkeyboard-configuration\fR" 4
 configures the keyboard.
-.IP "\fBsystemd\fR" 4
-configures systemd autologin.
 .IP "\fBsysvinit\fR" 4
 configures sysvinit.
 .IP "\fBsysv-rc\fR" 4
 configures sysv-rc by disabling listed services.
 .IP "\fBlogin\fR" 4
 disables lastlog.
-.IP "\fBapport\fR" 4
-disables apport.
-.IP "\fBgnome\-panel\-data\fR" 4
-disables lock button for the screen.
-.IP "\fBgnome\-power\-manager\fR" 4
-disables hibernation.
-.IP "\fBgnome\-screensaver\fR" 4
-disables the screensaver locking the screen.
-.IP "\fBkaboom\fR" 4
-disables KDE migration wizard (squeeze and newer).
-.IP "\fBkde\-services\fR" 4
-disables some unwanted KDE services (squeeze and newer).
-.IP "\fBpolicykit\fR" 4
-grant user privilegies through policykit.
-.IP "\fBssl\-cert\fR" 4
-regenerating ssl snake\-oil certificates.
-.IP "\fBxrdp\fR" 4
-configures xrdp for remote desktop connectivity.
 .IP "\fBanacron\fR" 4
 disables anacron.
 .IP "\fButil-linux\fR" 4
 disables util-linux' hwclock.
-.IP "\fBlogin\fR" 4
-disables lastlog.
-.IP "\fBxserver\-xorg\fR" 4
-configures xserver\-xorg.
-.IP "\fBbroadcom\-sta\fR" 4
-configures broadcom\-sta WLAN drivers.
-.IP "\fBopenssh-server\fR" 4
-recreates openssh-server host keys.
-.IP "\fBxfce4\-panel\fR" 4
-configures xfce4\-panel to default settings.
+.IP "\fBapport\fR" 4
+disables apport.
+.IP "\fBgnome-panel-data\fR" 4
+disables lock button for the screen.
+.IP "\fBgnome-power-manager\fR" 4
+disables hibernation.
+.IP "\fBgnome-screensaver\fR" 4
+disables the screensaver locking the screen.
+.IP "\fBkaboom\fR" 4
+disables KDE migration wizard (squeeze and newer).
+.IP "\fBkde-services\fR" 4
+disables some unwanted KDE services (squeeze and newer).
+.IP "\fBpolicykit\fR" 4
+grant user privilegies through policykit.
+.IP "\fBssl-cert\fR" 4
+regenerating ssl snake-oil certificates.
+.IP "\fBxrdp\fR" 4
+configures xrdp for remote desktop connectivity.
+.IP "\fBxfce4-panel\fR" 4
+configures xfce4-panel to default settings.
 .IP "\fBxscreensaver\fR" 4
 disables the screensaver locking the screen.
-.IP "\fBxhyper‑v\fR" 4
-configures X11 settings to improve compatibility on Microsoft Hyper‑V platforms.
+.IP "\fBbroadcom-sta\fR" 4
+configures broadcom-sta WLAN drivers.
+.IP "\fBxserver-xorg\fR" 4
+configures xserver-xorg.
+.IP "\fBopenssh-server\fR" 4
+recreates openssh-server host keys.
+.IP "\fBxhyper-v\fR" 4
+configures X11 settings to improve compatibility on Microsoft Hyper-V platforms.
 .IP "\fBntfs3\fR" 4
 manages udev rules for NTFS3 support.
-.IP "\fBconfig-module‑mode\fR" 4
+.IP "\fBconfig-module-mode\fR" 4
 configures system module mode and updates caches, user settings, and dpkg.
 .IP "\fBhooks\fR" 4
 allows one to run arbitrary commands from a file placed on the live media or an http/ftp server.

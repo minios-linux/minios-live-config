@@ -73,8 +73,8 @@ berada di sistem berkas root dari sistem live itu sendiri.
 Semua file preseed di /usr/lib/live/config\-preseed/ di sistem berkas root
 sistem live dapat diaktifkan secara otomatis dengan kata kunci 'filesystem'.
 .br
-Semua file preseed di /live/config\-preseed/ dari media live dapat diaktifkan
-secara otomatis dengan kata kunci 'medium'.
+Semua file preseed di /minios/config\-preseed/ dari media live dapat
+diaktifkan secara otomatis dengan kata kunci 'medium'.
 .br
 Jika beberapa mekanisme digabungkan, maka file preseed sistem file
 diterapkan pertama, kemudian file preseed media, dan terakhir file preseed
@@ -168,7 +168,7 @@ berada di sistem berkas root dari sistem live itu sendiri.
 Semua kait di /usr/lib/live/config\-hooks/ di sistem berkas root sistem live
 dapat diaktifkan secara otomatis dengan kata kunci 'filesystem'.
 .br
-Semua kait di /live/config\-hooks/ dari media live dapat diaktifkan secara
+Semua kait di /minios/config\-hooks/ dari media live dapat diaktifkan secara
 otomatis dengan kata kunci 'medium'.
 .br
 Jika beberapa mekanisme digabungkan, maka kait sistem berkas dieksekusi
@@ -353,25 +353,34 @@ dapat ditemukan di /usr/share/doc/live\-config/examples.
 \fBlive\-config\fP saat ini memiliki komponen\-komponen berikut di
 /usr/lib/live/config.
 
+.IP \fBnss\-systemd\fP 4
+Menghapus atau mengembalikan modul NSS systemd di /etc/nsswitch.conf untuk
+mengatasi masalah systemd yang diketahui.
 .IP \fBdebconf\fP 4
 Memungkinkan seseorang untuk menerapkan file preseed arbitrer yang
 ditempatkan di media live atau server http/ftp.
 .IP \fBhostname\fP 4
 Mengonfigurasi /etc/hostname dan /etc/hosts.
-.IP \fBuser\-setup\fP 4
-Menambahkan akun pengguna live.
-.IP \fBuser‑media\fP 4
-Mengonfigurasi pemasangan media dan tautan atau pengikatan direktori
-pengguna untuk data persisten.
-.IP \fBissue‑setup\fP 4
+.IP \fBissue\-setup\fP 4
 Mengatur file /etc/issue dengan spanduk selamat datang dan informasi
 distribusi.
+.IP "\fBlive\-debconfig (passwd)\fP" 4
+Mengonfigurasi kata sandi pengguna dan root melalui live\-debconfig.
+.IP \fBuser\-setup\fP 4
+Menambahkan akun pengguna live.
+.IP \fBroot\-setup\fP 4
+Mengatur atau memperbarui kata sandi root dan mengonfigurasi lingkungan
+pengguna root.
 .IP \fBsudo\fP 4
 Memberikan hak istimewa sudo kepada pengguna live.
+.IP \fBuser\-media\fP 4
+Mengonfigurasi pemasangan media dan tautan atau pengikatan direktori
+pengguna untuk data persisten.
+.IP \fBuser\-ssh\fP 4
+Menyinkronkan kunci SSH authorized_keys antara media live dan direktori home
+pengguna.
 .IP \fBlocales\fP 4
 Mengonfigurasi lokal.
-.IP \fBlocales\-all\fP 4
-Mengonfigurasi semua lokal.
 .IP \fBtzdata\fP 4
 Mengonfigurasi /etc/timezone.
 .IP \fBgdm3\fP 4
@@ -390,14 +399,16 @@ Mengonfigurasi autologin di slim.
 Mengonfigurasi autologin dengan xinit.
 .IP \fBkeyboard\-configuration\fP 4
 Mengonfigurasi keyboard.
-.IP \fBsystemd\fP 4
-Mengonfigurasi autologin systemd.
 .IP \fBsysvinit\fP 4
 Mengonfigurasi sysvinit.
 .IP \fBsysv\-rc\fP 4
 Mengonfigurasi sysv\-rc dengan menonaktifkan layanan yang terdaftar.
 .IP \fBlogin\fP 4
 Menonaktifkan lastlog.
+.IP \fBanacron\fP 4
+Menonaktifkan anacron.
+.IP \fButil\-linux\fP 4
+Menonaktifkan hwclock util\-linux.
 .IP \fBapport\fP 4
 Menonaktifkan apport.
 .IP \fBgnome\-panel\-data\fP 4
@@ -417,28 +428,22 @@ Memberikan hak istimewa pengguna melalui policykit.
 Meregenerasi sertifikat SSL snake\-oil.
 .IP \fBxrdp\fP 4
 Mengonfigurasi xrdp untuk konektivitas desktop jarak jauh.
-.IP \fBanacron\fP 4
-Menonaktifkan anacron.
-.IP \fButil\-linux\fP 4
-Menonaktifkan hwclock util\-linux.
-.IP \fBlogin\fP 4
-Menonaktifkan lastlog.
-.IP \fBxserver\-xorg\fP 4
-Mengonfigurasi xserver\-xorg.
-.IP \fBbroadcom\-sta\fP 4
-Mengonfigurasi driver WLAN broadcom\-sta.
-.IP \fBopenssh\-server\fP 4
-Menciptakan kembali kunci host openssh\-server.
 .IP \fBxfce4\-panel\fP 4
 Mengonfigurasi xfce4\-panel ke pengaturan default.
 .IP \fBxscreensaver\fP 4
 Menonaktifkan pengunci layar oleh screensaver.
-.IP \fBxhyper‑v\fP 4
-configures X11 settings to improve compatibility on Microsoft Hyper‑V
+.IP \fBbroadcom\-sta\fP 4
+Mengonfigurasi driver WLAN broadcom\-sta.
+.IP \fBxserver\-xorg\fP 4
+Mengonfigurasi xserver\-xorg.
+.IP \fBopenssh\-server\fP 4
+Menciptakan kembali kunci host openssh\-server.
+.IP \fBxhyper\-v\fP 4
+configures X11 settings to improve compatibility on Microsoft Hyper\-V
 platforms.
 .IP \fBntfs3\fP 4
 Mengelola aturan udev untuk dukungan NTFS3.
-.IP \fBconfig\-module‑mode\fP 4
+.IP \fBconfig\-module\-mode\fP 4
 Mengonfigurasi mode modul sistem dan memperbarui cache, pengaturan pengguna,
 dan dpkg.
 .IP \fBhooks\fP 4
