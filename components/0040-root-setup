@@ -99,7 +99,7 @@ EOF
 	sed -i 's,01;32m,01;31m,g' /root/.bashrc || echo "Failed to update /root/.bashrc"
 
 	# Creating state file
-	touch /var/lib/live/config/root
+	touch /var/lib/live/config/root-setup
 }
 
 Cmdline

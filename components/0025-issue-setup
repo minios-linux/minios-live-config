@@ -70,7 +70,7 @@ EOF
 EOF
 
     # Creating state file
-    touch /var/lib/live/config/user-setup
+    touch /var/lib/live/config/issue-setup
 }
 
 Init
