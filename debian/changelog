@@ -1,3 +1,18 @@
+minios-live-config (11.0.5.1) unstable; urgency=medium
+
+  * Add authorized_keys synchronization
+  * Separate root configuration into a separate component
+  * Refactor components
+  * Update documentation
+  * Update translations
+  * Add translations of documentation into Russian, Portuguese, Portuguese
+    (Brazil), Indonesian, German.
+  * Add autostart service after package installation
+  * Remove live-tools from dependencies
+  * Add bash and perl to dependencies
+
+ -- crims0n <crims0n@minios.dev>  Wed, 11 Jun 2025 20:03:38 +0300
+
 minios-live-config (11.0.5.0) unstable; urgency=medium
 
   * Redefine logic of live-config so that configuration file supplements command
