@@ -44,11 +44,11 @@ Init() {
 
 	# Checking if package is installed or already configured
 	if ! pkg_is_installed "user-setup" ||
-		component_was_executed "root"; then
+		component_was_executed "root-setup"; then
 		exit 0
 	fi
 
-	echo -n " root"
+	echo -n " root-setup"
 
 }
 
