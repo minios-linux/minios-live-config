@@ -57,9 +57,9 @@ Config ()
 				;;
 
 			medium)
-				if ls /lib/live/mount/medium/live/config-preseed/* 2>&1
+				if ls /run/initramfs/memory/data/minios/config-preseed/* 2>&1
 				then
-					_PRESEEDS="${_PRESEEDS} $(for _FILE in /lib/live/mount/medium/live/config-preseed/*; do echo file://${_FILE}; done)"
+					_PRESEEDS="${_PRESEEDS} $(for _FILE in /run/initramfs/memory/data/minios/config-preseed/*; do echo file://${_FILE}; done)"
 				fi
 				;;
 
