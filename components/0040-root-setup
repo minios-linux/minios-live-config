@@ -10,7 +10,7 @@
 ## This is free software, and you are welcome to redistribute it
 ## under certain conditions; see COPYING for details.
 
-#set -e
+set -e
 
 Cmdline() {
 	# Reading kernel command line
@@ -60,17 +60,22 @@ Config() {
 		ROOT_PASS_TYPE="crypted"
 	fi
 
+	# Build debconf selections
+	cat >/tmp/live-config.cfg <<EOF
+user-setup passwd/make-user boolean false
+EOF
+
 	# Root password selections
 	case "${ROOT_PASS_TYPE}" in
 	plain)
-		cat >/tmp/live-config.cfg <<EOF
+		cat >>/tmp/live-config.cfg <<EOF
 user-setup passwd/root-password string ${LIVE_ROOT_PASSWORD}
 user-setup passwd/root-password-again string ${LIVE_ROOT_PASSWORD}
 user-setup passwd/root-password-crypted string
 EOF
 		;;
 	crypted)
-		cat >/tmp/live-config.cfg <<EOF
+		cat >>/tmp/live-config.cfg <<EOF
 user-setup passwd/root-password string
 user-setup passwd/root-password-again string
 user-setup passwd/root-password-crypted string ${LIVE_ROOT_PASSWORD_CRYPTED}
@@ -81,11 +86,8 @@ EOF
 	debconf-set-selections </tmp/live-config.cfg
 	rm -f /tmp/live-config.cfg
 
-	# Workaround for bug in shadow
-	set +e
 	/usr/lib/user-setup/user-setup-apply 2>&1 |
-		grep -v "Shadow passwords are now on"
-	set -e
+		grep -v "Shadow passwords are now on" || :
 
 	# Setting up 'root' user environment
 	cp -rT /etc/skel /root || echo "Failed to copy skeleton files to /root."

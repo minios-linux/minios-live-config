@@ -11,7 +11,7 @@
 ## This is free software, and you are welcome to redistribute it
 ## under certain conditions; see COPYING for details.
 
-#set -e
+set -e
 
 BEXT="sb"
 
@@ -104,7 +104,7 @@ Config() {
     fi
 
     # Path to the marker file for storing last authkeys sync time
-    STATE_FILE="$MEDIA/var/lib/live/config/last-authkeys-sync-time"
+    STATE_FILE="/var/lib/live/config/last-authkeys-sync-time"
 
     # Get current time in seconds since epoch
     NOW=$(date +%s)

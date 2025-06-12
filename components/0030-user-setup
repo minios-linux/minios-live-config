@@ -11,7 +11,7 @@
 ## This is free software, and you are welcome to redistribute it
 ## under certain conditions; see COPYING for details.
 
-#set -e
+set -e
 
 Cmdline() {
     for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
@@ -82,6 +82,9 @@ Config() {
     # Build debconf selections
     cat >/tmp/live-config.cfg <<EOF
 user-setup passwd/make-user boolean true
+user-setup passwd/root-password string
+user-setup passwd/root-password-again string
+user-setup passwd/root-password-crypted string *
 EOF
 
     # User password selections
@@ -113,20 +116,21 @@ EOF
     debconf-set-selections </tmp/live-config.cfg
     rm -f /tmp/live-config.cfg
 
-    # Workaround for bug in shadow
-    set +e
     /usr/lib/user-setup/user-setup-apply 2>&1 |
-        grep -v "Shadow passwords are now on"
-    set -e
+        grep -v "Shadow passwords are now on" || :
+
+    cat /etc/shadow | grep -q "^${LIVE_USERNAME}:" || {
+        echo "Failed to create user ${LIVE_USERNAME}."
+    }
 
     # Setting up user environment
     if [ -d "/home/${LIVE_USERNAME}" ]; then
         for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos; do
             mkdir -p "/home/${LIVE_USERNAME}/$DIR" || echo "Failed to create /home/${LIVE_USERNAME}/$DIR"
         done
+        chown 1000:1000 /home/${LIVE_USERNAME} || echo "Failed to set ownership for /home/${LIVE_USERNAME}"
+        chown -R 1000:1000 /home/${LIVE_USERNAME} || echo "Failed to set ownership recursively for /home/${LIVE_USERNAME}"
     fi
-    chown 1000:1000 /home/${LIVE_USERNAME} || echo "Failed to set ownership for /home/${LIVE_USERNAME}"
-    chown -R 1000:1000 /home/${LIVE_USERNAME} || echo "Failed to set ownership recursively for /home/${LIVE_USERNAME}"
 
     # Creating state file
     touch /var/lib/live/config/user-setup
