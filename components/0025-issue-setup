@@ -14,6 +14,17 @@
 
 #set -e
 
+Cmdline() {
+    # Reading kernel command line
+    for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
+        case "${_PARAMETER}" in
+        live-config.username=* | username=*)
+            LIVE_USERNAME="${_PARAMETER#*username=}"
+            ;;
+        esac
+    done
+}
+
 Init() {
     # Checking if package is installed or already configured
     if component_was_executed "issue-setup"; then
@@ -29,6 +40,10 @@ Config() {
 
 
                                                                           \\l
+
+
+
+
 
                         Thank you for using MiniOS.
 EOF
@@ -68,6 +83,32 @@ EOF
     [1;1m###       ### ########### ###    #### ########### ########   ########  [0;29m
 
 EOF
+
+    if [ "$USERNAME" != "root" ]; then
+        cat <<EOF >>/etc/issue
+                        Default passwords:
+                          root: [1;33mtoor[0;29m
+                          live: [1;33mevil[0;29m
+
+
+
+
+
+
+EOF
+    else
+        cat <<EOF >>/etc/issue
+                        Default password:
+                          root: [1;33mtoor[0;29m
+
+
+
+
+
+
+
+EOF
+    fi
 
     # Creating state file
     touch /var/lib/live/config/issue-setup
