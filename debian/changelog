@@ -1,3 +1,12 @@
+minios-live-config (11.0.5.2) unstable; urgency=medium
+
+  * Add xorg-service component to configure xorg.service
+  * Update issue-setup component to include default credentials
+  * Update documentation
+  * Update translations
+
+ -- crims0n <crims0n@minios.dev>  Sun, 15 Jun 2025 00:27:09 +0300
+
 minios-live-config (11.0.5.1) unstable; urgency=medium
 
   * Add authorized_keys synchronization
