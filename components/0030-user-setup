@@ -55,6 +55,13 @@ Init() {
 }
 
 Config() {
+    # Workaround for MiniOS Flux
+    if [ "${LIVE_USERNAME}" = "root" ] && pkg_is_installed "fluxbox-slax"; then
+        local LIVE_USERNAME="guest"
+        local LIVE_USER_PASSWORD=""
+        local LIVE_USER_PASSWORD_CRYPTED="*"
+    fi
+
     # Checking if package is already configured differently
     if grep -q "^${LIVE_USERNAME}:" /etc/passwd; then
         exit 0
