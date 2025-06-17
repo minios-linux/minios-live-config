@@ -128,8 +128,8 @@ EOF
         for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos; do
             mkdir -p "/home/${LIVE_USERNAME}/$DIR" || echo "Failed to create /home/${LIVE_USERNAME}/$DIR"
         done
-        chown 1000:1000 /home/${LIVE_USERNAME} || echo "Failed to set ownership for /home/${LIVE_USERNAME}"
-        chown -R 1000:1000 /home/${LIVE_USERNAME} || echo "Failed to set ownership recursively for /home/${LIVE_USERNAME}"
+        chown ${LIVE_USERNAME}:${LIVE_USERNAME} /home/${LIVE_USERNAME} || echo "Failed to set ownership for /home/${LIVE_USERNAME}"
+        chown -R ${LIVE_USERNAME}:${LIVE_USERNAME} /home/${LIVE_USERNAME} || echo "Failed to set ownership recursively for /home/${LIVE_USERNAME}"
     fi
 
     # Creating state file

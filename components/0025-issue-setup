@@ -67,7 +67,7 @@ EOF
     [ -n "$DIST" ] && printf "                        %s\n" "$DIST" >>"/etc/issue"
 
     # Append Slax info if installed
-    if dpkg -l fluxbox-slax >/dev/null 2>&1; then
+    if pkg_is_installed "fluxbox-slax"; then
         printf "                        Powered by [1;32mSlax[0;29m.\n" >>"/etc/issue"
     fi
 
@@ -84,11 +84,11 @@ EOF
 
 EOF
 
-    if [ "$USERNAME" != "root" ]; then
+    if [ "$LIVE_USERNAME" = "root" ]; then
         cat <<EOF >>/etc/issue
-                        Default passwords:
-                          root: [1;33mtoor[0;29m
-                          live: [1;33mevil[0;29m
+                            Default password:
+                              root: [1;33mtoor[0;29m
+
 
 
 
@@ -98,9 +98,9 @@ EOF
 EOF
     else
         cat <<EOF >>/etc/issue
-                        Default password:
-                          root: [1;33mtoor[0;29m
-
+                            Default passwords:
+                              root: [1;33mtoor[0;29m
+                              live: [1;33mevil[0;29m
 
 
 
