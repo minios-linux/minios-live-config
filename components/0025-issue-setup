@@ -68,7 +68,7 @@ EOF
 
     # Append Slax info if installed
     if pkg_is_installed "fluxbox-slax"; then
-        printf "                        Powered by [1;32mSlax[0;29m.\n" >>"/etc/issue"
+        printf "                        With [1;32mSlax[0;29m flavour.\n" >>"/etc/issue"
     fi
 
     # Append ASCII art
