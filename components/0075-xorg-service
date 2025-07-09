@@ -12,17 +12,6 @@
 
 #set -e
 
-Cmdline() {
-    # Reading kernel command line
-    for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
-        case "${_PARAMETER}" in
-        live-config.username=* | username=*)
-            LIVE_USERNAME="${_PARAMETER#*username=}"
-            ;;
-        esac
-    done
-}
-
 Init() {
     # Checking if package is installed or already configured
     if [ ! -f "/usr/lib/systemd/system/xorg.service" ] ||
@@ -35,11 +24,6 @@ Init() {
 }
 
 Config() {
-    # Modify USERNAME in /usr/bin/start-xorg.sh
-    if [ -f /usr/bin/start-xorg.sh ]; then
-        sed -i "s|^USERNAME=.*|USERNAME=\"$LIVE_USERNAME\"|" /usr/bin/start-xorg.sh
-    fi
-
     # Avoid xinit
     touch /var/lib/live/config/xinit
 
@@ -47,6 +31,5 @@ Config() {
     touch /var/lib/live/config/xorg-service
 }
 
-Cmdline
 Init
 Config
