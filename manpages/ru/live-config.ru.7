@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2025\-06\-08 11.0.5 "Проект MiniOS Live"
+.TH LIVE\-CONFIG 7 2025\-07\-30 5.0~a5\-1 "Проект Debian Live"
 
 .SH ИМЯ
 \fBlive\-config\fP \- Компоненты настройки системы
@@ -144,7 +144,7 @@ UTC или нет. По умолчанию — 'yes'.
 живой системе указан идентификатор PCI, \fIДРАЙВЕР\fP принудительно применяется
 для этих устройств. Если найдены и параметр загрузки, и переопределение,
 параметр загрузки имеет приоритет.
-.IP "\fBlive\-config.module\-mode\fP=\fIMODE\fP | \fBmodule\-mode\fP=\fIMODE\fP" 4
+.IP "\fBlive\-config.module\-mode\fP=\fIРЕЖИМ\fP | \fBmodule\-mode\fP=\fIРЕЖИМ\fP" 4
 Позволяет указать режим модуля для живой конфигурации. При установке в
 "merged" система обновит учетные записи пользователей, пересоберёт кэши и
 обновит параметры пакетов, чтобы изменения конфигурации были динамически
@@ -380,9 +380,12 @@ root.
 .IP \fBuser\-media\fP 4
 настраивает монтирование носителей и связывание или привязку
 пользовательских каталогов для постоянных данных.
-.IP \fBuser\-ssh\fP 4
-синхронизирует SSH authorized_keys между Live\-носителем и домашним каталогом
-пользователя.
+.IP \fBuser\-ssh\-keys\fP 4
+синхронизирует SSH\-ключи из пользовательских файлов
+\fIauthorized_keys.<имя_пользователя>\fP с живого носителя в
+индивидуальные домашние каталоги пользователей. Поддерживает одновременную
+работу с несколькими пользователями (например, \fIauthorized_keys.root\fP,
+\fIauthorized_keys.live\fP, \fIauthorized_keys.admin\fP).
 .IP \fBlocales\fP 4
 настраивает локали.
 .IP \fBtzdata\fP 4
@@ -444,8 +447,8 @@ root.
 .IP \fBopenssh\-server\fP 4
 пересоздает хостовые ключи openssh\-server.
 .IP \fBxhyper\-v\fP 4
-configures X11 settings to improve compatibility on Microsoft Hyper\-V
-platforms.
+настраивает параметры X11 для улучшения совместимости на платформах
+Microsoft Hyper\-V.
 .IP \fBntfs3\fP 4
 управляет правилами udev для поддержки NTFS3.
 .IP \fBconfig\-module\-mode\fP 4

@@ -1,3 +1,13 @@
+minios-live-config (11.0.5.3) unstable; urgency=medium
+
+  * Replace user-ssh component with enhanced user-ssh-keys component
+  * Add support for user-specific SSH key files (authorized_keys.<username>)
+  * Enable SSH key synchronization for multiple users simultaneously
+  * Remove generic authorized_keys file support in favor of user-specific files
+  * Update documentation translations for user-ssh-keys component
+
+ -- crims0n <crims0n@minios.dev>  Wed, 30 Jul 2025 17:20:00 +0300
+
 minios-live-config (11.0.5.2) unstable; urgency=medium
 
   * Add xorg-service component to configure xorg.service

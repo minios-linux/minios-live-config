@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2025-06-15 00:12+0300\n"
+"POT-Creation-Date: 2025-07-30 17:28+0300\n"
 "PO-Revision-Date: 2025-06-08 23:36+0300\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
@@ -25,20 +25,20 @@ msgstr "LIVE-CONFIG"
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "2025-06-08"
-msgstr "2025-06-08"
+msgid "2025-07-30"
+msgstr "2025-07-30"
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "11.0.5"
-msgstr "11.0.5"
+msgid "5.0~a5-1"
+msgstr "5.0~a5-1"
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "MiniOS Live Project"
-msgstr "Проект MiniOS Live"
+msgid "Debian Live Project"
+msgstr "Проект Debian Live"
 
 #. type: SH
 #: en/live-config.7:13
@@ -544,8 +544,7 @@ msgstr ""
 
 #. type: IP
 #: en/live-config.7:89
-#, fuzzy, no-wrap
-#| msgid "B<live-config.timezone>=I<TIMEZONE> | B<timezone>=I<TIMEZONE>"
+#, no-wrap
 msgid "B<live-config.module-mode>=I<MODE> | B<module-mode>=I<MODE>"
 msgstr "B<live-config.module-mode>=I<РЕЖИМ> | B<module-mode>=I<РЕЖИМ>"
 
@@ -1214,8 +1213,7 @@ msgstr ""
 
 #. type: IP
 #: en/live-config.7:187
-#, fuzzy, no-wrap
-#| msgid "B<LIVE_KEYBOARD_MODEL>=I<KEYBOARD_MODEL>"
+#, no-wrap
 msgid "B<LIVE_MODULE_MODE>"
 msgstr "B<LIVE_MODULE_MODE>"
 
@@ -1339,8 +1337,7 @@ msgstr ""
 
 #. type: IP
 #: en/live-config.7:208
-#, fuzzy, no-wrap
-#| msgid "B<systemd>"
+#, no-wrap
 msgid "B<nss-systemd>"
 msgstr "B<nss-systemd>"
 
@@ -1381,7 +1378,7 @@ msgstr "настраивает /etc/hostname и /etc/hosts."
 
 #. type: IP
 #: en/live-config.7:214
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<issue-setup>"
 msgstr "B<issue-setup>"
 
@@ -1396,8 +1393,7 @@ msgstr ""
 
 #. type: IP
 #: en/live-config.7:216
-#, fuzzy, no-wrap
-#| msgid "B<live/config-preseed/* >"
+#, no-wrap
 msgid "B<live-debconfig (passwd)>"
 msgstr "B<live-debconfig (passwd)>"
 
@@ -1419,8 +1415,7 @@ msgstr "добавляет Live-пользователя."
 
 #. type: IP
 #: en/live-config.7:220
-#, fuzzy, no-wrap
-#| msgid "B<user-setup>"
+#, no-wrap
 msgid "B<root-setup>"
 msgstr "B<root-setup>"
 
@@ -1445,8 +1440,7 @@ msgstr "предоставляет sudo-привилегии Live-пользов
 
 #. type: IP
 #: en/live-config.7:224
-#, fuzzy, no-wrap
-#| msgid "B<user-media>"
+#, no-wrap
 msgid "B<user-media>"
 msgstr "B<user-media>"
 
@@ -1461,19 +1455,23 @@ msgstr ""
 
 #. type: IP
 #: en/live-config.7:226
-#, fuzzy, no-wrap
-#| msgid "B<user-setup>"
-msgid "B<user-ssh>"
-msgstr "B<user-ssh>"
+#, no-wrap
+msgid "B<user-ssh-keys>"
+msgstr "B<user-ssh-keys>"
 
 #. type: Plain text
 #: en/live-config.7:228
 msgid ""
-"synchronizes SSH authorized_keys between the live media and the user’s home "
-"directory."
+"synchronizes SSH keys from user-specific I<authorized_keys."
+"E<lt>usernameE<gt>> files on the live media to individual user home "
+"directories. Supports multiple users simultaneously (e.g., I<authorized_keys."
+"root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
 msgstr ""
-"синхронизирует SSH authorized_keys между Live-носителем и домашним каталогом "
-"пользователя."
+"синхронизирует SSH-ключи из пользовательских файлов I<authorized_keys."
+"E<lt>имя_пользователяE<gt>> с живого носителя в индивидуальные домашние "
+"каталоги пользователей. Поддерживает одновременную работу с несколькими "
+"пользователями (например, I<authorized_keys.root>, I<authorized_keys.live>, "
+"I<authorized_keys.admin>)."
 
 #. type: IP
 #: en/live-config.7:228
@@ -1802,17 +1800,12 @@ msgstr "пересоздает хостовые ключи openssh-server."
 
 #. type: IP
 #: en/live-config.7:288
-#, fuzzy, no-wrap
-#| msgid "B<xhyper-v>"
+#, no-wrap
 msgid "B<xhyper-v>"
 msgstr "B<xhyper-v>"
 
 #. type: Plain text
 #: en/live-config.7:290
-#, fuzzy
-#| msgid ""
-#| "configures X11 settings to improve compatibility on Microsoft Hyper-V "
-#| "platforms."
 msgid ""
 "configures X11 settings to improve compatibility on Microsoft Hyper-V "
 "platforms."
@@ -1833,8 +1826,7 @@ msgstr "управляет правилами udev для поддержки NTF
 
 #. type: IP
 #: en/live-config.7:292
-#, fuzzy, no-wrap
-#| msgid "B<config-module-mode>"
+#, no-wrap
 msgid "B<config-module-mode>"
 msgstr "B<config-module-mode>"
 

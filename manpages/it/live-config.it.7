@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2025\-06\-08 11.0.5 "Progetto MiniOS Live"
+.TH LIVE\-CONFIG 7 2025\-07\-30 5.0~a5\-1 "Debian Live Project"
 
 .SH NOME
 \fBlive\-config\fP \- Componenti di configurazione del sistema
@@ -378,9 +378,11 @@ concede i privilegi per sudo all'utente live.
 .IP \fBuser\-media\fP 4
 Configura il montaggio dei media e il collegamento o il bind\-mounting delle
 directory utente per i dati persistenti.
-.IP \fBuser\-ssh\fP 4
-sincronizza le chiavi SSH authorized_keys tra il media live e la directory
-home dell'utente.
+.IP \fBuser\-ssh\-keys\fP 4
+synchronizes SSH keys from user\-specific
+\fIauthorized_keys.<username>\fP files on the live media to individual
+user home directories. Supports multiple users simultaneously (e.g.,
+\fIauthorized_keys.root\fP, \fIauthorized_keys.live\fP, \fIauthorized_keys.admin\fP).
 .IP \fBlocales\fP 4
 configura la localizzazione.
 .IP \fBtzdata\fP 4

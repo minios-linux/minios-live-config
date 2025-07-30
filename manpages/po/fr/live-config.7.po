@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2025-06-15 00:12+0300\n"
+"POT-Creation-Date: 2025-07-30 17:28+0300\n"
 "PO-Revision-Date: 2018-02-24 11:37+0100\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
@@ -27,20 +27,20 @@ msgstr "LIVE-CONFIG"
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "2025-06-08"
-msgstr "2025-06-08"
+msgid "2025-07-30"
+msgstr "2025-07-30"
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "11.0.5"
-msgstr "11.0.5"
+msgid "5.0~a5-1"
+msgstr ""
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "MiniOS Live Project"
-msgstr "Projet MiniOS Live"
+msgid "Debian Live Project"
+msgstr "Projet Debian Live"
 
 #. type: SH
 #: en/live-config.7:13
@@ -578,15 +578,6 @@ msgstr "B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn> | B
 
 #. type: Plain text
 #: en/live-config.7:93
-#, fuzzy
-#| msgid ""
-#| "Allows one to fetch and execute one or plue arbitrary files. Note that "
-#| "the URLs must be fetchable by wget (http, ftp or file://), the files are "
-#| "executed in /tmp of the running live system, and that the files needs "
-#| "their dependencies, if any, already installed, e.g. if a python script "
-#| "should be executed the system needs python installed. Some hooks for some "
-#| "common use-cases are available at /usr/share/doc/live-config/examples/"
-#| "hooks/."
 msgid ""
 "Allows one to fetch and execute one or more arbitrary files. Note that the "
 "URLs must be fetchable by wget (http, ftp or file://), the files are "
@@ -1483,17 +1474,22 @@ msgstr ""
 #. type: IP
 #: en/live-config.7:226
 #, no-wrap
-msgid "B<user-ssh>"
-msgstr "B<user-ssh>"
+msgid "B<user-ssh-keys>"
+msgstr "B<user-ssh-keys>"
 
 #. type: Plain text
 #: en/live-config.7:228
 msgid ""
-"synchronizes SSH authorized_keys between the live media and the user’s home "
-"directory."
+"synchronizes SSH keys from user-specific I<authorized_keys."
+"E<lt>usernameE<gt>> files on the live media to individual user home "
+"directories. Supports multiple users simultaneously (e.g., I<authorized_keys."
+"root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
 msgstr ""
-"synchronise les clés SSH authorized_keys entre les médias live et le "
-"répertoire personnel de l'utilisateur."
+"synchronise les clés SSH à partir de fichiers spécifiques à l'utilisateur "
+"I<authorized_keys.E<lt>nomd'utilisateurE<gt>> sur le média live vers les "
+"répertoires home individuels des utilisateurs. Prend en charge plusieurs "
+"utilisateurs simultanément (ex. I<authorized_keys.root>, I<authorized_keys."
+"live>, I<authorized_keys.admin>)."
 
 #. type: IP
 #: en/live-config.7:228

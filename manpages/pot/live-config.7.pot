@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the live-config package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-06-15 00:12+0300\n"
+"Project-Id-Version: live-config 5.0~a5-1\n"
+"POT-Creation-Date: 2025-07-30 17:28+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,19 +25,19 @@ msgstr ""
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "2025-06-08"
+msgid "2025-07-30"
 msgstr ""
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "11.0.5"
+msgid "5.0~a5-1"
 msgstr ""
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "MiniOS Live Project"
+msgid "Debian Live Project"
 msgstr ""
 
 #. type: SH
@@ -1231,14 +1231,16 @@ msgstr ""
 #. type: IP
 #: en/live-config.7:226
 #, no-wrap
-msgid "B<user-ssh>"
+msgid "B<user-ssh-keys>"
 msgstr ""
 
 #. type: Plain text
 #: en/live-config.7:228
 msgid ""
-"synchronizes SSH authorized_keys between the live media and the user’s home "
-"directory."
+"synchronizes SSH keys from user-specific I<authorized_keys."
+"E<lt>usernameE<gt>> files on the live media to individual user home "
+"directories. Supports multiple users simultaneously (e.g., I<authorized_keys."
+"root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
 msgstr ""
 
 #. type: IP

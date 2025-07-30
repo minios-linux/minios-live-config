@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2025\-06\-08 11.0.5 "Projet MiniOS Live"
+.TH LIVE\-CONFIG 7 2025\-07\-30 5.0~a5\-1 "Projet Debian Live"
 
 .SH NOM
 \fBlive\-config\fP \- Composants de configuration du système
@@ -160,12 +160,15 @@ comptes utilisateurs, reconstruira les caches et actualisera les paramètres
 des paquets afin que les modifications de configuration soient intégrées
 dynamiquement au système en cours d'exécution.
 .IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
-Allows one to fetch and execute one or more arbitrary files. Note that the
-URLs must be fetchable by wget (http, ftp or file://), the files are
-executed in /tmp of the running live system, and that the files needs their
-dependencies, if any, already installed, e.g. if a python script should be
-executed the system needs python installed. Some hooks for some common
-use\-cases are available at /usr/share/doc/live\-config/examples/hooks/.
+Permet d'aller chercher et d'exécuter un ou plusieurs fichiers
+spécifiques. Notez que les URLs doivent pouvoir être téléchargées par wget
+(http, ftp ou file://), que les fichiers sont exécutés dans /tmp du système
+live en fonctionnement, et que les dépendances des fichiers doivent être
+préalablement installées; par exemple, si vous devez exécuter un script
+python, vous devez préalablement installer l'interpréteur python sur le
+système. Quelques hooks pour certains cas d'utilisation communs sont
+disponibles dans /usr/share/doc/live\-config/examples/hooks/ et sur
+<\fIhttp://live.debian.net/other/hooks\fP>.
 .br
 Si le fichier est placé dans le dispositif live, il peut être utilisé avec
 file:///run/initramfs/memory/data/\fIFILE\fP, ou bien avec file:///\fIFILE\fP s'il
@@ -394,9 +397,12 @@ offre les privilèges sudo à l'utilisateur live.
 .IP \fBuser\-media\fP 4
 configure le montage des médias et la liaison ou le montage de liaison des
 répertoires d'utilisateurs pour les données persistantes.
-.IP \fBuser\-ssh\fP 4
-synchronise les clés SSH authorized_keys entre les médias live et le
-répertoire personnel de l'utilisateur.
+.IP \fBuser\-ssh\-keys\fP 4
+synchronise les clés SSH à partir de fichiers spécifiques à l'utilisateur
+\fIauthorized_keys.<nomd'utilisateur>\fP sur le média live vers les
+répertoires home individuels des utilisateurs. Prend en charge plusieurs
+utilisateurs simultanément (ex. \fIauthorized_keys.root\fP,
+\fIauthorized_keys.live\fP, \fIauthorized_keys.admin\fP).
 .IP \fBlocales\fP 4
 configure les locales.
 .IP \fBtzdata\fP 4

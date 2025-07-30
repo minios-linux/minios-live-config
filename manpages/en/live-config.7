@@ -8,7 +8,7 @@
 .\" under certain conditions; see COPYING for details.
 .\"
 .\"
-.TH LIVE\-CONFIG 7 2025\-06\-08 11.0.5 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2025\-07\-30 5.0~a5-1 "Debian Live Project"
 
 .SH NAME
 \fBlive\-config\fR \- System Configuration Components
@@ -223,8 +223,8 @@ sets or updates the root password and configures the root user environment.
 grants sudo privileges to the live user.
 .IP "\fBuser-media\fR" 4
 configures mounting of media and linking or binding of user directories for persistent data.
-.IP "\fBuser-ssh\fR" 4
-synchronizes SSH authorized_keys between the live media and the user’s home directory.
+.IP "\fBuser-ssh-keys\fR" 4
+synchronizes SSH keys from user-specific \fIauthorized_keys.<username>\fR files on the live media to individual user home directories. Supports multiple users simultaneously (e.g., \fIauthorized_keys.root\fR, \fIauthorized_keys.live\fR, \fIauthorized_keys.admin\fR).
 .IP "\fBlocales\fR" 4
 configures locales.
 .IP "\fBtzdata\fR" 4

@@ -60,15 +60,6 @@ Init() {
 }
 
 Config() {
-    case "${LIVE_USERNAME}" in
-    root)
-        HOME_DIR="/root"
-        ;;
-    *)
-        HOME_DIR="/home/$LIVE_USERNAME"
-        ;;
-    esac
-
     if [ -z "$FROM" ] || echo "$FROM" | grep 'http://' || [ -d "/run/initramfs/memory/iso" ]; then
         FROM="minios"
     elif [ -f /run/initramfs/var/log/from.log ]; then
@@ -93,17 +84,6 @@ Config() {
         echo "The media is writable."
     fi
 
-    # Prepare SSH directory in target.
-    if [ ! -d "$HOME_DIR/.ssh" ]; then
-        echo "Preparing SSH directory"
-        mkdir -p "$HOME_DIR/.ssh" || {
-            echo "ERROR: Failed to create directory '$HOME_DIR/.ssh'"
-            # Continue, SSH may be optional
-        }
-        chmod 700 "$HOME_DIR/.ssh" 2>/dev/null || true
-        chown "$LIVE_USERNAME:$LIVE_USERNAME" "$HOME_DIR/.ssh" 2>/dev/null || true
-    fi
-
     # Path to the marker file for storing last authkeys sync time
     STATE_FILE="/var/lib/live/config/last-authkeys-sync-time"
 
@@ -122,7 +102,7 @@ Config() {
         fi
     fi
 
-    echo "Starting two-way sync of authorized_keys"
+    echo "Starting sync of authorized_keys for all users"
 
     # --- Function: determine whether to copy src ($1) to dst ($2)
     should_copy() {
@@ -136,30 +116,85 @@ Config() {
         fi
     }
 
-    # --- Sync from media to home ---
-    if [ -f "$MEDIA/authorized_keys" ] && should_copy "$MEDIA/authorized_keys" "$HOME_DIR/.ssh/authorized_keys"; then
-        echo "Copying $MEDIA/authorized_keys -> $HOME_DIR/.ssh/authorized_keys"
-        mkdir -p "$HOME_DIR/.ssh"
-        cp -fp "$MEDIA/authorized_keys" "$HOME_DIR/.ssh/authorized_keys" || {
-            echo "ERROR: copy failed"
-            return 1
-        }
-        chmod 600 "$HOME_DIR/.ssh/authorized_keys" || {
-            echo "ERROR: Failed to set permissions on $HOME_DIR/.ssh/authorized_keys"
-            return 1
-        }
-        chown "$LIVE_USERNAME:$LIVE_USERNAME" "$HOME_DIR/.ssh/authorized_keys" || {
-            echo "ERROR: Failed to set ownership on $HOME_DIR/.ssh/authorized_keys"
-            return 1
-        }
-    # --- If writable, sync back from home to media ---
-    elif [ "$WRITABLE" = "true" ] && [ -f "$HOME_DIR/.ssh/authorized_keys" ] && should_copy "$HOME_DIR/.ssh/authorized_keys" "$MEDIA/authorized_keys"; then
-        echo "Copying $HOME_DIR/.ssh/authorized_keys -> $MEDIA/authorized_keys"
-        cp -fp "$HOME_DIR/.ssh/authorized_keys" "$MEDIA/authorized_keys" || {
-            echo "ERROR: copy failed"
-            return 1
-        }
-    fi
+    # Function to sync keys for a specific user
+    sync_user_keys() {
+        local USERNAME="$1"
+        local USER_HOME
+        local USER_KEYS_FILE="$MEDIA/authorized_keys.$USERNAME"
+        
+        # Determine home directory
+        case "$USERNAME" in
+            root)
+                USER_HOME="/root"
+                ;;
+            *)
+                USER_HOME="/home/$USERNAME"
+                ;;
+        esac
+
+        # Skip if user doesn't exist
+        if ! id "$USERNAME" >/dev/null 2>&1; then
+            return
+        fi
+
+        # Skip if no keys file for this user
+        if [ ! -f "$USER_KEYS_FILE" ]; then
+            return
+        fi
+
+        echo "Processing keys for user: $USERNAME"
+
+        # Prepare SSH directory
+        if [ ! -d "$USER_HOME/.ssh" ]; then
+            echo "Creating SSH directory for $USERNAME"
+            mkdir -p "$USER_HOME/.ssh" || {
+                echo "ERROR: Failed to create directory '$USER_HOME/.ssh'"
+                return 1
+            }
+            chmod 700 "$USER_HOME/.ssh" || {
+                echo "ERROR: Failed to set permissions on '$USER_HOME/.ssh'"
+                return 1
+            }
+            chown "$USERNAME:$USERNAME" "$USER_HOME/.ssh" || {
+                echo "ERROR: Failed to set ownership on '$USER_HOME/.ssh'"
+                return 1
+            }
+        fi
+
+        # --- Sync from media to home ---
+        if should_copy "$USER_KEYS_FILE" "$USER_HOME/.ssh/authorized_keys"; then
+            echo "Copying $USER_KEYS_FILE -> $USER_HOME/.ssh/authorized_keys"
+            cp -fp "$USER_KEYS_FILE" "$USER_HOME/.ssh/authorized_keys" || {
+                echo "ERROR: copy failed for user $USERNAME"
+                return 1
+            }
+            chmod 600 "$USER_HOME/.ssh/authorized_keys" || {
+                echo "ERROR: Failed to set permissions on $USER_HOME/.ssh/authorized_keys"
+                return 1
+            }
+            chown "$USERNAME:$USERNAME" "$USER_HOME/.ssh/authorized_keys" || {
+                echo "ERROR: Failed to set ownership on $USER_HOME/.ssh/authorized_keys"
+                return 1
+            }
+        # --- If writable, sync back from home to media ---
+        elif [ "$WRITABLE" = "true" ] && [ -f "$USER_HOME/.ssh/authorized_keys" ] && should_copy "$USER_HOME/.ssh/authorized_keys" "$USER_KEYS_FILE"; then
+            echo "Copying $USER_HOME/.ssh/authorized_keys -> $USER_KEYS_FILE"
+            cp -fp "$USER_HOME/.ssh/authorized_keys" "$USER_KEYS_FILE" || {
+                echo "ERROR: reverse copy failed for user $USERNAME"
+                return 1
+            }
+        fi
+    }
+
+    # Find all authorized_keys.* files on media and sync for each user
+    for KEYS_FILE in "$MEDIA"/authorized_keys.*; do
+        if [ -f "$KEYS_FILE" ]; then
+            USERNAME=$(basename "$KEYS_FILE" | sed 's/^authorized_keys\.//')
+            if [ -n "$USERNAME" ] && [ "$USERNAME" != "*" ]; then
+                sync_user_keys "$USERNAME"
+            fi
+        fi
+    done
 
     # Update the marker if the system time is valid
     if [ "$SKIP_TIME_CHECK" = "false" ]; then

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2025-06-15 00:12+0300\n"
+"POT-Creation-Date: 2025-07-30 17:28+0300\n"
 "PO-Revision-Date: 2025-06-08 23:36+0300\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
@@ -23,20 +23,22 @@ msgstr "LIVE-CONFIG"
 
 #. type: TH
 #: en/live-config.7:11
-#, no-wrap
-msgid "2025-06-08"
+#, fuzzy, no-wrap
+#| msgid "2025-06-08"
+msgid "2025-07-30"
 msgstr "2025-06-08"
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "11.0.5"
-msgstr "11.0.5"
+msgid "5.0~a5-1"
+msgstr ""
 
 #. type: TH
 #: en/live-config.7:11
-#, no-wrap
-msgid "MiniOS Live Project"
+#, fuzzy, no-wrap
+#| msgid "MiniOS Live Project"
+msgid "Debian Live Project"
 msgstr "Projeto MiniOS Live"
 
 #. type: SH
@@ -1465,14 +1467,22 @@ msgstr ""
 #: en/live-config.7:226
 #, fuzzy, no-wrap
 #| msgid "B<user-setup>"
-msgid "B<user-ssh>"
-msgstr "B<user-ssh>"
+msgid "B<user-ssh-keys>"
+msgstr "B<user-ssh-keys>"
 
 #. type: Plain text
 #: en/live-config.7:228
+#, fuzzy
+#| msgid ""
+#| "synchronizes SSH authorized_keys between the live media and the user’s "
+#| "home directories. Supports multiple users simultaneously (e.g., "
+#| "I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys."
+#| "admin>)."
 msgid ""
-"synchronizes SSH authorized_keys between the live media and the user’s home "
-"directory."
+"synchronizes SSH keys from user-specific I<authorized_keys."
+"E<lt>usernameE<gt>> files on the live media to individual user home "
+"directories. Supports multiple users simultaneously (e.g., I<authorized_keys."
+"root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
 msgstr ""
 "Sincroniza as chaves autorizadas do SSH entre a mídia live e o diretório "
 "home do usuário."
