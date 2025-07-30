@@ -1,0 +1,13 @@
+# Debian build artifacts
+*.tar.xz
+*.dsc
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/*.log
+debian/*.substvars
+debian/minios-live-config/
+debian/minios-live-config-doc/
+debian/minios-live-config-systemd/
+debian/minios-live-config-sysvinit/
+debian/tmp/
