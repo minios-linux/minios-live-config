@@ -67,7 +67,7 @@ EOF
     [ -n "$DIST" ] && printf "                        %s\n" "$DIST" >>"/etc/issue"
 
     # Append Slax info if installed
-    if pkg_is_installed "fluxbox-slax"; then
+    if pkg_is_installed "fluxbox-slax" || pkg_is_installed "fluxbox-flux"; then
         printf "                        With [1;32mSlax[0;29m flavour.\n" >>"/etc/issue"
     fi
 
