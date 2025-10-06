@@ -26,6 +26,14 @@ case "${1}" in
 	start)
 		if [ -e /usr/bin/live-config ]
 		then
+			# Copy config.conf if it exists and target doesn't exist yet
+			if [ -f /lib/live/mount/medium/minios/config.conf ] && [ ! -f /etc/live/config.conf ]; then
+				cp -fp /lib/live/mount/medium/minios/config.conf /etc/live/config.conf
+			elif [ -f /run/initramfs/memory/data/minios/config.conf ] && [ ! -f /etc/live/config.conf ]; then
+				cp -fp /run/initramfs/memory/data/minios/config.conf /etc/live/config.conf
+			fi
+			sync
+			
 			/usr/bin/live-config ${@}
 		fi
 		;;
