@@ -43,8 +43,8 @@ Config() {
 			;;
 
 		medium)
-			if ls /run/initramfs/memory/data/minios/config-hooks/* 2>&1; then
-				_HOOKS="${_HOOKS} $(for _FILE in /run/initramfs/memory/data/minios/config-hooks/*; do echo file://${_FILE}; done)"
+			if ls $(get_live_medium_path)/minios/config-hooks/* 2>&1; then
+				_HOOKS="${_HOOKS} $(for _FILE in $(get_live_medium_path)/minios/config-hooks/*; do echo file://${_FILE}; done)"
 			elif ls /run/initramfs/memory/iso/minios/config-hooks/* 2>&1; then
 				_HOOKS="${_HOOKS} $(for _FILE in /run/initramfs/memory/iso/minios/config-hooks/*; do echo file://${_FILE}; done)"
 			fi

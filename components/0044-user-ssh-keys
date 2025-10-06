@@ -67,9 +67,9 @@ Config() {
     fi
 
     # search for bundles in the mounted directory
-    if [ "$(find "/run/initramfs/memory/data/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
+    if [ "$(find "$(get_live_medium_path)/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
         # we found at least one bundle/module here
-        FROM=$(echo "/run/initramfs/memory/data/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
+        FROM=$(echo "$(get_live_medium_path)/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
     elif [ "$(find "/run/initramfs/memory/iso/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
         FROM=$(echo "/run/initramfs/memory/iso/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
     fi

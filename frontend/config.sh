@@ -109,3 +109,36 @@ get_mount_point() {
     MOUNT_POINT=$(df "$1" | awk 'NR==2 {print $6}')
     echo "${MOUNT_POINT}"
 }
+
+get_live_medium_path() {
+    # Returns the path to live medium directory
+    if [ -d "/lib/live/mount/medium" ]; then
+        echo "/lib/live/mount/medium"
+    elif [ -d "/run/initramfs/memory/data" ]; then
+        echo "/run/initramfs/memory/data"
+    else
+        echo ""
+    fi
+}
+
+get_live_bundles_path() {
+    # Returns the path to bundles directory
+    if [ -d "/lib/live/mount/bundles" ]; then
+        echo "/lib/live/mount/bundles"
+    elif [ -d "/run/initramfs/memory/bundles" ]; then
+        echo "/run/initramfs/memory/bundles"
+    else
+        echo ""
+    fi
+}
+
+get_live_changes_path() {
+    # Returns the path to changes directory
+    if [ -d "/lib/live/mount/changes" ]; then
+        echo "/lib/live/mount/changes"
+    elif [ -d "/run/initramfs/memory/changes" ]; then
+        echo "/run/initramfs/memory/changes"
+    else
+        echo ""
+    fi
+}
