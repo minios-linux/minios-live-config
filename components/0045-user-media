@@ -71,6 +71,8 @@ Config() {
 
     if [ -z "$FROM" ] || echo "$FROM" | grep 'http://' || [ -d "/run/initramfs/memory/iso" ]; then
         FROM="minios"
+    elif [ -f /run/initramfs/log/from.log ]; then
+        FROM=$(cat /run/initramfs/log/from.log)
     elif [ -f /run/initramfs/var/log/from.log ]; then
         FROM=$(cat /run/initramfs/var/log/from.log)
     fi
