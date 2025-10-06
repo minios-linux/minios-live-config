@@ -60,8 +60,17 @@ Init() {
 }
 
 Config() {
-    if [ -z "$FROM" ] || echo "$FROM" | grep 'http://' || [ -d "/run/initramfs/memory/iso" ]; then
+    # Detect initramfs type for ISO path
+    if [ -d "/lib/live/mount" ]; then
+        ISO_PATH="/lib/live/mount/iso"
+    else
+        ISO_PATH="/run/initramfs/memory/iso"
+    fi
+
+    if [ -z "$FROM" ] || echo "$FROM" | grep 'http://' || [ -d "$ISO_PATH" ]; then
         FROM="minios"
+    elif [ -f /run/initramfs/log/from.log ]; then
+        FROM=$(cat /run/initramfs/log/from.log)
     elif [ -f /run/initramfs/var/log/from.log ]; then
         FROM=$(cat /run/initramfs/var/log/from.log)
     fi
@@ -70,8 +79,8 @@ Config() {
     if [ "$(find "$(get_live_medium_path)/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
         # we found at least one bundle/module here
         FROM=$(echo "$(get_live_medium_path)/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
-    elif [ "$(find "/run/initramfs/memory/iso/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
-        FROM=$(echo "/run/initramfs/memory/iso/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
+    elif [ "$(find "$ISO_PATH/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
+        FROM=$(echo "$ISO_PATH/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
     fi
     MEDIA="$FROM"
 

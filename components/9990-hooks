@@ -43,10 +43,17 @@ Config() {
 			;;
 
 		medium)
+			# Detect ISO path based on initramfs type
+			if [ -d "/lib/live/mount" ]; then
+				ISO_PATH="/lib/live/mount/iso"
+			else
+				ISO_PATH="/run/initramfs/memory/iso"
+			fi
+
 			if ls $(get_live_medium_path)/minios/config-hooks/* 2>&1; then
 				_HOOKS="${_HOOKS} $(for _FILE in $(get_live_medium_path)/minios/config-hooks/*; do echo file://${_FILE}; done)"
-			elif ls /run/initramfs/memory/iso/minios/config-hooks/* 2>&1; then
-				_HOOKS="${_HOOKS} $(for _FILE in /run/initramfs/memory/iso/minios/config-hooks/*; do echo file://${_FILE}; done)"
+			elif ls $ISO_PATH/minios/config-hooks/* 2>&1; then
+				_HOOKS="${_HOOKS} $(for _FILE in $ISO_PATH/minios/config-hooks/*; do echo file://${_FILE}; done)"
 			fi
 			;;
 

@@ -38,9 +38,11 @@ Init() {
 }
 
 Config() {
-    LIVE="/run/initramfs/memory"
-    BUNDLES="$LIVE/bundles"
-    CHANGES="$LIVE/changes"
+    # Detect paths based on initramfs type
+    BUNDLES="$(get_live_bundles_path)"
+    CHANGES="$(get_live_changes_path)"
+    
+    # For overlayfs, changes directory might have subdirectories
     if [ -d "$CHANGES/changes" ] && [ -d "$CHANGES/workdir" ]; then
         CHANGES="$CHANGES/changes"
     fi
