@@ -62,7 +62,26 @@ Init ()
 
 Config ()
 {
-	if [ -e /etc/lightdm/lightdm.conf ]
+	# Check which configuration method is used
+	# Both Debian and Ubuntu support lightdm.conf.d approach
+	# Debian also provides /etc/lightdm/lightdm.conf as fallback
+
+	# Try lightdm.conf.d approach first (works for both Debian and Ubuntu)
+	if [ -d /etc/lightdm/lightdm.conf.d ] || [ -d /usr/share/lightdm/lightdm.conf.d ]
+	then
+		# Create /etc/lightdm/lightdm.conf.d if it doesn't exist
+		mkdir -p /etc/lightdm/lightdm.conf.d
+
+		# Create autologin configuration file
+		# This will override settings from /etc/lightdm/lightdm.conf and /usr/share/lightdm/lightdm.conf.d/
+		cat > /etc/lightdm/lightdm.conf.d/50-autologin.conf <<EOF
+[Seat:*]
+autologin-user=${LIVE_USERNAME}
+autologin-user-timeout=0
+EOF
+
+	# Fallback to legacy lightdm.conf editing (old Debian versions)
+	elif [ -e /etc/lightdm/lightdm.conf ]
 	then
 		sed -i -r -e "s|^#.*autologin-user=.*\$|autologin-user=${LIVE_USERNAME}|" \
 			  -e "s|^#.*autologin-user-timeout=.*\$|autologin-user-timeout=0|" \
