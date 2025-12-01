@@ -72,25 +72,12 @@ Config ()
 		# Create /etc/lightdm/lightdm.conf.d if it doesn't exist
 		mkdir -p /etc/lightdm/lightdm.conf.d
 
-		# Determine session wrapper
-		# Debian uses /etc/X11/Xsession by default (which respects alternatives)
-		# Ubuntu has lightdm-session but doesn't set it by default
-		SESSION_WRAPPER=""
-		if [ -x /usr/sbin/lightdm-session ]; then
-			# Ubuntu-style session wrapper
-			SESSION_WRAPPER="session-wrapper=/usr/sbin/lightdm-session"
-		elif [ -x /etc/X11/Xsession ]; then
-			# Debian-style session wrapper
-			SESSION_WRAPPER="session-wrapper=/etc/X11/Xsession"
-		fi
-
 		# Create autologin configuration file
 		# This will override settings from /etc/lightdm/lightdm.conf and /usr/share/lightdm/lightdm.conf.d/
 		cat > /etc/lightdm/lightdm.conf.d/50-autologin.conf <<EOF
 [Seat:*]
 autologin-user=${LIVE_USERNAME}
 autologin-user-timeout=0
-${SESSION_WRAPPER}
 EOF
 
 	# Fallback to legacy lightdm.conf editing (old Debian versions)
@@ -99,15 +86,6 @@ EOF
 		sed -i -r -e "s|^#.*autologin-user=.*\$|autologin-user=${LIVE_USERNAME}|" \
 			  -e "s|^#.*autologin-user-timeout=.*\$|autologin-user-timeout=0|" \
 		/etc/lightdm/lightdm.conf
-
-		# Add session-wrapper if available
-		if [ -x /usr/sbin/lightdm-session ]; then
-			sed -i -r -e "s|^#.*session-wrapper=.*\$|session-wrapper=/usr/sbin/lightdm-session|" \
-			/etc/lightdm/lightdm.conf
-		elif [ -x /etc/X11/Xsession ]; then
-			sed -i -r -e "s|^#.*session-wrapper=.*\$|session-wrapper=/etc/X11/Xsession|" \
-			/etc/lightdm/lightdm.conf
-		fi
 	fi
 
 	# Avoid xinit
