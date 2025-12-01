@@ -72,12 +72,38 @@ Config ()
 		# Create /etc/lightdm/lightdm.conf.d if it doesn't exist
 		mkdir -p /etc/lightdm/lightdm.conf.d
 
+		# Detect session from alternatives system
+		AUTOLOGIN_SESSION_LINE=""
+		if [ -L /etc/alternatives/x-session-manager ]; then
+			# Get the target of x-session-manager alternative
+			SESSION_BIN=$(readlink -f /etc/alternatives/x-session-manager)
+			# Extract session name from binary path (e.g., /usr/bin/startxfce4 -> xfce4)
+			SESSION_NAME=$(basename "${SESSION_BIN}" | sed 's/^start//' | sed 's/[0-9]*$//')
+
+			# Try to find matching .desktop file
+			for session_dir in /usr/share/xsessions /usr/share/wayland-sessions; do
+				if [ -d "${session_dir}" ]; then
+					# Try exact match first
+					if [ -f "${session_dir}/${SESSION_NAME}.desktop" ]; then
+						AUTOLOGIN_SESSION_LINE="autologin-session=${SESSION_NAME}"
+						break
+					fi
+					# Try with session suffix
+					if [ -f "${session_dir}/${SESSION_NAME}-session.desktop" ]; then
+						AUTOLOGIN_SESSION_LINE="autologin-session=${SESSION_NAME}-session"
+						break
+					fi
+				fi
+			done
+		fi
+
 		# Create autologin configuration file
 		# This will override settings from /etc/lightdm/lightdm.conf and /usr/share/lightdm/lightdm.conf.d/
 		cat > /etc/lightdm/lightdm.conf.d/50-autologin.conf <<EOF
 [Seat:*]
 autologin-user=${LIVE_USERNAME}
 autologin-user-timeout=0
+${AUTOLOGIN_SESSION_LINE}
 EOF
 
 	# Fallback to legacy lightdm.conf editing (old Debian versions)
