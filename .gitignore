@@ -6,6 +6,7 @@ debian/debhelper-build-stamp
 debian/files
 debian/*.log
 debian/*.substvars
+debian/*.debhelper
 debian/minios-live-config/
 debian/minios-live-config-doc/
 debian/minios-live-config-systemd/
