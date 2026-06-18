@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# This file is distributed under the same license as the live-config package.
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: live-config 5.0~a5-1\n"
-"POT-Creation-Date: 2025-07-30 17:28+0300\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2026-06-18 14:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,10 +99,10 @@ msgid ""
 "B<live-config> is only activated if 'boot=live' is used as a boot parameter. "
 "Additionally, B<live-config> needs to be told which components to run "
 "through the 'live-config.components' parameter or which components to not "
-"run through the 'live-config.nocomponents' parameter. If both 'live-config."
-"components' and 'live-config.nocomponents' are used, or, if either one is "
-"specified multiple times, always the later one takes precedence over the "
-"previous one(s)."
+"run through the 'live-config.nocomponents' parameter. If both 'live-"
+"config.components' and 'live-config.nocomponents' are used, or, if either "
+"one is specified multiple times, always the later one takes precedence over "
+"the previous one(s)."
 msgstr ""
 
 #. type: IP
@@ -140,8 +140,8 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:33
 msgid ""
-"No component is run. This is the same as not using any of 'live-config."
-"components' or 'live-config.nocomponents'."
+"No component is run. This is the same as not using any of 'live-"
+"config.components' or 'live-config.nocomponents'."
 msgstr ""
 
 #. type: IP
@@ -675,8 +675,8 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:135
 msgid ""
-"This variable corresponds to the 'B<live-config.components>=I<COMPONENT1>,"
-"I<COMPONENT2>, ... I<COMPONENTn>' parameter."
+"This variable corresponds to the 'B<live-"
+"config.components>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
 msgstr ""
 
 #. type: IP
@@ -688,8 +688,9 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:137
 msgid ""
-"This variable corresponds to the 'B<live-config.nocomponents>=I<COMPONENT1>,"
-"I<COMPONENT2>, ... I<COMPONENTn>' parameter."
+"This variable corresponds to the 'B<live-"
+"config.nocomponents>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' "
+"parameter."
 msgstr ""
 
 #. type: IP
@@ -820,8 +821,8 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:157
 msgid ""
-"This variable corresponds to the 'B<live-config.locales>=I<LOCALE1>,"
-"I<LOCALE2> ... I<LOCALEn>' parameter."
+"This variable corresponds to the 'B<live-"
+"config.locales>=I<LOCALE1>,I<LOCALE2> ... I<LOCALEn>' parameter."
 msgstr ""
 
 #. type: IP
@@ -900,8 +901,8 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:169
 msgid ""
-"This variable corresponds to the 'B<live-config.sysv-rc>=I<SERVICE1>,"
-"I<SERVICE2> ... I<SERVICEn>' parameter."
+"This variable corresponds to the 'B<live-config.sysv-"
+"rc>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>' parameter."
 msgstr ""
 
 #. type: IP
@@ -1237,10 +1238,10 @@ msgstr ""
 #. type: Plain text
 #: en/live-config.7:228
 msgid ""
-"synchronizes SSH keys from user-specific I<authorized_keys."
-"E<lt>usernameE<gt>> files on the live media to individual user home "
-"directories. Supports multiple users simultaneously (e.g., I<authorized_keys."
-"root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
+"synchronizes SSH keys from user-specific "
+"I<authorized_keys.E<lt>usernameE<gt>> files on the live media to individual "
+"user home directories. Supports multiple users simultaneously (e.g., "
+"I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
 msgstr ""
 
 #. type: IP
@@ -1741,8 +1742,8 @@ msgstr ""
 msgid ""
 "Bugs can be reported by submitting a bugreport for the live-config package "
 "in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by "
-"writing a mail to the Debian Live mailing list at E<lt>I<debian-live@lists."
-"debian.org>E<gt>."
+"writing a mail to the Debian Live mailing list at E<lt>I<debian-"
+"live@lists.debian.org>E<gt>."
 msgstr ""
 
 #. type: SH

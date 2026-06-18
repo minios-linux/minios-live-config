@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2025-07-30 17:28+0300\n"
+"POT-Creation-Date: 2026-06-18 14:10+0300\n"
 "PO-Revision-Date: 2025-06-08 23:36+0300\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
@@ -109,18 +109,18 @@ msgid ""
 "B<live-config> is only activated if 'boot=live' is used as a boot parameter. "
 "Additionally, B<live-config> needs to be told which components to run "
 "through the 'live-config.components' parameter or which components to not "
-"run through the 'live-config.nocomponents' parameter. If both 'live-config."
-"components' and 'live-config.nocomponents' are used, or, if either one is "
-"specified multiple times, always the later one takes precedence over the "
-"previous one(s)."
+"run through the 'live-config.nocomponents' parameter. If both 'live-"
+"config.components' and 'live-config.nocomponents' are used, or, if either "
+"one is specified multiple times, always the later one takes precedence over "
+"the previous one(s)."
 msgstr ""
 "B<live-config> активируется только при использовании 'boot=live' в качестве "
 "параметра загрузки. Кроме того, B<live-config> необходимо указать, какие "
 "компоненты запускать, с помощью параметра 'live-config.components', или "
-"какие компоненты не запускать, с помощью параметра 'live-config."
-"nocomponents'. Если используются оба параметра 'live-config.components' и "
-"'live-config.nocomponents', или если любой из них указан несколько раз, "
-"всегда последний имеет приоритет над предыдущими."
+"какие компоненты не запускать, с помощью параметра 'live-"
+"config.nocomponents'. Если используются оба параметра 'live-"
+"config.components' и 'live-config.nocomponents', или если любой из них "
+"указан несколько раз, всегда последний имеет приоритет над предыдущими."
 
 #. type: IP
 #: en/live-config.7:27
@@ -163,8 +163,8 @@ msgstr "B<live-config.nocomponents> | B<nocomponents>"
 #. type: Plain text
 #: en/live-config.7:33
 msgid ""
-"No component is run. This is the same as not using any of 'live-config."
-"components' or 'live-config.nocomponents'."
+"No component is run. This is the same as not using any of 'live-"
+"config.components' or 'live-config.nocomponents'."
 msgstr ""
 "Ни один компонент не запускается. Это то же самое, что не использовать "
 "никакие из 'live-config.components' или 'live-config.nocomponents'."
@@ -807,11 +807,11 @@ msgstr "B<LIVE_CONFIG_COMPONENTS>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>,
 #. type: Plain text
 #: en/live-config.7:135
 msgid ""
-"This variable corresponds to the 'B<live-config.components>=I<COMPONENT1>,"
-"I<COMPONENT2>, ... I<COMPONENTn>' parameter."
+"This variable corresponds to the 'B<live-"
+"config.components>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
 msgstr ""
-"Эта переменная соответствует параметру 'B<live-config."
-"components>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>, ... I<КОМПОНЕНТn>'."
+"Эта переменная соответствует параметру 'B<live-"
+"config.components>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>, ... I<КОМПОНЕНТn>'."
 
 #. type: IP
 #: en/live-config.7:135
@@ -822,11 +822,12 @@ msgstr "B<LIVE_CONFIG_NOCOMPONENTS>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2
 #. type: Plain text
 #: en/live-config.7:137
 msgid ""
-"This variable corresponds to the 'B<live-config.nocomponents>=I<COMPONENT1>,"
-"I<COMPONENT2>, ... I<COMPONENTn>' parameter."
+"This variable corresponds to the 'B<live-"
+"config.nocomponents>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' "
+"parameter."
 msgstr ""
-"Эта переменная соответствует параметру 'B<live-config."
-"nocomponents>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>, ... I<КОМПОНЕНТn>'."
+"Эта переменная соответствует параметру 'B<live-"
+"config.nocomponents>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>, ... I<КОМПОНЕНТn>'."
 
 #. type: IP
 #: en/live-config.7:137
@@ -855,8 +856,8 @@ msgid ""
 "This variable corresponds to the 'B<live-config.hostname>=I<HOSTNAME>' "
 "parameter."
 msgstr ""
-"Эта переменная соответствует параметру 'B<live-config."
-"hostname>=I<ИМЯ_ХОСТА>'."
+"Эта переменная соответствует параметру 'B<live-"
+"config.hostname>=I<ИМЯ_ХОСТА>'."
 
 #. type: IP
 #: en/live-config.7:141
@@ -870,8 +871,8 @@ msgid ""
 "This variable corresponds to the 'B<live-config.username>=I<USERNAME>' "
 "parameter."
 msgstr ""
-"Эта переменная соответствует параметру 'B<live-config."
-"username>=I<ИМЯ_ПОЛЬЗОВАТЕЛЯ>'."
+"Эта переменная соответствует параметру 'B<live-"
+"config.username>=I<ИМЯ_ПОЛЬЗОВАТЕЛЯ>'."
 
 #. type: IP
 #: en/live-config.7:143
@@ -975,11 +976,11 @@ msgstr "B<LIVE_LOCALES>=I<ЛОКАЛЬ1>,I<ЛОКАЛЬ2> ... I<ЛОКАЛЬn>"
 #. type: Plain text
 #: en/live-config.7:157
 msgid ""
-"This variable corresponds to the 'B<live-config.locales>=I<LOCALE1>,"
-"I<LOCALE2> ... I<LOCALEn>' parameter."
+"This variable corresponds to the 'B<live-"
+"config.locales>=I<LOCALE1>,I<LOCALE2> ... I<LOCALEn>' parameter."
 msgstr ""
-"Эта переменная соответствует параметру 'B<live-config.locales>=I<ЛОКАЛЬ1>,"
-"I<ЛОКАЛЬ2> ... I<ЛОКАЛЬn>'."
+"Эта переменная соответствует параметру 'B<live-"
+"config.locales>=I<ЛОКАЛЬ1>,I<ЛОКАЛЬ2> ... I<ЛОКАЛЬn>'."
 
 #. type: IP
 #: en/live-config.7:157
@@ -993,8 +994,8 @@ msgid ""
 "This variable corresponds to the 'B<live-config.timezone>=I<TIMEZONE>' "
 "parameter."
 msgstr ""
-"Эта переменная соответствует параметру 'B<live-config."
-"timezone>=I<ЧАСОВОЙ_ПОЯС>'."
+"Эта переменная соответствует параметру 'B<live-"
+"config.timezone>=I<ЧАСОВОЙ_ПОЯС>'."
 
 #. type: IP
 #: en/live-config.7:159
@@ -1069,11 +1070,11 @@ msgstr "B<LIVE_SYSV_RC>=I<СЛУЖБА1>,I<СЛУЖБА2> ... I<СЛУЖБАn>"
 #. type: Plain text
 #: en/live-config.7:169
 msgid ""
-"This variable corresponds to the 'B<live-config.sysv-rc>=I<SERVICE1>,"
-"I<SERVICE2> ... I<SERVICEn>' parameter."
+"This variable corresponds to the 'B<live-config.sysv-"
+"rc>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>' parameter."
 msgstr ""
-"Эта переменная соответствует параметру 'B<live-config.sysv-rc>=I<СЛУЖБА1>,"
-"I<СЛУЖБА2> ... I<СЛУЖБАn>'."
+"Эта переменная соответствует параметру 'B<live-config.sysv-"
+"rc>=I<СЛУЖБА1>,I<СЛУЖБА2> ... I<СЛУЖБАn>'."
 
 #. type: IP
 #: en/live-config.7:169
@@ -1462,16 +1463,16 @@ msgstr "B<user-ssh-keys>"
 #. type: Plain text
 #: en/live-config.7:228
 msgid ""
-"synchronizes SSH keys from user-specific I<authorized_keys."
-"E<lt>usernameE<gt>> files on the live media to individual user home "
-"directories. Supports multiple users simultaneously (e.g., I<authorized_keys."
-"root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
+"synchronizes SSH keys from user-specific "
+"I<authorized_keys.E<lt>usernameE<gt>> files on the live media to individual "
+"user home directories. Supports multiple users simultaneously (e.g., "
+"I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
 msgstr ""
-"синхронизирует SSH-ключи из пользовательских файлов I<authorized_keys."
-"E<lt>имя_пользователяE<gt>> с живого носителя в индивидуальные домашние "
-"каталоги пользователей. Поддерживает одновременную работу с несколькими "
-"пользователями (например, I<authorized_keys.root>, I<authorized_keys.live>, "
-"I<authorized_keys.admin>)."
+"синхронизирует SSH-ключи из пользовательских файлов "
+"I<authorized_keys.E<lt>имя_пользователяE<gt>> с живого носителя в "
+"индивидуальные домашние каталоги пользователей. Поддерживает одновременную "
+"работу с несколькими пользователями (например, I<authorized_keys.root>, "
+"I<authorized_keys.live>, I<authorized_keys.admin>)."
 
 #. type: IP
 #: en/live-config.7:228
@@ -1981,8 +1982,8 @@ msgstr "ОШИБКИ"
 msgid ""
 "Bugs can be reported by submitting a bugreport for the live-config package "
 "in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by "
-"writing a mail to the Debian Live mailing list at E<lt>I<debian-live@lists."
-"debian.org>E<gt>."
+"writing a mail to the Debian Live mailing list at E<lt>I<debian-"
+"live@lists.debian.org>E<gt>."
 msgstr ""
 "Об ошибках можно сообщать, отправляя отчет об ошибке для пакета live-config "
 "в системе отслеживания ошибок по адресу E<lt>I<http://bugs.debian.org/>E<gt> "

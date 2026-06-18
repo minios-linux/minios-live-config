@@ -1,11 +1,11 @@
 # Indonesian translations for live-config
 # Copyright (C) 2025 crims0n <crims0n@minios.dev>
 # This file is distributed under the same license as the live-config package.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2025-07-30 17:28+0300\n"
+"POT-Creation-Date: 2026-06-18 14:10+0300\n"
 "PO-Revision-Date: 2026-03-13 18:20+0000\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
@@ -23,7 +23,6 @@ msgstr "LIVE-CONFIG"
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-#| msgid "2025-06-08"
 msgid "2025-07-30"
 msgstr "2025-07-30"
 
@@ -36,7 +35,6 @@ msgstr "5.0~a5-1"
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-#| msgid "MiniOS Live Project"
 msgid "Debian Live Project"
 msgstr "Debian Live Project"
 
@@ -59,8 +57,12 @@ msgstr "DESKRIPSI"
 
 #. type: Plain text
 #: en/live-config.7:18
-msgid "B<live-config> contains the components that configure a live system during the boot process (late userspace)."
-msgstr "B<live-config> berisi komponen-komponen yang mengonfigurasi sistem live selama proses boot (userspace akhir)."
+msgid ""
+"B<live-config> contains the components that configure a live system during "
+"the boot process (late userspace)."
+msgstr ""
+"B<live-config> berisi komponen-komponen yang mengonfigurasi sistem live "
+"selama proses boot (userspace akhir)."
 
 #. type: SH
 #: en/live-config.7:19
@@ -70,13 +72,27 @@ msgstr "KONFIGURASI"
 
 #. type: Plain text
 #: en/live-config.7:21
-msgid "B<live-config> can be configured through boot parameters or configuration files. If both mechanisms are used for a certain option, the boot parameters take precedence over the configuration files. When using persistency, B<live-config> components are only run once."
-msgstr "B<live-config> dapat dikonfigurasi melalui parameter boot atau file konfigurasi. Jika kedua mekanisme digunakan untuk opsi tertentu, parameter boot akan mengambil prioritas di atas file konfigurasi. Saat menggunakan persistensi, komponen B<live-config> hanya akan dijalankan sekali."
+msgid ""
+"B<live-config> can be configured through boot parameters or configuration "
+"files. If both mechanisms are used for a certain option, the boot parameters "
+"take precedence over the configuration files. When using persistency, B<live-"
+"config> components are only run once."
+msgstr ""
+"B<live-config> dapat dikonfigurasi melalui parameter boot atau file "
+"konfigurasi. Jika kedua mekanisme digunakan untuk opsi tertentu, parameter "
+"boot akan mengambil prioritas di atas file konfigurasi. Saat menggunakan "
+"persistensi, komponen B<live-config> hanya akan dijalankan sekali."
 
 #. type: Plain text
 #: en/live-config.7:23
-msgid "If I<live-build>(7) is used to build the live system, the live-config parameters used by default can be set through the --bootappend-live option, see I<lb_config>(1) manual page."
-msgstr "Jika I<live-build>(7) digunakan untuk membangun sistem live, parameter live-config yang digunakan secara default dapat diatur melalui opsi --bootappend-live, lihat halaman manual I<lb_config>(1)."
+msgid ""
+"If I<live-build>(7) is used to build the live system, the live-config "
+"parameters used by default can be set through the --bootappend-live option, "
+"see I<lb_config>(1) manual page."
+msgstr ""
+"Jika I<live-build>(7) digunakan untuk membangun sistem live, parameter live-"
+"config yang digunakan secara default dapat diatur melalui opsi --bootappend-"
+"live, lihat halaman manual I<lb_config>(1)."
 
 #. type: SS
 #: en/live-config.7:24
@@ -86,8 +102,22 @@ msgstr "Parameter Boot (komponen)"
 
 #. type: Plain text
 #: en/live-config.7:26
-msgid "B<live-config> is only activated if 'boot=live' is used as a boot parameter. Additionally, B<live-config> needs to be told which components to run through the 'live-config.components' parameter or which components to not run through the 'live-config.nocomponents' parameter. If both 'live-config.components' and 'live-config.nocomponents' are used, or, if either one is specified multiple times, always the later one takes precedence over the previous one(s)."
-msgstr "B<live-config> hanya diaktifkan jika 'boot=live' digunakan sebagai parameter boot. Selain itu, B<live-config> perlu diberitahu komponen mana yang akan dijalankan melalui parameter 'live-config.components' atau komponen mana yang tidak akan dijalankan melalui parameter 'live-config.nocomponents'. Jika kedua 'live-config.components' dan 'live-config.nocomponents' digunakan, atau, jika salah satunya ditentukan beberapa kali, selalu yang terakhir yang lebih diutamakan daripada yang sebelumnya."
+msgid ""
+"B<live-config> is only activated if 'boot=live' is used as a boot parameter. "
+"Additionally, B<live-config> needs to be told which components to run "
+"through the 'live-config.components' parameter or which components to not "
+"run through the 'live-config.nocomponents' parameter. If both 'live-"
+"config.components' and 'live-config.nocomponents' are used, or, if either "
+"one is specified multiple times, always the later one takes precedence over "
+"the previous one(s)."
+msgstr ""
+"B<live-config> hanya diaktifkan jika 'boot=live' digunakan sebagai parameter "
+"boot. Selain itu, B<live-config> perlu diberitahu komponen mana yang akan "
+"dijalankan melalui parameter 'live-config.components' atau komponen mana "
+"yang tidak akan dijalankan melalui parameter 'live-config.nocomponents'. "
+"Jika kedua 'live-config.components' dan 'live-config.nocomponents' "
+"digunakan, atau, jika salah satunya ditentukan beberapa kali, selalu yang "
+"terakhir yang lebih diutamakan daripada yang sebelumnya."
 
 #. type: IP
 #: en/live-config.7:27
@@ -98,7 +128,9 @@ msgstr "B<live-config.components> | B<components>"
 #. type: Plain text
 #: en/live-config.7:29
 msgid "All components are run. This is what live images use by default."
-msgstr "Semua komponen dijalankan. Ini adalah apa yang digunakan oleh citra live secara default."
+msgstr ""
+"Semua komponen dijalankan. Ini adalah apa yang digunakan oleh citra live "
+"secara default."
 
 #. type: IP
 #: en/live-config.7:29
@@ -108,8 +140,17 @@ msgstr "B<live-config.components>=I<KOMPONEN1>,I<KOMPONEN2>, ... I<KOMPONENn> | 
 
 #. type: Plain text
 #: en/live-config.7:31
-msgid "Only the specified components are run. Note that the order matters, e.g. 'live-config.components=sudo,user-setup' would not work since the user needs to be added before it can be configured for sudo. Look at the filenames of the components in /usr/lib/live/config for their ordering number."
-msgstr "Hanya komponen yang ditentukan yang dijalankan. Perlu diperhatikan bahwa urutan penting, misalnya 'live-config.components=sudo,user-setup' tidak akan berfungsi karena pengguna perlu ditambahkan sebelum dapat dikonfigurasi untuk sudo. Lihat nama file komponen di /usr/lib/live/config untuk nomor urutannya."
+msgid ""
+"Only the specified components are run. Note that the order matters, e.g. "
+"'live-config.components=sudo,user-setup' would not work since the user needs "
+"to be added before it can be configured for sudo. Look at the filenames of "
+"the components in /usr/lib/live/config for their ordering number."
+msgstr ""
+"Hanya komponen yang ditentukan yang dijalankan. Perlu diperhatikan bahwa "
+"urutan penting, misalnya 'live-config.components=sudo,user-setup' tidak akan "
+"berfungsi karena pengguna perlu ditambahkan sebelum dapat dikonfigurasi "
+"untuk sudo. Lihat nama file komponen di /usr/lib/live/config untuk nomor "
+"urutannya."
 
 #. type: IP
 #: en/live-config.7:31
@@ -119,8 +160,12 @@ msgstr "B<live-config.nocomponents> | B<nocomponents>"
 
 #. type: Plain text
 #: en/live-config.7:33
-msgid "No component is run. This is the same as not using any of 'live-config.components' or 'live-config.nocomponents'."
-msgstr "Tidak ada komponen yang dijalankan. Ini sama dengan tidak menggunakan 'live-config.components' atau 'live-config.nocomponents'."
+msgid ""
+"No component is run. This is the same as not using any of 'live-"
+"config.components' or 'live-config.nocomponents'."
+msgstr ""
+"Tidak ada komponen yang dijalankan. Ini sama dengan tidak menggunakan 'live-"
+"config.components' atau 'live-config.nocomponents'."
 
 #. type: IP
 #: en/live-config.7:33
@@ -141,8 +186,11 @@ msgstr "Parameter Boot (opsi)"
 
 #. type: Plain text
 #: en/live-config.7:38
-msgid "Some individual components can change their behaviour upon a boot parameter."
-msgstr "Beberapa komponen individu dapat mengubah perilakunya berdasarkan parameter boot."
+msgid ""
+"Some individual components can change their behaviour upon a boot parameter."
+msgstr ""
+"Beberapa komponen individu dapat mengubah perilakunya berdasarkan parameter "
+"boot."
 
 #. type: IP
 #: en/live-config.7:39
@@ -152,28 +200,53 @@ msgstr "B<live-config.debconf-preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I
 
 #. type: Plain text
 #: en/live-config.7:41
-msgid "Allows one to fetch and apply one or more debconf preseed files to be applied to the debconf database. Note that the URLs must be fetchable by wget (http, ftp or file://)."
-msgstr "Memungkinkan untuk mengambil dan menerapkan satu atau lebih file preseed debconf untuk diterapkan ke database debconf. Perhatikan bahwa URL harus dapat diambil oleh wget (http, ftp, atau file://)."
+msgid ""
+"Allows one to fetch and apply one or more debconf preseed files to be "
+"applied to the debconf database. Note that the URLs must be fetchable by "
+"wget (http, ftp or file://)."
+msgstr ""
+"Memungkinkan untuk mengambil dan menerapkan satu atau lebih file preseed "
+"debconf untuk diterapkan ke database debconf. Perhatikan bahwa URL harus "
+"dapat diambil oleh wget (http, ftp, atau file://)."
 
 #. type: Plain text
 #: en/live-config.7:43 en/live-config.7:95
-msgid "If the file is placed on the live medium, it can be fetched with file:///run/initramfs/memory/data/I<FILE>, or with file:///I<FILE> if it is in the root filesystem of the live system itself."
-msgstr "Jika file ditempatkan pada media live, ia dapat diambil dengan file:///lib/live/mount/medium/I<FILE>, atau dengan file:///I<FILE> jika berada di sistem berkas root dari sistem live itu sendiri."
+msgid ""
+"If the file is placed on the live medium, it can be fetched with file:///run/"
+"initramfs/memory/data/I<FILE>, or with file:///I<FILE> if it is in the root "
+"filesystem of the live system itself."
+msgstr ""
+"Jika file ditempatkan pada media live, ia dapat diambil dengan file:///lib/"
+"live/mount/medium/I<FILE>, atau dengan file:///I<FILE> jika berada di sistem "
+"berkas root dari sistem live itu sendiri."
 
 #. type: Plain text
 #: en/live-config.7:45
-msgid "All preseed files in /usr/lib/live/config-preseed/ in the root filesystem of the live system can be automatically enabled with the keyword 'filesystem'."
-msgstr "Semua file preseed di /usr/lib/live/config-preseed/ di sistem berkas root sistem live dapat diaktifkan secara otomatis dengan kata kunci 'filesystem'."
+msgid ""
+"All preseed files in /usr/lib/live/config-preseed/ in the root filesystem of "
+"the live system can be automatically enabled with the keyword 'filesystem'."
+msgstr ""
+"Semua file preseed di /usr/lib/live/config-preseed/ di sistem berkas root "
+"sistem live dapat diaktifkan secara otomatis dengan kata kunci 'filesystem'."
 
 #. type: Plain text
 #: en/live-config.7:47
-msgid "All preseed files in /minios/config-preseed/ of the live medium can be automatically enabled with the keyword 'medium'."
-msgstr "Semua file preseed di /minios/config-preseed/ dari media live dapat diaktifkan secara otomatis dengan kata kunci 'medium'."
+msgid ""
+"All preseed files in /minios/config-preseed/ of the live medium can be "
+"automatically enabled with the keyword 'medium'."
+msgstr ""
+"Semua file preseed di /minios/config-preseed/ dari media live dapat "
+"diaktifkan secara otomatis dengan kata kunci 'medium'."
 
 #. type: Plain text
 #: en/live-config.7:49
-msgid "If several mechanisms are combined, then filesystem preseed files are applied first, then medium preseed files, and last the network preseed files."
-msgstr "Jika beberapa mekanisme digabungkan, maka file preseed sistem file diterapkan pertama, kemudian file preseed media, dan terakhir file preseed jaringan."
+msgid ""
+"If several mechanisms are combined, then filesystem preseed files are "
+"applied first, then medium preseed files, and last the network preseed files."
+msgstr ""
+"Jika beberapa mekanisme digabungkan, maka file preseed sistem file "
+"diterapkan pertama, kemudian file preseed media, dan terakhir file preseed "
+"jaringan."
 
 #. type: IP
 #: en/live-config.7:49
@@ -184,7 +257,9 @@ msgstr "B<live-config.hostname>=I<NAMA HOST> | B<hostname>=I<NAMA HOST>"
 #. type: Plain text
 #: en/live-config.7:51
 msgid "Allows one to set the hostname of the system. The default is 'debian'."
-msgstr "Memungkinkan seseorang untuk mengatur nama host sistem. Defaultnya adalah 'debian'."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur nama host sistem. Defaultnya adalah "
+"'debian'."
 
 #. type: IP
 #: en/live-config.7:51
@@ -194,8 +269,12 @@ msgstr "B<live-config.username>=I<NAMA PENGGUNA> | B<username>=I<NAMA PENGGUNA>"
 
 #. type: Plain text
 #: en/live-config.7:53
-msgid "Allows one to set the username that gets created for autologin. The default is 'user'."
-msgstr "Memungkinkan seseorang untuk mengatur nama pengguna yang dibuat untuk autologin. Defaultnya adalah 'user'."
+msgid ""
+"Allows one to set the username that gets created for autologin. The default "
+"is 'user'."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur nama pengguna yang dibuat untuk "
+"autologin. Defaultnya adalah 'user'."
 
 #. type: IP
 #: en/live-config.7:53
@@ -205,8 +284,14 @@ msgstr "B<live-config.user-default-groups>=I<GRUP1>,I<GRUP2> ... I<GRUPn> | B<us
 
 #. type: Plain text
 #: en/live-config.7:55
-msgid "Allows one to set the default groups of the users that gets created for autologin is member of. The default is 'audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth'."
-msgstr "Memungkinkan untuk mengatur grup default dari pengguna yang dibuat untuk autologin. Defaultnya adalah 'audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth'."
+msgid ""
+"Allows one to set the default groups of the users that gets created for "
+"autologin is member of. The default is 'audio cdrom dip floppy video plugdev "
+"netdev powerdev scanner bluetooth'."
+msgstr ""
+"Memungkinkan untuk mengatur grup default dari pengguna yang dibuat untuk "
+"autologin. Defaultnya adalah 'audio cdrom dip floppy video plugdev netdev "
+"powerdev scanner bluetooth'."
 
 #. type: IP
 #: en/live-config.7:55
@@ -216,8 +301,12 @@ msgstr "B<live-config.user-fullname>=\"I<NAMA LENGKAP PENGGUNA>\" | B<user-fulln
 
 #. type: Plain text
 #: en/live-config.7:57
-msgid "Allows one to set the fullname of the users that gets created for autologin. On Debian the default is 'Debian Live user'."
-msgstr "Memungkinkan seseorang untuk mengatur nama lengkap pengguna yang dibuat untuk autologin. Di Debian, defaultnya adalah 'Debian Live user'."
+msgid ""
+"Allows one to set the fullname of the users that gets created for autologin. "
+"On Debian the default is 'Debian Live user'."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur nama lengkap pengguna yang dibuat "
+"untuk autologin. Di Debian, defaultnya adalah 'Debian Live user'."
 
 #. type: IP
 #: en/live-config.7:57
@@ -271,8 +360,14 @@ msgstr "B<live-config.locales>=I<LOKAL1>,I<LOKAL2> ... I<LOKALn> | B<locales>=I<
 
 #. type: Plain text
 #: en/live-config.7:67
-msgid "Allows one to set the locale of the system, e.g. 'de_CH.UTF-8'. The default is 'en_US.UTF-8'. In case the selected locale is not already available on the system, it is automatically generated on the fly."
-msgstr "Memungkinkan seseorang untuk mengatur lokal sistem, misalnya 'de_CH.UTF-8'. Defaultnya adalah 'en_US.UTF-8'. Jika lokal yang dipilih belum tersedia di sistem, ia akan secara otomatis dibuat saat itu juga."
+msgid ""
+"Allows one to set the locale of the system, e.g. 'de_CH.UTF-8'. The default "
+"is 'en_US.UTF-8'. In case the selected locale is not already available on "
+"the system, it is automatically generated on the fly."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur lokal sistem, misalnya 'de_CH.UTF-8'. "
+"Defaultnya adalah 'en_US.UTF-8'. Jika lokal yang dipilih belum tersedia di "
+"sistem, ia akan secara otomatis dibuat saat itu juga."
 
 #. type: IP
 #: en/live-config.7:67
@@ -282,8 +377,12 @@ msgstr "B<live-config.timezone>=I<ZONA_WAKTU> | B<timezone>=I<ZONA_WAKTU>"
 
 #. type: Plain text
 #: en/live-config.7:69
-msgid "Allows one to set the timezone of the system, e.g. 'Europe/Zurich'. The default is 'UTC'."
-msgstr "Memungkinkan seseorang untuk mengatur zona waktu sistem, misalnya 'Europe/Zurich'. Defaultnya adalah 'UTC'."
+msgid ""
+"Allows one to set the timezone of the system, e.g. 'Europe/Zurich'. The "
+"default is 'UTC'."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur zona waktu sistem, misalnya 'Europe/"
+"Zurich'. Defaultnya adalah 'UTC'."
 
 #. type: IP
 #: en/live-config.7:69
@@ -294,7 +393,9 @@ msgstr "B<live-config.keyboard-model>=I<MODEL_KEYBOARD> | B<keyboard-model>=I<MO
 #. type: Plain text
 #: en/live-config.7:71
 msgid "Allows one to change the keyboard model. There is no default value set."
-msgstr "Memungkinkan seseorang untuk mengubah model keyboard. Tidak ada nilai default yang diatur."
+msgstr ""
+"Memungkinkan seseorang untuk mengubah model keyboard. Tidak ada nilai "
+"default yang diatur."
 
 #. type: IP
 #: en/live-config.7:71
@@ -304,8 +405,14 @@ msgstr "B<live-config.keyboard-layouts>=I<LAYOUT_KEYBOARD1>,I<LAYOUT_KEYBOARD2> 
 
 #. type: Plain text
 #: en/live-config.7:73
-msgid "Allows one to change the keyboard layouts. If more than one is specified, the tools of the desktop environment will allow one to switch it under X11. There is no default value set."
-msgstr "Memungkinkan seseorang untuk mengubah layout keyboard. Jika lebih dari satu ditentukan, alat lingkungan desktop akan memungkinkan untuk beralih di bawah X11. Tidak ada nilai default yang diatur."
+msgid ""
+"Allows one to change the keyboard layouts. If more than one is specified, "
+"the tools of the desktop environment will allow one to switch it under X11. "
+"There is no default value set."
+msgstr ""
+"Memungkinkan seseorang untuk mengubah layout keyboard. Jika lebih dari satu "
+"ditentukan, alat lingkungan desktop akan memungkinkan untuk beralih di bawah "
+"X11. Tidak ada nilai default yang diatur."
 
 #. type: IP
 #: en/live-config.7:73
@@ -315,8 +422,20 @@ msgstr "B<live-config.keyboard-variants>=I<VARIAN_KEYBOARD1>,I<VARIAN_KEYBOARD2>
 
 #. type: Plain text
 #: en/live-config.7:75
-msgid "Allows one to change the keyboard variants. If more than one is specified, the same number of values as keyboard-layouts values should be specified as they will be matched one-to-one in the order specified. Blank values are allowed. The tools of the desktop environment will allow one to switch between each layout and variant pair under X11. There is no default value set."
-msgstr "Memungkinkan seseorang untuk mengubah varian keyboard. Jika lebih dari satu ditentukan, jumlah nilai yang sama dengan nilai keyboard-layouts harus ditentukan karena akan dicocokkan satu-ke-satu dalam urutan yang ditentukan. Nilai kosong diizinkan. Alat-alat lingkungan desktop akan memungkinkan untuk beralih antara setiap pasangan tata letak dan varian di bawah X11. Tidak ada nilai default yang diatur."
+msgid ""
+"Allows one to change the keyboard variants. If more than one is specified, "
+"the same number of values as keyboard-layouts values should be specified as "
+"they will be matched one-to-one in the order specified. Blank values are "
+"allowed. The tools of the desktop environment will allow one to switch "
+"between each layout and variant pair under X11. There is no default value "
+"set."
+msgstr ""
+"Memungkinkan seseorang untuk mengubah varian keyboard. Jika lebih dari satu "
+"ditentukan, jumlah nilai yang sama dengan nilai keyboard-layouts harus "
+"ditentukan karena akan dicocokkan satu-ke-satu dalam urutan yang ditentukan. "
+"Nilai kosong diizinkan. Alat-alat lingkungan desktop akan memungkinkan untuk "
+"beralih antara setiap pasangan tata letak dan varian di bawah X11. Tidak ada "
+"nilai default yang diatur."
 
 #. type: IP
 #: en/live-config.7:75
@@ -326,8 +445,11 @@ msgstr "B<live-config.keyboard-options>=I<OPSI_KEYBOARD> | B<keyboard-options>=I
 
 #. type: Plain text
 #: en/live-config.7:77
-msgid "Allows one to change the keyboard options. There is no default value set."
-msgstr "Memungkinkan seseorang untuk mengubah opsi keyboard. Tidak ada nilai default yang diatur."
+msgid ""
+"Allows one to change the keyboard options. There is no default value set."
+msgstr ""
+"Memungkinkan seseorang untuk mengubah opsi keyboard. Tidak ada nilai default "
+"yang diatur."
 
 #. type: IP
 #: en/live-config.7:77
@@ -338,7 +460,8 @@ msgstr "B<live-config.sysv-rc>=I<LAYANAN1>,I<LAYANAN2> ... I<LAYANANn> | B<sysv-
 #. type: Plain text
 #: en/live-config.7:79
 msgid "Allows one to disable sysv services through update-rc.d."
-msgstr "Memungkinkan seseorang untuk menonaktifkan layanan sysv melalui update-rc.d."
+msgstr ""
+"Memungkinkan seseorang untuk menonaktifkan layanan sysv melalui update-rc.d."
 
 #. type: IP
 #: en/live-config.7:79
@@ -348,8 +471,12 @@ msgstr "B<live-config.utc>=B<ya>|tidak | B<utc>=B<ya>|tidak"
 
 #. type: Plain text
 #: en/live-config.7:81
-msgid "Allows one to change if the system is assuming that the hardware clock is set to UTC or not. The default is 'yes'."
-msgstr "Memungkinkan seseorang untuk mengubah apakah sistem mengasumsikan bahwa jam perangkat keras diatur ke UTC atau tidak. Defaultnya adalah 'ya'."
+msgid ""
+"Allows one to change if the system is assuming that the hardware clock is "
+"set to UTC or not. The default is 'yes'."
+msgstr ""
+"Memungkinkan seseorang untuk mengubah apakah sistem mengasumsikan bahwa jam "
+"perangkat keras diatur ke UTC atau tidak. Defaultnya adalah 'ya'."
 
 #. type: IP
 #: en/live-config.7:81
@@ -360,7 +487,9 @@ msgstr "B<live-config.x-session-manager=>I<MANAJER_SESI_X> | B<x-session-manager
 #. type: Plain text
 #: en/live-config.7:83
 msgid "Allows one to set the x-session-manager through update-alternatives."
-msgstr "Memungkinkan seseorang untuk mengatur manajer sesi X melalui update-alternatives."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur manajer sesi X melalui update-"
+"alternatives."
 
 #. type: IP
 #: en/live-config.7:83
@@ -370,8 +499,17 @@ msgstr "B<live-config.xorg-driver>=I<DRIVER_XORG> | B<xorg-driver>=I<DRIVER_XORG
 
 #. type: Plain text
 #: en/live-config.7:85
-msgid "Allows one to set xorg driver instead of autodetecting it. If a PCI ID is specified in /usr/share/live/config/xserver-xorg/I<DRIVER>.ids within the live system, the I<DRIVER> is enforced for these devices. If both a boot parameter and an override are found, the boot parameter takes precedence."
-msgstr "Memungkinkan seseorang untuk mengatur driver xorg alih-alih mendeteksinya secara otomatis. Jika ID PCI ditentukan dalam /usr/share/live/config/xserver-xorg/I<DRIVER>.ids dalam sistem live, I<DRIVER> diberlakukan untuk perangkat ini. Jika parameter boot dan override ditemukan, parameter boot yang diutamakan."
+msgid ""
+"Allows one to set xorg driver instead of autodetecting it. If a PCI ID is "
+"specified in /usr/share/live/config/xserver-xorg/I<DRIVER>.ids within the "
+"live system, the I<DRIVER> is enforced for these devices. If both a boot "
+"parameter and an override are found, the boot parameter takes precedence."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur driver xorg alih-alih mendeteksinya "
+"secara otomatis. Jika ID PCI ditentukan dalam /usr/share/live/config/xserver-"
+"xorg/I<DRIVER>.ids dalam sistem live, I<DRIVER> diberlakukan untuk perangkat "
+"ini. Jika parameter boot dan override ditemukan, parameter boot yang "
+"diutamakan."
 
 #. type: IP
 #: en/live-config.7:85
@@ -381,8 +519,11 @@ msgstr "B<live-config.xorg-resolution>=I<RESOLUSI_XORG> | B<xorg-resolution>=I<R
 
 #. type: Plain text
 #: en/live-config.7:87
-msgid "Allows one to set xorg resolution instead of autodetecting it, e.g. 1024x768."
-msgstr "Memungkinkan seseorang untuk mengatur resolusi xorg alih-alih mendeteksinya secara otomatis, misalnya 1024x768."
+msgid ""
+"Allows one to set xorg resolution instead of autodetecting it, e.g. 1024x768."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur resolusi xorg alih-alih mendeteksinya "
+"secara otomatis, misalnya 1024x768."
 
 #. type: IP
 #: en/live-config.7:87
@@ -392,20 +533,36 @@ msgstr "B<live-config.wlan-driver>=I<DRIVER_WLAN> | B<wlan-driver>=I<DRIVER_WLAN
 
 #. type: Plain text
 #: en/live-config.7:89
-msgid "Allows one to set WLAN driver instead of autodetecting it. If a PCI ID is specified in /usr/share/live/config/broadcom-sta/I<DRIVER>.ids within the live system, the I<DRIVER> is enforced for these devices. If both a boot parameter and an override are found, the boot parameter takes precedence."
-msgstr "Memungkinkan seseorang untuk mengatur driver WLAN alih-alih mendeteksinya secara otomatis. Jika ID PCI ditentukan dalam /usr/share/live/config/broadcom-sta/I<DRIVER>.ids dalam sistem live, I<DRIVER> diberlakukan untuk perangkat ini. Jika parameter boot dan override ditemukan, parameter boot yang diutamakan."
+msgid ""
+"Allows one to set WLAN driver instead of autodetecting it. If a PCI ID is "
+"specified in /usr/share/live/config/broadcom-sta/I<DRIVER>.ids within the "
+"live system, the I<DRIVER> is enforced for these devices. If both a boot "
+"parameter and an override are found, the boot parameter takes precedence."
+msgstr ""
+"Memungkinkan seseorang untuk mengatur driver WLAN alih-alih mendeteksinya "
+"secara otomatis. Jika ID PCI ditentukan dalam /usr/share/live/config/"
+"broadcom-sta/I<DRIVER>.ids dalam sistem live, I<DRIVER> diberlakukan untuk "
+"perangkat ini. Jika parameter boot dan override ditemukan, parameter boot "
+"yang diutamakan."
 
 #. type: IP
 #: en/live-config.7:89
 #, no-wrap
-#| msgid "B<live-config.timezone>=I<TIMEZONE> | B<timezone>=I<TIMEZONE>"
 msgid "B<live-config.module-mode>=I<MODE> | B<module-mode>=I<MODE>"
 msgstr "B<live-config.module-mode>=I<MODE> | B<module-mode>=I<MODE>"
 
 #. type: Plain text
 #: en/live-config.7:91
-msgid "Allows you to specify the module mode for live configuration. When set to \"merged\", the system will update user accounts, rebuild caches, and refresh package settings so that configuration changes are dynamically integrated into the running system."
-msgstr "Memungkinkan Anda menentukan mode modul untuk konfigurasi live. Jika disetel ke \"merged\", sistem akan memperbarui akun pengguna, membangun ulang cache, dan menyegarkan pengaturan paket agar perubahan konfigurasi terintegrasi secara dinamis ke dalam sistem yang sedang berjalan."
+msgid ""
+"Allows you to specify the module mode for live configuration. When set to "
+"\"merged\", the system will update user accounts, rebuild caches, and "
+"refresh package settings so that configuration changes are dynamically "
+"integrated into the running system."
+msgstr ""
+"Memungkinkan Anda menentukan mode modul untuk konfigurasi live. Jika disetel "
+"ke \"merged\", sistem akan memperbarui akun pengguna, membangun ulang cache, "
+"dan menyegarkan pengaturan paket agar perubahan konfigurasi terintegrasi "
+"secara dinamis ke dalam sistem yang sedang berjalan."
 
 #. type: IP
 #: en/live-config.7:91
@@ -415,23 +572,48 @@ msgstr "B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn> | B
 
 #. type: Plain text
 #: en/live-config.7:93
-msgid "Allows one to fetch and execute one or more arbitrary files. Note that the URLs must be fetchable by wget (http, ftp or file://), the files are executed in /tmp of the running live system, and that the files needs their dependencies, if any, already installed, e.g. if a python script should be executed the system needs python installed. Some hooks for some common use-cases are available at /usr/share/doc/live-config/examples/hooks/."
-msgstr "Memungkinkan seseorang untuk mengambil dan menjalankan satu atau lebih file arbitrer. Perhatikan bahwa URL harus dapat diambil oleh wget (http, ftp atau file://), file dijalankan di /tmp sistem live yang sedang berjalan, dan file tersebut membutuhkan dependensinya, jika ada, sudah terinstal, misalnya jika skrip python harus dijalankan, sistem membutuhkan python terinstal. Beberapa kait untuk kasus penggunaan umum tersedia di /usr/share/doc/live-config/examples/hooks/."
+msgid ""
+"Allows one to fetch and execute one or more arbitrary files. Note that the "
+"URLs must be fetchable by wget (http, ftp or file://), the files are "
+"executed in /tmp of the running live system, and that the files needs their "
+"dependencies, if any, already installed, e.g. if a python script should be "
+"executed the system needs python installed. Some hooks for some common use-"
+"cases are available at /usr/share/doc/live-config/examples/hooks/."
+msgstr ""
+"Memungkinkan seseorang untuk mengambil dan menjalankan satu atau lebih file "
+"arbitrer. Perhatikan bahwa URL harus dapat diambil oleh wget (http, ftp atau "
+"file://), file dijalankan di /tmp sistem live yang sedang berjalan, dan file "
+"tersebut membutuhkan dependensinya, jika ada, sudah terinstal, misalnya jika "
+"skrip python harus dijalankan, sistem membutuhkan python terinstal. Beberapa "
+"kait untuk kasus penggunaan umum tersedia di /usr/share/doc/live-config/"
+"examples/hooks/."
 
 #. type: Plain text
 #: en/live-config.7:97
-msgid "All hooks in /usr/lib/live/config-hooks/ in the root filesystem of the live system can be automatically enabled with the keyword 'filesystem'."
-msgstr "Semua kait di /usr/lib/live/config-hooks/ di sistem berkas root sistem live dapat diaktifkan secara otomatis dengan kata kunci 'filesystem'."
+msgid ""
+"All hooks in /usr/lib/live/config-hooks/ in the root filesystem of the live "
+"system can be automatically enabled with the keyword 'filesystem'."
+msgstr ""
+"Semua kait di /usr/lib/live/config-hooks/ di sistem berkas root sistem live "
+"dapat diaktifkan secara otomatis dengan kata kunci 'filesystem'."
 
 #. type: Plain text
 #: en/live-config.7:99
-msgid "All hooks in /minios/config-hooks/ of the live medium can be automatically enabled with the keyword 'medium'."
-msgstr "Semua kait di /minios/config-hooks/ dari media live dapat diaktifkan secara otomatis dengan kata kunci 'medium'."
+msgid ""
+"All hooks in /minios/config-hooks/ of the live medium can be automatically "
+"enabled with the keyword 'medium'."
+msgstr ""
+"Semua kait di /minios/config-hooks/ dari media live dapat diaktifkan secara "
+"otomatis dengan kata kunci 'medium'."
 
 #. type: Plain text
 #: en/live-config.7:101
-msgid "If several mechanisms are combined, then filesystem hooks are executed first, then medium hooks, and last the network hooks."
-msgstr "Jika beberapa mekanisme digabungkan, maka kait sistem berkas dieksekusi terlebih dahulu, kemudian kait media, dan terakhir kait jaringan."
+msgid ""
+"If several mechanisms are combined, then filesystem hooks are executed "
+"first, then medium hooks, and last the network hooks."
+msgstr ""
+"Jika beberapa mekanisme digabungkan, maka kait sistem berkas dieksekusi "
+"terlebih dahulu, kemudian kait media, dan terakhir kait jaringan."
 
 #. type: SS
 #: en/live-config.7:102
@@ -441,8 +623,15 @@ msgstr "Parameter Boot (pintasan)"
 
 #. type: Plain text
 #: en/live-config.7:104
-msgid "For some common use cases where it would require to combine several individual parameters, B<live-config> provides shortcuts. This allows both to have full granularity over all the options, as well keep things simple."
-msgstr "Untuk beberapa kasus penggunaan umum di mana dibutuhkan kombinasi beberapa parameter individual, B<live-config> menyediakan pintasan. Ini memungkinkan untuk memiliki granularitas penuh atas semua opsi, serta menjaga semuanya tetap sederhana."
+msgid ""
+"For some common use cases where it would require to combine several "
+"individual parameters, B<live-config> provides shortcuts. This allows both "
+"to have full granularity over all the options, as well keep things simple."
+msgstr ""
+"Untuk beberapa kasus penggunaan umum di mana dibutuhkan kombinasi beberapa "
+"parameter individual, B<live-config> menyediakan pintasan. Ini memungkinkan "
+"untuk memiliki granularitas penuh atas semua opsi, serta menjaga semuanya "
+"tetap sederhana."
 
 #. type: IP
 #: en/live-config.7:105
@@ -452,8 +641,12 @@ msgstr "B<live-config.noroot> | B<noroot>"
 
 #. type: Plain text
 #: en/live-config.7:107
-msgid "Disables sudo and policykit, the user cannot gain root privileges on the system."
-msgstr "Menonaktifkan sudo dan policykit, pengguna tidak dapat memperoleh hak istimewa root di sistem."
+msgid ""
+"Disables sudo and policykit, the user cannot gain root privileges on the "
+"system."
+msgstr ""
+"Menonaktifkan sudo dan policykit, pengguna tidak dapat memperoleh hak "
+"istimewa root di sistem."
 
 #. type: IP
 #: en/live-config.7:107
@@ -474,8 +667,11 @@ msgstr "B<live-config.nottyautologin> | B<nottyautologin>"
 
 #. type: Plain text
 #: en/live-config.7:111
-msgid "Disables the automatic login on the console, not affecting the graphical autologin."
-msgstr "Menonaktifkan login otomatis di konsol, tidak memengaruhi autologin grafis."
+msgid ""
+"Disables the automatic login on the console, not affecting the graphical "
+"autologin."
+msgstr ""
+"Menonaktifkan login otomatis di konsol, tidak memengaruhi autologin grafis."
 
 #. type: IP
 #: en/live-config.7:111
@@ -485,8 +681,12 @@ msgstr "B<live-config.nox11autologin> | B<nox11autologin>"
 
 #. type: Plain text
 #: en/live-config.7:113
-msgid "Disables the automatic login with any display manager, not affecting tty autologin."
-msgstr "Menonaktifkan login otomatis dengan manajer tampilan apa pun, tidak memengaruhi autologin tty."
+msgid ""
+"Disables the automatic login with any display manager, not affecting tty "
+"autologin."
+msgstr ""
+"Menonaktifkan login otomatis dengan manajer tampilan apa pun, tidak "
+"memengaruhi autologin tty."
 
 #. type: SS
 #: en/live-config.7:114
@@ -518,28 +718,72 @@ msgstr "File Konfigurasi"
 
 #. type: Plain text
 #: en/live-config.7:122
-msgid "B<live-config> can be configured (but not activated) through configuration files. Everything but the shortcuts that can be configured with a boot parameter can also alternatively be configured through one or more files. If configuration files are used, the 'boot=live' parameter is still required to activate B<live-config>."
-msgstr "B<live-config> dapat dikonfigurasi (tetapi tidak diaktifkan) melalui file konfigurasi. Segala sesuatu kecuali pintasan yang dapat dikonfigurasi dengan parameter boot juga dapat dikonfigurasi melalui satu atau lebih file. Jika file konfigurasi digunakan, parameter 'boot=live' masih diperlukan untuk mengaktifkan B<live-config>."
+msgid ""
+"B<live-config> can be configured (but not activated) through configuration "
+"files. Everything but the shortcuts that can be configured with a boot "
+"parameter can also alternatively be configured through one or more files. If "
+"configuration files are used, the 'boot=live' parameter is still required to "
+"activate B<live-config>."
+msgstr ""
+"B<live-config> dapat dikonfigurasi (tetapi tidak diaktifkan) melalui file "
+"konfigurasi. Segala sesuatu kecuali pintasan yang dapat dikonfigurasi dengan "
+"parameter boot juga dapat dikonfigurasi melalui satu atau lebih file. Jika "
+"file konfigurasi digunakan, parameter 'boot=live' masih diperlukan untuk "
+"mengaktifkan B<live-config>."
 
 #. type: Plain text
 #: en/live-config.7:124
-msgid "B<Note:> If configuration files are used, either (preferably) all boot parameters should be put into the B<LIVE_CONFIG_CMDLINE> variable, or individual variables can be set. If individual variables are used, the user is required to ensure that all the necessary variables are set to create a valid configuration."
-msgstr "B<Catatan:> Jika file konfigurasi digunakan, sebaiknya semua parameter boot harus ditempatkan dalam variabel B<LIVE_CONFIG_CMDLINE>, atau variabel individual dapat diatur. Jika variabel individual digunakan, pengguna diwajibkan untuk memastikan bahwa semua variabel yang diperlukan diatur untuk membuat konfigurasi yang valid."
+msgid ""
+"B<Note:> If configuration files are used, either (preferably) all boot "
+"parameters should be put into the B<LIVE_CONFIG_CMDLINE> variable, or "
+"individual variables can be set. If individual variables are used, the user "
+"is required to ensure that all the necessary variables are set to create a "
+"valid configuration."
+msgstr ""
+"B<Catatan:> Jika file konfigurasi digunakan, sebaiknya semua parameter boot "
+"harus ditempatkan dalam variabel B<LIVE_CONFIG_CMDLINE>, atau variabel "
+"individual dapat diatur. Jika variabel individual digunakan, pengguna "
+"diwajibkan untuk memastikan bahwa semua variabel yang diperlukan diatur "
+"untuk membuat konfigurasi yang valid."
 
 #. type: Plain text
 #: en/live-config.7:126
-msgid "Configuration files can be placed either in the root filesystem itself (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), or on the live media (minios/config.conf, minios/config.conf.d/*.conf). If both places are used for a certain option, the ones from the live media take precedence over the ones from the root filesystem."
-msgstr "File konfigurasi dapat ditempatkan baik di sistem file root itu sendiri (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), atau di media live (minios/config.conf, minios/config.conf.d/*.conf). Jika kedua lokasi digunakan untuk opsi tertentu, yang dari media live lebih diutamakan daripada yang dari sistem file root."
+msgid ""
+"Configuration files can be placed either in the root filesystem itself (/etc/"
+"live/config.conf, /etc/live/config.conf.d/*.conf), or on the live media "
+"(minios/config.conf, minios/config.conf.d/*.conf). If both places are used "
+"for a certain option, the ones from the live media take precedence over the "
+"ones from the root filesystem."
+msgstr ""
+"File konfigurasi dapat ditempatkan baik di sistem file root itu sendiri (/"
+"etc/live/config.conf, /etc/live/config.conf.d/*.conf), atau di media live "
+"(minios/config.conf, minios/config.conf.d/*.conf). Jika kedua lokasi "
+"digunakan untuk opsi tertentu, yang dari media live lebih diutamakan "
+"daripada yang dari sistem file root."
 
 #. type: Plain text
 #: en/live-config.7:128
-msgid "Although the configuration files placed in the configuration directories do not require a particular name, it is suggested for consistency reasons to either use 'vendor.conf' or 'project.conf' as a naming scheme (whereas 'vendor' or 'project' is replaced with the actual name, resulting in a filename like 'progress-linux.conf')."
-msgstr "Meskipun file konfigurasi yang ditempatkan di direktori konfigurasi tidak memerlukan nama tertentu, disarankan untuk alasan konsistensi untuk menggunakan 'vendor.conf' atau 'project.conf' sebagai skema penamaan (di mana 'vendor' atau 'project' diganti dengan nama sebenarnya, menghasilkan nama file seperti 'progress-linux.conf')."
+msgid ""
+"Although the configuration files placed in the configuration directories do "
+"not require a particular name, it is suggested for consistency reasons to "
+"either use 'vendor.conf' or 'project.conf' as a naming scheme (whereas "
+"'vendor' or 'project' is replaced with the actual name, resulting in a "
+"filename like 'progress-linux.conf')."
+msgstr ""
+"Meskipun file konfigurasi yang ditempatkan di direktori konfigurasi tidak "
+"memerlukan nama tertentu, disarankan untuk alasan konsistensi untuk "
+"menggunakan 'vendor.conf' atau 'project.conf' sebagai skema penamaan (di "
+"mana 'vendor' atau 'project' diganti dengan nama sebenarnya, menghasilkan "
+"nama file seperti 'progress-linux.conf')."
 
 #. type: Plain text
 #: en/live-config.7:130
-msgid "The actual content of the configuration files consists of one or more of the following variables."
-msgstr "Konten aktual dari file konfigurasi terdiri dari satu atau lebih variabel berikut."
+msgid ""
+"The actual content of the configuration files consists of one or more of the "
+"following variables."
+msgstr ""
+"Konten aktual dari file konfigurasi terdiri dari satu atau lebih variabel "
+"berikut."
 
 #. type: IP
 #: en/live-config.7:131
@@ -560,8 +804,12 @@ msgstr "B<LIVE_CONFIG_COMPONENTS>=I<KOMPONEN1>,I<KOMPONEN2>, ... I<KOMPONENn>"
 
 #. type: Plain text
 #: en/live-config.7:135
-msgid "This variable corresponds to the 'B<live-config.components>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.components>=I<KOMPONEN1>,I<KOMPONEN2>, ... I<KOMPONENn>'."
+msgid ""
+"This variable corresponds to the 'B<live-"
+"config.components>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-"
+"config.components>=I<KOMPONEN1>,I<KOMPONEN2>, ... I<KOMPONENn>'."
 
 #. type: IP
 #: en/live-config.7:135
@@ -571,8 +819,13 @@ msgstr "B<LIVE_CONFIG_NOCOMPONENTS>=I<KOMPONEN1>,I<KOMPONEN2>, ... I<KOMPONENn>"
 
 #. type: Plain text
 #: en/live-config.7:137
-msgid "This variable corresponds to the 'B<live-config.nocomponents>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.nocomponents>=I<KOMPONEN1>,I<KOMPONEN2>, ... I<KOMPONENn>'."
+msgid ""
+"This variable corresponds to the 'B<live-"
+"config.nocomponents>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' "
+"parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-"
+"config.nocomponents>=I<KOMPONEN1>,I<KOMPONEN2>, ... I<KOMPONENn>'."
 
 #. type: IP
 #: en/live-config.7:137
@@ -582,8 +835,12 @@ msgstr "B<LIVE_DEBCONF_PRESEED>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>"
 
 #. type: Plain text
 #: en/live-config.7:139
-msgid "This variable corresponds to the 'B<live-config.debconf-preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.debconf-preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.debconf-preseed>=filesystem|"
+"medium|I<URL1>|I<URL2>| ... |I<URLn>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.debconf-"
+"preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>'."
 
 #. type: IP
 #: en/live-config.7:139
@@ -593,8 +850,11 @@ msgstr "B<LIVE_HOSTNAME>=I<NAMA HOST>"
 
 #. type: Plain text
 #: en/live-config.7:141
-msgid "This variable corresponds to the 'B<live-config.hostname>=I<HOSTNAME>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.hostname>=I<NAMA_HOST>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.hostname>=I<HOSTNAME>' "
+"parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.hostname>=I<NAMA_HOST>'."
 
 #. type: IP
 #: en/live-config.7:141
@@ -604,8 +864,11 @@ msgstr "B<LIVE_USERNAME>=I<NAMA PENGGUNA>"
 
 #. type: Plain text
 #: en/live-config.7:143
-msgid "This variable corresponds to the 'B<live-config.username>=I<USERNAME>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.username>=I<USERNAME>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.username>=I<USERNAME>' "
+"parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.username>=I<USERNAME>'."
 
 #. type: IP
 #: en/live-config.7:143
@@ -615,8 +878,12 @@ msgstr "B<LIVE_USER_DEFAULT_GROUPS>=I<GROUP1>,I<GROUP2> ... I<GROUPn>"
 
 #. type: Plain text
 #: en/live-config.7:145
-msgid "This variable corresponds to the 'B<live-config.user-default-groups>=\"I<GROUP1>,I<GROUP2> ... I<GROUPn>\"' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.user-default-groups>=\"I<GROUP1>,I<GROUP2> ... I<GROUPn>\"'."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-default-"
+"groups>=\"I<GROUP1>,I<GROUP2> ... I<GROUPn>\"' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.user-default-"
+"groups>=\"I<GROUP1>,I<GROUP2> ... I<GROUPn>\"'."
 
 #. type: IP
 #: en/live-config.7:145
@@ -626,8 +893,12 @@ msgstr "B<LIVE_USER_FULLNAME>=\"I<NAMA LENGKAP PENGGUNA>\""
 
 #. type: Plain text
 #: en/live-config.7:147
-msgid "This variable corresponds to the 'B<live-config.user-fullname>=\"I<USER FULLNAME>\"' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.user-fullname>=\"I<NAMA LENGKAP PENGGUNA>\"'."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-fullname>=\"I<USER "
+"FULLNAME>\"' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.user-fullname>=\"I<NAMA "
+"LENGKAP PENGGUNA>\"'."
 
 #. type: IP
 #: en/live-config.7:147
@@ -637,8 +908,13 @@ msgstr "B<LIVE_ROOT_PASSWORD>=I<KATA SANDI>"
 
 #. type: Plain text
 #: en/live-config.7:149
-msgid "This variable corresponds to the 'B<live-config.root-password>=I<PASSWORD>' parameter. It specifies the root password in plain text."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.root-password>=I<PASSWORD>'. Variabel ini menentukan kata sandi root dalam teks biasa."
+msgid ""
+"This variable corresponds to the 'B<live-config.root-password>=I<PASSWORD>' "
+"parameter. It specifies the root password in plain text."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.root-"
+"password>=I<PASSWORD>'. Variabel ini menentukan kata sandi root dalam teks "
+"biasa."
 
 #. type: IP
 #: en/live-config.7:149
@@ -648,8 +924,14 @@ msgstr "B<LIVE_ROOT_PASSWORD_CRYPTED>=I<KATA SANDI>"
 
 #. type: Plain text
 #: en/live-config.7:151
-msgid "This variable corresponds to the 'B<live-config.root-password-crypted>=I<PASSWORD>' parameter. It specifies the root password in crypted form."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.root-password-crypted>=I<PASSWORD>'. Variabel ini menentukan kata sandi root dalam bentuk terenkripsi."
+msgid ""
+"This variable corresponds to the 'B<live-config.root-password-"
+"crypted>=I<PASSWORD>' parameter. It specifies the root password in crypted "
+"form."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.root-password-"
+"crypted>=I<PASSWORD>'. Variabel ini menentukan kata sandi root dalam bentuk "
+"terenkripsi."
 
 #. type: IP
 #: en/live-config.7:151
@@ -659,8 +941,13 @@ msgstr "B<LIVE_USER_PASSWORD>=I<KATA SANDI>"
 
 #. type: Plain text
 #: en/live-config.7:153
-msgid "This variable corresponds to the 'B<live-config.user-password>=I<PASSWORD>' parameter. It specifies the user password in plain text."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.user-password>=I<PASSWORD>'. Variabel ini menentukan kata sandi pengguna dalam teks biasa."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-password>=I<PASSWORD>' "
+"parameter. It specifies the user password in plain text."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.user-"
+"password>=I<PASSWORD>'. Variabel ini menentukan kata sandi pengguna dalam "
+"teks biasa."
 
 #. type: IP
 #: en/live-config.7:153
@@ -670,8 +957,14 @@ msgstr "B<LIVE_USER_PASSWORD_CRYPTED>=I<KATA SANDI>"
 
 #. type: Plain text
 #: en/live-config.7:155
-msgid "This variable corresponds to the 'B<live-config.user-password-crypted>=I<PASSWORD>' parameter. It specifies the user password in crypted form."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.user-password-crypted>=I<PASSWORD>'. Variabel ini menentukan kata sandi pengguna dalam bentuk terenkripsi."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-password-"
+"crypted>=I<PASSWORD>' parameter. It specifies the user password in crypted "
+"form."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.user-password-"
+"crypted>=I<PASSWORD>'. Variabel ini menentukan kata sandi pengguna dalam "
+"bentuk terenkripsi."
 
 #. type: IP
 #: en/live-config.7:155
@@ -681,8 +974,12 @@ msgstr "B<LIVE_LOCALES>=I<LOKAL1>,I<LOKAL2> ... I<LOKALn>"
 
 #. type: Plain text
 #: en/live-config.7:157
-msgid "This variable corresponds to the 'B<live-config.locales>=I<LOCALE1>,I<LOCALE2> ... I<LOCALEn>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.locales>=I<LOKAL1>,I<LOKAL2> ... I<LOKALn>'."
+msgid ""
+"This variable corresponds to the 'B<live-"
+"config.locales>=I<LOCALE1>,I<LOCALE2> ... I<LOCALEn>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-"
+"config.locales>=I<LOKAL1>,I<LOKAL2> ... I<LOKALn>'."
 
 #. type: IP
 #: en/live-config.7:157
@@ -692,8 +989,11 @@ msgstr "B<LIVE_TIMEZONE>=I<ZONA_WAKTU>"
 
 #. type: Plain text
 #: en/live-config.7:159
-msgid "This variable corresponds to the 'B<live-config.timezone>=I<TIMEZONE>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.timezone>=I<ZONA_WAKTU>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.timezone>=I<TIMEZONE>' "
+"parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.timezone>=I<ZONA_WAKTU>'."
 
 #. type: IP
 #: en/live-config.7:159
@@ -703,8 +1003,12 @@ msgstr "B<LIVE_KEYBOARD_MODEL>=I<MODEL_KEYBOARD>"
 
 #. type: Plain text
 #: en/live-config.7:161
-msgid "This variable corresponds to the 'B<live-config.keyboard-model>=I<KEYBOARD_MODEL>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.keyboard-model>=I<MODEL_KEYBOARD>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.keyboard-"
+"model>=I<KEYBOARD_MODEL>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.keyboard-"
+"model>=I<MODEL_KEYBOARD>'."
 
 #. type: IP
 #: en/live-config.7:161
@@ -714,8 +1018,13 @@ msgstr "B<LIVE_KEYBOARD_LAYOUTS>=I<LAYOUT_KEYBOARD1>,I<LAYOUT_KEYBOARD2> ... I<L
 
 #. type: Plain text
 #: en/live-config.7:163
-msgid "This variable corresponds to the 'B<live-config.keyboard-layouts>=I<KEYBOARD_LAYOUT1>,I<KEYBOARD_LAYOUT2> ... I<KEYBOARD_LAYOUTn>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.keyboard-layouts>=I<LAYOUT_KEYBOARD1>,I<LAYOUT_KEYBOARD2> ... I<LAYOUT_KEYBOARDn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.keyboard-"
+"layouts>=I<KEYBOARD_LAYOUT1>,I<KEYBOARD_LAYOUT2> ... I<KEYBOARD_LAYOUTn>' "
+"parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.keyboard-"
+"layouts>=I<LAYOUT_KEYBOARD1>,I<LAYOUT_KEYBOARD2> ... I<LAYOUT_KEYBOARDn>'."
 
 #. type: IP
 #: en/live-config.7:163
@@ -725,8 +1034,13 @@ msgstr "B<LIVE_KEYBOARD_VARIANTS>=I<VARIAN_KEYBOARD1>,I<VARIAN_KEYBOARD2> ... I<
 
 #. type: Plain text
 #: en/live-config.7:165
-msgid "This variable corresponds to the 'B<live-config.keyboard-variants>=I<KEYBOARD_VARIANT1>,I<KEYBOARD_VARIANT2> ... I<KEYBOARD_VARIANTn>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.keyboard-variants>=I<VARIAN_KEYBOARD1>,I<VARIAN_KEYBOARD2> ... I<VARIAN_KEYBOARDn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.keyboard-"
+"variants>=I<KEYBOARD_VARIANT1>,I<KEYBOARD_VARIANT2> ... "
+"I<KEYBOARD_VARIANTn>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.keyboard-"
+"variants>=I<VARIAN_KEYBOARD1>,I<VARIAN_KEYBOARD2> ... I<VARIAN_KEYBOARDn>'."
 
 #. type: IP
 #: en/live-config.7:165
@@ -736,8 +1050,12 @@ msgstr "B<LIVE_KEYBOARD_OPTIONS>=I<OPSI_KEYBOARD>"
 
 #. type: Plain text
 #: en/live-config.7:167
-msgid "This variable corresponds to the 'B<live-config.keyboard-options>=I<KEYBOARD_OPTIONS>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.keyboard-options>=I<OPSI_KEYBOARD>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.keyboard-"
+"options>=I<KEYBOARD_OPTIONS>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.keyboard-"
+"options>=I<OPSI_KEYBOARD>'."
 
 #. type: IP
 #: en/live-config.7:167
@@ -747,8 +1065,12 @@ msgstr "B<LIVE_SYSV_RC>=I<LAYANAN1>,I<LAYANAN2> ... I<LAYANANn>"
 
 #. type: Plain text
 #: en/live-config.7:169
-msgid "This variable corresponds to the 'B<live-config.sysv-rc>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.sysv-rc>=I<LAYANAN1>,I<LAYANAN2> ... I<LAYANANn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.sysv-"
+"rc>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.sysv-"
+"rc>=I<LAYANAN1>,I<LAYANAN2> ... I<LAYANANn>'."
 
 #. type: IP
 #: en/live-config.7:169
@@ -758,7 +1080,8 @@ msgstr "B<LIVE_UTC>=B<ya>|tidak"
 
 #. type: Plain text
 #: en/live-config.7:171
-msgid "This variable corresponds to the 'B<live-config.utc>=B<yes>|no' parameter."
+msgid ""
+"This variable corresponds to the 'B<live-config.utc>=B<yes>|no' parameter."
 msgstr "Variabel ini sesuai dengan parameter 'B<live-config.utc>=B<ya>|tidak'."
 
 #. type: IP
@@ -769,8 +1092,12 @@ msgstr "B<LIVE_X_SESSION_MANAGER>=I<MANAJER_SESI_X>"
 
 #. type: Plain text
 #: en/live-config.7:173
-msgid "This variable corresponds to the 'B<live-config.x-session-manager>=I<X_SESSION_MANAGER>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.x-session-manager>=I<MANAJER_SESI_X>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.x-session-"
+"manager>=I<X_SESSION_MANAGER>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.x-session-"
+"manager>=I<MANAJER_SESI_X>'."
 
 #. type: IP
 #: en/live-config.7:173
@@ -780,8 +1107,12 @@ msgstr "B<LIVE_XORG_DRIVER>=I<DRIVER_XORG>"
 
 #. type: Plain text
 #: en/live-config.7:175
-msgid "This variable corresponds to the 'B<live-config.xorg-driver>=I<XORG_DRIVER>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.xorg-driver>=I<DRIVER_XORG>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.xorg-driver>=I<XORG_DRIVER>' "
+"parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.xorg-"
+"driver>=I<DRIVER_XORG>'."
 
 #. type: IP
 #: en/live-config.7:175
@@ -791,8 +1122,12 @@ msgstr "B<LIVE_XORG_RESOLUTION>=I<RESOLUSI_XORG>"
 
 #. type: Plain text
 #: en/live-config.7:177
-msgid "This variable corresponds to the 'B<live-config.xorg-resolution>=I<XORG_RESOLUTION>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.xorg-resolution>=I<RESOLUSI_XORG>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.xorg-"
+"resolution>=I<XORG_RESOLUTION>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.xorg-"
+"resolution>=I<RESOLUSI_XORG>'."
 
 #. type: IP
 #: en/live-config.7:177
@@ -802,8 +1137,12 @@ msgstr "B<LIVE_WLAN_DRIVER>=I<DRIVER_WLAN>"
 
 #. type: Plain text
 #: en/live-config.7:179
-msgid "This variable corresponds to the 'B<live-config.wlan-driver>=I<WLAN_DRIVER>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.wlan-driver>=I<DRIVER_WLAN>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.wlan-driver>=I<WLAN_DRIVER>' "
+"parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.wlan-"
+"driver>=I<DRIVER_WLAN>'."
 
 #. type: IP
 #: en/live-config.7:179
@@ -813,8 +1152,12 @@ msgstr "B<LIVE_HOOKS>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>"
 
 #. type: Plain text
 #: en/live-config.7:181
-msgid "This variable corresponds to the 'B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>' parameter."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.hooks>=filesystem|medium|"
+"I<URL1>|I<URL2>| ... |I<URLn>' parameter."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.hooks>=filesystem|medium|"
+"I<URL1>|I<URL2>| ... |I<URLn>'."
 
 #. type: IP
 #: en/live-config.7:181
@@ -824,8 +1167,14 @@ msgstr "B<LIVE_LINK_USER_DIRS>=true|false"
 
 #. type: Plain text
 #: en/live-config.7:183
-msgid "This variable corresponds to the 'B<live-config.link-user-dirs>=true|false' parameter. It enables or disables creation of symbolic links for user directories."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.link-user-dirs>=true|false'. Ini mengaktifkan atau menonaktifkan pembuatan tautan simbolis untuk direktori pengguna."
+msgid ""
+"This variable corresponds to the 'B<live-config.link-user-dirs>=true|false' "
+"parameter. It enables or disables creation of symbolic links for user "
+"directories."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.link-user-dirs>=true|"
+"false'. Ini mengaktifkan atau menonaktifkan pembuatan tautan simbolis untuk "
+"direktori pengguna."
 
 #. type: IP
 #: en/live-config.7:183
@@ -835,8 +1184,13 @@ msgstr "B<LIVE_BIND_USER_DIRS>=true|false"
 
 #. type: Plain text
 #: en/live-config.7:185
-msgid "This variable corresponds to the 'B<live-config.bind-user-dirs>=true|false' parameter. It enables or disables bind-mounting for user directories."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.bind-user-dirs>=true|false'. Ini mengaktifkan atau menonaktifkan pemasangan ikatan untuk direktori pengguna."
+msgid ""
+"This variable corresponds to the 'B<live-config.bind-user-dirs>=true|false' "
+"parameter. It enables or disables bind-mounting for user directories."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.bind-user-dirs>=true|"
+"false'. Ini mengaktifkan atau menonaktifkan pemasangan ikatan untuk "
+"direktori pengguna."
 
 #. type: IP
 #: en/live-config.7:185
@@ -846,20 +1200,33 @@ msgstr "B<LIVE_USER_DIRS_PATH>=I<JALUR>"
 
 #. type: Plain text
 #: en/live-config.7:187
-msgid "This variable corresponds to the 'B<live-config.user-dirs-path>=I<PATH>' parameter. It specifies the path for user directories on the media."
-msgstr "Variabel ini sesuai dengan parameter 'B<live-config.user-dirs-path>=I<JALUR>'. Variabel ini menentukan jalur untuk direktori pengguna di media."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-dirs-path>=I<PATH>' "
+"parameter. It specifies the path for user directories on the media."
+msgstr ""
+"Variabel ini sesuai dengan parameter 'B<live-config.user-dirs-"
+"path>=I<JALUR>'. Variabel ini menentukan jalur untuk direktori pengguna di "
+"media."
 
 #. type: IP
 #: en/live-config.7:187
 #, no-wrap
-#| msgid "B<LIVE_KEYBOARD_MODEL>=I<KEYBOARD_MODEL>"
 msgid "B<LIVE_MODULE_MODE>"
 msgstr "B<LIVE_MODULE_MODE>"
 
 #. type: Plain text
 #: en/live-config.7:189
-msgid "This variable holds the state specified by the 'live-config.module-mode' (or 'module-mode') parameter. When it is set to \"merged\", the live system applies updates (via minios-update-users, minios-update-cache, and minios-update-dpkg) to merge custom configurations with the base environment."
-msgstr "Variabel ini menyimpan status yang ditentukan oleh parameter 'live-config.module-mode' (atau 'module-mode'). Jika disetel ke \"merged\", sistem live akan menerapkan pembaruan (melalui minios-update-users, minios-update-cache, dan minios-update-dpkg) untuk menggabungkan konfigurasi khusus dengan lingkungan dasar."
+msgid ""
+"This variable holds the state specified by the 'live-config.module-mode' (or "
+"'module-mode') parameter. When it is set to \"merged\", the live system "
+"applies updates (via minios-update-users, minios-update-cache, and minios-"
+"update-dpkg) to merge custom configurations with the base environment."
+msgstr ""
+"Variabel ini menyimpan status yang ditentukan oleh parameter 'live-"
+"config.module-mode' (atau 'module-mode'). Jika disetel ke \"merged\", sistem "
+"live akan menerapkan pembaruan (melalui minios-update-users, minios-update-"
+"cache, dan minios-update-dpkg) untuk menggabungkan konfigurasi khusus dengan "
+"lingkungan dasar."
 
 #. type: IP
 #: en/live-config.7:189
@@ -880,8 +1247,12 @@ msgstr "KUSTOMISASI"
 
 #. type: Plain text
 #: en/live-config.7:194
-msgid "B<live-config> can be easily customized for downstream projects or local usage."
-msgstr "B<live-config> dapat dengan mudah disesuaikan untuk proyek-proyek hilir atau penggunaan lokal."
+msgid ""
+"B<live-config> can be easily customized for downstream projects or local "
+"usage."
+msgstr ""
+"B<live-config> dapat dengan mudah disesuaikan untuk proyek-proyek hilir atau "
+"penggunaan lokal."
 
 #. type: SS
 #: en/live-config.7:195
@@ -891,13 +1262,25 @@ msgstr "Menambahkan komponen konfigurasi baru"
 
 #. type: Plain text
 #: en/live-config.7:197
-msgid "Downstream projects can put their components into /usr/lib/live/config and do not need to do anything else, the components will be called automatically during boot."
-msgstr "Proyek hilir dapat menempatkan komponen mereka ke dalam /usr/lib/live/config dan tidak perlu melakukan hal lain, komponen akan dipanggil secara otomatis saat boot."
+msgid ""
+"Downstream projects can put their components into /usr/lib/live/config and "
+"do not need to do anything else, the components will be called automatically "
+"during boot."
+msgstr ""
+"Proyek hilir dapat menempatkan komponen mereka ke dalam /usr/lib/live/config "
+"dan tidak perlu melakukan hal lain, komponen akan dipanggil secara otomatis "
+"saat boot."
 
 #. type: Plain text
 #: en/live-config.7:199
-msgid "The components are best put into an own debian package. A sample package containing an example component can be found in /usr/share/doc/live-config/examples."
-msgstr "Komponen-komponen tersebut sebaiknya dimasukkan ke dalam paket debian sendiri. Contoh paket yang berisi komponen contoh dapat ditemukan di /usr/share/doc/live-config/examples."
+msgid ""
+"The components are best put into an own debian package. A sample package "
+"containing an example component can be found in /usr/share/doc/live-config/"
+"examples."
+msgstr ""
+"Komponen-komponen tersebut sebaiknya dimasukkan ke dalam paket debian "
+"sendiri. Contoh paket yang berisi komponen contoh dapat ditemukan di /usr/"
+"share/doc/live-config/examples."
 
 #. type: SS
 #: en/live-config.7:200
@@ -907,13 +1290,32 @@ msgstr "Menghapus komponen konfigurasi yang ada"
 
 #. type: Plain text
 #: en/live-config.7:202
-msgid "It is not really possible to remove components itself in a sane way yet without requiring either to ship a locally modified B<live-config> package or using dpkg-divert. However, the same can be achieved by disabling the respective components through the live-config.nocomponents mechanism, see above. To avoid to always need specifying disabled components through the boot parameter, a configuration file should be used, see above."
-msgstr "Sebenarnya tidak mungkin untuk menghapus komponen itu sendiri dengan cara yang baik tanpa memerlukan pengiriman paket B<live-config> yang dimodifikasi secara lokal atau menggunakan dpkg-divert. Namun, hal yang sama dapat dicapai dengan menonaktifkan komponen yang bersangkutan melalui mekanisme live-config.nocomponents, lihat di atas. Untuk menghindari keharusan selalu menentukan komponen yang dinonaktifkan melalui parameter boot, file konfigurasi harus digunakan, lihat di atas."
+msgid ""
+"It is not really possible to remove components itself in a sane way yet "
+"without requiring either to ship a locally modified B<live-config> package "
+"or using dpkg-divert. However, the same can be achieved by disabling the "
+"respective components through the live-config.nocomponents mechanism, see "
+"above. To avoid to always need specifying disabled components through the "
+"boot parameter, a configuration file should be used, see above."
+msgstr ""
+"Sebenarnya tidak mungkin untuk menghapus komponen itu sendiri dengan cara "
+"yang baik tanpa memerlukan pengiriman paket B<live-config> yang dimodifikasi "
+"secara lokal atau menggunakan dpkg-divert. Namun, hal yang sama dapat "
+"dicapai dengan menonaktifkan komponen yang bersangkutan melalui mekanisme "
+"live-config.nocomponents, lihat di atas. Untuk menghindari keharusan selalu "
+"menentukan komponen yang dinonaktifkan melalui parameter boot, file "
+"konfigurasi harus digunakan, lihat di atas."
 
 #. type: Plain text
 #: en/live-config.7:204
-msgid "The configuration files for the live system itself are best put into an own debian package. A sample package containing an example configuration can be found in /usr/share/doc/live-config/examples."
-msgstr "File-file konfigurasi untuk sistem live itu sendiri sebaiknya dimasukkan ke dalam paket debian sendiri. Contoh paket yang berisi konfigurasi contoh dapat ditemukan di /usr/share/doc/live-config/examples."
+msgid ""
+"The configuration files for the live system itself are best put into an own "
+"debian package. A sample package containing an example configuration can be "
+"found in /usr/share/doc/live-config/examples."
+msgstr ""
+"File-file konfigurasi untuk sistem live itu sendiri sebaiknya dimasukkan ke "
+"dalam paket debian sendiri. Contoh paket yang berisi konfigurasi contoh "
+"dapat ditemukan di /usr/share/doc/live-config/examples."
 
 #. type: SH
 #: en/live-config.7:205
@@ -923,20 +1325,27 @@ msgstr "KOMPONEN"
 
 #. type: Plain text
 #: en/live-config.7:207
-msgid "B<live-config> currently features the following components in /usr/lib/live/config."
-msgstr "B<live-config> saat ini memiliki komponen-komponen berikut di /usr/lib/live/config."
+msgid ""
+"B<live-config> currently features the following components in /usr/lib/live/"
+"config."
+msgstr ""
+"B<live-config> saat ini memiliki komponen-komponen berikut di /usr/lib/live/"
+"config."
 
 #. type: IP
 #: en/live-config.7:208
 #, no-wrap
-#| msgid "B<systemd>"
 msgid "B<nss-systemd>"
 msgstr "B<nss-systemd>"
 
 #. type: Plain text
 #: en/live-config.7:210
-msgid "removes or restores the systemd NSS module in /etc/nsswitch.conf to work around a known systemd issue."
-msgstr "Menghapus atau mengembalikan modul NSS systemd di /etc/nsswitch.conf untuk mengatasi masalah systemd yang diketahui."
+msgid ""
+"removes or restores the systemd NSS module in /etc/nsswitch.conf to work "
+"around a known systemd issue."
+msgstr ""
+"Menghapus atau mengembalikan modul NSS systemd di /etc/nsswitch.conf untuk "
+"mengatasi masalah systemd yang diketahui."
 
 #. type: IP
 #: en/live-config.7:210
@@ -946,8 +1355,12 @@ msgstr "B<debconf>"
 
 #. type: Plain text
 #: en/live-config.7:212
-msgid "allows one to apply arbitrary preseed files placed on the live media or an http/ftp server."
-msgstr "Memungkinkan seseorang untuk menerapkan file preseed arbitrer yang ditempatkan di media live atau server http/ftp."
+msgid ""
+"allows one to apply arbitrary preseed files placed on the live media or an "
+"http/ftp server."
+msgstr ""
+"Memungkinkan seseorang untuk menerapkan file preseed arbitrer yang "
+"ditempatkan di media live atau server http/ftp."
 
 #. type: IP
 #: en/live-config.7:212
@@ -968,13 +1381,16 @@ msgstr "B<issue-setup>"
 
 #. type: Plain text
 #: en/live-config.7:216
-msgid "sets up the /etc/issue file with a welcome banner and distribution information."
-msgstr "Mengatur file /etc/issue dengan spanduk selamat datang dan informasi distribusi."
+msgid ""
+"sets up the /etc/issue file with a welcome banner and distribution "
+"information."
+msgstr ""
+"Mengatur file /etc/issue dengan spanduk selamat datang dan informasi "
+"distribusi."
 
 #. type: IP
 #: en/live-config.7:216
 #, no-wrap
-#| msgid "B<live/config-preseed/* >"
 msgid "B<live-debconfig (passwd)>"
 msgstr "B<live-debconfig (passwd)>"
 
@@ -997,14 +1413,16 @@ msgstr "Menambahkan akun pengguna live."
 #. type: IP
 #: en/live-config.7:220
 #, no-wrap
-#| msgid "B<user-setup>"
 msgid "B<root-setup>"
 msgstr "B<root-setup>"
 
 #. type: Plain text
 #: en/live-config.7:222
-msgid "sets or updates the root password and configures the root user environment."
-msgstr "Mengatur atau memperbarui kata sandi root dan mengonfigurasi lingkungan pengguna root."
+msgid ""
+"sets or updates the root password and configures the root user environment."
+msgstr ""
+"Mengatur atau memperbarui kata sandi root dan mengonfigurasi lingkungan "
+"pengguna root."
 
 #. type: IP
 #: en/live-config.7:222
@@ -1020,26 +1438,36 @@ msgstr "Memberikan hak istimewa sudo kepada pengguna live."
 #. type: IP
 #: en/live-config.7:224
 #, no-wrap
-#| msgid "B<user-media>"
 msgid "B<user-media>"
 msgstr "B<user-media>"
 
 #. type: Plain text
 #: en/live-config.7:226
-msgid "configures mounting of media and linking or binding of user directories for persistent data."
-msgstr "Mengonfigurasi pemasangan media dan tautan atau pengikatan direktori pengguna untuk data persisten."
+msgid ""
+"configures mounting of media and linking or binding of user directories for "
+"persistent data."
+msgstr ""
+"Mengonfigurasi pemasangan media dan tautan atau pengikatan direktori "
+"pengguna untuk data persisten."
 
 #. type: IP
 #: en/live-config.7:226
 #, no-wrap
-#| msgid "B<user-setup>"
 msgid "B<user-ssh-keys>"
 msgstr "B<user-ssh-keys>"
 
 #. type: Plain text
 #: en/live-config.7:228
-msgid "synchronizes SSH keys from user-specific I<authorized_keys.E<lt>usernameE<gt>> files on the live media to individual user home directories. Supports multiple users simultaneously (e.g., I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
-msgstr "mensinkronkan kunci SSH dari berkas I<authorized_keys.E<lt>usernameE<gt>> yang spesifik untuk pengguna pada media live ke direktori home masing-masing pengguna. Mendukung beberapa pengguna secara bersamaan (misal: I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
+msgid ""
+"synchronizes SSH keys from user-specific "
+"I<authorized_keys.E<lt>usernameE<gt>> files on the live media to individual "
+"user home directories. Supports multiple users simultaneously (e.g., "
+"I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
+msgstr ""
+"mensinkronkan kunci SSH dari berkas I<authorized_keys.E<lt>usernameE<gt>> "
+"yang spesifik untuk pengguna pada media live ke direktori home masing-masing "
+"pengguna. Mendukung beberapa pengguna secara bersamaan (misal: "
+"I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
 
 #. type: IP
 #: en/live-config.7:228
@@ -1281,7 +1709,9 @@ msgstr "B<kde-services>"
 #. type: Plain text
 #: en/live-config.7:272
 msgid "disables some unwanted KDE services (squeeze and newer)."
-msgstr "Menonaktifkan beberapa layanan KDE yang tidak diinginkan (squeeze dan yang lebih baru)."
+msgstr ""
+"Menonaktifkan beberapa layanan KDE yang tidak diinginkan (squeeze dan yang "
+"lebih baru)."
 
 #. type: IP
 #: en/live-config.7:272
@@ -1369,14 +1799,17 @@ msgstr "Menciptakan kembali kunci host openssh-server."
 #. type: IP
 #: en/live-config.7:288
 #, no-wrap
-#| msgid "B<xhyper-v>"
 msgid "B<xhyper-v>"
 msgstr "B<xhyper-v>"
 
 #. type: Plain text
 #: en/live-config.7:290
-msgid "configures X11 settings to improve compatibility on Microsoft Hyper-V platforms."
-msgstr "mengonfigurasi pengaturan X11 untuk meningkatkan kompatibilitas pada platform Microsoft Hyper-V."
+msgid ""
+"configures X11 settings to improve compatibility on Microsoft Hyper-V "
+"platforms."
+msgstr ""
+"mengonfigurasi pengaturan X11 untuk meningkatkan kompatibilitas pada "
+"platform Microsoft Hyper-V."
 
 #. type: IP
 #: en/live-config.7:290
@@ -1392,14 +1825,16 @@ msgstr "Mengelola aturan udev untuk dukungan NTFS3."
 #. type: IP
 #: en/live-config.7:292
 #, no-wrap
-#| msgid "B<config-module-mode>"
 msgid "B<config-module-mode>"
 msgstr "B<config-module-mode>"
 
 #. type: Plain text
 #: en/live-config.7:294
-msgid "configures system module mode and updates caches, user settings, and dpkg."
-msgstr "Mengonfigurasi mode modul sistem dan memperbarui cache, pengaturan pengguna, dan dpkg."
+msgid ""
+"configures system module mode and updates caches, user settings, and dpkg."
+msgstr ""
+"Mengonfigurasi mode modul sistem dan memperbarui cache, pengaturan pengguna, "
+"dan dpkg."
 
 #. type: IP
 #: en/live-config.7:294
@@ -1409,8 +1844,12 @@ msgstr "B<hooks>"
 
 #. type: Plain text
 #: en/live-config.7:296
-msgid "allows one to run arbitrary commands from a file placed on the live media or an http/ftp server."
-msgstr "Memungkinkan seseorang untuk menjalankan perintah arbitrer dari sebuah file yang ditempatkan di media live atau server http/ftp."
+msgid ""
+"allows one to run arbitrary commands from a file placed on the live media or "
+"an http/ftp server."
+msgstr ""
+"Memungkinkan seseorang untuk menjalankan perintah arbitrer dari sebuah file "
+"yang ditempatkan di media live atau server http/ftp."
 
 #. type: SH
 #: en/live-config.7:297
@@ -1519,8 +1958,15 @@ msgstr "HALAMAN UTAMA"
 
 #. type: Plain text
 #: en/live-config.7:321
-msgid "More information about live-config and the Debian Live project can be found on the homepage at E<lt>I<https://wiki.debian.org/DebianLive>E<gt> and in the manual at E<lt>I<https://live-team.pages.debian.net/live-manual/>E<gt>."
-msgstr "Informasi lebih lanjut tentang live-config dan proyek Debian Live dapat ditemukan di halaman utama di E<lt>I<https://wiki.debian.org/DebianLive>E<gt> dan di manual di E<lt>I<https://live-team.pages.debian.net/live-manual/>E<gt>."
+msgid ""
+"More information about live-config and the Debian Live project can be found "
+"on the homepage at E<lt>I<https://wiki.debian.org/DebianLive>E<gt> and in "
+"the manual at E<lt>I<https://live-team.pages.debian.net/live-manual/>E<gt>."
+msgstr ""
+"Informasi lebih lanjut tentang live-config dan proyek Debian Live dapat "
+"ditemukan di halaman utama di E<lt>I<https://wiki.debian.org/"
+"DebianLive>E<gt> dan di manual di E<lt>I<https://live-team.pages.debian.net/"
+"live-manual/>E<gt>."
 
 #. type: SH
 #: en/live-config.7:322
@@ -1530,8 +1976,16 @@ msgstr "BUG"
 
 #. type: Plain text
 #: en/live-config.7:324
-msgid "Bugs can be reported by submitting a bugreport for the live-config package in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by writing a mail to the Debian Live mailing list at E<lt>I<debian-live@lists.debian.org>E<gt>."
-msgstr "Bug dapat dilaporkan dengan mengirimkan laporan bug untuk paket live-config di Sistem Pelacak Bug di E<lt>I<http://bugs.debian.org/>E<gt> atau dengan menulis email ke daftar milis Debian Live di E<lt>I<debian-live@lists.debian.org>E<gt>."
+msgid ""
+"Bugs can be reported by submitting a bugreport for the live-config package "
+"in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by "
+"writing a mail to the Debian Live mailing list at E<lt>I<debian-"
+"live@lists.debian.org>E<gt>."
+msgstr ""
+"Bug dapat dilaporkan dengan mengirimkan laporan bug untuk paket live-config "
+"di Sistem Pelacak Bug di E<lt>I<http://bugs.debian.org/>E<gt> atau dengan "
+"menulis email ke daftar milis Debian Live di E<lt>I<debian-"
+"live@lists.debian.org>E<gt>."
 
 #. type: SH
 #: en/live-config.7:325
@@ -1541,5 +1995,12 @@ msgstr "PENULIS"
 
 #. type: Plain text
 #: en/live-config.7:326
-msgid "live-config was originally written by Daniel Baumann E<lt>I<mail@daniel-baumann.ch>E<gt>. Since 2016 development has been continued by the Debian Live team. Since 2025 development of the modified version has been continued by the MiniOS Live team."
-msgstr "live-config awalnya ditulis oleh Daniel Baumann E<lt>I<mail@daniel-baumann.ch>E<gt>. Sejak 2016, pengembangan dilanjutkan oleh tim Debian Live. Sejak 2025, pengembangan versi modifikasi dilanjutkan oleh tim MiniOS Live."
+msgid ""
+"live-config was originally written by Daniel Baumann E<lt>I<mail@daniel-"
+"baumann.ch>E<gt>. Since 2016 development has been continued by the Debian "
+"Live team. Since 2025 development of the modified version has been continued "
+"by the MiniOS Live team."
+msgstr ""
+"live-config awalnya ditulis oleh Daniel Baumann E<lt>I<mail@daniel-"
+"baumann.ch>E<gt>. Sejak 2016, pengembangan dilanjutkan oleh tim Debian Live. "
+"Sejak 2025, pengembangan versi modifikasi dilanjutkan oleh tim MiniOS Live."
