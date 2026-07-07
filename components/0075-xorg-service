@@ -14,8 +14,8 @@
 
 Init() {
     # Checking if package is installed or already configured
-    if [ ! -f "/usr/lib/systemd/system/xorg.service" ] ||
-        [ ! -f "/usr/bin/start-xorg.sh" ] ||
+    if { [ ! -f "/usr/lib/systemd/system/xorg.service" ] && [ ! -f "/etc/init.d/minios-xorg" ]; } ||
+        [ ! -x "/usr/bin/start-xorg.sh" ] ||
         component_was_executed "xorg-service"; then
         exit 0
     fi

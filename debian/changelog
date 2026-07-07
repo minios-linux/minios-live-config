@@ -1,3 +1,11 @@
+minios-live-config (11.0.5.10) unstable; urgency=medium
+
+  * Start sysvinit live-config after writable local filesystems and before
+    display manager services.
+  * Recognize the sysvinit minios-xorg fallback in the xorg-service component.
+
+ -- crims0n <crims0n@minios.dev>  Wed, 08 Jul 2026 01:58:43 +0300
+
 minios-live-config (11.0.5.9) unstable; urgency=medium
 
   * Resync manpages PO and POT files with po4a

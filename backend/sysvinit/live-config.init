@@ -8,16 +8,16 @@
 
 ### BEGIN INIT INFO
 # Provides:		live-config
-# Required-Start:
+# Required-Start:	$local_fs $remote_fs dbus mountall mountall-boot
 # Required-Stop:
 # Should-Start:
 # Should-Stop:
-# Default-Start:	S
+# Default-Start:	2 3 4 5
 # Default-Stop:
 # Short-Description:	live-config - System Configuration Components
 # Description:		live-config contains the components that configure a
 #			live system during the boot process (late userspace).
-# X-Start-Before:	mountkernfs
+# X-Start-Before:	lightdm nodm slim gdm3 sddm lxdm minios-xorg networking gpm ssh cron
 # X-Stop-After:
 # X-Interactive:	true
 ### END INIT INFO
