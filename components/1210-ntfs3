@@ -2,6 +2,8 @@
 
 . /usr/lib/live/config.sh
 
+[ -r /etc/os-release ] && . /etc/os-release
+
 ## live-config(7) - System Configuration Components
 ## Copyright (C) 2016-2020 The Debian Live team
 ## Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
@@ -30,7 +32,11 @@ Init() {
         set -x
     fi
 
-    echo -n " ntfs3"
+    if [ ! -d /run/systemd/system ] && echo "${LIVE_CONFIG_CMDLINE}" | grep -qs '\bquiet\b'; then
+        echo " ntfs3"
+    else
+        echo -n " ntfs3"
+    fi
 }
 
 Config() {

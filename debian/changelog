@@ -1,3 +1,14 @@
+minios-live-config (11.0.5.11) unstable; urgency=medium
+
+  * Keep live-config console logging on systemd systems and on sysvinit boots
+    without the quiet kernel parameter; with quiet on sysvinit, log only to
+    /var/log/live/config.log.
+  * Write component names with trailing newlines on sysvinit boots when quiet
+    is set so the live-config log stays readable.
+  * Recognize Devuan in the issue banner.
+
+ -- crims0n <crims0n@minios.dev>  Wed, 08 Jul 2026 17:18:54 +0300
+
 minios-live-config (11.0.5.10) unstable; urgency=medium
 
   * Start sysvinit live-config after writable local filesystems and before

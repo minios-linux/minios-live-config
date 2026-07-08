@@ -34,7 +34,22 @@ _IP_SEPARATOR="-"
 _PROC_OPTIONS="nodev,noexec,nosuid"
 export _IP_SEPARATOR _PROC_OPTIONS
 
+_MINIOS_QUIET_LOG="false"
+
 _COMPONENTS="$(ls /usr/lib/live/config/*)"
+
+DetectQuietLog ()
+{
+	if [ -r /etc/os-release ]
+	then
+		. /etc/os-release
+	fi
+
+	if [ ! -d /run/systemd/system ] && echo "${LIVE_CONFIG_CMDLINE}" | grep -qs '\bquiet\b'
+	then
+		_MINIOS_QUIET_LOG="true"
+	fi
+}
 
 Cmdline ()
 {
@@ -134,10 +149,22 @@ Main ()
 
 	mkdir -p /var/log/live
 	mkfifo /tmp/live-config.pipe
-	tee < /tmp/live-config.pipe /var/log/live/config.log &
+	DetectQuietLog
+
+	if [ "${_MINIOS_QUIET_LOG}" = "true" ]
+	then
+		cat < /tmp/live-config.pipe > /var/log/live/config.log &
+	else
+		tee < /tmp/live-config.pipe /var/log/live/config.log &
+	fi
 	exec > /tmp/live-config.pipe 2>&1
 
-	echo -n "live-config:" > /tmp/live-config.pipe 2>&1
+	if [ "${_MINIOS_QUIET_LOG}" = "true" ]
+	then
+		echo "live-config:" > /tmp/live-config.pipe 2>&1
+	else
+		echo -n "live-config:" > /tmp/live-config.pipe 2>&1
+	fi
 	trap 'Trap' EXIT HUP INT QUIT TERM
 
 	# Processing command line
@@ -154,6 +181,7 @@ Main ()
 
 	for _COMPONENT in ${_COMPONENTS}
 	do
+		[ "${_MINIOS_QUIET_LOG}" = "true" ] && echo
 		[ "${LIVE_CONFIG_DEBUG}" = "true" ] && echo "[$(date +'%F %T')] live-config: ${_COMPONENT}" > /tmp/live-config.pipe
 
 		${_COMPONENT} > /tmp/live-config.pipe 2>&1

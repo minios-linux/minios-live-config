@@ -2,6 +2,8 @@
 
 . /usr/lib/live/config.sh
 
+[ -r /etc/os-release ] && . /etc/os-release
+
 ## live-config(7) - System Configuration Components
 ## Copyright (C) 2016-2020 The Debian Live team
 ## Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
@@ -34,7 +36,11 @@ Init() {
         set -x
     fi
 
-    echo -n " config-module-mode"
+    if [ ! -d /run/systemd/system ] && echo "${LIVE_CONFIG_CMDLINE}" | grep -qs '\bquiet\b'; then
+        echo " config-module-mode"
+    else
+        echo -n " config-module-mode"
+    fi
 }
 
 Config() {

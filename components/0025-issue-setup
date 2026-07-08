@@ -53,6 +53,9 @@ EOF
     debian)
         DIST="Based on [1;31mDebian GNU/Linux[0;29m."
         ;;
+    devuan)
+        DIST="Based on [1;35mDevuan GNU/Linux[0;29m."
+        ;;
     ubuntu)
         DIST="Based on [1;38;5;214mUbuntu[0;29m."
         ;;
