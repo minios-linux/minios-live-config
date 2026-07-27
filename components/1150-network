@@ -1,0 +1,227 @@
+#!/bin/sh
+
+. /usr/lib/live/config.sh
+
+Cmdline() {
+	for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
+		case "${_PARAMETER}" in
+			live-config.network-method=*|network-method=*) LIVE_NETWORK_METHOD="${_PARAMETER#*network-method=}" ;;
+			live-config.network-interface=*|network-interface=*) LIVE_NETWORK_INTERFACE="${_PARAMETER#*network-interface=}" ;;
+			live-config.network-address=*|network-address=*) LIVE_NETWORK_ADDRESS="${_PARAMETER#*network-address=}" ;;
+			live-config.network-prefix=*|network-prefix=*) LIVE_NETWORK_PREFIX="${_PARAMETER#*network-prefix=}" ;;
+			live-config.network-gateway=*|network-gateway=*) LIVE_NETWORK_GATEWAY="${_PARAMETER#*network-gateway=}" ;;
+			live-config.network-dns=*|network-dns=*) LIVE_NETWORK_DNS="${_PARAMETER#*network-dns=}" ;;
+			live-config.network-backend=*|network-backend=*) LIVE_NETWORK_BACKEND="${_PARAMETER#*network-backend=}" ;;
+		esac
+	done
+}
+
+Init() {
+	if component_was_executed "network"; then
+		exit 0
+	fi
+
+	case "${LIVE_NETWORK_METHOD:-}" in
+		static|off) ;;
+		dhcp|"") exit 0 ;;
+		*) echo " live-config: invalid network method: ${LIVE_NETWORK_METHOD}" >&2; exit 0 ;;
+	esac
+
+	echo -n " network"
+}
+
+network_error() {
+	echo " live-config: network: $*" >&2
+	return 1
+}
+
+valid_interface() {
+	case "$1" in
+		""|*[!A-Za-z0-9_.:-]*) return 1 ;;
+	esac
+	return 0
+}
+
+valid_ipv4() {
+	old_ifs="${IFS}"
+	IFS=.
+	set -- $1
+	IFS="${old_ifs}"
+	[ "$#" -eq 4 ] || return 1
+	for octet in "$@"; do
+		case "${octet}" in ""|*[!0-9]*) return 1 ;; esac
+		[ "${octet}" -le 255 ] || return 1
+	done
+}
+
+valid_dns() {
+	old_ifs="${IFS}"
+	IFS=,
+	set -- $1
+	IFS="${old_ifs}"
+	for server in "$@"; do
+		server=$(printf '%s' "${server}" | tr -d ' ')
+		[ -n "${server}" ] || continue
+		case "${server}" in
+			*:* ) case "${server}" in *[!0-9A-Fa-f:.]*) return 1 ;; esac ;;
+			* ) valid_ipv4 "${server}" || return 1 ;;
+		esac
+	done
+}
+
+resolve_interface() {
+	if [ -n "${LIVE_NETWORK_INTERFACE:-}" ]; then
+		valid_interface "${LIVE_NETWORK_INTERFACE}" || network_error "invalid interface name"
+		return $?
+	fi
+
+	candidates=""
+	for path in /sys/class/net/*; do
+		[ -e "${path}" ] || continue
+		iface=${path##*/}
+		[ "${iface}" = "lo" ] && continue
+		[ -d "${path}/wireless" ] && continue
+		case "${iface}" in wl*|wlan*) continue ;; esac
+		candidates="${candidates} ${iface}"
+	done
+	set -- ${candidates}
+	[ "$#" -eq 1 ] || { network_error "set network-interface (found $# wired interfaces)"; return 1; }
+	LIVE_NETWORK_INTERFACE="$1"
+	echo " live-config: network: auto-selected interface=${LIVE_NETWORK_INTERFACE}"
+}
+
+select_backend() {
+	backend=${LIVE_NETWORK_BACKEND:-auto}
+	case "${backend}" in
+		auto)
+			if pkg_is_installed "network-manager" || [ -x /usr/sbin/NetworkManager ] || [ -x /usr/bin/nmcli ]; then
+				backend=nm
+			elif pkg_is_installed "ifupdown" || [ -x /sbin/ifup ]; then
+				backend=ifupdown
+			else
+				network_error "no implemented network backend is available"
+				return 1
+			fi
+			;;
+		nm)
+			if ! pkg_is_installed "network-manager" && [ ! -x /usr/sbin/NetworkManager ] && [ ! -x /usr/bin/nmcli ]; then
+				network_error "NetworkManager backend is unavailable"
+				return 1
+			fi
+			;;
+		ifupdown)
+			if ! pkg_is_installed "ifupdown" && [ ! -x /sbin/ifup ]; then
+				network_error "ifupdown backend is unavailable"
+				return 1
+			fi
+			;;
+		*) network_error "backend ${backend} is not implemented in this version"; return 1 ;;
+	esac
+}
+
+write_nm_profile() {
+	dir=/etc/NetworkManager/system-connections
+	dest=${dir}/minios-static.nmconnection
+	tmp=${dest}.tmp.$$
+	umask 077
+	mkdir -p "${dir}" || return 1
+	chmod 700 "${dir}" || true
+	rm -f "${dir}/minios-installer.nmconnection" "${dest}"
+
+	{
+		echo "[connection]"
+		echo "id=MiniOS static wired network"
+		echo "type=ethernet"
+		echo "interface-name=${LIVE_NETWORK_INTERFACE}"
+		if [ "${LIVE_NETWORK_METHOD}" = "off" ]; then
+			echo "autoconnect=false"
+			echo
+			echo "[ipv4]"
+			echo "method=disabled"
+		else
+			echo "autoconnect=true"
+			echo "autoconnect-priority=100"
+			echo
+			echo "[ipv4]"
+			echo "method=manual"
+			address="${LIVE_NETWORK_ADDRESS}/${LIVE_NETWORK_PREFIX}"
+			[ -n "${LIVE_NETWORK_GATEWAY:-}" ] && address="${address},${LIVE_NETWORK_GATEWAY}"
+			echo "address1=${address}"
+			if [ -n "${LIVE_NETWORK_DNS:-}" ]; then
+				dns=$(printf '%s' "${LIVE_NETWORK_DNS}" | tr -d ' ' | tr ',' ';')
+				echo "dns=${dns};"
+			fi
+		fi
+		echo
+		echo "[ipv6]"
+		echo "method=auto"
+	} > "${tmp}" || { rm -f "${tmp}"; return 1; }
+	chmod 600 "${tmp}" || true
+	mv -f "${tmp}" "${dest}" || { rm -f "${tmp}"; return 1; }
+	echo " live-config: network: wrote ${dest}"
+}
+
+write_ifupdown_profile() {
+	dir=/etc/network/interfaces.d
+	dest=${dir}/minios-static
+	tmp=${dest}.tmp.$$
+	umask 077
+	mkdir -p "${dir}" || return 1
+	{
+		echo "# Managed by MiniOS live-config"
+		if [ "${LIVE_NETWORK_METHOD}" = "off" ]; then
+			echo "iface ${LIVE_NETWORK_INTERFACE} inet manual"
+		else
+			echo "auto ${LIVE_NETWORK_INTERFACE}"
+			echo "iface ${LIVE_NETWORK_INTERFACE} inet static"
+			echo "    address ${LIVE_NETWORK_ADDRESS}/${LIVE_NETWORK_PREFIX}"
+			[ -n "${LIVE_NETWORK_GATEWAY:-}" ] && echo "    gateway ${LIVE_NETWORK_GATEWAY}"
+			if [ -n "${LIVE_NETWORK_DNS:-}" ]; then
+				dns=$(printf '%s' "${LIVE_NETWORK_DNS}" | tr -d ' ' | tr ',' ' ')
+				echo "    dns-nameservers ${dns}"
+			fi
+		fi
+	} > "${tmp}" || { rm -f "${tmp}"; return 1; }
+	chmod 600 "${tmp}" || true
+	mv -f "${tmp}" "${dest}" || { rm -f "${tmp}"; return 1; }
+
+	if pkg_is_installed "network-manager" || [ -x /usr/sbin/NetworkManager ]; then
+		nm_dir=/etc/NetworkManager/conf.d
+		nm_dest=${nm_dir}/99-minios-unmanaged.conf
+		nm_tmp=${nm_dest}.tmp.$$
+		mkdir -p "${nm_dir}" || return 1
+		{
+			echo "# Managed by MiniOS live-config"
+			echo "[keyfile]"
+			echo "unmanaged-devices=interface-name:${LIVE_NETWORK_INTERFACE}"
+		} > "${nm_tmp}" || { rm -f "${nm_tmp}"; return 1; }
+		chmod 600 "${nm_tmp}" || true
+		mv -f "${nm_tmp}" "${nm_dest}" || { rm -f "${nm_tmp}"; return 1; }
+	fi
+	echo " live-config: network: wrote ${dest}"
+}
+
+Config() {
+	resolve_interface || return 0
+	select_backend || return 0
+
+	if [ "${LIVE_NETWORK_METHOD}" = "static" ]; then
+		LIVE_NETWORK_PREFIX=${LIVE_NETWORK_PREFIX:-24}
+		valid_ipv4 "${LIVE_NETWORK_ADDRESS:-}" || { network_error "invalid IPv4 address"; return 0; }
+		case "${LIVE_NETWORK_PREFIX}" in ""|*[!0-9]*) network_error "invalid network prefix"; return 0 ;; esac
+		[ "${LIVE_NETWORK_PREFIX}" -le 32 ] || { network_error "invalid network prefix"; return 0; }
+		[ -z "${LIVE_NETWORK_GATEWAY:-}" ] || valid_ipv4 "${LIVE_NETWORK_GATEWAY}" || { network_error "invalid gateway"; return 0; }
+		[ -z "${LIVE_NETWORK_DNS:-}" ] || valid_dns "${LIVE_NETWORK_DNS}" || { network_error "invalid DNS server"; return 0; }
+	fi
+
+	case "${backend}" in
+		nm) write_nm_profile || { network_error "failed to write NetworkManager profile"; return 0; } ;;
+		ifupdown) write_ifupdown_profile || { network_error "failed to write ifupdown profile"; return 0; } ;;
+	esac
+	mkdir -p /var/lib/live/config
+	touch /var/lib/live/config/network
+}
+
+Cmdline
+Init
+Config

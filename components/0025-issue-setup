@@ -21,6 +21,9 @@ Cmdline() {
         live-config.username=* | username=*)
             LIVE_USERNAME="${_PARAMETER#*username=}"
             ;;
+        live-config.issue-password-hints=* | issue-password-hints=*)
+            LIVE_ISSUE_PASSWORD_HINTS="${_PARAMETER#*issue-password-hints=}"
+            ;;
         esac
     done
 }
@@ -87,7 +90,19 @@ EOF
 
 EOF
 
-    if [ "$LIVE_USERNAME" = "root" ]; then
+    case "${LIVE_ISSUE_PASSWORD_HINTS}" in
+    "" | true)
+        SHOW_PASSWORD_HINTS=true
+        ;;
+    false)
+        SHOW_PASSWORD_HINTS=false
+        ;;
+    *)
+        SHOW_PASSWORD_HINTS=true
+        ;;
+    esac
+
+    if [ "${SHOW_PASSWORD_HINTS}" = true ] && [ "$LIVE_USERNAME" = "root" ]; then
         cat <<EOF >>/etc/issue
                             Default password:
                               root: [1;33mtoor[0;29m
@@ -99,7 +114,7 @@ EOF
 
 
 EOF
-    else
+    elif [ "${SHOW_PASSWORD_HINTS}" = true ]; then
         cat <<EOF >>/etc/issue
                             Default passwords:
                               root: [1;33mtoor[0;29m

@@ -22,6 +22,9 @@ Cmdline ()
 			live-config.username=*|username=*)
 				LIVE_USERNAME="${_PARAMETER#*username=}"
 				;;
+			live-config.lockscreen-mode=*|lockscreen-mode=*)
+				LIVE_LOCKSCREEN_MODE="${_PARAMETER#*lockscreen-mode=}"
+				;;
 		esac
 	done
 }
@@ -40,6 +43,19 @@ Init ()
 
 Config ()
 {
+	case "${LIVE_LOCKSCREEN_MODE}" in
+		hardened)
+			if [ -f "/home/${LIVE_USERNAME}/.xscreensaver" ]
+			then
+				sed -i 's|^lock:.*|lock: True|' "/home/${LIVE_USERNAME}/.xscreensaver"
+			else
+				echo "lock: True" >> "/home/${LIVE_USERNAME}/.xscreensaver"
+			fi
+			touch /var/lib/live/config/xscreensaver
+			exit 0
+			;;
+	esac
+
 	if ! grep -qs '^lock:' "/home/${LIVE_USERNAME}/.xscreensaver"
 	then
 		echo "lock: False" >> "/home/${LIVE_USERNAME}/.xscreensaver"

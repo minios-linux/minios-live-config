@@ -1,0 +1,357 @@
+{
+  "schema": 1,
+  "package": "minios-live-config",
+  "capabilities": {
+    "live-config.cmdline": {
+      "type": "string",
+      "config_key": "LIVE_CONFIG_CMDLINE",
+      "description": "Boot/live-config parameter blob (space-separated)",
+      "implements": ["live-config"]
+    },
+    "live-config.components": {
+      "type": "string",
+      "config_key": "LIVE_CONFIG_COMPONENTS",
+      "cmdline": ["components", "live-config.components"],
+      "description": "Run only listed components (comma-separated), or all if flag without value",
+      "implements": ["live-config"]
+    },
+    "live-config.nocomponents": {
+      "type": "string",
+      "config_key": "LIVE_CONFIG_NOCOMPONENTS",
+      "cmdline": ["nocomponents", "live-config.nocomponents"],
+      "description": "Skip listed components (comma-separated), or all if flag without value",
+      "implements": ["live-config"]
+    },
+    "live-config.debug": {
+      "type": "boolean",
+      "config_key": "LIVE_CONFIG_DEBUG",
+      "cmdline": ["debug", "live-config.debug"],
+      "default": false,
+      "description": "Enable live-config debug tracing",
+      "implements": ["live-config"]
+    },
+    "live-config.debconf-preseed": {
+      "type": "string",
+      "config_key": "LIVE_DEBCONF_PRESEED",
+      "cmdline": ["debconf-preseed", "live-config.debconf-preseed"],
+      "description": "filesystem|medium|URL preseed sources (pipe-separated)",
+      "implements": ["0010-debconf"]
+    },
+    "live-config.hostname": {
+      "type": "string",
+      "config_key": "LIVE_HOSTNAME",
+      "cmdline": ["hostname", "live-config.hostname"],
+      "implements": ["0020-hostname"]
+    },
+    "live-config.network-method": {
+      "type": "enum",
+      "values": ["dhcp", "static", "off"],
+      "config_key": "LIVE_NETWORK_METHOD",
+      "cmdline": ["network-method", "live-config.network-method"],
+      "description": "Wired network policy applied by 1150-network",
+      "implements": ["1150-network"]
+    },
+    "live-config.network-interface": {
+      "type": "string",
+      "config_key": "LIVE_NETWORK_INTERFACE",
+      "cmdline": ["network-interface", "live-config.network-interface"],
+      "implements": ["1150-network"]
+    },
+    "live-config.network-address": {
+      "type": "string",
+      "config_key": "LIVE_NETWORK_ADDRESS",
+      "cmdline": ["network-address", "live-config.network-address"],
+      "implements": ["1150-network"]
+    },
+    "live-config.network-prefix": {
+      "type": "string",
+      "config_key": "LIVE_NETWORK_PREFIX",
+      "cmdline": ["network-prefix", "live-config.network-prefix"],
+      "default": "24",
+      "implements": ["1150-network"]
+    },
+    "live-config.network-gateway": {
+      "type": "string",
+      "config_key": "LIVE_NETWORK_GATEWAY",
+      "cmdline": ["network-gateway", "live-config.network-gateway"],
+      "implements": ["1150-network"]
+    },
+    "live-config.network-dns": {
+      "type": "string",
+      "config_key": "LIVE_NETWORK_DNS",
+      "cmdline": ["network-dns", "live-config.network-dns"],
+      "implements": ["1150-network"]
+    },
+    "live-config.network-backend": {
+      "type": "enum",
+      "values": ["auto", "nm", "ifupdown"],
+      "config_key": "LIVE_NETWORK_BACKEND",
+      "cmdline": ["network-backend", "live-config.network-backend"],
+      "default": "auto",
+      "description": "Select the implemented wired network backend",
+      "implements": ["1150-network"]
+    },
+    "live-config.username": {
+      "type": "string",
+      "config_key": "LIVE_USERNAME",
+      "cmdline": ["username", "live-config.username"],
+      "default": "live",
+      "implements": ["0030-user-setup"]
+    },
+    "live-config.user-fullname": {
+      "type": "string",
+      "config_key": "LIVE_USER_FULLNAME",
+      "cmdline": ["user-fullname", "live-config.user-fullname"],
+      "implements": ["0030-user-setup"]
+    },
+    "live-config.user-default-groups": {
+      "type": "string",
+      "config_key": "LIVE_USER_DEFAULT_GROUPS",
+      "cmdline": ["user-default-groups", "live-config.user-default-groups"],
+      "description": "Comma or space separated group list for the live user",
+      "implements": ["0030-user-setup"]
+    },
+    "live-config.user-password": {
+      "type": "string",
+      "config_key": "LIVE_USER_PASSWORD",
+      "cmdline": ["user-password", "live-config.user-password"],
+      "description": "Plain-text user password (prefer crypted form)",
+      "implements": ["0030-user-setup"]
+    },
+    "live-config.user-password-crypted": {
+      "type": "string",
+      "config_key": "LIVE_USER_PASSWORD_CRYPTED",
+      "cmdline": ["user-password-crypted", "live-config.user-password-crypted"],
+      "implements": ["0030-user-setup"]
+    },
+    "live-config.root-password": {
+      "type": "string",
+      "config_key": "LIVE_ROOT_PASSWORD",
+      "cmdline": ["root-password", "live-config.root-password"],
+      "description": "Plain-text root password (prefer crypted form)",
+      "implements": ["0040-root-setup"]
+    },
+    "live-config.root-password-crypted": {
+      "type": "string",
+      "config_key": "LIVE_ROOT_PASSWORD_CRYPTED",
+      "cmdline": ["root-password-crypted", "live-config.root-password-crypted"],
+      "implements": ["0040-root-setup"]
+    },
+    "live-config.noroot": {
+      "type": "boolean",
+      "config_key": "LIVE_CONFIG_NOROOT",
+      "cmdline": ["noroot", "live-config.noroot"],
+      "default": false,
+      "description": "Disable sudo, polkit live rules, and root password setup path",
+      "implements": ["0040-sudo", "1080-policykit", "0040-root-setup", "0030-user-setup"]
+    },
+    "live-config.noautologin": {
+      "type": "flag",
+      "cmdline": ["noautologin", "live-config.noautologin"],
+      "description": "Prevent setup of console and graphical autologin; existing persistent configuration is not removed",
+      "implements": ["0080-gdm3", "0085-sddm", "0090-kdm", "0100-lightdm", "0110-lxdm", "0120-nodm", "0130-slim", "0140-xinit", "0160-sysvinit"]
+    },
+    "live-config.nox11autologin": {
+      "type": "flag",
+      "cmdline": ["nox11autologin", "live-config.nox11autologin"],
+      "description": "Prevent setup of graphical autologin only; existing persistent configuration is not removed",
+      "implements": ["0080-gdm3", "0085-sddm", "0090-kdm", "0100-lightdm", "0110-lxdm", "0120-nodm", "0130-slim", "0140-xinit"]
+    },
+    "live-config.nottyautologin": {
+      "type": "flag",
+      "cmdline": ["nottyautologin", "live-config.nottyautologin"],
+      "description": "Prevent setup of console/TTY autologin only; existing persistent configuration is not removed",
+      "implements": ["0160-sysvinit"]
+    },
+    "live-config.locales": {
+      "type": "string",
+      "config_key": "LIVE_LOCALES",
+      "cmdline": ["locales", "live-config.locales"],
+      "implements": ["0050-locales"]
+    },
+    "live-config.timezone": {
+      "type": "string",
+      "config_key": "LIVE_TIMEZONE",
+      "cmdline": ["timezone", "live-config.timezone"],
+      "implements": ["0070-tzdata"]
+    },
+    "live-config.keyboard-model": {
+      "type": "string",
+      "config_key": "LIVE_KEYBOARD_MODEL",
+      "cmdline": ["keyboard-model", "live-config.keyboard-model"],
+      "implements": ["0150-keyboard-configuration", "1140-xserver-xorg"]
+    },
+    "live-config.keyboard-layouts": {
+      "type": "string",
+      "config_key": "LIVE_KEYBOARD_LAYOUTS",
+      "cmdline": ["keyboard-layouts", "live-config.keyboard-layouts"],
+      "implements": ["0150-keyboard-configuration", "1140-xserver-xorg", "1060-kde-services"]
+    },
+    "live-config.keyboard-variants": {
+      "type": "string",
+      "config_key": "LIVE_KEYBOARD_VARIANTS",
+      "cmdline": ["keyboard-variants", "live-config.keyboard-variants"],
+      "implements": ["0150-keyboard-configuration", "1140-xserver-xorg"]
+    },
+    "live-config.keyboard-options": {
+      "type": "string",
+      "config_key": "LIVE_KEYBOARD_OPTIONS",
+      "cmdline": ["keyboard-options", "live-config.keyboard-options"],
+      "implements": ["0150-keyboard-configuration", "1140-xserver-xorg"]
+    },
+    "live-config.sysv-rc": {
+      "type": "string",
+      "config_key": "LIVE_SYSV_RC",
+      "cmdline": ["sysv-rc", "live-config.sysv-rc"],
+      "description": "Comma-separated sysv services to disable via update-rc.d",
+      "implements": ["0180-sysv-rc"]
+    },
+    "live-config.utc": {
+      "type": "enum",
+      "values": ["yes", "no"],
+      "config_key": "LIVE_UTC",
+      "cmdline": ["utc", "live-config.utc"],
+      "default": "yes",
+      "description": "Whether hardware clock is UTC (legacy yes|no values)",
+      "implements": ["1120-util-linux"]
+    },
+    "live-config.x-session-manager": {
+      "type": "string",
+      "config_key": "LIVE_X_SESSION_MANAGER",
+      "cmdline": ["x-session-manager", "live-config.xorg-xsession-manager"],
+      "description": "update-alternatives x-session-manager path, or none",
+      "implements": ["1140-xserver-xorg", "0085-sddm"]
+    },
+    "live-config.xorg-driver": {
+      "type": "string",
+      "config_key": "LIVE_XORG_DRIVER",
+      "cmdline": ["xorg-driver", "live-config.xorg-driver"],
+      "implements": ["1140-xserver-xorg"]
+    },
+    "live-config.xorg-resolution": {
+      "type": "string",
+      "config_key": "LIVE_XORG_RESOLUTION",
+      "cmdline": ["xorg-resolution", "live-config.xorg-resolution"],
+      "implements": ["1140-xserver-xorg"]
+    },
+    "live-config.wlan-driver": {
+      "type": "string",
+      "config_key": "LIVE_WLAN_DRIVER",
+      "cmdline": ["wlan-driver", "live-config.wlan-driver"],
+      "implements": ["1190-broadcom-sta"]
+    },
+    "live-config.hooks": {
+      "type": "string",
+      "config_key": "LIVE_HOOKS",
+      "cmdline": ["hooks", "live-config.hooks"],
+      "description": "filesystem|medium|URL hooks (pipe-separated)",
+      "implements": ["9990-hooks"]
+    },
+    "live-config.link-user-dirs": {
+      "type": "boolean",
+      "config_key": "LIVE_LINK_USER_DIRS",
+      "cmdline": ["link-user-dirs", "live-config.link-user-dirs"],
+      "default": false,
+      "description": "Symlink user directories onto live media path",
+      "implements": ["0045-user-media"]
+    },
+    "live-config.bind-user-dirs": {
+      "type": "boolean",
+      "config_key": "LIVE_BIND_USER_DIRS",
+      "cmdline": ["bind-user-dirs", "live-config.bind-user-dirs"],
+      "default": false,
+      "description": "Bind-mount user directories onto live media path",
+      "implements": ["0045-user-media"]
+    },
+    "live-config.user-dirs-path": {
+      "type": "string",
+      "config_key": "LIVE_USER_DIRS_PATH",
+      "cmdline": ["user-dirs-path", "live-config.user-dirs-path"],
+      "description": "Path on media for user directories (with link/bind modes)",
+      "implements": ["0045-user-media"]
+    },
+    "live-config.module-mode": {
+      "type": "enum",
+      "values": ["simple", "merged"],
+      "config_key": "LIVE_MODULE_MODE",
+      "cmdline": ["module-mode", "live-config.module-mode"],
+      "description": "merged runs minios-update-users/cache/dpkg integration",
+      "implements": ["1220-config-module-mode"]
+    },
+    "live-config.issue.password-hints": {
+      "type": "boolean",
+      "config_key": "LIVE_ISSUE_PASSWORD_HINTS",
+      "cmdline": ["issue-password-hints", "live-config.issue-password-hints"],
+      "default": true,
+      "description": "Show default root/live password hints in /etc/issue",
+      "implements": ["0025-issue-setup"]
+    },
+    "live-config.sudo.mode": {
+      "type": "enum",
+      "values": ["passwordless", "password", "disabled"],
+      "config_key": "LIVE_SUDO_MODE",
+      "cmdline": ["sudo-mode", "live-config.sudo-mode"],
+      "default": "passwordless",
+      "description": "Sudo privilege mode for the live user",
+      "implements": ["0030-user-setup", "0040-sudo"]
+    },
+    "live-config.polkit.mode": {
+      "type": "enum",
+      "values": ["passwordless", "password", "disabled"],
+      "config_key": "LIVE_POLKIT_MODE",
+      "cmdline": ["polkit-mode", "live-config.polkit-mode"],
+      "default": "passwordless",
+      "description": "PolicyKit prompt mode for live administrative actions",
+      "implements": ["1080-policykit"],
+      "notes": "password and disabled remove MiniOS passwordless polkit grant; disabled is not a hard deny-all policy."
+    },
+    "live-config.ssh.permit-root-login": {
+      "type": "boolean",
+      "config_key": "LIVE_SSH_PERMIT_ROOT_LOGIN",
+      "cmdline": ["ssh-permit-root-login", "live-config.ssh-permit-root-login"],
+      "default": true,
+      "description": "Write PermitRootLogin policy for OpenSSH when openssh-server is present",
+      "implements": ["1160-openssh-server"]
+    },
+    "live-config.ssh.password-authentication": {
+      "type": "boolean",
+      "config_key": "LIVE_SSH_PASSWORD_AUTHENTICATION",
+      "cmdline": ["ssh-password-authentication", "live-config.ssh-password-authentication"],
+      "default": true,
+      "description": "Write PasswordAuthentication policy for OpenSSH when openssh-server is present",
+      "implements": ["1160-openssh-server"]
+    },
+    "live-config.xrdp.mode": {
+      "type": "enum",
+      "values": ["relaxed", "hardened", "disabled"],
+      "config_key": "LIVE_XRDP_MODE",
+      "cmdline": ["xrdp-mode", "live-config.xrdp-mode"],
+      "default": "relaxed",
+      "description": "XRDP security posture for live sessions",
+      "implements": ["1095-xrdp"]
+    },
+    "live-config.x11.mode": {
+      "type": "enum",
+      "values": ["relaxed", "hardened"],
+      "config_key": "LIVE_X11_MODE",
+      "cmdline": ["x11-mode", "live-config.x11-mode"],
+      "default": "relaxed",
+      "description": "X11 launch/wrapper posture for live sessions",
+      "implements": ["0075-xorg-service", "start-xorg.sh"]
+    },
+    "live-config.lockscreen.mode": {
+      "type": "enum",
+      "values": ["relaxed", "hardened"],
+      "config_key": "LIVE_LOCKSCREEN_MODE",
+      "cmdline": ["lockscreen-mode", "live-config.lockscreen-mode"],
+      "default": "relaxed",
+      "description": "Whether live-config relaxes or preserves screen locking",
+      "implements": ["1040-gnome-screensaver", "1180-xscreensaver"]
+    },
+    "live-config.user-ssh-keys": {
+      "type": "flag",
+      "description": "Deploys authorized_keys.* from live media for users",
+      "implements": ["0044-user-ssh-keys"]
+    }
+  }
+}

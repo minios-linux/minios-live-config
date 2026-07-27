@@ -13,6 +13,16 @@
 
 #set -e
 
+Cmdline() {
+    for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
+        case "${_PARAMETER}" in
+        live-config.xrdp-mode=* | xrdp-mode=*)
+            LIVE_XRDP_MODE="${_PARAMETER#*xrdp-mode=}"
+            ;;
+        esac
+    done
+}
+
 Init() {
     # Checking if package is installed
     if ! pkg_is_installed "xrdp" ||
@@ -24,6 +34,40 @@ Init() {
 }
 
 Config() {
+    case "${LIVE_XRDP_MODE}" in
+    "" | relaxed | hardened | disabled)
+        ;;
+    *)
+        LIVE_XRDP_MODE="relaxed"
+        ;;
+    esac
+
+    case "${LIVE_XRDP_MODE}" in
+    disabled)
+        if command -v minios-svc >/dev/null 2>&1; then
+            minios-svc disable xrdp || true
+            minios-svc stop xrdp || true
+        fi
+        touch /var/lib/live/config/xrdp
+        exit 0
+        ;;
+    hardened)
+        if [ -f /etc/xrdp/xrdp.ini ]; then
+            sed -i \
+                -e 's|^port=.*|port=tcp://127.0.0.1:3389|' \
+                -e 's|^security_layer=.*|security_layer=negotiate|' \
+                -e 's|^crypt_level=.*|crypt_level=high|' \
+                /etc/xrdp/xrdp.ini
+        fi
+        if [ -f /etc/xrdp/sesman.ini ]; then
+            sed -i \
+                -e 's|^AllowRootLogin=.*|AllowRootLogin=false|' \
+                -e 's|^AlwaysGroupCheck=.*|AlwaysGroupCheck=true|' \
+                /etc/xrdp/sesman.ini
+        fi
+        ;;
+    esac
+
     if [ ! -f /var/log/xrdp.log ]; then
         touch /var/log/xrdp.log
         chown xrdp:adm /var/log/xrdp.log
@@ -34,5 +78,6 @@ Config() {
     touch /var/lib/live/config/xrdp
 }
 
+Cmdline
 Init
 Config

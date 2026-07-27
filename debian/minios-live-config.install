@@ -2,4 +2,5 @@ usr/bin
 usr/sbin
 usr/lib/live
 usr/share/live
+usr/share/minios/capabilities
 var

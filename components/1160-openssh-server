@@ -13,6 +13,21 @@
 
 #set -e
 
+Cmdline ()
+{
+	for _PARAMETER in ${LIVE_CONFIG_CMDLINE}
+	do
+		case "${_PARAMETER}" in
+			live-config.ssh-permit-root-login=*|ssh-permit-root-login=*)
+				LIVE_SSH_PERMIT_ROOT_LOGIN="${_PARAMETER#*ssh-permit-root-login=}"
+				;;
+			live-config.ssh-password-authentication=*|ssh-password-authentication=*)
+				LIVE_SSH_PASSWORD_AUTHENTICATION="${_PARAMETER#*ssh-password-authentication=}"
+				;;
+		esac
+	done
+}
+
 Init ()
 {
 	# Checking if package is installed or already configured
@@ -27,6 +42,15 @@ Init ()
 
 Config ()
 {
+	case "${LIVE_SSH_PERMIT_ROOT_LOGIN}" in
+		""|true|false) ;;
+		*) LIVE_SSH_PERMIT_ROOT_LOGIN="" ;;
+	esac
+	case "${LIVE_SSH_PASSWORD_AUTHENTICATION}" in
+		""|true|false) ;;
+		*) LIVE_SSH_PASSWORD_AUTHENTICATION="" ;;
+	esac
+
 	for _PROTOCOL in dsa rsa ecdsa ed25519
 	do
 		if [ ! -e /etc/ssh/ssh_host_${_PROTOCOL}_key ] &&
@@ -38,7 +62,27 @@ Config ()
 		fi
 	done
 
-	#sed -i -e 's|#\(PasswordAuthentication\) yes|\1 no|' /etc/ssh/sshd_config
+	if [ -n "${LIVE_SSH_PERMIT_ROOT_LOGIN}" ] || [ -n "${LIVE_SSH_PASSWORD_AUTHENTICATION}" ]
+	then
+		mkdir -p /etc/ssh/sshd_config.d
+		{
+			echo "# Managed by MiniOS live-config"
+			case "${LIVE_SSH_PERMIT_ROOT_LOGIN}" in
+				true) echo "PermitRootLogin yes" ;;
+				false) echo "PermitRootLogin no" ;;
+			esac
+			case "${LIVE_SSH_PASSWORD_AUTHENTICATION}" in
+				true) echo "PasswordAuthentication yes" ;;
+				false) echo "PasswordAuthentication no" ;;
+			esac
+		} > /etc/ssh/sshd_config.d/minios.conf
+
+		if [ -f /etc/ssh/sshd_config ] && ! grep -qs '^Include[[:space:]]\+/etc/ssh/sshd_config.d/\*.conf' /etc/ssh/sshd_config
+		then
+			printf '\nInclude /etc/ssh/sshd_config.d/*.conf\n' >> /etc/ssh/sshd_config
+		fi
+		_SSH="true"
+	fi
 
 	case "${_SSH}" in
 		true)
@@ -48,5 +92,6 @@ Config ()
 	esac
 }
 
+Cmdline
 Init
 Config

@@ -32,6 +32,9 @@ Cmdline() {
         live-config.user-password-crypted=* | user-password-crypted=*)
             LIVE_USER_PASSWORD_CRYPTED="${_PARAMETER#*user-password-crypted=}"
             ;;
+        live-config.sudo-mode=* | sudo-mode=*)
+            LIVE_SUDO_MODE="${_PARAMETER#*sudo-mode=}"
+            ;;
         live-config.debug | debug)
             LIVE_CONFIG_DEBUG=true
             ;;
@@ -72,10 +75,29 @@ Config() {
         LIVE_USER_DEFAULT_GROUPS="$(echo ${LIVE_USER_DEFAULT_GROUPS} | sed -e 's|,| |g')"
     fi
 
-    # Make sure user is not in sudo group if sudo is disabled
+    # Make sure user is not in sudo group if sudo is disabled.
+    case "${LIVE_SUDO_MODE}" in
+    disabled)
+        _GROUPS=""
+        for _GROUP in ${LIVE_USER_DEFAULT_GROUPS}; do
+            if [ "${_GROUP}" != "sudo" ]; then
+                _GROUPS="${_GROUPS} ${_GROUP}"
+            fi
+        done
+        LIVE_USER_DEFAULT_GROUPS="${_GROUPS}"
+        ;;
+    esac
+
+    # Legacy noroot still overrides all privilege setup.
     case "${LIVE_CONFIG_NOROOT}" in
     true)
-        LIVE_USER_DEFAULT_GROUPS="$(echo ${LIVE_USER_DEFAULT_GROUPS} | sed -e 's|sudo||')"
+        _GROUPS=""
+        for _GROUP in ${LIVE_USER_DEFAULT_GROUPS}; do
+            if [ "${_GROUP}" != "sudo" ]; then
+                _GROUPS="${_GROUPS} ${_GROUP}"
+            fi
+        done
+        LIVE_USER_DEFAULT_GROUPS="${_GROUPS}"
         ;;
     esac
 

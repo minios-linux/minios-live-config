@@ -1,0 +1,100 @@
+#!/bin/sh
+# Validate capabilities/minios-live-config.json against schema-1 rules.
+# Exit 0 on success, non-zero on failure.
+
+set -eu
+
+ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+JSON="${1:-$ROOT/capabilities/minios-live-config.json}"
+PACKAGE_NAME="minios-live-config"
+
+if [ ! -f "$JSON" ]; then
+    echo "ERROR: missing $JSON" >&2
+    exit 1
+fi
+
+if ! command -v jq >/dev/null 2>&1; then
+    echo "ERROR: jq is required to validate capabilities JSON" >&2
+    exit 1
+fi
+
+if ! PARSE_ERROR=$(jq -e 'true' "$JSON" 2>&1); then
+    echo "ERROR: invalid JSON: $PARSE_ERROR" >&2
+    exit 1
+fi
+
+ERRORS=$(jq -r --arg expected_package "$PACKAGE_NAME" '
+    def error_if(condition; message):
+        if condition then [message] else [] end;
+
+    def descriptor_errors(id; descriptor):
+        error_if(
+            (id | test("^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+$") | not);
+            "invalid capability id: \(id)"
+        )
+        + error_if(
+            (id | startswith("live-config.") | not);
+            "namespace must be live-config.*: \(id)"
+        )
+        + if (descriptor | type) != "object" then
+            ["\(id): descriptor must be an object"]
+        else
+            descriptor.type as $cap_type
+            | error_if(
+                (["enum", "boolean", "string", "flag"] | index($cap_type)) == null;
+                "\(id): invalid capability type: \($cap_type | tojson)"
+            )
+            + if $cap_type == "enum" then
+                if (descriptor.values | type) != "array" or (descriptor.values | length) == 0 then
+                    ["\(id): enum requires non-empty values[]"]
+                elif (descriptor.values | unique | length) != (descriptor.values | length) then
+                    ["\(id): enum values must be unique"]
+                elif ([descriptor.values[] | select(if type == "string" then length == 0 else true end)] | length) > 0 then
+                    ["\(id): enum values must be non-empty strings"]
+                else [] end
+            elif (descriptor | has("values"))
+                and descriptor.values != null
+                and descriptor.values != []
+                and $cap_type != "string" then
+                ["\(id): values[] only allowed for enum (or omitted)"]
+            else [] end
+            + if descriptor.config_key == null then []
+              elif (descriptor.config_key | type) != "string" then
+                ["\(id): invalid config_key \(descriptor.config_key | tojson)"]
+              elif (descriptor.config_key | test("^[A-Z][A-Z0-9_]*$") | not) then
+                ["\(id): invalid config_key \(descriptor.config_key | tojson)"]
+              else [] end
+            + if descriptor.cmdline == null then []
+              elif (descriptor.cmdline | type) != "array" then
+                ["\(id): cmdline must be a list of non-empty strings"]
+              elif ([descriptor.cmdline[] | select(if type == "string" then length == 0 else true end)] | length) > 0 then
+                ["\(id): cmdline must be a list of non-empty strings"]
+              else [] end
+        end;
+
+    if type != "object" then
+        ["document must be an object"]
+    else
+        error_if(.schema != 1; "schema must be 1, got \(.schema | tojson)")
+        + error_if(.package != $expected_package; "package must be \($expected_package | tojson), got \(.package | tojson)")
+        + if (.capabilities | type) != "object" then
+            ["capabilities must be an object"]
+          else
+            [.capabilities | to_entries | sort_by(.key)[] | descriptor_errors(.key; .value)] | add // []
+          end
+    end
+    | .[]
+' "$JSON")
+
+if [ -n "$ERRORS" ]; then
+    printf '%s\n' "$ERRORS" | while IFS= read -r ERROR; do
+        printf 'ERROR: %s\n' "$ERROR" >&2
+    done
+    ERROR_COUNT=$(printf '%s\n' "$ERRORS" | wc -l | tr -d ' ')
+    printf 'FAILED: %s issue(s) in %s\n' "$ERROR_COUNT" "$JSON" >&2
+    exit 1
+fi
+
+jq -r --arg path "$JSON" '
+    "OK: \($path) \(.capabilities | length) capabilities, package=\(.package)"
+' "$JSON"

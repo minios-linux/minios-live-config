@@ -22,6 +22,9 @@ Cmdline ()
 			live-config.noroot|noroot)
 				LIVE_CONFIG_NOROOT="true"
 				;;
+			live-config.polkit-mode=*|polkit-mode=*)
+				LIVE_POLKIT_MODE="${_PARAMETER#*polkit-mode=}"
+				;;
 
 			live-config.username=*|username=*)
 				LIVE_USERNAME="${_PARAMETER#*username=}"
@@ -52,6 +55,23 @@ Init ()
 
 Config ()
 {
+	case "${LIVE_POLKIT_MODE}" in
+		""|passwordless|password|disabled)
+			;;
+		*)
+			echo "Invalid LIVE_POLKIT_MODE=${LIVE_POLKIT_MODE}; using passwordless" >&2
+			LIVE_POLKIT_MODE="passwordless"
+			;;
+	esac
+
+	case "${LIVE_POLKIT_MODE}" in
+		password|disabled)
+			rm -f /usr/share/polkit-1/rules.d/sudo_on_live.rules
+			touch /var/lib/live/config/policykit
+			exit 0
+			;;
+	esac
+
 	# Configure PolicyKit in live session
 	mkdir -p /usr/share/polkit-1/rules.d
 

@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2025\-07\-30 5.0~a5\-1 "Проект Debian Live"
+.TH LIVE\-CONFIG 7 2026\-07\-19 11.0.5.13 "Проект MiniOS Live"
 
 .SH ИМЯ
 \fBlive\-config\fP \- Компоненты настройки системы
@@ -80,17 +80,41 @@ file:///run/initramfs/memory/data/\fIФАЙЛ\fP, или с помощью file:
 предварительной настройки файловой системы, затем файлы предварительной
 настройки носителя, и, наконец, сетевые хуки.
 .IP "\fBlive\-config.hostname\fP=\fIИМЯ_ХОСТА\fP | \fBhostname\fP=\fIИМЯ_ХОСТА\fP" 4
-Позволяет установить имя хоста системы. По умолчанию это 'debian'.
+Позволяет задать имя хоста системы. Значение по умолчанию в MiniOS —
+\&'minios'.
+.IP "\fBlive\-config.network\-method\fP=dhcp|static|off | \fBnetwork\-method\fP=dhcp|static|off" 4
+Определяет политику проводной сети. Если не задано или указано dhcp,
+используется профиль по умолчанию. При static создаётся ключевой файл
+NetworkManager; off отключает автоматическую настройку IPv4 для выбранного
+интерфейса.
+.IP "\fBlive\-config.network\-interface\fP=\fIИНТЕРФЕЙС\fP | \fBnetwork\-interface\fP=\fIИНТЕРФЕЙС\fP" 4
+Выбирает проводной интерфейс. Если не указан для static или off,
+автоматически выбирается единственный проводной не\-loopback интерфейс; если
+кандидатов нет или несколько, требуется явное указание значения.
+.IP "\fBlive\-config.network\-address\fP=\fIIPV4\fP | \fBnetwork\-address\fP=\fIIPV4\fP" 4
+Устанавливает статический IPv4\-адрес.
+.IP "\fBlive\-config.network\-prefix\fP=\fIПРЕФИКС\fP | \fBnetwork\-prefix\fP=\fIПРЕФИКС\fP" 4
+Устанавливает длину префикса IPv4 от 0 до 32. Значение по умолчанию для
+static — 24.
+.IP "\fBlive\-config.network\-gateway\fP=\fIIPV4\fP | \fBnetwork\-gateway\fP=\fIIPV4\fP" 4
+Устанавливает необязательный шлюз IPv4.
+.IP "\fBlive\-config.network\-dns\fP=\fIАДРЕС1,АДРЕС2\fP | \fBnetwork\-dns\fP=\fIАДРЕС1,АДРЕС2\fP" 4
+Устанавливает необязательные адреса DNS\-серверов, разделённые запятыми.
+.IP "\fBlive\-config.network\-backend\fP=auto|nm|ifupdown | \fBnetwork\-backend\fP=auto|nm|ifupdown" 4
+Определяет механизм управления сетью. Auto предпочитает NetworkManager и при
+необходимости переключается на ifupdown. Принудительный выбор ifupdown
+помечает интерфейс как неуправляемый NetworkManager, если установлены оба
+стека.
 .IP "\fBlive\-config.username\fP=\fIИМЯ_ПОЛЬЗОВАТЕЛЯ\fP | \fBusername\fP=\fIИМЯ_ПОЛЬЗОВАТЕЛЯ\fP" 4
-Позволяет установить имя пользователя, которое создается для автологина. По
-умолчанию это 'user'.
+Позволяет задать имя пользователя, создаваемого для автологина. Значение по
+умолчанию в MiniOS — 'live'.
 .IP "\fBlive\-config.user\-default\-groups\fP=\fIГРУППА1\fP,\fIГРУППА2\fP ... \fIГРУППAn\fP | \fBuser\-default\-groups\fP=\fIГРУППА1\fP,\fIГРУППА2\fP ... \fIГРУППAn\fP" 4
 Позволяет установить группы по умолчанию для пользователей, создаваемых для
 автологина. По умолчанию это 'audio cdrom dip floppy video plugdev netdev
 powerdev scanner bluetooth'.
 .IP "\fBlive\-config.user\-fullname\fP=\(dq\fIПОЛНОЕ_ИМЯ_ПОЛЬЗОВАТЕЛЯ\fP\(dq | \fBuser\-fullname\fP=\(dq\fIПОЛНОЕ_ИМЯ_ПОЛЬЗОВАТЕЛЯ\fP\(dq" 4
-Позволяет установить полное имя пользователей, создаваемых для автологина. В
-Debian по умолчанию это 'Debian Live user'.
+Позволяет задать полное имя пользователя, создаваемого для
+автологина. Значение по умолчанию в MiniOS — 'MiniOS Live User'.
 .IP "\fBlive\-config.root\-password\fP=\fIПАРОЛЬ\fP | \fBroot\-password\fP=\fIПАРОЛЬ\fP" 4
 Позволяет установить пароль root в виде открытого текста.
 .IP "\fBlive\-config.root\-password\-crypted\fP=\fIПАРОЛЬ\fP | \fBroot\-password\-crypted\fP=\fIПАРОЛЬ\fP" 4
@@ -181,6 +205,48 @@ file:///run/initramfs/memory/data/\fIФАЙЛ\fP, или с помощью file:
 .IP "\fBlive\-config.noroot\fP | \fBnoroot\fP" 4
 Отключает sudo и policykit, пользователь не может получить привилегии root в
 системе.
+.IP "\fBlive\-config.sudo\-mode\fP=\fBpasswordless\fP|password|disabled | \fBsudo\-mode\fP=\fBpasswordless\fP|password|disabled" 4
+Управляет настройкой sudo для live\-пользователя. Значение по умолчанию и
+историческое поведение MiniOS при отсутствии параметра —
+\fBpasswordless\fP. Режим \fBpassword\fP сохраняет доступ к sudo, но требует
+пароль пользователя. Режим \fBdisabled\fP удаляет права sudo в MiniOS и не
+добавляет пользователя в группу sudo при создании. Старый ярлык \fBnoroot\fP
+по\-прежнему имеет приоритет и полностью отключает настройку прав
+суперпользователя.
+.IP "\fBlive\-config.polkit\-mode\fP=\fBpasswordless\fP|password|disabled | \fBpolkit\-mode\fP=\fBpasswordless\fP|password|disabled" 4
+Управляет правилами PolicyKit для MiniOS. Значение по умолчанию и
+историческое поведение MiniOS при отсутствии параметра — \fBpasswordless\fP,
+что позволяет выполнять локальные административные действия без пароля для
+live/sudo пользователя. Режимы \fBpassword\fP и \fBdisabled\fP удаляют это
+правило, и применяется стандартная аутентификация PolicyKit
+дистрибутива. \fBdisabled\fP не является жёсткой политикой запрета PolicyKit;
+используйте \fBnoroot\fP, если live\-пользователь не должен получать
+административные права.
+.IP "\fBlive\-config.ssh\-permit\-root\-login\fP=\fBtrue\fP|false | \fBssh\-permit\-root\-login\fP=\fBtrue\fP|false" 4
+Создаёт drop\-in политику OpenSSH PermitRootLogin при установленном
+openssh\-server.
+.IP "\fBlive\-config.ssh\-password\-authentication\fP=\fBtrue\fP|false | \fBssh\-password\-authentication\fP=\fBtrue\fP|false" 4
+Создаёт drop\-in политику OpenSSH PasswordAuthentication при установленном
+openssh\-server.
+.IP "\fBlive\-config.xrdp\-mode\fP=\fBrelaxed\fP|hardened|disabled | \fBxrdp\-mode\fP=\fBrelaxed\fP|hardened|disabled" 4
+Управляет режимом XRDP при установленном xrdp. \fBrelaxed\fP сохраняет
+исторические значения MiniOS. \fBhardened\fP привязывает XRDP к localhost,
+включает согласованные/повышенные параметры безопасности и запрещает вход
+root через XRDP. \fBdisabled\fP отключает/останавливает XRDP через minios\-svc,
+если доступно.
+.IP "\fBlive\-config.x11\-mode\fP=\fBrelaxed\fP|hardened | \fBx11\-mode\fP=\fBrelaxed\fP|hardened" 4
+Управляет политикой удобства X11 в MiniOS. \fBrelaxed\fP сохраняет
+совместимость с предыдущими версиями. \fBhardened\fP удаляет разрешающий
+параметр \-ac у X\-сервера и ужесточает настройки Xwrapper.config при его
+наличии.
+.IP "\fBlive\-config.issue\-password\-hints\fP=\fBtrue\fP|false | \fBissue\-password\-hints\fP=\fBtrue\fP|false" 4
+Определяет, будет ли /etc/issue отображать подсказки по паролям root/live по
+умолчанию в MiniOS.
+.IP "\fBlive\-config.lockscreen\-mode\fP=\fBrelaxed\fP|hardened | \fBlockscreen\-mode\fP=\fBrelaxed\fP|hardened" 4
+Определяет, будет ли live\-config ослаблять блокировку экрана. \fBrelaxed\fP
+сохраняет историческую удобную настройку для live\-сессии. \fBhardened\fP не
+отключает блокировку GNOME и включает блокировку xscreensaver, если
+соответствующий файл присутствует.
 .IP "\fBlive\-config.noautologin\fP | \fBnoautologin\fP" 4
 Отключает как автоматический вход в консоль, так и графический автологин.
 .IP "\fBlive\-config.nottyautologin\fP | \fBnottyautologin\fP" 4
@@ -241,6 +307,29 @@ Live\-носителе (minios/config.conf, minios/config.conf.d/*.conf). Есл
 .IP \fBLIVE_HOSTNAME\fP=\fIИМЯ_ХОСТА\fP 4
 Эта переменная соответствует параметру
 \&'\fBlive\-config.hostname\fP=\fIИМЯ_ХОСТА\fP'.
+.IP \fBLIVE_NETWORK_METHOD\fP=dhcp|static|off 4
+Определяет политику проводной сети. DHCP и отсутствие значения не изменяют
+ранее созданный статический профиль MiniOS.
+.IP \fBLIVE_NETWORK_INTERFACE\fP=\fIИНТЕРФЕЙС\fP 4
+Выбирает проводной интерфейс для политики static или off.
+.IP \fBLIVE_NETWORK_ADDRESS\fP=\fIIPV4\fP 4
+Устанавливает статический IPv4\-адрес.
+.IP \fBLIVE_NETWORK_PREFIX\fP=\fIPREFIX\fP 4
+Устанавливает длину статического префикса; по умолчанию 24.
+.IP \fBLIVE_NETWORK_GATEWAY\fP=\fIIPV4\fP 4
+Задает необязательный статический шлюз.
+.IP \fBLIVE_NETWORK_DNS\fP=\fIADDRESS1,ADDRESS2\fP 4
+Указывает необязательные DNS\-серверы через запятую.
+.IP \fBLIVE_NETWORK_BACKEND\fP=auto|nm|ifupdown 4
+Выбирает используемый backend.
+.PP
+Сетевой компонент записывает политику один раз в постоянных live\-системах и
+сохраняет /var/lib/live/config/network. Для повторного применения измененной
+политики удалите этот штамп и отредактируйте
+/etc/live/config.conf. Обновление только конфигурации носителя не
+перезаписывает существующий постоянный /etc/live/config.conf. Для возврата к
+предыдущему статическому профилю используйте method=off или вручную удалите
+профиль и штамп, управляемые MiniOS.
 .IP \fBLIVE_USERNAME\fP=\fIИМЯ_ПОЛЬЗОВАТЕЛЯ\fP 4
 Эта переменная соответствует параметру
 \&'\fBlive\-config.username\fP=\fIИМЯ_ПОЛЬЗОВАТЕЛЯ\fP'.
@@ -266,6 +355,33 @@ Live\-носителе (minios/config.conf, minios/config.conf.d/*.conf). Есл
 Эта переменная соответствует параметру
 \&'\fBlive\-config.user\-password\-crypted\fP=\fIПАРОЛЬ\fP'. Она указывает пароль
 пользователя в зашифрованном виде.
+.IP \fBLIVE_SUDO_MODE\fP=\fBpasswordless\fP|password|disabled 4
+Эта переменная соответствует параметру '\fBlive\-config.sudo\-mode\fP=...'. Если
+не задано, MiniOS сохраняет историческое поведение sudo без
+пароля. Используйте \fBpassword\fP для требования пароля пользователя при sudo
+или \fBdisabled\fP для удаления права sudo и членства в группе sudo при
+создании пользователя.
+.IP \fBLIVE_POLKIT_MODE\fP=\fBpasswordless\fP|password|disabled 4
+Эта переменная соответствует параметру
+\&'\fBlive\-config.polkit\-mode\fP=...'. Если не задано, MiniOS сохраняет
+историческое правило PolicyKit без пароля. Используйте \fBpassword\fP или
+\fBdisabled\fP для удаления этого правила и возврата к стандартной
+аутентификации PolicyKit дистрибутива.
+.IP \fBLIVE_SSH_PERMIT_ROOT_LOGIN\fP=\fBtrue\fP|false 4
+Эта переменная соответствует параметру
+\&'\fBlive\-config.ssh\-permit\-root\-login\fP=...'.
+.IP \fBLIVE_SSH_PASSWORD_AUTHENTICATION\fP=\fBtrue\fP|false 4
+Эта переменная соответствует параметру
+\&'\fBlive\-config.ssh\-password\-authentication\fP=...'.
+.IP \fBLIVE_XRDP_MODE\fP=\fBrelaxed\fP|hardened|disabled 4
+Эта переменная соответствует параметру '\fBlive\-config.xrdp\-mode\fP=...'.
+.IP \fBLIVE_X11_MODE\fP=\fBrelaxed\fP|hardened 4
+Эта переменная соответствует параметру '\fBlive\-config.x11\-mode\fP=...'.
+.IP \fBLIVE_ISSUE_PASSWORD_HINTS\fP=\fBtrue\fP|false 4
+Эта переменная соответствует параметру
+\&'\fBlive\-config.issue\-password\-hints\fP=...'.
+.IP \fBLIVE_LOCKSCREEN_MODE\fP=\fBrelaxed\fP|hardened 4
+Эта переменная соответствует параметру '\fBlive\-config.lockscreen\-mode\fP=...'.
 .IP "\fBLIVE_LOCALES\fP=\fIЛОКАЛЬ1\fP,\fIЛОКАЛЬ2\fP ... \fIЛОКАЛЬn\fP" 4
 Эта переменная соответствует параметру
 \&'\fBlive\-config.locales\fP=\fIЛОКАЛЬ1\fP,\fIЛОКАЛЬ2\fP ... \fIЛОКАЛЬn\fP'.
@@ -318,6 +434,19 @@ Live\-носителе (minios/config.conf, minios/config.conf.d/*.conf). Есл
 Эта переменная соответствует параметру
 \&'\fBlive\-config.user\-dirs\-path\fP=\fIПУТЬ\fP'. Она указывает путь для
 пользовательских каталогов на носителе.
+.PP
+Режимы ссылки и bind для пользовательских данных являются
+взаимоисключающими. Путь по умолчанию — /minios/userdata относительно
+существующего монтирования /run/initramfs/memory/data. Принимаются только
+доступные для записи локальные носители на основе блочных устройств с FAT32,
+exFAT и NTFS. Сетевые, оптические, RAM, overlay, только для чтения,
+неподдерживаемые файловые системы, а также toram, toram=full или toram=trim
+отклоняются. Пути не должны содержать переходов, пустых сегментов,
+управляющих символов или небезопасных имен. Управляются каталоги Desktop,
+Documents, Downloads, Music, Pictures, Public, Templates и Videos. Миграция
+не объединяет два заполненных дерева; при отключении функции управляемые
+данные копируются обратно. Состояние и статус записываются в
+/var/lib/live/config.
 .IP \fBLIVE_MODULE_MODE\fP 4
 Эта переменная содержит состояние, заданное параметром
 \&'live\-config.module\-mode' (или 'module\-mode'). Когда она установлена в
@@ -365,6 +494,10 @@ minios\-update\-users, minios\-update\-cache и minios\-update\-dpkg) для
 Live\-носителе или на http/ftp сервере.
 .IP \fBhostname\fP 4
 настраивает /etc/hostname и /etc/hosts.
+.IP \fBсеть\fP 4
+настраивает устойчивую проводную политику IPv4 через защищенный keyfile
+NetworkManager или секцию ifupdown. Выполняется до запуска сетевых служб,
+проверяет все значения и отмечает только после успешной записи.
 .IP \fBissue\-setup\fP 4
 настраивает файл /etc/issue с приветственным баннером и информацией о
 дистрибутиве.
@@ -378,8 +511,9 @@ root.
 .IP \fBsudo\fP 4
 предоставляет sudo\-привилегии Live\-пользователю.
 .IP \fBuser\-media\fP 4
-настраивает монтирование носителей и связывание или привязку
-пользовательских каталогов для постоянных данных.
+создает ссылки или bind\-монтирует проверенные пользовательские каталоги на
+существующем доступном для записи носителе данных MiniOS с безопасной
+миграцией и возвратом данных при отключении.
 .IP \fBuser\-ssh\-keys\fP 4
 синхронизирует SSH\-ключи из пользовательских файлов
 \fIauthorized_keys.<имя_пользователя>\fP с живого носителя в
@@ -391,7 +525,8 @@ root.
 .IP \fBtzdata\fP 4
 настраивает /etc/timezone.
 .IP \fBxorg\-service\fP 4
-настраивает имя пользователя в xorg.service.
+настраивает имя пользователя в xorg.service и применяет политику X11, если
+поддерживается.
 .IP \fBgdm3\fP 4
 настраивает автологин в gdm3.
 .IP \fBkdm\fP 4
@@ -409,7 +544,9 @@ root.
 .IP \fBkeyboard\-configuration\fP 4
 настраивает клавиатуру.
 .IP \fBsysvinit\fP 4
-настраивает sysvinit.
+настраивает автологин в консоли через /etc/inittab при установленном
+sysvinit. Краткие параметры noautologin и nottyautologin отключают эту
+настройку.
 .IP \fBsysv\-rc\fP 4
 настраивает sysv\-rc, отключая перечисленные службы.
 .IP \fBlogin\fP 4
@@ -425,7 +562,7 @@ root.
 .IP \fBgnome\-power\-manager\fP 4
 отключает гибернацию.
 .IP \fBgnome\-screensaver\fP 4
-отключает блокировку экрана заставкой.
+управляет блокировкой экрана GNOME в соответствии с LIVE_LOCKSCREEN_MODE.
 .IP \fBkaboom\fP 4
 отключает мастер миграции KDE (squeeze и новее).
 .IP \fBkde\-services\fP 4
@@ -435,17 +572,19 @@ root.
 .IP \fBssl\-cert\fP 4
 перегенерация SSL\-сертификатов snake\-oil.
 .IP \fBxrdp\fP 4
-настраивает xrdp для подключения к удаленному рабочему столу.
+настраивает режим XRDP: расслабленный, усиленный или отключенный, если XRDP
+установлен.
 .IP \fBxfce4\-panel\fP 4
 настраивает xfce4\-panel на настройки по умолчанию.
 .IP \fBxscreensaver\fP 4
-отключает блокировку экрана заставкой.
+управляет блокировкой xscreensaver в соответствии с LIVE_LOCKSCREEN_MODE.
 .IP \fBbroadcom\-sta\fP 4
 настраивает драйверы WLAN broadcom\-sta.
 .IP \fBxserver\-xorg\fP 4
 настраивает xserver\-xorg.
 .IP \fBopenssh\-server\fP 4
-пересоздает хостовые ключи openssh\-server.
+воссоздает ключи хоста OpenSSH и явно записывает запрошенную политику
+root\-login или password\-authentication.
 .IP \fBxhyper\-v\fP 4
 настраивает параметры X11 для улучшения совместимости на платформах
 Microsoft Hyper\-V.

@@ -1,3 +1,41 @@
+minios-live-config (11.0.5.14) unstable; urgency=medium
+
+  * Replace the Python capability validator and pytest suite with POSIX shell
+    and jq build-time validation, avoiding a Python test dependency.
+  * Keep package release metadata outside the capability registry; consumers
+    use its schema version and individual capability identifiers instead.
+
+ -- crims0n <crims0n@minios.dev>  Mon, 27 Jul 2026 17:41:24 +0300
+
+minios-live-config (11.0.5.13) unstable; urgency=medium
+
+  * Add configurable security posture controls for sudo, PolicyKit, OpenSSH,
+    XRDP, X11, issue password hints, and screen locking while preserving the
+    existing defaults when unset.
+  * Add declarative wired IPv4 configuration through LIVE_NETWORK_* settings
+    and kernel parameters, with DHCP, static and disabled modes, interface
+    selection, validation, and NetworkManager or ifupdown backends.
+  * Rework user-media directories to use the existing MiniOS drive mount
+    with safe migration and restoration, path and content validation, conflict
+    detection, and support for writable FAT32, exFAT, and NTFS media.
+  * Adjust sysvinit live-config startup dependencies and package metadata.
+  * Advertise and document the new network, security-posture, and user-media
+    options through the capabilities inventory and live-config(7).
+
+ -- crims0n <crims0n@minios.dev>  Sat, 11 Jul 2026 01:20:00 +0300
+
+minios-live-config (11.0.5.12) unstable; urgency=medium
+
+  * Ship MiniOS capabilities inventory at
+    /usr/share/minios/capabilities/minios-live-config.json (schema 1).
+  * Cover the full public live-config surface currently enforced by this
+    package (user, host, locale, keyboard, autologin shortcuts, noroot,
+    module-mode, hooks, media user dirs, and related knobs).
+  * Validate the inventory via scripts/validate-capabilities during make test
+    and make install; stamp the package version into the installed JSON.
+
+ -- crims0n <crims0n@minios.dev>  Fri, 10 Jul 2026 12:00:00 +0300
+
 minios-live-config (11.0.5.11) unstable; urgency=medium
 
   * Keep live-config console logging on systemd systems and on sysvinit boots

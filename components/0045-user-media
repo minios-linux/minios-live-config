@@ -2,42 +2,79 @@
 
 . /usr/lib/live/config.sh
 
-[ -r /etc/os-release ] && . /etc/os-release
-
 ## live-config(7) - System Configuration Components
 ## Copyright (C) 2016-2020 The Debian Live team
-## Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
-## Copyright (C) 2025 MiniOS <https://minios.dev>
-##
-## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
-## This is free software, and you are welcome to redistribute it
-## under certain conditions; see COPYING for details.
+## Copyright (C) 2006-2015 Daniel Baumann <daniel@debian.org>
+## Copyright (C) 2025-2026 MiniOS <https://minios.dev>
 
-set -e
+set -eu
 
-BEXT="sb"
+MEDIA_ROOT=/run/initramfs/memory/data
+STATE_DIR=/var/lib/live/config
+STATE_FILE=${STATE_DIR}/user-media.state
+STATUS_FILE=${STATE_DIR}/user-media.status
+LOCK_DIR=/run/lock/minios-user-media.lock
+TORAM=false
+ROLLBACK_ACTIVE=false
+
+log() {
+    printf '%s\n' "user-media: $*"
+}
+
+fail() {
+    message=$1
+    if [ "${ROLLBACK_ACTIVE}" = true ]; then
+        rollback_connections
+    fi
+    mkdir -p "${STATE_DIR}"
+    printf 'failed: %s\n' "${message}" >"${STATUS_FILE}"
+    log "${message}"
+    exit 0
+}
+
+rollback_connections() {
+    ROLLBACK_ACTIVE=false
+    for directory in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+        target=${HOME_DIR}/${directory}
+        media=${USER_DATA_ROOT}/${directory}
+        backup=${target}.minios-backup.$$
+        if command -v mountpoint >/dev/null 2>&1 && mountpoint -q "${target}"; then
+            umount "${target}" 2>/dev/null || true
+        fi
+        if [ -L "${target}" ] && [ "$(readlink "${target}")" = "${media}" ]; then
+            rm -f "${target}"
+        elif [ -d "${target}" ] && directory_empty "${target}"; then
+            rmdir "${target}" 2>/dev/null || true
+        fi
+        if [ -d "${backup}" ] && [ ! -e "${target}" ]; then
+            mv "${backup}" "${target}" 2>/dev/null || true
+        fi
+    done
+    rm -f "${STATE_FILE}.new"
+}
+
+cleanup() {
+    [ "${ROLLBACK_ACTIVE}" = false ] || rollback_connections
+    rmdir "${LOCK_DIR}" 2>/dev/null || true
+}
 
 Cmdline() {
-    # Reading kernel command line
-    for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
-        case "${_PARAMETER}" in
-        from=*)
-            FROM="${_PARAMETER#*from=}"
-            ;;
-        toram)
-            TORAM="true"
-            ;;
+    for parameter in ${LIVE_CONFIG_CMDLINE:-}; do
+        case "${parameter}" in
         live-config.username=* | username=*)
-            LIVE_USERNAME="${_PARAMETER#*username=}"
+            LIVE_USERNAME=${parameter#*username=}
             ;;
         live-config.link-user-dirs | link-user-dirs)
-            LIVE_LINK_USER_DIRS="true"
+            LIVE_LINK_USER_DIRS=true
             ;;
         live-config.bind-user-dirs | bind-user-dirs)
-            LIVE_BIND_USER_DIRS="true"
+            LIVE_BIND_USER_DIRS=true
             ;;
-        live-config.user-dirs-path | user-dirs-path)
-            LIVE_USER_DIRS_PATH="${_PARAMETER#*user-dirs-path=}"
+        live-config.user-dirs-path=* | user-dirs-path=*)
+            LIVE_USER_DIRS_PATH=${parameter#*user-dirs-path=}
+            ;;
+        toram | toram=full | toram=trim)
+            TORAM=true
             ;;
         live-config.debug | debug)
             LIVE_CONFIG_DEBUG=true
@@ -47,158 +84,322 @@ Cmdline() {
 }
 
 Init() {
-    # Setting debug mode if enabled
-    if [ "${LIVE_CONFIG_DEBUG}" = true ]; then
-        set -x
-    fi
+    [ "${LIVE_CONFIG_DEBUG:-false}" = true ] && set -x
 
-    # Checking if package is installed or already configured
-    if ! pkg_is_installed "user-setup" ||
-        ! component_was_executed "user-setup"; then
+    if ! pkg_is_installed user-setup || ! component_was_executed user-setup; then
         exit 0
     fi
 
-    if [ ! -d /run/systemd/system ] && echo "${LIVE_CONFIG_CMDLINE}" | grep -qs '\bquiet\b'; then
-        echo " user-media"
-    else
-        echo -n " user-media"
+    mkdir -p "$(dirname "${LOCK_DIR}")"
+    if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
+        fail "another user-media operation is already running"
+    fi
+    trap cleanup EXIT
+    trap 'cleanup; exit 1' HUP INT TERM
+}
+
+normalize_path() {
+    value=${1#/}
+    [ -n "${value}" ] || return 1
+    case "${value}" in
+    *//* | . | ./* | */./* | */. | .. | ../* | */../* | */..)
+        return 1
+        ;;
+    esac
+    if printf '%s' "${value}" | LC_ALL=C grep -q '[[:cntrl:]]'; then
+        return 1
+    fi
+    if printf '%s' "${value}" | LC_ALL=C grep -q '[^A-Za-z0-9._ /-]'; then
+        return 1
+    fi
+    printf '%s\n' "${value}"
+}
+
+verify_path_components() {
+    base=$1
+    relative=$2
+    current=${base}
+    old_ifs=$IFS
+    IFS=/
+    set -f
+    set -- ${relative}
+    set +f
+    IFS=$old_ifs
+    for component do
+        current=${current}/${component}
+        if [ -L "${current}" ]; then
+            return 1
+        fi
+        if [ -e "${current}" ] && [ ! -d "${current}" ]; then
+            return 1
+        fi
+    done
+}
+
+directory_empty() {
+    [ -d "$1" ] && [ -z "$(find "$1" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]
+}
+
+validate_tree() {
+    tree=$1
+    [ -d "${tree}" ] || return 0
+    if find "${tree}" -mindepth 1 \( -type l -o ! -type d ! -type f \) -print -quit | grep -q .; then
+        return 1
+    fi
+
+    # FAT32 cannot store files of 4 GiB or larger.
+    if [ "${MEDIA_FS}" = vfat ] && find "${tree}" -type f -size +4294967295c -print -quit | grep -q .; then
+        return 1
+    fi
+
+    # Reject names Windows cannot address reliably on shared FAT/exFAT/NTFS media.
+    if find "${tree}" -mindepth 1 -printf '%f\n' | LC_ALL=C grep -Eiq \
+        '(^|/)(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])([.]|$)|[<>:"\\|?*]|[. ]$'; then
+        return 1
     fi
 }
 
-Config() {
-    case "${LIVE_USERNAME}" in
-    root)
-        HOME_DIR="/root"
-        ;;
-    *)
-        HOME_DIR="/home/${LIVE_USERNAME}"
-        ;;
+detect_media() {
+    command -v findmnt >/dev/null 2>&1 || fail "findmnt is required to validate the MiniOS drive"
+    [ -d "${MEDIA_ROOT}" ] || fail "MiniOS drive is not available at ${MEDIA_ROOT}"
+
+    mount_info=$(findmnt -n -T "${MEDIA_ROOT}" -o SOURCE,FSTYPE,OPTIONS 2>/dev/null || true)
+    [ -n "${mount_info}" ] || fail "cannot determine the MiniOS drive mount"
+    set -- ${mount_info}
+    MEDIA_SOURCE=${1:-}
+    MEDIA_FS=${2:-}
+    MEDIA_OPTIONS=${3:-}
+
+    case "${MEDIA_SOURCE}" in
+    /dev/*) ;;
+    *) fail "MiniOS user directories require a local block device" ;;
     esac
+    case ",${MEDIA_OPTIONS}," in
+    *,rw,*) ;;
+    *) fail "MiniOS drive is read-only" ;;
+    esac
+    case "${MEDIA_FS}" in
+    vfat | exfat | ntfs | ntfs3) ;;
+    fuseblk)
+        fs_probe=$(blkid -s TYPE -o value "${MEDIA_SOURCE}" 2>/dev/null || true)
+        [ "${fs_probe}" = ntfs ] || fail "unsupported FUSE filesystem on the MiniOS drive"
+        MEDIA_FS=ntfs
+        ;;
+    *) fail "user directories require a FAT32, exFAT, or NTFS MiniOS drive" ;;
+    esac
+}
 
-    # Detect initramfs type for ISO path
-    if [ -d "/lib/live/mount" ]; then
-        ISO_PATH="/lib/live/mount/iso"
+resolve_home() {
+    account=${LIVE_USERNAME:-live}
+    passwd_entry=$(getent passwd "${account}" 2>/dev/null || true)
+    [ -n "${passwd_entry}" ] || fail "configured user '${account}' does not exist"
+    HOME_DIR=$(printf '%s\n' "${passwd_entry}" | cut -d: -f6)
+    [ -n "${HOME_DIR}" ] && [ -d "${HOME_DIR}" ] || fail "configured user has no usable home directory"
+    [ ! -L "${HOME_DIR}" ] || fail "refusing a symlinked user home directory"
+}
+
+probe_storage() {
+    mkdir -p "${USER_DATA_ROOT}" || fail "cannot create user-data directory on the MiniOS drive"
+    probe=${USER_DATA_ROOT}/.minios-write-test.$$
+    moved=${probe}.renamed
+    if ! (umask 077 && printf 'test\n' >"${probe}" && sync "${probe}" && mv "${probe}" "${moved}" && rm -f "${moved}"); then
+        rm -f "${probe}" "${moved}" 2>/dev/null || true
+        fail "MiniOS user-data directory is not safely writable"
+    fi
+}
+
+preflight() {
+    for directory in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+        target=${HOME_DIR}/${directory}
+        media=${USER_DATA_ROOT}/${directory}
+
+        [ ! -L "${media}" ] || fail "storage path for ${directory} is a symlink"
+        [ ! -e "${media}" ] || [ -d "${media}" ] || fail "storage path for ${directory} is not a directory"
+        if [ -L "${target}" ]; then
+            [ "$(readlink "${target}")" = "${media}" ] || fail "${target} is an unmanaged symbolic link"
+            continue
+        fi
+        [ ! -e "${target}" ] || [ -d "${target}" ] || fail "${target} is not a directory"
+
+        local_has_data=false
+        media_has_data=false
+        [ -d "${target}" ] && ! directory_empty "${target}" && local_has_data=true
+        [ -d "${media}" ] && ! directory_empty "${media}" && media_has_data=true
+
+        if [ "${local_has_data}" = true ] && [ "${media_has_data}" = true ]; then
+            fail "both ${target} and ${media} contain data; merge them manually"
+        fi
+        [ "${local_has_data}" = false ] || validate_tree "${target}" ||
+            fail "${target} contains files that cannot be migrated safely"
+    done
+}
+
+migrate_to_media() {
+    target=$1
+    media=$2
+    [ -d "${target}" ] && ! directory_empty "${target}" || return 0
+    [ ! -e "${media}" ] || directory_empty "${media}" || return 1
+
+    stage=${media}.minios-stage.$$
+    rm -rf "${stage}"
+    mkdir -p "${stage}"
+    if ! cp -R "${target}/." "${stage}/"; then
+        rm -rf "${stage}"
+        return 1
+    fi
+    sync "${stage}" 2>/dev/null || sync
+    rmdir "${media}" 2>/dev/null || true
+    if ! mv "${stage}" "${media}"; then
+        rm -rf "${stage}"
+        return 1
+    fi
+}
+
+connect_directory() {
+    directory=$1
+    target=${HOME_DIR}/${directory}
+    media=${USER_DATA_ROOT}/${directory}
+    mkdir -p "${media}"
+    if [ -L "${target}" ] && [ "$(readlink "${target}")" = "${media}" ]; then
+        if [ "${MODE}" = link ]; then
+            printf '%s\t%s\t%s\n' "${directory}" "${target}" "${media}" >>"${STATE_FILE}.new"
+            return 0
+        fi
+        rm "${target}" || fail "cannot replace the managed link at ${target}"
+    fi
+    if [ "${MODE}" = bind ] && command -v mountpoint >/dev/null 2>&1 && mountpoint -q "${target}"; then
+        mounted_source=$(findmnt -n -T "${target}" -o SOURCE 2>/dev/null || true)
+        [ "${mounted_source}" = "${media}" ] || fail "${target} is already mounted from another source"
+        printf '%s\t%s\t%s\n' "${directory}" "${target}" "${media}" >>"${STATE_FILE}.new"
+        return 0
+    fi
+    migrate_to_media "${target}" "${media}" || fail "failed to migrate ${target} to the MiniOS drive"
+
+    backup=
+    if [ -d "${target}" ]; then
+        backup=${target}.minios-backup.$$
+        mv "${target}" "${backup}" || fail "cannot stage ${target}"
+    fi
+
+    if [ "${MODE}" = link ]; then
+        if ! ln -s "${media}" "${target}"; then
+            [ -n "${backup}" ] && mv "${backup}" "${target}"
+            fail "cannot link ${target} to the MiniOS drive"
+        fi
     else
-        ISO_PATH="/run/initramfs/memory/iso"
+        mkdir -p "${target}"
+        if ! mount --bind "${media}" "${target}"; then
+            rmdir "${target}" 2>/dev/null || true
+            [ -n "${backup}" ] && mv "${backup}" "${target}"
+            fail "cannot bind-mount ${media} on ${target}"
+        fi
     fi
 
-    if [ -z "$FROM" ] || echo "$FROM" | grep 'http://' || [ -d "$ISO_PATH" ]; then
-        FROM="minios"
-    elif [ -f /run/initramfs/log/from.log ]; then
-        FROM=$(cat /run/initramfs/log/from.log)
-    elif [ -f /run/initramfs/var/log/from.log ]; then
-        FROM=$(cat /run/initramfs/var/log/from.log)
-    fi
+    printf '%s\t%s\t%s\n' "${directory}" "${target}" "${media}" >>"${STATE_FILE}.new"
+}
 
-    # search for bundles in the mounted directory
-    if [ "$(find "$(get_live_medium_path)/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
-        # we found at least one bundle/module here
-        FROM=$(echo "$(get_live_medium_path)/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
-    elif [ "$(find "$ISO_PATH/$FROM" -maxdepth 1 -name "*.$BEXT" 2>/dev/null)" != "" ]; then
-        FROM=$(echo "$ISO_PATH/$FROM" | tr -s "/" | sed -r "s:/[^/]+/[.][.]/:/:g")
-    fi
-    MEDIA="$FROM"
+disable_user_media() {
+    old_home=$(sed -n 's/^home=//p' "${STATE_FILE}" | head -n 1)
+    old_path=$(sed -n 's/^path=//p' "${STATE_FILE}" | head -n 1)
+    [ -n "${old_home}" ] && [ -d "${old_home}" ] && [ ! -L "${old_home}" ] ||
+        fail "saved user-media home is not available"
+    old_relative=$(normalize_path "${old_path}") || fail "saved user-media path is invalid"
+    old_root=${MEDIA_ROOT}/${old_relative}
+    verify_path_components "${MEDIA_ROOT}" "${old_relative}" ||
+        fail "saved user-media path is no longer safe"
 
-    DEVICE=$(get_device $MEDIA)
-    DEVICE_NAME=$(get_device_name $MEDIA)
-    FS_TYPE=$(get_filesystem_type $MEDIA)
-    MEDIA_ROOT=$(get_mount_point $MEDIA)
+    # Validate every target before preparing local copies.
+    for directory in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+        target=${old_home}/${directory}
+        media=${old_root}/${directory}
+        if [ -L "${target}" ]; then
+            [ "$(readlink "${target}")" = "${media}" ] || fail "${target} is no longer managed by MiniOS"
+        elif command -v mountpoint >/dev/null 2>&1 && mountpoint -q "${target}"; then
+            fail "cannot disable user media while ${target} is mounted; reboot and try again"
+        elif [ -d "${target}" ] && ! directory_empty "${target}"; then
+            rm -rf "${stage}"
+            fail "local ${target} contains data; automatic copy-back would overwrite it"
+        elif [ -e "${target}" ] && [ ! -d "${target}" ]; then
+            rm -rf "${stage}"
+            fail "local ${target} is not a directory"
+        fi
+    done
 
-    echo "Checking if the media is writable or if TORAM mode is enabled"
-    if ! test -w "$MEDIA" || [ "$TORAM" = "true" ]; then
-        WRITABLE="false"
-        echo "The media is not writable or the system is running in TORAM mode."
-    else
-        WRITABLE="true"
-        echo "The media is writable."
-    fi
-
-    if [ "${WRITABLE}" = "true" ]; then
-        case "${FS_TYPE}" in
-        vfat | ntfs | exfat)
-            chmod 777 "${MEDIA_ROOT}"
-            mkdir -p "/media/${DEVICE_NAME}"
-            mount "${DEVICE}" "/media/${DEVICE_NAME}"
-            MEDIA_ROOT="/media/${DEVICE_NAME}"
-            ;;
-        esac
-    fi
-
-    if [ "${WRITABLE}" = "true" ]; then
-        case "${FS_TYPE}" in
-        vfat | ntfs | exfat)
-            LIVE_USER_DIRS_PATH="${LIVE_USER_DIRS_PATH:-/minios/userdata}"
-            USER_DIRS_ABS_PATH="${MEDIA_ROOT}${LIVE_USER_DIRS_PATH}"
-            for DIR in Desktop Documents Downloads Music Pictures Public Templates Videos; do
-                MTD="${USER_DIRS_ABS_PATH}/${DIR}"
-                TARGET="${HOME_DIR}/${DIR}"
-                BACKUP="${TARGET}.backup"
-
-                # If both options are set, prefer link-user-dirs
-                if [ "${LIVE_BIND_USER_DIRS}" = "true" ] && [ "${LIVE_LINK_USER_DIRS}" = "true" ]; then
-                    echo "Both bind-user-dirs and link-user-dirs are set. Using link-user-dirs."
-                    LIVE_BIND_USER_DIRS="false"
-                fi
-
-                if [ "${LIVE_BIND_USER_DIRS}" = "true" ]; then
-                    # Ensure media folder exists
-                    mkdir -p "${MTD}"
-
-                    # --- Prepare TARGET for bind-mount ---
-                    # 1) If it's a symlink — remove it
-                    if [ -L "${TARGET}" ]; then
-                        rm "${TARGET}"
-                    fi
-
-                    # 2) If it's a directory with data — back it up
-                    if [ -d "${TARGET}" ] && [ "$(ls -A "${TARGET}")" ]; then
-                        mv "${TARGET}" "${BACKUP}"
-                        echo "Moved existing data ${TARGET} → ${BACKUP}"
-                    fi
-
-                    # 3) (Re)create empty directory as mountpoint
-                    mkdir -p "${TARGET}"
-
-                    # 4) Bind-mount
-                    mount --bind "${MTD}" "${TARGET}" ||
-                        echo "Failed to bind-mount ${MTD} → ${TARGET}"
-
-                elif [ "${LIVE_LINK_USER_DIRS}" = "true" ]; then
-                    # Ensure media folder exists
-                    mkdir -p "${MTD}"
-
-                    # --- Prepare TARGET for symlink ---
-                    # 1) If it's a symlink — remove it
-                    if [ -L "${TARGET}" ]; then
-                        rm "${TARGET}"
-                    fi
-
-                    # 2) If it's a directory with data — back it up
-                    if [ -d "${TARGET}" ] && [ "$(ls -A "${TARGET}")" ]; then
-                        mv "${TARGET}" "${BACKUP}"
-                        echo "Moved existing data ${TARGET} → ${BACKUP}"
-                    fi
-
-                    # 3) If it's a directory without data — remove it
-                    if [ -d "${TARGET}" ]; then
-                        if [ -z "$(ls -A "${TARGET}")" ]; then
-                            rmdir "${TARGET}" || echo "Failed to remove empty directory ${TARGET}"
-                        else
-                            echo "Directory ${TARGET} is not empty, skipping removal"
-                        fi
-                    fi
-
-                    # 4) Create symlink
-                    ln -s "${MTD}" "${TARGET}" ||
-                        echo "Failed to create symlink ${TARGET} → ${MTD}"
-                fi
+    # Prepare every local copy before replacing any active link or mount.
+    for directory in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+        target=${old_home}/${directory}
+        media=${old_root}/${directory}
+        stage=${target}.minios-restore.$$
+        rm -rf "${stage}"
+        mkdir -p "${stage}"
+        [ ! -d "${media}" ] || cp -R "${media}/." "${stage}/" || {
+            for cleanup in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+                rm -rf "${old_home}/${cleanup}.minios-restore.$$"
             done
-            ;;
-        esac
+            fail "cannot copy ${media} back to local storage"
+        }
+    done
+    sync
+
+    for directory in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+        target=${old_home}/${directory}
+        stage=${target}.minios-restore.$$
+        if [ -L "${target}" ]; then
+            rm "${target}"
+        elif [ -d "${target}" ]; then
+            rmdir "${target}"
+        fi
+        mv "${stage}" "${target}" || fail "cannot restore local ${target}"
+    done
+    rm -f "${STATE_FILE}" "${STATUS_FILE}"
+    log "user directories copied back to local storage"
+}
+
+Config() {
+    link=${LIVE_LINK_USER_DIRS:-false}
+    bind=${LIVE_BIND_USER_DIRS:-false}
+    if [ "${link}" = true ] && [ "${bind}" = true ]; then
+        fail "link-user-dirs and bind-user-dirs cannot both be enabled"
     fi
 
-    # Creating state file
-    #touch /var/lib/live/config/user-media
+    if [ "${link}" != true ] && [ "${bind}" != true ]; then
+        if [ -s "${STATE_FILE}" ]; then
+            [ "${TORAM}" = false ] || fail "user directories cannot be copied back while toram is active"
+            detect_media
+            disable_user_media
+        fi
+        rm -f "${STATUS_FILE}"
+        exit 0
+    fi
+    [ "${TORAM}" = false ] || fail "user directories are unavailable with toram, toram=full, or toram=trim"
+
+    MODE=bind
+    [ "${link}" = true ] && MODE=link
+    relative=$(normalize_path "${LIVE_USER_DIRS_PATH:-/minios/userdata}") ||
+        fail "invalid user directories path"
+    verify_path_components "${MEDIA_ROOT}" "${relative}" ||
+        fail "user directories path contains a symlink or non-directory component"
+
+    detect_media
+    resolve_home
+    USER_DATA_ROOT=${MEDIA_ROOT}/${relative}
+    probe_storage
+    preflight
+
+    mkdir -p "${STATE_DIR}"
+    : >"${STATE_FILE}.new"
+    printf 'mode=%s\nmedia=%s\nfilesystem=%s\npath=%s\nhome=%s\n' \
+        "${MODE}" "${MEDIA_SOURCE}" "${MEDIA_FS}" "${relative}" "${HOME_DIR}" >>"${STATE_FILE}.new"
+    ROLLBACK_ACTIVE=true
+    for directory in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+        connect_directory "${directory}"
+    done
+    ROLLBACK_ACTIVE=false
+    for directory in Desktop Documents Downloads Music Pictures Public Templates Videos; do
+        rm -rf "${HOME_DIR}/${directory}.minios-backup.$$"
+    done
+    mv "${STATE_FILE}.new" "${STATE_FILE}"
+    printf 'active: %s user directories at %s\n' "${MODE}" "${USER_DATA_ROOT}" >"${STATUS_FILE}"
 }
 
 Cmdline

@@ -23,6 +23,10 @@ Cmdline ()
 				LIVE_CONFIG_NOROOT="true"
 				;;
 
+			live-config.sudo-mode=*|sudo-mode=*)
+				LIVE_SUDO_MODE="${_PARAMETER#*sudo-mode=}"
+				;;
+
 			live-config.username=*|username=*)
 				LIVE_USERNAME="${_PARAMETER#*username=}"
 				;;
@@ -52,6 +56,15 @@ Init ()
 
 Config ()
 {
+	case "${LIVE_SUDO_MODE}" in
+		""|passwordless|password|disabled)
+			;;
+		*)
+			echo "Invalid LIVE_SUDO_MODE=${LIVE_SUDO_MODE}; using passwordless" >&2
+			LIVE_SUDO_MODE="passwordless"
+			;;
+	esac
+
 	# Skip sudo configuration if username is root
 	case "${LIVE_USERNAME}" in
 		root)
@@ -59,13 +72,27 @@ Config ()
 			;;
 	esac
 
+	if [ "${LIVE_SUDO_MODE}" = "disabled" ]
+	then
+		rm -f /etc/sudoers.d/live
+		touch /var/lib/live/config/sudo
+		exit 0
+	fi
+
 	# Checking if package is already configured differently
 	if grep -qs "^${LIVE_USERNAME}" /etc/sudoers.d/live
 	then
 		exit 0
 	fi
 
-	echo "${LIVE_USERNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/live
+	case "${LIVE_SUDO_MODE}" in
+		password)
+			echo "${LIVE_USERNAME} ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/live
+			;;
+		*)
+			echo "${LIVE_USERNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/live
+			;;
+	esac
 	chmod 0440 /etc/sudoers.d/live
 
 	# Add the user to the sudo group even if it's not required for

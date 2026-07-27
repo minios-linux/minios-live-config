@@ -8,7 +8,7 @@
 
 ### BEGIN INIT INFO
 # Provides:		live-config
-# Required-Start:	$local_fs $remote_fs dbus mountall mountall-boot
+# Required-Start:	$local_fs $remote_fs dbus
 # Required-Stop:
 # Should-Start:
 # Should-Stop:

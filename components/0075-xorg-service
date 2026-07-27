@@ -24,6 +24,20 @@ Init() {
 }
 
 Config() {
+    case "${LIVE_CONFIG_CMDLINE}" in
+    *live-config.x11-mode=hardened* | *x11-mode=hardened*)
+        if [ -f /usr/bin/start-xorg.sh ]; then
+            sed -i 's/[[:space:]]-ac\([[:space:]]\|"\)/\1/g' /usr/bin/start-xorg.sh
+        fi
+        if [ -f /etc/X11/Xwrapper.config ]; then
+            sed -i \
+                -e 's|^allowed_users=.*|allowed_users=console|' \
+                -e 's|^needs_root_rights=.*|needs_root_rights=auto|' \
+                /etc/X11/Xwrapper.config
+        fi
+        ;;
+    esac
+
     # Avoid xinit
     touch /var/lib/live/config/xinit
 

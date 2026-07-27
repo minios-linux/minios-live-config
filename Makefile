@@ -14,6 +14,7 @@ SHELL := sh -e
 LANGUAGES = $(shell cd manpages/po && ls)
 
 SCRIPTS = backend/*/*.init frontend/* components/*
+CAPABILITIES_JSON = capabilities/minios-live-config.json
 
 all: build
 
@@ -26,6 +27,10 @@ test:
 		echo -n "."; \
 	done
 
+	@echo " done."
+
+	@echo -n "Validating capabilities inventory"
+	@./scripts/validate-capabilities "$(CAPABILITIES_JSON)"
 	@echo " done."
 
 build:
@@ -52,6 +57,11 @@ install:
 	# Installing shared data
 	mkdir -p $(DESTDIR)/usr/share/live/config
 	cp -r VERSION share/* $(DESTDIR)/usr/share/live/config
+
+	# Installing capabilities registry (schema 1)
+	install -D -m 0644 "$(CAPABILITIES_JSON)" \
+		"$(DESTDIR)/usr/share/minios/capabilities/minios-live-config.json"
+	./scripts/validate-capabilities "$(DESTDIR)/usr/share/minios/capabilities/minios-live-config.json"
 
 	# Installing docs
 	mkdir -p $(DESTDIR)/usr/share/doc/live-config

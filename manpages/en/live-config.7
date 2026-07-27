@@ -8,7 +8,7 @@
 .\" under certain conditions; see COPYING for details.
 .\"
 .\"
-.TH LIVE\-CONFIG 7 2025\-07\-30 5.0~a5-1 "Debian Live Project"
+.TH LIVE\-CONFIG 7 2026\-07\-19 11.0.5.13 "MiniOS Live Project"
 
 .SH NAME
 \fBlive\-config\fR \- System Configuration Components
@@ -47,13 +47,27 @@ All preseed files in /minios/config\-preseed/ of the live medium can be automati
 .br
 If several mechanisms are combined, then filesystem preseed files are applied first, then medium preseed files, and last the network preseed files.
 .IP "\fBlive\-config.hostname\fR=\fIHOSTNAME\fR | \fBhostname\fR=\fIHOSTNAME\fR" 4
-Allows one to set the hostname of the system. The default is 'debian'.
+Allows one to set the hostname of the system. The MiniOS default is 'minios'.
+.IP "\fBlive\-config.network\-method\fR=dhcp|static|off | \fBnetwork\-method\fR=dhcp|static|off" 4
+Selects wired network policy. Unset and dhcp leave the image default unchanged. Static writes a NetworkManager keyfile; off disables automatic IPv4 configuration for the selected interface.
+.IP "\fBlive\-config.network\-interface\fR=\fIINTERFACE\fR | \fBnetwork\-interface\fR=\fIINTERFACE\fR" 4
+Selects the wired interface. If omitted for static or off, the only wired non-loopback interface is selected automatically; zero or multiple candidates require an explicit value.
+.IP "\fBlive\-config.network\-address\fR=\fIIPV4\fR | \fBnetwork\-address\fR=\fIIPV4\fR" 4
+Sets the static IPv4 address.
+.IP "\fBlive\-config.network\-prefix\fR=\fIPREFIX\fR | \fBnetwork\-prefix\fR=\fIPREFIX\fR" 4
+Sets the IPv4 prefix length from 0 to 32. The static default is 24.
+.IP "\fBlive\-config.network\-gateway\fR=\fIIPV4\fR | \fBnetwork\-gateway\fR=\fIIPV4\fR" 4
+Sets the optional IPv4 gateway.
+.IP "\fBlive\-config.network\-dns\fR=\fIADDRESS1,ADDRESS2\fR | \fBnetwork\-dns\fR=\fIADDRESS1,ADDRESS2\fR" 4
+Sets optional comma-separated DNS server addresses.
+.IP "\fBlive\-config.network\-backend\fR=auto|nm|ifupdown | \fBnetwork\-backend\fR=auto|nm|ifupdown" 4
+Selects the network backend. Auto prefers NetworkManager and falls back to ifupdown. Forced ifupdown marks the interface unmanaged by NetworkManager when both stacks are installed.
 .IP "\fBlive\-config.username\fR=\fIUSERNAME\fR | \fBusername\fR=\fIUSERNAME\fR" 4
-Allows one to set the username that gets created for autologin. The default is 'user'.
+Allows one to set the username that gets created for autologin. The MiniOS default is 'live'.
 .IP "\fBlive\-config.user\-default\-groups\fR=\fIGROUP1\fR,\fIGROUP2\fR ... \fIGROUPn\fR | \fBuser\-default\-groups\fR=\fIGROUP1\fR,\fIGROUP2\fR ... \fIGROUPn\fR" 4
 Allows one to set the default groups of the users that gets created for autologin is member of. The default is 'audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth'.
 .IP "\fBlive\-config.user\-fullname\fR=""\fIUSER FULLNAME\fR"" | \fBuser\-fullname\fR=""\fIUSER FULLNAME\fR""" 4
-Allows one to set the fullname of the users that gets created for autologin. On Debian the default is 'Debian Live user'.
+Allows one to set the fullname of the user created for autologin. The MiniOS default is 'MiniOS Live User'.
 .IP "\fBlive-config.root-password\fR=\fIPASSWORD\fR | \fBroot-password\fR=\fIPASSWORD\fR" 4
 Allows setting the root password in plain text.
 .IP "\fBlive-config.root-password-crypted\fR=\fIPASSWORD\fR | \fBroot-password-crypted\fR=\fIPASSWORD\fR" 4
@@ -104,6 +118,22 @@ For some common use cases where it would require to combine several individual p
 
 .IP "\fBlive\-config.noroot\fR | \fBnoroot\fR" 4
 Disables sudo and policykit, the user cannot gain root privileges on the system.
+.IP "\fBlive\-config.sudo\-mode\fR=\fBpasswordless\fR|password|disabled | \fBsudo\-mode\fR=\fBpasswordless\fR|password|disabled" 4
+Controls sudo setup for the live user. The default, and historical MiniOS behavior when unset, is \fBpasswordless\fR. The \fBpassword\fR mode keeps sudo access but requires the live user's password. The \fBdisabled\fR mode removes the MiniOS sudo grant and keeps the live user out of the sudo group when the user is created. The older \fBnoroot\fR shortcut still overrides this and disables root privilege setup more broadly.
+.IP "\fBlive\-config.polkit\-mode\fR=\fBpasswordless\fR|password|disabled | \fBpolkit\-mode\fR=\fBpasswordless\fR|password|disabled" 4
+Controls MiniOS PolicyKit convenience rules. The default, and historical MiniOS behavior when unset, is \fBpasswordless\fR, which grants local administrative actions without a password for the live/sudo user. The \fBpassword\fR and \fBdisabled\fR modes both remove that MiniOS passwordless rule, so normal distribution PolicyKit authentication applies. \fBdisabled\fR is not a hard deny-all PolicyKit policy; use \fBnoroot\fR when the live user must not gain administrative privileges.
+.IP "\fBlive\-config.ssh\-permit\-root\-login\fR=\fBtrue\fR|false | \fBssh\-permit\-root\-login\fR=\fBtrue\fR|false" 4
+Writes an OpenSSH PermitRootLogin policy drop-in when openssh-server is installed.
+.IP "\fBlive\-config.ssh\-password\-authentication\fR=\fBtrue\fR|false | \fBssh\-password\-authentication\fR=\fBtrue\fR|false" 4
+Writes an OpenSSH PasswordAuthentication policy drop-in when openssh-server is installed.
+.IP "\fBlive\-config.xrdp\-mode\fR=\fBrelaxed\fR|hardened|disabled | \fBxrdp\-mode\fR=\fBrelaxed\fR|hardened|disabled" 4
+Controls XRDP posture when xrdp is installed. \fBrelaxed\fR preserves historical MiniOS defaults. \fBhardened\fR binds XRDP to localhost, restores negotiated/high security settings, and disables XRDP root login. \fBdisabled\fR disables/stops XRDP through minios-svc when available.
+.IP "\fBlive\-config.x11\-mode\fR=\fBrelaxed\fR|hardened | \fBx11\-mode\fR=\fBrelaxed\fR|hardened" 4
+Controls MiniOS X11 convenience posture. \fBrelaxed\fR preserves historical compatibility. \fBhardened\fR removes the permissive -ac X server option and tightens Xwrapper.config when present.
+.IP "\fBlive\-config.issue\-password\-hints\fR=\fBtrue\fR|false | \fBissue\-password\-hints\fR=\fBtrue\fR|false" 4
+Controls whether /etc/issue shows the default MiniOS root/live password hints.
+.IP "\fBlive\-config.lockscreen\-mode\fR=\fBrelaxed\fR|hardened | \fBlockscreen\-mode\fR=\fBrelaxed\fR|hardened" 4
+Controls whether live-config relaxes screen locking. \fBrelaxed\fR preserves historical live-session convenience. \fBhardened\fR avoids disabling GNOME locking and enables xscreensaver locking where that file is present.
 .IP "\fBlive\-config.noautologin\fR | \fBnoautologin\fR" 4
 Disables both the automatic console login and the graphical autologin.
 .IP "\fBlive\-config.nottyautologin\fR | \fBnottyautologin\fR" 4
@@ -138,6 +168,22 @@ This variable corresponds to the '\fBlive\-config.nocomponents\fR=\fICOMPONENT1\
 This variable corresponds to the '\fBlive\-config.debconf\-preseed\fR=filesystem|medium|\fIURL1\fR|\fIURL2\fR| ... |\fIURLn\fR' parameter.
 .IP "\fBLIVE_HOSTNAME\fR=\fIHOSTNAME\fR" 4
 This variable corresponds to the '\fBlive\-config.hostname\fR=\fIHOSTNAME\fR' parameter.
+.IP "\fBLIVE_NETWORK_METHOD\fR=dhcp|static|off" 4
+Selects wired network policy. DHCP and an unset value are no-ops and do not remove a previously created MiniOS static profile.
+.IP "\fBLIVE_NETWORK_INTERFACE\fR=\fIINTERFACE\fR" 4
+Selects the wired interface for static or off policy.
+.IP "\fBLIVE_NETWORK_ADDRESS\fR=\fIIPV4\fR" 4
+Sets the static IPv4 address.
+.IP "\fBLIVE_NETWORK_PREFIX\fR=\fIPREFIX\fR" 4
+Sets the static prefix length; defaults to 24.
+.IP "\fBLIVE_NETWORK_GATEWAY\fR=\fIIPV4\fR" 4
+Sets the optional static gateway.
+.IP "\fBLIVE_NETWORK_DNS\fR=\fIADDRESS1,ADDRESS2\fR" 4
+Sets optional comma-separated DNS servers.
+.IP "\fBLIVE_NETWORK_BACKEND\fR=auto|nm|ifupdown" 4
+Selects the implemented backend.
+.PP
+The network component writes policy once under persistent live systems and records /var/lib/live/config/network. Remove that stamp and edit /etc/live/config.conf to reapply changed policy. Updating only the media config does not overwrite an existing persistent /etc/live/config.conf. To return from a prior static profile, use method=off or remove the MiniOS-managed profile and stamp manually.
 .IP "\fBLIVE_USERNAME\fR=\fIUSERNAME\fR" 4
 This variable corresponds to the '\fBlive\-config.username\fR=\fIUSERNAME\fR' parameter.
 .IP "\fBLIVE_USER_DEFAULT_GROUPS\fR=\fIGROUP1\fR,\fIGROUP2\fR ... \fIGROUPn\fR" 4
@@ -152,6 +198,22 @@ This variable corresponds to the '\fBlive\-config.root\-password\-crypted\fR=\fI
 This variable corresponds to the '\fBlive\-config.user\-password\fR=\fIPASSWORD\fR' parameter. It specifies the user password in plain text.
 .IP "\fBLIVE_USER_PASSWORD_CRYPTED\fR=\fIPASSWORD\fR" 4
 This variable corresponds to the '\fBlive\-config.user\-password\-crypted\fR=\fIPASSWORD\fR' parameter. It specifies the user password in crypted form.
+.IP "\fBLIVE_SUDO_MODE\fR=\fBpasswordless\fR|password|disabled" 4
+This variable corresponds to the '\fBlive\-config.sudo\-mode\fR=...' parameter. If unset, MiniOS keeps the historical passwordless sudo behavior. Use \fBpassword\fR to require the live user's password for sudo, or \fBdisabled\fR to remove the MiniOS sudo grant and sudo group membership during user creation.
+.IP "\fBLIVE_POLKIT_MODE\fR=\fBpasswordless\fR|password|disabled" 4
+This variable corresponds to the '\fBlive\-config.polkit\-mode\fR=...' parameter. If unset, MiniOS keeps the historical passwordless PolicyKit rule. Use \fBpassword\fR or \fBdisabled\fR to remove that rule and fall back to the distribution's normal PolicyKit authentication behavior.
+.IP "\fBLIVE_SSH_PERMIT_ROOT_LOGIN\fR=\fBtrue\fR|false" 4
+This variable corresponds to the '\fBlive\-config.ssh\-permit\-root\-login\fR=...' parameter.
+.IP "\fBLIVE_SSH_PASSWORD_AUTHENTICATION\fR=\fBtrue\fR|false" 4
+This variable corresponds to the '\fBlive\-config.ssh\-password\-authentication\fR=...' parameter.
+.IP "\fBLIVE_XRDP_MODE\fR=\fBrelaxed\fR|hardened|disabled" 4
+This variable corresponds to the '\fBlive\-config.xrdp\-mode\fR=...' parameter.
+.IP "\fBLIVE_X11_MODE\fR=\fBrelaxed\fR|hardened" 4
+This variable corresponds to the '\fBlive\-config.x11\-mode\fR=...' parameter.
+.IP "\fBLIVE_ISSUE_PASSWORD_HINTS\fR=\fBtrue\fR|false" 4
+This variable corresponds to the '\fBlive\-config.issue\-password\-hints\fR=...' parameter.
+.IP "\fBLIVE_LOCKSCREEN_MODE\fR=\fBrelaxed\fR|hardened" 4
+This variable corresponds to the '\fBlive\-config.lockscreen\-mode\fR=...' parameter.
 .IP "\fBLIVE_LOCALES\fR=\fILOCALE1\fR,\fILOCALE2\fR ... \fILOCALEn\fR" 4
 This variable corresponds to the '\fBlive\-config.locales\fR=\fILOCALE1\fR,\fILOCALE2\fR ... \fILOCALEn\fR' parameter.
 .IP "\fBLIVE_TIMEZONE\fR=\fITIMEZONE\fR" 4
@@ -184,6 +246,16 @@ This variable corresponds to the '\fBlive\-config.link\-user\-dirs\fR=true|false
 This variable corresponds to the '\fBlive\-config.bind\-user\-dirs\fR=true|false' parameter. It enables or disables bind-mounting for user directories.
 .IP "\fBLIVE_USER_DIRS_PATH\fR=\fIPATH\fR" 4
 This variable corresponds to the '\fBlive\-config.user\-dirs\-path\fR=\fIPATH\fR' parameter. It specifies the path for user directories on the media.
+.PP
+User-media link and bind modes are mutually exclusive. The default path is
+/minios/userdata relative to the existing /run/initramfs/memory/data mount.
+Only writable local block-backed FAT32, exFAT, and NTFS media are accepted.
+Network, optical, RAM, overlay, read-only, unsupported filesystems, and toram,
+toram=full, or toram=trim are rejected. Paths may not contain traversal, empty
+segments, control characters, or unsafe names. Desktop, Documents, Downloads,
+Music, Pictures, Public, Templates, and Videos are managed. Migration refuses
+to merge two populated trees; disabling the feature copies managed data back.
+State and status are recorded under /var/lib/live/config.
 .IP "\fBLIVE_MODULE_MODE\fR" 4
 This variable holds the state specified by the 'live-config.module-mode' (or 'module-mode') parameter. When it is set to "merged", the live system applies updates (via minios-update-users, minios-update-cache, and minios-update-dpkg) to merge custom configurations with the base environment.
 .IP "\fBLIVE_CONFIG_DEBUG\fR=true|false" 4
@@ -211,6 +283,8 @@ removes or restores the systemd NSS module in /etc/nsswitch.conf to work around 
 allows one to apply arbitrary preseed files placed on the live media or an http/ftp server.
 .IP "\fBhostname\fR" 4
 configures /etc/hostname and /etc/hosts.
+.IP "\fBnetwork\fR" 4
+configures durable wired IPv4 policy through a secure NetworkManager keyfile or ifupdown stanza. It runs before networking services, validates all values, and stamps only after a successful write.
 .IP "\fBissue-setup\fR" 4
 sets up the /etc/issue file with a welcome banner and distribution information.
 .IP "\fBlive-debconfig (passwd)\fR" 4
@@ -222,7 +296,8 @@ sets or updates the root password and configures the root user environment.
 .IP "\fBsudo\fR" 4
 grants sudo privileges to the live user.
 .IP "\fBuser-media\fR" 4
-configures mounting of media and linking or binding of user directories for persistent data.
+links or bind-mounts validated user directories on the existing writable MiniOS
+data medium, with safe migration and copy-back when disabled.
 .IP "\fBuser-ssh-keys\fR" 4
 synchronizes SSH keys from user-specific \fIauthorized_keys.<username>\fR files on the live media to individual user home directories. Supports multiple users simultaneously (e.g., \fIauthorized_keys.root\fR, \fIauthorized_keys.live\fR, \fIauthorized_keys.admin\fR).
 .IP "\fBlocales\fR" 4
@@ -230,7 +305,7 @@ configures locales.
 .IP "\fBtzdata\fR" 4
 configures /etc/timezone.
 .IP "\fBxorg-service\fR" 4
-configures username in xorg.service.
+configures username in xorg.service and applies X11 posture when supported.
 .IP "\fBgdm3\fR" 4
 configures autologin in gdm3.
 .IP "\fBkdm\fR" 4
@@ -248,7 +323,8 @@ configures autologin with xinit.
 .IP "\fBkeyboard-configuration\fR" 4
 configures the keyboard.
 .IP "\fBsysvinit\fR" 4
-configures sysvinit.
+configures console autologin through /etc/inittab when sysvinit is installed.
+The noautologin and nottyautologin shortcuts suppress that setup.
 .IP "\fBsysv-rc\fR" 4
 configures sysv-rc by disabling listed services.
 .IP "\fBlogin\fR" 4
@@ -264,7 +340,7 @@ disables lock button for the screen.
 .IP "\fBgnome-power-manager\fR" 4
 disables hibernation.
 .IP "\fBgnome-screensaver\fR" 4
-disables the screensaver locking the screen.
+controls GNOME screen locking according to LIVE_LOCKSCREEN_MODE.
 .IP "\fBkaboom\fR" 4
 disables KDE migration wizard (squeeze and newer).
 .IP "\fBkde-services\fR" 4
@@ -274,17 +350,18 @@ grant user privilegies through policykit.
 .IP "\fBssl-cert\fR" 4
 regenerating ssl snake-oil certificates.
 .IP "\fBxrdp\fR" 4
-configures xrdp for remote desktop connectivity.
+configures relaxed, hardened, or disabled XRDP posture when XRDP is installed.
 .IP "\fBxfce4-panel\fR" 4
 configures xfce4-panel to default settings.
 .IP "\fBxscreensaver\fR" 4
-disables the screensaver locking the screen.
+controls xscreensaver locking according to LIVE_LOCKSCREEN_MODE.
 .IP "\fBbroadcom-sta\fR" 4
 configures broadcom-sta WLAN drivers.
 .IP "\fBxserver-xorg\fR" 4
 configures xserver-xorg.
 .IP "\fBopenssh-server\fR" 4
-recreates openssh-server host keys.
+recreates OpenSSH host keys and writes explicitly requested root-login or
+password-authentication policy.
 .IP "\fBxhyper-v\fR" 4
 configures X11 settings to improve compatibility on Microsoft Hyper-V platforms.
 .IP "\fBntfs3\fR" 4
