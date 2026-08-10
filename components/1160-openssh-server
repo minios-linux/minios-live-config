@@ -64,8 +64,8 @@ Config ()
 
 	if [ -n "${LIVE_SSH_PERMIT_ROOT_LOGIN}" ] || [ -n "${LIVE_SSH_PASSWORD_AUTHENTICATION}" ]
 	then
-		mkdir -p /etc/ssh/sshd_config.d
-		{
+		_SSH_POLICY="$(
+			{
 			echo "# Managed by MiniOS live-config"
 			case "${LIVE_SSH_PERMIT_ROOT_LOGIN}" in
 				true) echo "PermitRootLogin yes" ;;
@@ -75,12 +75,33 @@ Config ()
 				true) echo "PasswordAuthentication yes" ;;
 				false) echo "PasswordAuthentication no" ;;
 			esac
-		} > /etc/ssh/sshd_config.d/minios.conf
+			}
+		)"
 
-		if [ -f /etc/ssh/sshd_config ] && ! grep -qs '^Include[[:space:]]\+/etc/ssh/sshd_config.d/\*.conf' /etc/ssh/sshd_config
+		_TMP="$(mktemp /etc/ssh/.sshd_config.minios.XXXXXX)" || exit 1
+		trap '[ -z "${_TMP:-}" ] || rm -f -- "${_TMP}"' 0 HUP INT TERM
+		{
+			echo "# BEGIN MiniOS live-config SSH policy"
+			printf '%s\n' "${_SSH_POLICY}"
+			echo "# END MiniOS live-config SSH policy"
+			sed -e '/^# BEGIN MiniOS live-config SSH policy$/,/^# END MiniOS live-config SSH policy$/d' \
+				-e '/^# BEGIN MiniOS security profile$/,/^# END MiniOS security profile$/d' \
+				/etc/ssh/sshd_config
+		} > "${_TMP}" || exit 1
+
+		_SSH_VERSION="$(dpkg-query -W -f='${Version}' openssh-server 2>/dev/null || true)"
+		if [ -z "${_SSH_VERSION}" ] || ! dpkg --compare-versions "${_SSH_VERSION}" ge '1:8.2p1~'
 		then
-			printf '\nInclude /etc/ssh/sshd_config.d/*.conf\n' >> /etc/ssh/sshd_config
+			sed -i '/^Include[[:space:]]\+\/etc\/ssh\/sshd_config\.d\/\*\.conf$/d' "${_TMP}" || exit 1
 		fi
+
+		chmod --reference=/etc/ssh/sshd_config "${_TMP}" || exit 1
+		chown --reference=/etc/ssh/sshd_config "${_TMP}" || exit 1
+		/usr/sbin/sshd -t -f "${_TMP}" || exit 1
+		mv -f "${_TMP}" /etc/ssh/sshd_config || exit 1
+		_TMP=""
+		trap - 0 HUP INT TERM
+		rm -f /etc/ssh/sshd_config.d/minios.conf
 		_SSH="true"
 	fi
 

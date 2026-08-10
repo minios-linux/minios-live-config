@@ -1,3 +1,14 @@
+minios-live-config (11.0.5.15) unstable; urgency=medium
+
+  * Keep the managed OpenSSH policy ahead of existing directives and remove
+    the unsupported sshd_config.d Include on OpenSSH versions older than 8.2.
+  * Validate and atomically replace sshd_config while preserving its owner and
+    file mode.
+  * Use debhelper compatibility level 11 for Ubuntu 18.04 source builds.
+  * Let debhelper manage the systemd unit without a duplicate postinst call.
+
+ -- crims0n <crims0n@minios.dev>  Sun, 09 Aug 2026 23:25:32 +0300
+
 minios-live-config (11.0.5.14) unstable; urgency=medium
 
   * Replace the Python capability validator and pytest suite with POSIX shell

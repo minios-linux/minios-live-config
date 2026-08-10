@@ -2,7 +2,7 @@ Source: minios-live-config
 Maintainer: crims0n <crims0n@minios.dev>
 Section: misc
 Priority: optional
-Build-Depends: debhelper-compat (= 13), jq
+Build-Depends: debhelper (>= 11), jq
 Build-Depends-Indep: lsb-release
 Rules-Requires-Root: no
 Standards-Version: 4.6.2
