@@ -214,14 +214,15 @@ file:///run/initramfs/memory/data/\fIФАЙЛ\fP, или с помощью file:
 по\-прежнему имеет приоритет и полностью отключает настройку прав
 суперпользователя.
 .IP "\fBlive\-config.polkit\-mode\fP=\fBpasswordless\fP|password|disabled | \fBpolkit\-mode\fP=\fBpasswordless\fP|password|disabled" 4
-Управляет правилами PolicyKit для MiniOS. Значение по умолчанию и
-историческое поведение MiniOS при отсутствии параметра — \fBpasswordless\fP,
-что позволяет выполнять локальные административные действия без пароля для
-live/sudo пользователя. Режимы \fBpassword\fP и \fBdisabled\fP удаляют это
-правило, и применяется стандартная аутентификация PolicyKit
-дистрибутива. \fBdisabled\fP не является жёсткой политикой запрета PolicyKit;
-используйте \fBnoroot\fP, если live\-пользователь не должен получать
-административные права.
+Управляет удобными правилами PolicyKit для MiniOS. Значение по умолчанию, а
+также историческое поведение MiniOS при отсутствии настройки — это
+\fBpasswordless\fP, при котором локальные административные действия для
+live/sudo\-пользователя выполняются без запроса пароля. Режимы \fBpassword\fP и
+\fBdisabled\fP оба отключают это правило MiniOS, поэтому применяется обычная
+аутентификация PolicyKit, принятая в дистрибутиве. \fBdisabled\fP не является
+строгой политикой полного запрета PolicyKit; используйте \fBnoroot\fP, если
+необходимо полностью запретить получение административных привилегий
+live\-пользователем.
 .IP "\fBlive\-config.ssh\-permit\-root\-login\fP=\fBtrue\fP|false | \fBssh\-permit\-root\-login\fP=\fBtrue\fP|false" 4
 Создаёт drop\-in политику OpenSSH PermitRootLogin при установленном
 openssh\-server.
@@ -358,9 +359,9 @@ Live\-носителе (minios/config.conf, minios/config.conf.d/*.conf). Есл
 .IP \fBLIVE_SUDO_MODE\fP=\fBpasswordless\fP|password|disabled 4
 Эта переменная соответствует параметру '\fBlive\-config.sudo\-mode\fP=...'. Если
 не задано, MiniOS сохраняет историческое поведение sudo без
-пароля. Используйте \fBpassword\fP для требования пароля пользователя при sudo
-или \fBdisabled\fP для удаления права sudo и членства в группе sudo при
-создании пользователя.
+пароля. Используйте \fBpassword\fP, чтобы требовать пароль live\-пользователя
+для sudo, или \fBdisabled\fP, чтобы удалить предоставление sudo от MiniOS и
+членство в группе sudo при создании пользователя.
 .IP \fBLIVE_POLKIT_MODE\fP=\fBpasswordless\fP|password|disabled 4
 Эта переменная соответствует параметру
 \&'\fBlive\-config.polkit\-mode\fP=...'. Если не задано, MiniOS сохраняет
@@ -569,6 +570,11 @@ sysvinit. Краткие параметры noautologin и nottyautologin отк
 отключает некоторые нежелательные службы KDE (squeeze и новее).
 .IP \fBpolicykit\fP 4
 предоставляет пользовательские привилегии через policykit.
+.IP \fBuser\-groups\fP 4
+добавляет live\-пользователя во вспомогательные группы, объявленные
+установленными модулями. Существующие группы, перечисленные в
+/usr/share/live/config/user\-default\-groups.d/*.groups, применяются после
+создания пользователя и при последующих запусках live\-config.
 .IP \fBssl\-cert\fP 4
 перегенерация SSL\-сертификатов snake\-oil.
 .IP \fBxrdp\fP 4
@@ -604,6 +610,11 @@ Live\-носителе или на http/ftp сервере.
 .IP \fBlive/config.conf.d/*.conf\fP 4
 .IP \fB/lib/live/config.sh\fP 4
 .IP \fB/lib/live/config/\fP 4
+.IP \fB/usr/share/live/config/user\-default\-groups.d/*.groups\fP 4
+Дополнительные группы для live\-пользователя, предоставляемые
+модулями. Названия групп могут быть разделены пробелами; пустые строки и
+комментарии, начинающиеся с #, игнорируются. Применяются только те группы,
+которые существуют в текущей системе.
 .IP \fB/var/lib/live/config/\fP 4
 .IP \fB/var/log/live/config.log\fP 4
 .PP

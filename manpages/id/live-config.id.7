@@ -560,6 +560,11 @@ Menonaktifkan beberapa layanan KDE yang tidak diinginkan (squeeze dan yang
 lebih baru).
 .IP \fBpolicykit\fP 4
 Memberikan hak istimewa pengguna melalui policykit.
+.IP \fBuser\-groups\fP 4
+menambahkan pengguna live ke grup tambahan yang dideklarasikan oleh modul
+yang terpasang. Grup yang sudah ada dan tercantum di
+/usr/share/live/config/user\-default\-groups.d/*.groups akan diterapkan
+setelah pembuatan pengguna dan pada eksekusi live\-config berikutnya.
 .IP \fBssl\-cert\fP 4
 Meregenerasi sertifikat SSL snake\-oil.
 .IP \fBxrdp\fP 4
@@ -595,6 +600,11 @@ yang ditempatkan di media live atau server http/ftp.
 .IP \fBlive/config.conf.d/*.conf\fP 4
 .IP \fB/lib/live/config.sh\fP 4
 .IP \fB/lib/live/config/\fP 4
+.IP \fB/usr/share/live/config/user\-default\-groups.d/*.groups\fP 4
+Grup tambahan yang disediakan modul untuk pengguna live. Nama grup dapat
+dipisahkan dengan spasi; baris kosong dan komentar yang diawali dengan #
+akan diabaikan. Hanya grup yang sudah ada di sistem berjalan yang akan
+diterapkan.
 .IP \fB/var/lib/live/config/\fP 4
 .IP \fB/var/log/live/config.log\fP 4
 .PP

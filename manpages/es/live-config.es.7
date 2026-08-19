@@ -567,6 +567,11 @@ Desactiva el asistente de migración de KDE (Squeeze y superior).
 Desactiva algunos servicios de KDE no deseados (squeeze y superior).
 .IP \fBpolicykit\fP 4
 garantiza privilegios de usuario mediante policykit.
+.IP \fBuser\-groups\fP 4
+agrega el usuario en vivo a los grupos suplementarios declarados por los
+módulos instalados. Los grupos existentes listados en
+/usr/share/live/config/user\-default\-groups.d/*.groups se aplican después de
+la creación del usuario y en ejecuciones posteriores de live\-config.
 .IP \fBssl\-cert\fP 4
 Regenera los certificados ssl snake\-oil.
 .IP \fBxrdp\fP 4
@@ -602,6 +607,11 @@ el medio en vivo o en un servidor http/ftp.
 .IP \fBlive/config.conf.d/*.conf\fP 4
 .IP \fB/lib/live/config.sh\fP 4
 .IP \fB/lib/live/config/\fP 4
+.IP \fB/usr/share/live/config/user\-default\-groups.d/*.groups\fP 4
+Grupos suplementarios proporcionados por módulos para el usuario en
+vivo. Los nombres de los grupos pueden estar separados por espacios en
+blanco; las líneas en blanco y los comentarios que comienzan con # se
+ignoran. Solo se aplican los grupos que existen en el sistema en ejecución.
 .IP \fB/var/lib/live/config/\fP 4
 .IP \fB/var/log/live/config.log\fP 4
 .PP

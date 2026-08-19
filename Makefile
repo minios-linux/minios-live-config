@@ -55,7 +55,7 @@ install:
 	mkdir -p $(DESTDIR)/var/lib/live/config
 
 	# Installing shared data
-	mkdir -p $(DESTDIR)/usr/share/live/config
+	mkdir -p $(DESTDIR)/usr/share/live/config/user-default-groups.d
 	cp -r VERSION share/* $(DESTDIR)/usr/share/live/config
 
 	# Installing capabilities registry (schema 1)

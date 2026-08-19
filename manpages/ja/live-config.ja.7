@@ -239,11 +239,11 @@ static または off ポリシー用の有線インターフェースを選択�
 .IP \fBLIVE_NETWORK_BACKEND\fP=auto|nm|ifupdown 4
 実装されているバックエンドを選択します。
 .PP
-ネットワークコンポーネントは、永続的なライブシステム下でポリシーを一度だけ書き込み、/var/lib/live/config/network
+ネットワークコンポーネントは、永続的なライブシステム上でポリシーを一度だけ適用し、/var/lib/live/config/network
 に記録します。そのスタンプを削除し、/etc/live/config.conf
-を編集することで、変更したポリシーを再適用できます。メディア設定のみを更新しても、既存の永続的な /etc/live/config.conf
-は上書きされません。以前の静的プロファイルから戻すには、method=off
-を使用するか、MiniOSが管理するプロファイルとスタンプを手動で削除してください。
+を編集することで、変更されたポリシーを再適用できます。メディアの設定のみを更新しても、既存の永続的な /etc/live/config.conf
+は上書きされません。以前の静的プロファイルから戻すには、method=off を使用するか、MiniOS
+管理のプロファイルとスタンプを手動で削除してください。
 .IP \fBLIVE_USERNAME\fP=\fIユーザ名\fP 4
 この変数は「\fBlive\-config.username\fP=\fIユーザ名\fP」パラメータに相当します。
 .IP "\fBLIVE_USER_DEFAULT_GROUPS\fP=\fIグループ1\fP,\fIグループ2\fP ... \fIグループn\fP" 4
@@ -261,9 +261,9 @@ static または off ポリシー用の有線インターフェースを選択�
 .IP \fBLIVE_USER_PASSWORD_CRYPTED\fP=\fIパスワード\fP 4
 この変数は「\fBlive\-config.user\-password\-crypted\fP=\fIパスワード\fP」パラメータに相当します。ユーザパスワードを暗号化された形式で指定します。
 .IP \fBLIVE_SUDO_MODE\fP=\fBpasswordless\fP|password|disabled 4
-この変数は '\fBlive\-config.sudo\-mode\fP=...' パラメータに対応します。未設定の場合、MiniOS
-は従来のパスワードなしsudo動作を維持します。sudoにライブユーザーのパスワードを要求するには \fBpassword\fP
-を、MiniOSのsudo権限およびsudoグループメンバーシップをユーザー作成時に削除するには \fBdisabled\fP を使用します。
+この変数は '\fBlive\-config.sudo\-mode\fP=...' パラメータに対応します。未設定の場合、MiniOS は従来のパスワードなし
+sudo 動作を維持します。sudo 実行時にライブユーザーのパスワードを要求するには \fBpassword\fP を、ユーザー作成時に MiniOS の
+sudo 権限および sudo グループメンバーシップを削除するには \fBdisabled\fP を指定してください。
 .IP \fBLIVE_POLKIT_MODE\fP=\fBpasswordless\fP|password|disabled 4
 この変数は '\fBlive\-config.polkit\-mode\fP=...' パラメータに対応します。未設定の場合、MiniOS
 は従来のパスワードなしPolicyKitルールを維持します。\fBpassword\fP または \fBdisabled\fP
@@ -371,7 +371,8 @@ root パスワードを設定または更新し、root ユーザー環境を設�
 .IP \fBsudo\fP 4
 Live ユーザに sudo 権限を与えます。
 .IP \fBuser\-media\fP 4
-既存の書き込み可能なMiniOSデータメディア上で検証済みのユーザーディレクトリをリンクまたはバインドマウントし、無効化時には安全にマイグレーションやコピー・バックを行います。
+既存の書き込み可能な MiniOS
+データメディア上の検証済みユーザーディレクトリに対して、リンクまたはバインドマウントを行い、無効化時には安全に移行およびコピー・バックを実施します。
 .IP \fBuser\-ssh\-keys\fP 4
 ライブメディア上のユーザーごとの\fIauthorized_keys.<username>\fPファイルから、各ユーザーのホームディレクトリへSSH鍵を同期します。複数ユーザーを同時にサポートします（例：\fIauthorized_keys.root\fP、\fIauthorized_keys.live\fP、\fIauthorized_keys.admin\fP）。
 .IP \fBlocales\fP 4
@@ -421,6 +422,9 @@ KDE 移行ウイザードを無効にします (squeeze 以降)。
 望まれていない KDE サービスの一部を無効にします (squeeze 以降)。
 .IP \fBpolicykit\fP 4
 policykit を使ってユーザ権限を与えます。
+.IP \fBuser\-groups\fP 4
+インストール済みモジュールによって宣言された補助グループにライブユーザーを追加します。/usr/share/live/config/user\-default\-groups.d/*.groups
+に記載された既存のグループは、ユーザー作成後およびその後の live\-config 実行時に適用されます。
 .IP \fBssl\-cert\fP 4
 SSL の snake\-oil 証明書を再生成します。
 .IP \fBxrdp\fP 4
@@ -451,6 +455,9 @@ Live メディアや http/ftp サーバに置かれたファイルから任意�
 .IP \fBlive/config.conf.d/*.conf\fP 4
 .IP \fB/lib/live/config.sh\fP 4
 .IP \fB/lib/live/config/\fP 4
+.IP \fB/usr/share/live/config/user\-default\-groups.d/*.groups\fP 4
+ライブユーザー用にモジュールで提供される補助グループです。グループ名は空白で区切ることができ、空行や #
+で始まるコメント行は無視されます。実行中のシステムに存在するグループのみが適用されます。
 .IP \fB/var/lib/live/config/\fP 4
 .IP \fB/var/log/live/config.log\fP 4
 .PP

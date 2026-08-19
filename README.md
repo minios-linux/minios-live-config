@@ -55,6 +55,15 @@ Templates, and Videos. Paths and contents are validated; two populated trees
 are never merged automatically. Disabling the feature copies data back before
 removing managed links or mounts.
 
+## Module User Groups
+
+Modules that require supplementary groups for the live user can install
+`*.groups` files under `/usr/share/live/config/user-default-groups.d/`. Group
+names may be separated by whitespace; blank lines and `#` comments are ignored.
+The `user-groups` component adds existing declared groups to the live user
+after user creation. It runs idempotently on each live-config invocation so a
+module added to an existing persistent session can grant its required groups.
+
 ## Security
 
 Unset posture settings preserve historical MiniOS behavior. Explicit settings

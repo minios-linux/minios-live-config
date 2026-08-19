@@ -347,6 +347,8 @@ disables KDE migration wizard (squeeze and newer).
 disables some unwanted KDE services (squeeze and newer).
 .IP "\fBpolicykit\fR" 4
 grant user privilegies through policykit.
+.IP "\fBuser-groups\fR" 4
+adds the live user to supplementary groups declared by installed modules. Existing groups listed in /usr/share/live/config/user-default-groups.d/*.groups are applied after user creation and on later live-config runs.
 .IP "\fBssl-cert\fR" 4
 regenerating ssl snake-oil certificates.
 .IP "\fBxrdp\fR" 4
@@ -378,6 +380,8 @@ allows one to run arbitrary commands from a file placed on the live media or an 
 .IP "\fBlive/config.conf.d/*.conf\fR" 4
 .IP "\fB/lib/live/config.sh\fR" 4
 .IP "\fB/lib/live/config/\fR" 4
+.IP "\fB/usr/share/live/config/user-default-groups.d/*.groups\fR" 4
+Module-provided supplementary groups for the live user. Group names may be separated by whitespace; blank lines and comments beginning with # are ignored. Only groups that exist in the running system are applied.
 .IP "\fB/var/lib/live/config/\fR" 4
 .IP "\fB/var/log/live/config.log\fR" 4
 .PP

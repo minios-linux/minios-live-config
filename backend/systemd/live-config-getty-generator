@@ -16,8 +16,10 @@ SYSTEMD_DIR=$1
 
 Cmdline ()
 {
-	# Reading kernel command line
-	for _PARAMETER in $(cat /proc/cmdline)
+	# Match the main live-config frontend: options from config.conf are applied
+	# first, then kernel command-line options may override them.
+	LIVE_CONFIG_CMDLINE="${LIVE_CONFIG_CMDLINE:+$LIVE_CONFIG_CMDLINE }$(cat /proc/cmdline)"
+	for _PARAMETER in ${LIVE_CONFIG_CMDLINE}
 	do
 		case "${_PARAMETER}" in
 			live-config.debug|debug)

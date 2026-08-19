@@ -565,6 +565,11 @@ disabilita la procedura guidata di migrazione di KDE (squeeze e successive).
 disabilita i servizi di KDE non voluti (squeeze e successive).
 .IP \fBpolicykit\fP 4
 concede i privilegi per l'utente tramite policykit.
+.IP \fBuser\-groups\fP 4
+aggiunge l'utente live ai gruppi supplementari dichiarati dai moduli
+installati. I gruppi esistenti elencati in
+/usr/share/live/config/user\-default\-groups.d/*.groups vengono applicati dopo
+la creazione dell'utente e nelle successive esecuzioni di live\-config.
 .IP \fBssl\-cert\fP 4
 rigenera certificati ssl snake\-oil.
 .IP \fBxrdp\fP 4
@@ -600,6 +605,11 @@ o su un server http/ftp.
 .IP \fBlive/config.conf.d/*.conf\fP 4
 .IP \fB/lib/live/config.sh\fP 4
 .IP \fB/lib/live/config/\fP 4
+.IP \fB/usr/share/live/config/user\-default\-groups.d/*.groups\fP 4
+Gruppi supplementari forniti dai moduli per l'utente live. I nomi dei gruppi
+possono essere separati da spazi; le righe vuote e i commenti che iniziano
+con # vengono ignorati. Vengono applicati solo i gruppi già presenti nel
+sistema in esecuzione.
 .IP \fB/var/lib/live/config/\fP 4
 .IP \fB/var/log/live/config.log\fP 4
 .PP

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2026-07-19 01:49+0300\n"
-"PO-Revision-Date: 2026-07-18 22:51+0000\n"
+"POT-Creation-Date: 2026-08-19 20:55+0300\n"
+"PO-Revision-Date: 2026-08-19 17:54+0000\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -2240,22 +2240,40 @@ msgstr "Concede privilégios de usuário através do policykit."
 #. type: IP
 #: en/live-config.7:350
 #, no-wrap
+msgid "B<user-groups>"
+msgstr "B<user-groups>"
+
+#. type: Plain text
+#: en/live-config.7:352
+msgid ""
+"adds the live user to supplementary groups declared by installed modules. "
+"Existing groups listed in /usr/share/live/config/user-default-groups.d/"
+"*.groups are applied after user creation and on later live-config runs."
+msgstr ""
+"adiciona o usuário live aos grupos suplementares declarados pelos módulos "
+"instalados. Os grupos existentes listados em /usr/share/live/config/user-"
+"default-groups.d/*.groups são aplicados após a criação do usuário e em "
+"execuções posteriores do live-config."
+
+#. type: IP
+#: en/live-config.7:352
+#, no-wrap
 msgid "B<ssl-cert>"
 msgstr "B<ssl-cert>"
 
 #. type: Plain text
-#: en/live-config.7:352
+#: en/live-config.7:354
 msgid "regenerating ssl snake-oil certificates."
 msgstr "Regenerando certificados ssl snake-oil."
 
 #. type: IP
-#: en/live-config.7:352
+#: en/live-config.7:354
 #, no-wrap
 msgid "B<xrdp>"
 msgstr "B<xrdp>"
 
 #. type: Plain text
-#: en/live-config.7:354
+#: en/live-config.7:356
 msgid ""
 "configures relaxed, hardened, or disabled XRDP posture when XRDP is "
 "installed."
@@ -2264,57 +2282,57 @@ msgstr ""
 "está instalado."
 
 #. type: IP
-#: en/live-config.7:354
+#: en/live-config.7:356
 #, no-wrap
 msgid "B<xfce4-panel>"
 msgstr "B<xfce4-panel>"
 
 #. type: Plain text
-#: en/live-config.7:356
+#: en/live-config.7:358
 msgid "configures xfce4-panel to default settings."
 msgstr "Configura o xfce4-panel para as configurações padrão."
 
 #. type: IP
-#: en/live-config.7:356
+#: en/live-config.7:358
 #, no-wrap
 msgid "B<xscreensaver>"
 msgstr "B<xscreensaver>"
 
 #. type: Plain text
-#: en/live-config.7:358
+#: en/live-config.7:360
 msgid "controls xscreensaver locking according to LIVE_LOCKSCREEN_MODE."
 msgstr "controla o bloqueio do xscreensaver conforme o LIVE_LOCKSCREEN_MODE."
 
 #. type: IP
-#: en/live-config.7:358
+#: en/live-config.7:360
 #, no-wrap
 msgid "B<broadcom-sta>"
 msgstr "B<broadcom-sta>"
 
 #. type: Plain text
-#: en/live-config.7:360
+#: en/live-config.7:362
 msgid "configures broadcom-sta WLAN drivers."
 msgstr "Configura drivers WLAN broadcom-sta."
 
 #. type: IP
-#: en/live-config.7:360
+#: en/live-config.7:362
 #, no-wrap
 msgid "B<xserver-xorg>"
 msgstr "B<xserver-xorg>"
 
 #. type: Plain text
-#: en/live-config.7:362
+#: en/live-config.7:364
 msgid "configures xserver-xorg."
 msgstr "Configura o xserver-xorg."
 
 #. type: IP
-#: en/live-config.7:362
+#: en/live-config.7:364
 #, no-wrap
 msgid "B<openssh-server>"
 msgstr "B<openssh-server>"
 
 #. type: Plain text
-#: en/live-config.7:365
+#: en/live-config.7:367
 msgid ""
 "recreates OpenSSH host keys and writes explicitly requested root-login or "
 "password-authentication policy."
@@ -2323,13 +2341,13 @@ msgstr ""
 "root-login ou autenticação por senha solicitada."
 
 #. type: IP
-#: en/live-config.7:365
+#: en/live-config.7:367
 #, no-wrap
 msgid "B<xhyper-v>"
 msgstr "B<xhyper-v>"
 
 #. type: Plain text
-#: en/live-config.7:367
+#: en/live-config.7:369
 msgid ""
 "configures X11 settings to improve compatibility on Microsoft Hyper-V "
 "platforms."
@@ -2338,24 +2356,24 @@ msgstr ""
 "plataformas Microsoft Hyper-V."
 
 #. type: IP
-#: en/live-config.7:367
+#: en/live-config.7:369
 #, no-wrap
 msgid "B<ntfs3>"
 msgstr "B<ntfs3>"
 
 #. type: Plain text
-#: en/live-config.7:369
+#: en/live-config.7:371
 msgid "manages udev rules for NTFS3 support."
 msgstr "Gerencia regras udev para suporte a NTFS3."
 
 #. type: IP
-#: en/live-config.7:369
+#: en/live-config.7:371
 #, no-wrap
 msgid "B<config-module-mode>"
 msgstr "B<modo-do-módulo-config>"
 
 #. type: Plain text
-#: en/live-config.7:371
+#: en/live-config.7:373
 msgid ""
 "configures system module mode and updates caches, user settings, and dpkg."
 msgstr ""
@@ -2363,13 +2381,13 @@ msgstr ""
 "usuário e dpkg."
 
 #. type: IP
-#: en/live-config.7:371
+#: en/live-config.7:373
 #, no-wrap
 msgid "B<hooks>"
 msgstr "B<hooks>"
 
 #. type: Plain text
-#: en/live-config.7:373
+#: en/live-config.7:375
 msgid ""
 "allows one to run arbitrary commands from a file placed on the live media or "
 "an http/ftp server."
@@ -2378,112 +2396,130 @@ msgstr ""
 "ou em um servidor http/ftp."
 
 #. type: SH
-#: en/live-config.7:374
+#: en/live-config.7:376
 #, no-wrap
 msgid "FILES"
 msgstr "ARQUIVOS"
 
 #. type: IP
-#: en/live-config.7:375
+#: en/live-config.7:377
 #, no-wrap
 msgid "B</etc/live/config.conf>"
 msgstr "B</etc/live/config.conf>"
 
 #. type: IP
-#: en/live-config.7:376
+#: en/live-config.7:378
 #, no-wrap
 msgid "B</etc/live/config.conf.d/*.conf>"
 msgstr "B</etc/live/config.conf.d/*.conf>"
 
 #. type: IP
-#: en/live-config.7:377
+#: en/live-config.7:379
 #, no-wrap
 msgid "B<live/config.conf>"
 msgstr "B<live/config.conf>"
 
 #. type: IP
-#: en/live-config.7:378
+#: en/live-config.7:380
 #, no-wrap
 msgid "B<live/config.conf.d/*.conf>"
 msgstr "B<live/config.conf.d/*.conf>"
 
 #. type: IP
-#: en/live-config.7:379
+#: en/live-config.7:381
 #, no-wrap
 msgid "B</lib/live/config.sh>"
 msgstr "B</lib/live/config.sh>"
 
 #. type: IP
-#: en/live-config.7:380
+#: en/live-config.7:382
 #, no-wrap
 msgid "B</lib/live/config/>"
 msgstr "B</lib/live/config/>"
 
 #. type: IP
-#: en/live-config.7:381
+#: en/live-config.7:383
+#, no-wrap
+msgid "B</usr/share/live/config/user-default-groups.d/*.groups>"
+msgstr "B</usr/share/live/config/user-default-groups.d/*.groups>"
+
+#. type: Plain text
+#: en/live-config.7:385
+msgid ""
+"Module-provided supplementary groups for the live user. Group names may be "
+"separated by whitespace; blank lines and comments beginning with # are "
+"ignored. Only groups that exist in the running system are applied."
+msgstr ""
+"Grupos suplementares fornecidos por módulos para o usuário live. Os nomes "
+"dos grupos podem ser separados por espaços em branco; linhas em branco e "
+"comentários iniciados com # são ignorados. Apenas os grupos que existem no "
+"sistema em execução são aplicados."
+
+#. type: IP
+#: en/live-config.7:385
 #, no-wrap
 msgid "B</var/lib/live/config/>"
 msgstr "B</var/lib/live/config/>"
 
 #. type: IP
-#: en/live-config.7:382
+#: en/live-config.7:386
 #, no-wrap
 msgid "B</var/log/live/config.log>"
 msgstr "B</var/log/live/config.log>"
 
 #. type: IP
-#: en/live-config.7:384
+#: en/live-config.7:388
 #, no-wrap
 msgid "B</live/config-hooks/*>"
 msgstr "B</live/config-hooks/*>"
 
 #. type: IP
-#: en/live-config.7:385
+#: en/live-config.7:389
 #, no-wrap
 msgid "B<live/config-hooks/*>"
 msgstr "B<live/config-hooks/*>"
 
 #. type: IP
-#: en/live-config.7:386
+#: en/live-config.7:390
 #, no-wrap
 msgid "B</live/config-preseed/*>"
 msgstr "B</live/config-preseed/*>"
 
 #. type: IP
-#: en/live-config.7:387
+#: en/live-config.7:391
 #, no-wrap
 msgid "B<live/config-preseed/* >"
 msgstr "B<live/config-preseed/* >"
 
 #. type: SH
-#: en/live-config.7:389
+#: en/live-config.7:393
 #, no-wrap
 msgid "SEE ALSO"
 msgstr "CONSULTE TAMBÉM"
 
 #. type: Plain text
-#: en/live-config.7:391
+#: en/live-config.7:395
 msgid "I<live-boot>(7)"
 msgstr "I<live-boot>(7)"
 
 #. type: Plain text
-#: en/live-config.7:393
+#: en/live-config.7:397
 msgid "I<live-build>(7)"
 msgstr "I<live-build>(7)"
 
 #. type: Plain text
-#: en/live-config.7:395
+#: en/live-config.7:399
 msgid "I<live-tools>(7)"
 msgstr "I<live-tools>(7)"
 
 #. type: SH
-#: en/live-config.7:396
+#: en/live-config.7:400
 #, no-wrap
 msgid "HOMEPAGE"
 msgstr "PÁGINA INICIAL"
 
 #. type: Plain text
-#: en/live-config.7:398
+#: en/live-config.7:402
 msgid ""
 "More information about live-config and the Debian Live project can be found "
 "on the homepage at E<lt>I<https://wiki.debian.org/DebianLive>E<gt> and in "
@@ -2495,13 +2531,13 @@ msgstr ""
 "live-manual/>E<gt>."
 
 #. type: SH
-#: en/live-config.7:399
+#: en/live-config.7:403
 #, no-wrap
 msgid "BUGS"
 msgstr "BUGS"
 
 #. type: Plain text
-#: en/live-config.7:401
+#: en/live-config.7:405
 msgid ""
 "Bugs can be reported by submitting a bugreport for the live-config package "
 "in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by "
@@ -2514,13 +2550,13 @@ msgstr ""
 "E<lt>I<debian-live@lists.debian.org>E<gt>."
 
 #. type: SH
-#: en/live-config.7:402
+#: en/live-config.7:406
 #, no-wrap
 msgid "AUTHOR"
 msgstr "AUTOR"
 
 #. type: Plain text
-#: en/live-config.7:403
+#: en/live-config.7:407
 msgid ""
 "live-config was originally written by Daniel Baumann E<lt>I<mail@daniel-"
 "baumann.ch>E<gt>. Since 2016 development has been continued by the Debian "

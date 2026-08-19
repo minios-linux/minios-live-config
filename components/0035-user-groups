@@ -1,0 +1,79 @@
+#!/bin/sh
+
+. /usr/lib/live/config.sh
+
+## live-config(7) - System Configuration Components
+## Copyright (C) 2026 MiniOS <https://minios.dev>
+##
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+set -e
+
+GROUPS_DIR=/usr/share/live/config/user-default-groups.d
+
+Cmdline() {
+    for _PARAMETER in ${LIVE_CONFIG_CMDLINE}; do
+        case "${_PARAMETER}" in
+        live-config.username=* | username=*)
+            LIVE_USERNAME="${_PARAMETER#*username=}"
+            ;;
+        live-config.debug | debug)
+            LIVE_CONFIG_DEBUG=true
+            ;;
+        esac
+    done
+}
+
+Init() {
+    if [ "${LIVE_CONFIG_DEBUG}" = true ]; then
+        set -x
+    fi
+
+    [ -d "${GROUPS_DIR}" ] || exit 0
+    _HAS_GROUPS=false
+    for _FILE in "${GROUPS_DIR}"/*.groups; do
+        if [ -f "${_FILE}" ]; then
+            _HAS_GROUPS=true
+            break
+        fi
+    done
+    [ "${_HAS_GROUPS}" = true ] || exit 0
+
+    USERNAME="${LIVE_USERNAME}"
+    if [ "${USERNAME}" = root ] || ! getent passwd "${USERNAME}" >/dev/null 2>&1; then
+        USERNAME="$(getent passwd 1000 2>/dev/null | cut -d: -f1)"
+    fi
+    [ -n "${USERNAME}" ] || exit 0
+
+    printf ' user-groups'
+}
+
+Config() {
+    _GROUPS=""
+
+    for _FILE in "${GROUPS_DIR}"/*.groups; do
+        [ -f "${_FILE}" ] || continue
+        while IFS= read -r _LINE || [ -n "${_LINE}" ]; do
+            _LINE="${_LINE%%#*}"
+            for _GROUP in ${_LINE}; do
+                getent group "${_GROUP}" >/dev/null 2>&1 || continue
+                if id -nG "${USERNAME}" | tr ' ' '\n' | grep -Fxq "${_GROUP}"; then
+                    continue
+                fi
+                case " ${_GROUPS} " in
+                *" ${_GROUP} "*) ;;
+                *) _GROUPS="${_GROUPS} ${_GROUP}" ;;
+                esac
+            done
+        done <"${_FILE}"
+    done
+
+    [ -n "${_GROUPS}" ] || return 0
+    usermod -a -G "$(echo "${_GROUPS# }" | tr ' ' ',')" "${USERNAME}"
+}
+
+Cmdline
+Init
+Config

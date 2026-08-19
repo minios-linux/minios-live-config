@@ -1,3 +1,14 @@
+minios-live-config (11.0.5.16) unstable; urgency=medium
+
+  * Honor LIVE_CONFIG_CMDLINE from config.conf in the systemd getty generator
+    before applying kernel command-line overrides, so settings such as
+    nottyautologin work consistently with the main live-config frontend.
+  * Allow modules to declare supplementary live-user groups through
+    /usr/share/live/config/user-default-groups.d/*.groups and apply them
+    idempotently after user creation, including in existing persistent sessions.
+
+ -- crims0n <crims0n@minios.dev>  Wed, 19 Aug 2026 20:39:59 +0300
+
 minios-live-config (11.0.5.15) unstable; urgency=medium
 
   * Keep the managed OpenSSH policy ahead of existing directives and remove

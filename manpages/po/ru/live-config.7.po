@@ -5,15 +5,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2026-07-19 01:49+0300\n"
-"PO-Revision-Date: 2026-08-09 04:06+0000\n"
+"POT-Creation-Date: 2026-08-19 20:55+0300\n"
+"PO-Revision-Date: 2026-08-19 17:59+0000\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. type: TH
 #: en/live-config.7:11
@@ -58,8 +59,12 @@ msgstr "ОПИСАНИЕ"
 
 #. type: Plain text
 #: en/live-config.7:18
-msgid "B<live-config> contains the components that configure a live system during the boot process (late userspace)."
-msgstr "B<live-config> содержит компоненты, которые настраивают живую систему во время процесса загрузки (позднее пользовательское пространство)."
+msgid ""
+"B<live-config> contains the components that configure a live system during "
+"the boot process (late userspace)."
+msgstr ""
+"B<live-config> содержит компоненты, которые настраивают живую систему во "
+"время процесса загрузки (позднее пользовательское пространство)."
 
 #. type: SH
 #: en/live-config.7:19
@@ -69,13 +74,28 @@ msgstr "НАСТРОЙКА"
 
 #. type: Plain text
 #: en/live-config.7:21
-msgid "B<live-config> can be configured through boot parameters or configuration files. If both mechanisms are used for a certain option, the boot parameters take precedence over the configuration files. When using persistency, B<live-config> components are only run once."
-msgstr "B<live-config> может быть настроен с помощью параметров загрузки или файлов конфигурации. Если для определенной опции используются оба механизма, параметры загрузки имеют приоритет над файлами конфигурации. При использовании персистентности, компоненты B<live-config> запускаются только один раз."
+msgid ""
+"B<live-config> can be configured through boot parameters or configuration "
+"files. If both mechanisms are used for a certain option, the boot parameters "
+"take precedence over the configuration files. When using persistency, B<live-"
+"config> components are only run once."
+msgstr ""
+"B<live-config> может быть настроен с помощью параметров загрузки или файлов "
+"конфигурации. Если для определенной опции используются оба механизма, "
+"параметры загрузки имеют приоритет над файлами конфигурации. При "
+"использовании персистентности, компоненты B<live-config> запускаются только "
+"один раз."
 
 #. type: Plain text
 #: en/live-config.7:23
-msgid "If I<live-build>(7) is used to build the live system, the live-config parameters used by default can be set through the --bootappend-live option, see I<lb_config>(1) manual page."
-msgstr "Если для создания живой системы используется I<live-build>(7), параметры live-config, используемые по умолчанию, могут быть установлены через опцию --bootappend-live, см. страницу руководства I<lb_config>(1)."
+msgid ""
+"If I<live-build>(7) is used to build the live system, the live-config "
+"parameters used by default can be set through the --bootappend-live option, "
+"see I<lb_config>(1) manual page."
+msgstr ""
+"Если для создания живой системы используется I<live-build>(7), параметры "
+"live-config, используемые по умолчанию, могут быть установлены через опцию --"
+"bootappend-live, см. страницу руководства I<lb_config>(1)."
 
 #. type: SS
 #: en/live-config.7:24
@@ -85,8 +105,22 @@ msgstr "Параметры загрузки (компоненты)"
 
 #. type: Plain text
 #: en/live-config.7:26
-msgid "B<live-config> is only activated if 'boot=live' is used as a boot parameter. Additionally, B<live-config> needs to be told which components to run through the 'live-config.components' parameter or which components to not run through the 'live-config.nocomponents' parameter. If both 'live-config.components' and 'live-config.nocomponents' are used, or, if either one is specified multiple times, always the later one takes precedence over the previous one(s)."
-msgstr "B<live-config> активируется только при использовании 'boot=live' в качестве параметра загрузки. Кроме того, B<live-config> необходимо указать, какие компоненты запускать, с помощью параметра 'live-config.components', или какие компоненты не запускать, с помощью параметра 'live-config.nocomponents'. Если используются оба параметра 'live-config.components' и 'live-config.nocomponents', или если любой из них указан несколько раз, всегда последний имеет приоритет над предыдущими."
+msgid ""
+"B<live-config> is only activated if 'boot=live' is used as a boot parameter. "
+"Additionally, B<live-config> needs to be told which components to run "
+"through the 'live-config.components' parameter or which components to not "
+"run through the 'live-config.nocomponents' parameter. If both 'live-"
+"config.components' and 'live-config.nocomponents' are used, or, if either "
+"one is specified multiple times, always the later one takes precedence over "
+"the previous one(s)."
+msgstr ""
+"B<live-config> активируется только при использовании 'boot=live' в качестве "
+"параметра загрузки. Кроме того, B<live-config> необходимо указать, какие "
+"компоненты запускать, с помощью параметра 'live-config.components', или "
+"какие компоненты не запускать, с помощью параметра 'live-"
+"config.nocomponents'. Если используются оба параметра 'live-"
+"config.components' и 'live-config.nocomponents', или если любой из них "
+"указан несколько раз, всегда последний имеет приоритет над предыдущими."
 
 #. type: IP
 #: en/live-config.7:27
@@ -97,7 +131,8 @@ msgstr "B<live-config.components> | B<components>"
 #. type: Plain text
 #: en/live-config.7:29
 msgid "All components are run. This is what live images use by default."
-msgstr "Запускаются все компоненты. Это используется образами Live по умолчанию."
+msgstr ""
+"Запускаются все компоненты. Это используется образами Live по умолчанию."
 
 #. type: IP
 #: en/live-config.7:29
@@ -107,8 +142,17 @@ msgstr "B<live-config.components>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>,
 
 #. type: Plain text
 #: en/live-config.7:31
-msgid "Only the specified components are run. Note that the order matters, e.g. 'live-config.components=sudo,user-setup' would not work since the user needs to be added before it can be configured for sudo. Look at the filenames of the components in /usr/lib/live/config for their ordering number."
-msgstr "Запускаются только указанные компоненты. Обратите внимание, что порядок имеет значение, например, 'live-config.components=sudo,user-setup' не будет работать, так как пользователь должен быть добавлен до того, как он сможет быть настроен для sudo. Посмотрите на имена файлов компонентов в /usr/lib/live/config для их порядкового номера."
+msgid ""
+"Only the specified components are run. Note that the order matters, e.g. "
+"'live-config.components=sudo,user-setup' would not work since the user needs "
+"to be added before it can be configured for sudo. Look at the filenames of "
+"the components in /usr/lib/live/config for their ordering number."
+msgstr ""
+"Запускаются только указанные компоненты. Обратите внимание, что порядок "
+"имеет значение, например, 'live-config.components=sudo,user-setup' не будет "
+"работать, так как пользователь должен быть добавлен до того, как он сможет "
+"быть настроен для sudo. Посмотрите на имена файлов компонентов в /usr/lib/"
+"live/config для их порядкового номера."
 
 #. type: IP
 #: en/live-config.7:31
@@ -118,8 +162,12 @@ msgstr "B<live-config.nocomponents> | B<nocomponents>"
 
 #. type: Plain text
 #: en/live-config.7:33
-msgid "No component is run. This is the same as not using any of 'live-config.components' or 'live-config.nocomponents'."
-msgstr "Ни один компонент не запускается. Это то же самое, что не использовать никакие из 'live-config.components' или 'live-config.nocomponents'."
+msgid ""
+"No component is run. This is the same as not using any of 'live-"
+"config.components' or 'live-config.nocomponents'."
+msgstr ""
+"Ни один компонент не запускается. Это то же самое, что не использовать "
+"никакие из 'live-config.components' или 'live-config.nocomponents'."
 
 #. type: IP
 #: en/live-config.7:33
@@ -140,8 +188,11 @@ msgstr "Параметры загрузки (опции)"
 
 #. type: Plain text
 #: en/live-config.7:38
-msgid "Some individual components can change their behaviour upon a boot parameter."
-msgstr "Некоторые отдельные компоненты могут изменять свое поведение в зависимости от параметра загрузки."
+msgid ""
+"Some individual components can change their behaviour upon a boot parameter."
+msgstr ""
+"Некоторые отдельные компоненты могут изменять свое поведение в зависимости "
+"от параметра загрузки."
 
 #. type: IP
 #: en/live-config.7:39
@@ -151,28 +202,54 @@ msgstr "B<live-config.debconf-preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I
 
 #. type: Plain text
 #: en/live-config.7:41
-msgid "Allows one to fetch and apply one or more debconf preseed files to be applied to the debconf database. Note that the URLs must be fetchable by wget (http, ftp or file://)."
-msgstr "Позволяет получать и применять один или несколько предварительных файлов debconf к базе данных debconf. Обратите внимание, что URL-адреса должны быть доступны для wget (http, ftp или file://)."
+msgid ""
+"Allows one to fetch and apply one or more debconf preseed files to be "
+"applied to the debconf database. Note that the URLs must be fetchable by "
+"wget (http, ftp or file://)."
+msgstr ""
+"Позволяет получать и применять один или несколько предварительных файлов "
+"debconf к базе данных debconf. Обратите внимание, что URL-адреса должны быть "
+"доступны для wget (http, ftp или file://)."
 
 #. type: Plain text
 #: en/live-config.7:43 en/live-config.7:109
-msgid "If the file is placed on the live medium, it can be fetched with file:///run/initramfs/memory/data/I<FILE>, or with file:///I<FILE> if it is in the root filesystem of the live system itself."
-msgstr "Если файл находится на Live-носителе, его можно получить с помощью file:///run/initramfs/memory/data/I<ФАЙЛ>, или с помощью file:///I<ФАЙЛ>, если он находится в корневой файловой системе самой Live-системы."
+msgid ""
+"If the file is placed on the live medium, it can be fetched with file:///run/"
+"initramfs/memory/data/I<FILE>, or with file:///I<FILE> if it is in the root "
+"filesystem of the live system itself."
+msgstr ""
+"Если файл находится на Live-носителе, его можно получить с помощью file:///"
+"run/initramfs/memory/data/I<ФАЙЛ>, или с помощью file:///I<ФАЙЛ>, если он "
+"находится в корневой файловой системе самой Live-системы."
 
 #. type: Plain text
 #: en/live-config.7:45
-msgid "All preseed files in /usr/lib/live/config-preseed/ in the root filesystem of the live system can be automatically enabled with the keyword 'filesystem'."
-msgstr "Все файлы предварительной настройки в /usr/lib/live/config-preseed/ в корневой файловой системе живой системы могут быть автоматически включены с помощью ключевого слова 'filesystem'."
+msgid ""
+"All preseed files in /usr/lib/live/config-preseed/ in the root filesystem of "
+"the live system can be automatically enabled with the keyword 'filesystem'."
+msgstr ""
+"Все файлы предварительной настройки в /usr/lib/live/config-preseed/ в "
+"корневой файловой системе живой системы могут быть автоматически включены с "
+"помощью ключевого слова 'filesystem'."
 
 #. type: Plain text
 #: en/live-config.7:47
-msgid "All preseed files in /minios/config-preseed/ of the live medium can be automatically enabled with the keyword 'medium'."
-msgstr "Все файлы предварительной настройки в /minios/config-preseed/ Live-носителя могут быть автоматически включены с помощью ключевого слова 'medium'."
+msgid ""
+"All preseed files in /minios/config-preseed/ of the live medium can be "
+"automatically enabled with the keyword 'medium'."
+msgstr ""
+"Все файлы предварительной настройки в /minios/config-preseed/ Live-носителя "
+"могут быть автоматически включены с помощью ключевого слова 'medium'."
 
 #. type: Plain text
 #: en/live-config.7:49
-msgid "If several mechanisms are combined, then filesystem preseed files are applied first, then medium preseed files, and last the network preseed files."
-msgstr "Если комбинируются несколько механизмов, то сначала применяются файлы предварительной настройки файловой системы, затем файлы предварительной настройки носителя, и, наконец, сетевые хуки."
+msgid ""
+"If several mechanisms are combined, then filesystem preseed files are "
+"applied first, then medium preseed files, and last the network preseed files."
+msgstr ""
+"Если комбинируются несколько механизмов, то сначала применяются файлы "
+"предварительной настройки файловой системы, затем файлы предварительной "
+"настройки носителя, и, наконец, сетевые хуки."
 
 #. type: IP
 #: en/live-config.7:49
@@ -182,8 +259,11 @@ msgstr "B<live-config.hostname>=I<ИМЯ_ХОСТА> | B<hostname>=I<ИМЯ_ХО
 
 #. type: Plain text
 #: en/live-config.7:51
-msgid "Allows one to set the hostname of the system. The MiniOS default is 'minios'."
-msgstr "Позволяет задать имя хоста системы. Значение по умолчанию в MiniOS — 'minios'."
+msgid ""
+"Allows one to set the hostname of the system. The MiniOS default is 'minios'."
+msgstr ""
+"Позволяет задать имя хоста системы. Значение по умолчанию в MiniOS — "
+"'minios'."
 
 #. type: IP
 #: en/live-config.7:51
@@ -193,8 +273,15 @@ msgstr "B<live-config.network-method>=dhcp|static|off | B<network-method>=dhcp|s
 
 #. type: Plain text
 #: en/live-config.7:53
-msgid "Selects wired network policy. Unset and dhcp leave the image default unchanged. Static writes a NetworkManager keyfile; off disables automatic IPv4 configuration for the selected interface."
-msgstr "Определяет политику проводной сети. Если не задано или указано dhcp, используется профиль по умолчанию. При static создаётся ключевой файл NetworkManager; off отключает автоматическую настройку IPv4 для выбранного интерфейса."
+msgid ""
+"Selects wired network policy. Unset and dhcp leave the image default "
+"unchanged. Static writes a NetworkManager keyfile; off disables automatic "
+"IPv4 configuration for the selected interface."
+msgstr ""
+"Определяет политику проводной сети. Если не задано или указано dhcp, "
+"используется профиль по умолчанию. При static создаётся ключевой файл "
+"NetworkManager; off отключает автоматическую настройку IPv4 для выбранного "
+"интерфейса."
 
 #. type: IP
 #: en/live-config.7:53
@@ -204,8 +291,14 @@ msgstr "B<live-config.network-interface>=I<ИНТЕРФЕЙС> | B<network-inter
 
 #. type: Plain text
 #: en/live-config.7:55
-msgid "Selects the wired interface. If omitted for static or off, the only wired non-loopback interface is selected automatically; zero or multiple candidates require an explicit value."
-msgstr "Выбирает проводной интерфейс. Если не указан для static или off, автоматически выбирается единственный проводной не-loopback интерфейс; если кандидатов нет или несколько, требуется явное указание значения."
+msgid ""
+"Selects the wired interface. If omitted for static or off, the only wired "
+"non-loopback interface is selected automatically; zero or multiple "
+"candidates require an explicit value."
+msgstr ""
+"Выбирает проводной интерфейс. Если не указан для static или off, "
+"автоматически выбирается единственный проводной не-loopback интерфейс; если "
+"кандидатов нет или несколько, требуется явное указание значения."
 
 #. type: IP
 #: en/live-config.7:55
@@ -227,7 +320,9 @@ msgstr "B<live-config.network-prefix>=I<ПРЕФИКС> | B<network-prefix>=I<П
 #. type: Plain text
 #: en/live-config.7:59
 msgid "Sets the IPv4 prefix length from 0 to 32. The static default is 24."
-msgstr "Устанавливает длину префикса IPv4 от 0 до 32. Значение по умолчанию для static — 24."
+msgstr ""
+"Устанавливает длину префикса IPv4 от 0 до 32. Значение по умолчанию для "
+"static — 24."
 
 #. type: IP
 #: en/live-config.7:59
@@ -249,7 +344,8 @@ msgstr "B<live-config.network-dns>=I<АДРЕС1,АДРЕС2> | B<network-dns>=I
 #. type: Plain text
 #: en/live-config.7:63
 msgid "Sets optional comma-separated DNS server addresses."
-msgstr "Устанавливает необязательные адреса DNS-серверов, разделённые запятыми."
+msgstr ""
+"Устанавливает необязательные адреса DNS-серверов, разделённые запятыми."
 
 #. type: IP
 #: en/live-config.7:63
@@ -259,8 +355,15 @@ msgstr "B<live-config.network-backend>=auto|nm|ifupdown | B<network-backend>=aut
 
 #. type: Plain text
 #: en/live-config.7:65
-msgid "Selects the network backend. Auto prefers NetworkManager and falls back to ifupdown. Forced ifupdown marks the interface unmanaged by NetworkManager when both stacks are installed."
-msgstr "Определяет механизм управления сетью. Auto предпочитает NetworkManager и при необходимости переключается на ifupdown. Принудительный выбор ifupdown помечает интерфейс как неуправляемый NetworkManager, если установлены оба стека."
+msgid ""
+"Selects the network backend. Auto prefers NetworkManager and falls back to "
+"ifupdown. Forced ifupdown marks the interface unmanaged by NetworkManager "
+"when both stacks are installed."
+msgstr ""
+"Определяет механизм управления сетью. Auto предпочитает NetworkManager и при "
+"необходимости переключается на ifupdown. Принудительный выбор ifupdown "
+"помечает интерфейс как неуправляемый NetworkManager, если установлены оба "
+"стека."
 
 #. type: IP
 #: en/live-config.7:65
@@ -270,8 +373,12 @@ msgstr "B<live-config.username>=I<ИМЯ_ПОЛЬЗОВАТЕЛЯ> | B<username>
 
 #. type: Plain text
 #: en/live-config.7:67
-msgid "Allows one to set the username that gets created for autologin. The MiniOS default is 'live'."
-msgstr "Позволяет задать имя пользователя, создаваемого для автологина. Значение по умолчанию в MiniOS — 'live'."
+msgid ""
+"Allows one to set the username that gets created for autologin. The MiniOS "
+"default is 'live'."
+msgstr ""
+"Позволяет задать имя пользователя, создаваемого для автологина. Значение по "
+"умолчанию в MiniOS — 'live'."
 
 #. type: IP
 #: en/live-config.7:67
@@ -281,8 +388,14 @@ msgstr "B<live-config.user-default-groups>=I<ГРУППА1>,I<ГРУППА2> ...
 
 #. type: Plain text
 #: en/live-config.7:69
-msgid "Allows one to set the default groups of the users that gets created for autologin is member of. The default is 'audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth'."
-msgstr "Позволяет установить группы по умолчанию для пользователей, создаваемых для автологина. По умолчанию это 'audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth'."
+msgid ""
+"Allows one to set the default groups of the users that gets created for "
+"autologin is member of. The default is 'audio cdrom dip floppy video plugdev "
+"netdev powerdev scanner bluetooth'."
+msgstr ""
+"Позволяет установить группы по умолчанию для пользователей, создаваемых для "
+"автологина. По умолчанию это 'audio cdrom dip floppy video plugdev netdev "
+"powerdev scanner bluetooth'."
 
 #. type: IP
 #: en/live-config.7:69
@@ -292,8 +405,12 @@ msgstr "B<live-config.user-fullname>=\"I<ПОЛНОЕ_ИМЯ_ПОЛЬЗОВАТ�
 
 #. type: Plain text
 #: en/live-config.7:71
-msgid "Allows one to set the fullname of the user created for autologin. The MiniOS default is 'MiniOS Live User'."
-msgstr "Позволяет задать полное имя пользователя, создаваемого для автологина. Значение по умолчанию в MiniOS — 'MiniOS Live User'."
+msgid ""
+"Allows one to set the fullname of the user created for autologin. The MiniOS "
+"default is 'MiniOS Live User'."
+msgstr ""
+"Позволяет задать полное имя пользователя, создаваемого для автологина. "
+"Значение по умолчанию в MiniOS — 'MiniOS Live User'."
 
 #. type: IP
 #: en/live-config.7:71
@@ -347,8 +464,14 @@ msgstr "B<live-config.locales>=I<ЛОКАЛЬ1>,I<ЛОКАЛЬ2> ... I<ЛОКА�
 
 #. type: Plain text
 #: en/live-config.7:81
-msgid "Allows one to set the locale of the system, e.g. 'de_CH.UTF-8'. The default is 'en_US.UTF-8'. In case the selected locale is not already available on the system, it is automatically generated on the fly."
-msgstr "Позволяет установить локаль системы, например, 'de_CH.UTF-8'. По умолчанию используется 'en_US.UTF-8'. Если выбранная локаль еще не доступна в системе, она автоматически генерируется на лету."
+msgid ""
+"Allows one to set the locale of the system, e.g. 'de_CH.UTF-8'. The default "
+"is 'en_US.UTF-8'. In case the selected locale is not already available on "
+"the system, it is automatically generated on the fly."
+msgstr ""
+"Позволяет установить локаль системы, например, 'de_CH.UTF-8'. По умолчанию "
+"используется 'en_US.UTF-8'. Если выбранная локаль еще не доступна в системе, "
+"она автоматически генерируется на лету."
 
 #. type: IP
 #: en/live-config.7:81
@@ -358,8 +481,12 @@ msgstr "B<live-config.timezone>=I<ЧАСОВОЙ_ПОЯС> | B<timezone>=I<ЧА�
 
 #. type: Plain text
 #: en/live-config.7:83
-msgid "Allows one to set the timezone of the system, e.g. 'Europe/Zurich'. The default is 'UTC'."
-msgstr "Позволяет установить часовой пояс системы, например, 'Europe/Zurich'. По умолчанию это 'UTC'."
+msgid ""
+"Allows one to set the timezone of the system, e.g. 'Europe/Zurich'. The "
+"default is 'UTC'."
+msgstr ""
+"Позволяет установить часовой пояс системы, например, 'Europe/Zurich'. По "
+"умолчанию это 'UTC'."
 
 #. type: IP
 #: en/live-config.7:83
@@ -370,7 +497,8 @@ msgstr "B<live-config.keyboard-model>=I<МОДЕЛЬ_КЛАВИАТУРЫ> | B<k
 #. type: Plain text
 #: en/live-config.7:85
 msgid "Allows one to change the keyboard model. There is no default value set."
-msgstr "Позволяет изменить модель клавиатуры. Значение по умолчанию не установлено."
+msgstr ""
+"Позволяет изменить модель клавиатуры. Значение по умолчанию не установлено."
 
 #. type: IP
 #: en/live-config.7:85
@@ -380,8 +508,14 @@ msgstr "B<live-config.keyboard-layouts>=I<РАСКЛАДКА_КЛАВИАТУР�
 
 #. type: Plain text
 #: en/live-config.7:87
-msgid "Allows one to change the keyboard layouts. If more than one is specified, the tools of the desktop environment will allow one to switch it under X11. There is no default value set."
-msgstr "Позволяет изменить раскладки клавиатуры. Если указано несколько, средства рабочего стола позволят переключать их в X11. Значение по умолчанию не установлено."
+msgid ""
+"Allows one to change the keyboard layouts. If more than one is specified, "
+"the tools of the desktop environment will allow one to switch it under X11. "
+"There is no default value set."
+msgstr ""
+"Позволяет изменить раскладки клавиатуры. Если указано несколько, средства "
+"рабочего стола позволят переключать их в X11. Значение по умолчанию не "
+"установлено."
 
 #. type: IP
 #: en/live-config.7:87
@@ -391,8 +525,20 @@ msgstr "B<live-config.keyboard-variants>=I<ВАРИАНТ_КЛАВИАТУРЫ1>
 
 #. type: Plain text
 #: en/live-config.7:89
-msgid "Allows one to change the keyboard variants. If more than one is specified, the same number of values as keyboard-layouts values should be specified as they will be matched one-to-one in the order specified. Blank values are allowed. The tools of the desktop environment will allow one to switch between each layout and variant pair under X11. There is no default value set."
-msgstr "Позволяет изменить варианты клавиатуры. Если указано несколько, должно быть указано такое же количество значений, как и значений раскладки клавиатуры, поскольку они будут сопоставлены один к одному в указанном порядке. Пустые значения разрешены. Инструменты среды рабочего стола позволят переключаться между каждой парой раскладки и варианта в X11. Значение по умолчанию не установлено."
+msgid ""
+"Allows one to change the keyboard variants. If more than one is specified, "
+"the same number of values as keyboard-layouts values should be specified as "
+"they will be matched one-to-one in the order specified. Blank values are "
+"allowed. The tools of the desktop environment will allow one to switch "
+"between each layout and variant pair under X11. There is no default value "
+"set."
+msgstr ""
+"Позволяет изменить варианты клавиатуры. Если указано несколько, должно быть "
+"указано такое же количество значений, как и значений раскладки клавиатуры, "
+"поскольку они будут сопоставлены один к одному в указанном порядке. Пустые "
+"значения разрешены. Инструменты среды рабочего стола позволят переключаться "
+"между каждой парой раскладки и варианта в X11. Значение по умолчанию не "
+"установлено."
 
 #. type: IP
 #: en/live-config.7:89
@@ -402,8 +548,11 @@ msgstr "B<live-config.keyboard-options>=I<ПАРАМЕТРЫ_КЛАВИАТУР�
 
 #. type: Plain text
 #: en/live-config.7:91
-msgid "Allows one to change the keyboard options. There is no default value set."
-msgstr "Позволяет изменить параметры клавиатуры. Значение по умолчанию не установлено."
+msgid ""
+"Allows one to change the keyboard options. There is no default value set."
+msgstr ""
+"Позволяет изменить параметры клавиатуры. Значение по умолчанию не "
+"установлено."
 
 #. type: IP
 #: en/live-config.7:91
@@ -424,8 +573,12 @@ msgstr "B<live-config.utc>=B<yes>|no | B<utc>=B<yes>|no"
 
 #. type: Plain text
 #: en/live-config.7:95
-msgid "Allows one to change if the system is assuming that the hardware clock is set to UTC or not. The default is 'yes'."
-msgstr "Позволяет изменить, считает ли система, что аппаратные часы установлены по UTC или нет. По умолчанию — 'yes'."
+msgid ""
+"Allows one to change if the system is assuming that the hardware clock is "
+"set to UTC or not. The default is 'yes'."
+msgstr ""
+"Позволяет изменить, считает ли система, что аппаратные часы установлены по "
+"UTC или нет. По умолчанию — 'yes'."
 
 #. type: IP
 #: en/live-config.7:95
@@ -446,8 +599,17 @@ msgstr "B<live-config.xorg-driver>=I<ДРАЙВЕР_XORG> | B<xorg-driver>=I<Д�
 
 #. type: Plain text
 #: en/live-config.7:99
-msgid "Allows one to set xorg driver instead of autodetecting it. If a PCI ID is specified in /usr/share/live/config/xserver-xorg/I<DRIVER>.ids within the live system, the I<DRIVER> is enforced for these devices. If both a boot parameter and an override are found, the boot parameter takes precedence."
-msgstr "Позволяет установить драйвер xorg вместо его автоматического определения. Если в /usr/share/live/config/xserver-xorg/I<ДРАЙВЕР>.ids в живой системе указан идентификатор PCI, I<ДРАЙВЕР> принудительно применяется для этих устройств. Если найдены и параметр загрузки, и переопределение, параметр загрузки имеет приоритет."
+msgid ""
+"Allows one to set xorg driver instead of autodetecting it. If a PCI ID is "
+"specified in /usr/share/live/config/xserver-xorg/I<DRIVER>.ids within the "
+"live system, the I<DRIVER> is enforced for these devices. If both a boot "
+"parameter and an override are found, the boot parameter takes precedence."
+msgstr ""
+"Позволяет установить драйвер xorg вместо его автоматического определения. "
+"Если в /usr/share/live/config/xserver-xorg/I<ДРАЙВЕР>.ids в живой системе "
+"указан идентификатор PCI, I<ДРАЙВЕР> принудительно применяется для этих "
+"устройств. Если найдены и параметр загрузки, и переопределение, параметр "
+"загрузки имеет приоритет."
 
 #. type: IP
 #: en/live-config.7:99
@@ -457,8 +619,11 @@ msgstr "B<live-config.xorg-resolution>=I<РАЗРЕШЕНИЕ_XORG> | B<xorg-res
 
 #. type: Plain text
 #: en/live-config.7:101
-msgid "Allows one to set xorg resolution instead of autodetecting it, e.g. 1024x768."
-msgstr "Позволяет установить разрешение xorg вместо его автоматического определения, например, 1024x768."
+msgid ""
+"Allows one to set xorg resolution instead of autodetecting it, e.g. 1024x768."
+msgstr ""
+"Позволяет установить разрешение xorg вместо его автоматического определения, "
+"например, 1024x768."
 
 #. type: IP
 #: en/live-config.7:101
@@ -468,8 +633,17 @@ msgstr "B<live-config.wlan-driver>=I<ДРАЙВЕР_WLAN> | B<wlan-driver>=I<Д�
 
 #. type: Plain text
 #: en/live-config.7:103
-msgid "Allows one to set WLAN driver instead of autodetecting it. If a PCI ID is specified in /usr/share/live/config/broadcom-sta/I<DRIVER>.ids within the live system, the I<DRIVER> is enforced for these devices. If both a boot parameter and an override are found, the boot parameter takes precedence."
-msgstr "Позволяет установить драйвер WLAN вместо его автоматического определения. Если в /usr/share/live/config/broadcom-sta/I<ДРАЙВЕР>.ids в живой системе указан идентификатор PCI, I<ДРАЙВЕР> принудительно применяется для этих устройств. Если найдены и параметр загрузки, и переопределение, параметр загрузки имеет приоритет."
+msgid ""
+"Allows one to set WLAN driver instead of autodetecting it. If a PCI ID is "
+"specified in /usr/share/live/config/broadcom-sta/I<DRIVER>.ids within the "
+"live system, the I<DRIVER> is enforced for these devices. If both a boot "
+"parameter and an override are found, the boot parameter takes precedence."
+msgstr ""
+"Позволяет установить драйвер WLAN вместо его автоматического определения. "
+"Если в /usr/share/live/config/broadcom-sta/I<ДРАЙВЕР>.ids в живой системе "
+"указан идентификатор PCI, I<ДРАЙВЕР> принудительно применяется для этих "
+"устройств. Если найдены и параметр загрузки, и переопределение, параметр "
+"загрузки имеет приоритет."
 
 #. type: IP
 #: en/live-config.7:103
@@ -479,8 +653,16 @@ msgstr "B<live-config.module-mode>=I<РЕЖИМ> | B<module-mode>=I<РЕЖИМ>"
 
 #. type: Plain text
 #: en/live-config.7:105
-msgid "Allows you to specify the module mode for live configuration. When set to \"merged\", the system will update user accounts, rebuild caches, and refresh package settings so that configuration changes are dynamically integrated into the running system."
-msgstr "Позволяет указать режим модуля для живой конфигурации. При установке в \"merged\" система обновит учетные записи пользователей, пересоберёт кэши и обновит параметры пакетов, чтобы изменения конфигурации были динамически интегрированы в работающую систему."
+msgid ""
+"Allows you to specify the module mode for live configuration. When set to "
+"\"merged\", the system will update user accounts, rebuild caches, and "
+"refresh package settings so that configuration changes are dynamically "
+"integrated into the running system."
+msgstr ""
+"Позволяет указать режим модуля для живой конфигурации. При установке в "
+"\"merged\" система обновит учетные записи пользователей, пересоберёт кэши и "
+"обновит параметры пакетов, чтобы изменения конфигурации были динамически "
+"интегрированы в работающую систему."
 
 #. type: IP
 #: en/live-config.7:105
@@ -490,23 +672,49 @@ msgstr "B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn> | B
 
 #. type: Plain text
 #: en/live-config.7:107
-msgid "Allows one to fetch and execute one or more arbitrary files. Note that the URLs must be fetchable by wget (http, ftp or file://), the files are executed in /tmp of the running live system, and that the files needs their dependencies, if any, already installed, e.g. if a python script should be executed the system needs python installed. Some hooks for some common use-cases are available at /usr/share/doc/live-config/examples/hooks/."
-msgstr "Позволяет получить и выполнить один или несколько произвольных файлов. Обратите внимание, что URL-адреса должны быть доступны для wget (http, ftp или file://), файлы выполняются в /tmp запущенной Live-системы, и что файлам нужны их зависимости, если таковые имеются, уже установленные, например, если должен быть выполнен скрипт python, то в системе должен быть установлен python. Некоторые хуки для распространенных случаев использования доступны в /usr/share/doc/live-config/examples/hooks/."
+msgid ""
+"Allows one to fetch and execute one or more arbitrary files. Note that the "
+"URLs must be fetchable by wget (http, ftp or file://), the files are "
+"executed in /tmp of the running live system, and that the files needs their "
+"dependencies, if any, already installed, e.g. if a python script should be "
+"executed the system needs python installed. Some hooks for some common use-"
+"cases are available at /usr/share/doc/live-config/examples/hooks/."
+msgstr ""
+"Позволяет получить и выполнить один или несколько произвольных файлов. "
+"Обратите внимание, что URL-адреса должны быть доступны для wget (http, ftp "
+"или file://), файлы выполняются в /tmp запущенной Live-системы, и что файлам "
+"нужны их зависимости, если таковые имеются, уже установленные, например, "
+"если должен быть выполнен скрипт python, то в системе должен быть установлен "
+"python. Некоторые хуки для распространенных случаев использования доступны "
+"в /usr/share/doc/live-config/examples/hooks/."
 
 #. type: Plain text
 #: en/live-config.7:111
-msgid "All hooks in /usr/lib/live/config-hooks/ in the root filesystem of the live system can be automatically enabled with the keyword 'filesystem'."
-msgstr "Все хуки в /usr/lib/live/config-hooks/ в корневой файловой системе живой системы могут быть автоматически включены с помощью ключевого слова 'filesystem'."
+msgid ""
+"All hooks in /usr/lib/live/config-hooks/ in the root filesystem of the live "
+"system can be automatically enabled with the keyword 'filesystem'."
+msgstr ""
+"Все хуки в /usr/lib/live/config-hooks/ в корневой файловой системе живой "
+"системы могут быть автоматически включены с помощью ключевого слова "
+"'filesystem'."
 
 #. type: Plain text
 #: en/live-config.7:113
-msgid "All hooks in /minios/config-hooks/ of the live medium can be automatically enabled with the keyword 'medium'."
-msgstr "Все хуки в /minios/config-hooks/ Live-носителя могут быть автоматически включены с помощью ключевого слова 'medium'."
+msgid ""
+"All hooks in /minios/config-hooks/ of the live medium can be automatically "
+"enabled with the keyword 'medium'."
+msgstr ""
+"Все хуки в /minios/config-hooks/ Live-носителя могут быть автоматически "
+"включены с помощью ключевого слова 'medium'."
 
 #. type: Plain text
 #: en/live-config.7:115
-msgid "If several mechanisms are combined, then filesystem hooks are executed first, then medium hooks, and last the network hooks."
-msgstr "Если комбинируются несколько механизмов, то сначала выполняются хуки файловой системы, затем хуки носителя, и, наконец, сетевые хуки."
+msgid ""
+"If several mechanisms are combined, then filesystem hooks are executed "
+"first, then medium hooks, and last the network hooks."
+msgstr ""
+"Если комбинируются несколько механизмов, то сначала выполняются хуки "
+"файловой системы, затем хуки носителя, и, наконец, сетевые хуки."
 
 #. type: SS
 #: en/live-config.7:116
@@ -516,8 +724,15 @@ msgstr "Параметры загрузки (ярлыки)"
 
 #. type: Plain text
 #: en/live-config.7:118
-msgid "For some common use cases where it would require to combine several individual parameters, B<live-config> provides shortcuts. This allows both to have full granularity over all the options, as well keep things simple."
-msgstr "Для некоторых распространенных случаев использования, когда требуется объединить несколько отдельных параметров, B<live-config> предоставляет ярлыки. Это позволяет иметь полную детализацию всех опций, а также сохранять простоту."
+msgid ""
+"For some common use cases where it would require to combine several "
+"individual parameters, B<live-config> provides shortcuts. This allows both "
+"to have full granularity over all the options, as well keep things simple."
+msgstr ""
+"Для некоторых распространенных случаев использования, когда требуется "
+"объединить несколько отдельных параметров, B<live-config> предоставляет "
+"ярлыки. Это позволяет иметь полную детализацию всех опций, а также сохранять "
+"простоту."
 
 #. type: IP
 #: en/live-config.7:119
@@ -527,8 +742,12 @@ msgstr "B<live-config.noroot> | B<noroot>"
 
 #. type: Plain text
 #: en/live-config.7:121
-msgid "Disables sudo and policykit, the user cannot gain root privileges on the system."
-msgstr "Отключает sudo и policykit, пользователь не может получить привилегии root в системе."
+msgid ""
+"Disables sudo and policykit, the user cannot gain root privileges on the "
+"system."
+msgstr ""
+"Отключает sudo и policykit, пользователь не может получить привилегии root в "
+"системе."
 
 #. type: IP
 #: en/live-config.7:121
@@ -538,8 +757,20 @@ msgstr "B<live-config.sudo-mode>=B<passwordless>|password|disabled | B<sudo-mode
 
 #. type: Plain text
 #: en/live-config.7:123
-msgid "Controls sudo setup for the live user. The default, and historical MiniOS behavior when unset, is B<passwordless>. The B<password> mode keeps sudo access but requires the live user's password. The B<disabled> mode removes the MiniOS sudo grant and keeps the live user out of the sudo group when the user is created. The older B<noroot> shortcut still overrides this and disables root privilege setup more broadly."
-msgstr "Управляет настройкой sudo для live-пользователя. Значение по умолчанию и историческое поведение MiniOS при отсутствии параметра — B<passwordless>. Режим B<password> сохраняет доступ к sudo, но требует пароль пользователя. Режим B<disabled> удаляет права sudo в MiniOS и не добавляет пользователя в группу sudo при создании. Старый ярлык B<noroot> по-прежнему имеет приоритет и полностью отключает настройку прав суперпользователя."
+msgid ""
+"Controls sudo setup for the live user. The default, and historical MiniOS "
+"behavior when unset, is B<passwordless>. The B<password> mode keeps sudo "
+"access but requires the live user's password. The B<disabled> mode removes "
+"the MiniOS sudo grant and keeps the live user out of the sudo group when the "
+"user is created. The older B<noroot> shortcut still overrides this and "
+"disables root privilege setup more broadly."
+msgstr ""
+"Управляет настройкой sudo для live-пользователя. Значение по умолчанию и "
+"историческое поведение MiniOS при отсутствии параметра — B<passwordless>. "
+"Режим B<password> сохраняет доступ к sudo, но требует пароль пользователя. "
+"Режим B<disabled> удаляет права sudo в MiniOS и не добавляет пользователя в "
+"группу sudo при создании. Старый ярлык B<noroot> по-прежнему имеет приоритет "
+"и полностью отключает настройку прав суперпользователя."
 
 #. type: IP
 #: en/live-config.7:123
@@ -549,8 +780,24 @@ msgstr "B<live-config.polkit-mode>=B<passwordless>|password|disabled | B<polkit-
 
 #. type: Plain text
 #: en/live-config.7:125
-msgid "Controls MiniOS PolicyKit convenience rules. The default, and historical MiniOS behavior when unset, is B<passwordless>, which grants local administrative actions without a password for the live/sudo user. The B<password> and B<disabled> modes both remove that MiniOS passwordless rule, so normal distribution PolicyKit authentication applies. B<disabled> is not a hard deny-all PolicyKit policy; use B<noroot> when the live user must not gain administrative privileges."
-msgstr "Управляет удобными правилами PolicyKit для MiniOS. Значение по умолчанию, а также историческое поведение MiniOS при отсутствии настройки — это B<passwordless>, при котором локальные административные действия для live/sudo-пользователя выполняются без запроса пароля. Режимы B<password> и B<disabled> оба отключают это правило MiniOS, поэтому применяется обычная аутентификация PolicyKit, принятая в дистрибутиве. B<disabled> не является строгой политикой полного запрета PolicyKit; используйте B<noroot>, если необходимо полностью запретить получение административных привилегий live-пользователем."
+msgid ""
+"Controls MiniOS PolicyKit convenience rules. The default, and historical "
+"MiniOS behavior when unset, is B<passwordless>, which grants local "
+"administrative actions without a password for the live/sudo user. The "
+"B<password> and B<disabled> modes both remove that MiniOS passwordless rule, "
+"so normal distribution PolicyKit authentication applies. B<disabled> is not "
+"a hard deny-all PolicyKit policy; use B<noroot> when the live user must not "
+"gain administrative privileges."
+msgstr ""
+"Управляет удобными правилами PolicyKit для MiniOS. Значение по умолчанию, а "
+"также историческое поведение MiniOS при отсутствии настройки — это "
+"B<passwordless>, при котором локальные административные действия для live/"
+"sudo-пользователя выполняются без запроса пароля. Режимы B<password> и "
+"B<disabled> оба отключают это правило MiniOS, поэтому применяется обычная "
+"аутентификация PolicyKit, принятая в дистрибутиве. B<disabled> не является "
+"строгой политикой полного запрета PolicyKit; используйте B<noroot>, если "
+"необходимо полностью запретить получение административных привилегий live-"
+"пользователем."
 
 #. type: IP
 #: en/live-config.7:125
@@ -560,8 +807,12 @@ msgstr "B<live-config.ssh-permit-root-login>=B<true>|false | B<ssh-permit-root-l
 
 #. type: Plain text
 #: en/live-config.7:127
-msgid "Writes an OpenSSH PermitRootLogin policy drop-in when openssh-server is installed."
-msgstr "Создаёт drop-in политику OpenSSH PermitRootLogin при установленном openssh-server."
+msgid ""
+"Writes an OpenSSH PermitRootLogin policy drop-in when openssh-server is "
+"installed."
+msgstr ""
+"Создаёт drop-in политику OpenSSH PermitRootLogin при установленном openssh-"
+"server."
 
 #. type: IP
 #: en/live-config.7:127
@@ -571,8 +822,12 @@ msgstr "B<live-config.ssh-password-authentication>=B<true>|false | B<ssh-passwor
 
 #. type: Plain text
 #: en/live-config.7:129
-msgid "Writes an OpenSSH PasswordAuthentication policy drop-in when openssh-server is installed."
-msgstr "Создаёт drop-in политику OpenSSH PasswordAuthentication при установленном openssh-server."
+msgid ""
+"Writes an OpenSSH PasswordAuthentication policy drop-in when openssh-server "
+"is installed."
+msgstr ""
+"Создаёт drop-in политику OpenSSH PasswordAuthentication при установленном "
+"openssh-server."
 
 #. type: IP
 #: en/live-config.7:129
@@ -582,8 +837,17 @@ msgstr "B<live-config.xrdp-mode>=B<relaxed>|hardened|disabled | B<xrdp-mode>=B<r
 
 #. type: Plain text
 #: en/live-config.7:131
-msgid "Controls XRDP posture when xrdp is installed. B<relaxed> preserves historical MiniOS defaults. B<hardened> binds XRDP to localhost, restores negotiated/high security settings, and disables XRDP root login. B<disabled> disables/stops XRDP through minios-svc when available."
-msgstr "Управляет режимом XRDP при установленном xrdp. B<relaxed> сохраняет исторические значения MiniOS. B<hardened> привязывает XRDP к localhost, включает согласованные/повышенные параметры безопасности и запрещает вход root через XRDP. B<disabled> отключает/останавливает XRDP через minios-svc, если доступно."
+msgid ""
+"Controls XRDP posture when xrdp is installed. B<relaxed> preserves "
+"historical MiniOS defaults. B<hardened> binds XRDP to localhost, restores "
+"negotiated/high security settings, and disables XRDP root login. B<disabled> "
+"disables/stops XRDP through minios-svc when available."
+msgstr ""
+"Управляет режимом XRDP при установленном xrdp. B<relaxed> сохраняет "
+"исторические значения MiniOS. B<hardened> привязывает XRDP к localhost, "
+"включает согласованные/повышенные параметры безопасности и запрещает вход "
+"root через XRDP. B<disabled> отключает/останавливает XRDP через minios-svc, "
+"если доступно."
 
 #. type: IP
 #: en/live-config.7:131
@@ -593,8 +857,15 @@ msgstr "B<live-config.x11-mode>=B<relaxed>|hardened | B<x11-mode>=B<relaxed>|har
 
 #. type: Plain text
 #: en/live-config.7:133
-msgid "Controls MiniOS X11 convenience posture. B<relaxed> preserves historical compatibility. B<hardened> removes the permissive -ac X server option and tightens Xwrapper.config when present."
-msgstr "Управляет политикой удобства X11 в MiniOS. B<relaxed> сохраняет совместимость с предыдущими версиями. B<hardened> удаляет разрешающий параметр -ac у X-сервера и ужесточает настройки Xwrapper.config при его наличии."
+msgid ""
+"Controls MiniOS X11 convenience posture. B<relaxed> preserves historical "
+"compatibility. B<hardened> removes the permissive -ac X server option and "
+"tightens Xwrapper.config when present."
+msgstr ""
+"Управляет политикой удобства X11 в MiniOS. B<relaxed> сохраняет "
+"совместимость с предыдущими версиями. B<hardened> удаляет разрешающий "
+"параметр -ac у X-сервера и ужесточает настройки Xwrapper.config при его "
+"наличии."
 
 #. type: IP
 #: en/live-config.7:133
@@ -604,8 +875,12 @@ msgstr "B<live-config.issue-password-hints>=B<true>|false | B<issue-password-hin
 
 #. type: Plain text
 #: en/live-config.7:135
-msgid "Controls whether /etc/issue shows the default MiniOS root/live password hints."
-msgstr "Определяет, будет ли /etc/issue отображать подсказки по паролям root/live по умолчанию в MiniOS."
+msgid ""
+"Controls whether /etc/issue shows the default MiniOS root/live password "
+"hints."
+msgstr ""
+"Определяет, будет ли /etc/issue отображать подсказки по паролям root/live по "
+"умолчанию в MiniOS."
 
 #. type: IP
 #: en/live-config.7:135
@@ -615,8 +890,15 @@ msgstr "B<live-config.lockscreen-mode>=B<relaxed>|hardened | B<lockscreen-mode>=
 
 #. type: Plain text
 #: en/live-config.7:137
-msgid "Controls whether live-config relaxes screen locking. B<relaxed> preserves historical live-session convenience. B<hardened> avoids disabling GNOME locking and enables xscreensaver locking where that file is present."
-msgstr "Определяет, будет ли live-config ослаблять блокировку экрана. B<relaxed> сохраняет историческую удобную настройку для live-сессии. B<hardened> не отключает блокировку GNOME и включает блокировку xscreensaver, если соответствующий файл присутствует."
+msgid ""
+"Controls whether live-config relaxes screen locking. B<relaxed> preserves "
+"historical live-session convenience. B<hardened> avoids disabling GNOME "
+"locking and enables xscreensaver locking where that file is present."
+msgstr ""
+"Определяет, будет ли live-config ослаблять блокировку экрана. B<relaxed> "
+"сохраняет историческую удобную настройку для live-сессии. B<hardened> не "
+"отключает блокировку GNOME и включает блокировку xscreensaver, если "
+"соответствующий файл присутствует."
 
 #. type: IP
 #: en/live-config.7:137
@@ -627,7 +909,8 @@ msgstr "B<live-config.noautologin> | B<noautologin>"
 #. type: Plain text
 #: en/live-config.7:139
 msgid "Disables both the automatic console login and the graphical autologin."
-msgstr "Отключает как автоматический вход в консоль, так и графический автологин."
+msgstr ""
+"Отключает как автоматический вход в консоль, так и графический автологин."
 
 #. type: IP
 #: en/live-config.7:139
@@ -637,8 +920,11 @@ msgstr "B<live-config.nottyautologin> | B<nottyautologin>"
 
 #. type: Plain text
 #: en/live-config.7:141
-msgid "Disables the automatic login on the console, not affecting the graphical autologin."
-msgstr "Отключает автоматический вход в консоль, не влияя на графический автологин."
+msgid ""
+"Disables the automatic login on the console, not affecting the graphical "
+"autologin."
+msgstr ""
+"Отключает автоматический вход в консоль, не влияя на графический автологин."
 
 #. type: IP
 #: en/live-config.7:141
@@ -648,8 +934,12 @@ msgstr "B<live-config.nox11autologin> | B<nox11autologin>"
 
 #. type: Plain text
 #: en/live-config.7:143
-msgid "Disables the automatic login with any display manager, not affecting tty autologin."
-msgstr "Отключает автоматический вход с любым менеджером дисплея, не влияя на автологин tty."
+msgid ""
+"Disables the automatic login with any display manager, not affecting tty "
+"autologin."
+msgstr ""
+"Отключает автоматический вход с любым менеджером дисплея, не влияя на "
+"автологин tty."
 
 #. type: SS
 #: en/live-config.7:144
@@ -660,7 +950,9 @@ msgstr "Параметры загрузки (специальные опции)"
 #. type: Plain text
 #: en/live-config.7:146
 msgid "For special use cases there are some special boot parameters."
-msgstr "Для особых случаев использования существуют некоторые специальные параметры загрузки."
+msgstr ""
+"Для особых случаев использования существуют некоторые специальные параметры "
+"загрузки."
 
 #. type: IP
 #: en/live-config.7:147
@@ -681,28 +973,73 @@ msgstr "Файлы конфигурации"
 
 #. type: Plain text
 #: en/live-config.7:152
-msgid "B<live-config> can be configured (but not activated) through configuration files. Everything but the shortcuts that can be configured with a boot parameter can also alternatively be configured through one or more files. If configuration files are used, the 'boot=live' parameter is still required to activate B<live-config>."
-msgstr "B<live-config> может быть настроен (но не активирован) через файлы конфигурации. Все, кроме ярлыков, которые могут быть настроены с помощью параметра загрузки, также могут быть настроены через один или несколько файлов. Если используются файлы конфигурации, параметр 'boot=live' все еще требуется для активации B<live-config>."
+msgid ""
+"B<live-config> can be configured (but not activated) through configuration "
+"files. Everything but the shortcuts that can be configured with a boot "
+"parameter can also alternatively be configured through one or more files. If "
+"configuration files are used, the 'boot=live' parameter is still required to "
+"activate B<live-config>."
+msgstr ""
+"B<live-config> может быть настроен (но не активирован) через файлы "
+"конфигурации. Все, кроме ярлыков, которые могут быть настроены с помощью "
+"параметра загрузки, также могут быть настроены через один или несколько "
+"файлов. Если используются файлы конфигурации, параметр 'boot=live' все еще "
+"требуется для активации B<live-config>."
 
 #. type: Plain text
 #: en/live-config.7:154
-msgid "B<Note:> If configuration files are used, either (preferably) all boot parameters should be put into the B<LIVE_CONFIG_CMDLINE> variable, or individual variables can be set. If individual variables are used, the user is required to ensure that all the necessary variables are set to create a valid configuration."
-msgstr "B<Примечание:> Если используются файлы конфигурации, то (предпочтительно) все параметры загрузки должны быть помещены в переменную B<LIVE_CONFIG_CMDLINE>, либо могут быть установлены отдельные переменные. Если используются отдельные переменные, пользователь обязан убедиться, что все необходимые переменные установлены для создания действительной конфигурации."
+msgid ""
+"B<Note:> If configuration files are used, either (preferably) all boot "
+"parameters should be put into the B<LIVE_CONFIG_CMDLINE> variable, or "
+"individual variables can be set. If individual variables are used, the user "
+"is required to ensure that all the necessary variables are set to create a "
+"valid configuration."
+msgstr ""
+"B<Примечание:> Если используются файлы конфигурации, то (предпочтительно) "
+"все параметры загрузки должны быть помещены в переменную "
+"B<LIVE_CONFIG_CMDLINE>, либо могут быть установлены отдельные переменные. "
+"Если используются отдельные переменные, пользователь обязан убедиться, что "
+"все необходимые переменные установлены для создания действительной "
+"конфигурации."
 
 #. type: Plain text
 #: en/live-config.7:156
-msgid "Configuration files can be placed either in the root filesystem itself (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), or on the live media (minios/config.conf, minios/config.conf.d/*.conf). If both places are used for a certain option, the ones from the live media take precedence over the ones from the root filesystem."
-msgstr "Файлы конфигурации могут быть размещены либо в самой корневой файловой системе (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), либо на Live-носителе (minios/config.conf, minios/config.conf.d/*.conf). Если для определенной опции используются оба места, то те, что на Live-носителе, имеют приоритет над теми, что в корневой файловой системе."
+msgid ""
+"Configuration files can be placed either in the root filesystem itself (/etc/"
+"live/config.conf, /etc/live/config.conf.d/*.conf), or on the live media "
+"(minios/config.conf, minios/config.conf.d/*.conf). If both places are used "
+"for a certain option, the ones from the live media take precedence over the "
+"ones from the root filesystem."
+msgstr ""
+"Файлы конфигурации могут быть размещены либо в самой корневой файловой "
+"системе (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), либо на "
+"Live-носителе (minios/config.conf, minios/config.conf.d/*.conf). Если для "
+"определенной опции используются оба места, то те, что на Live-носителе, "
+"имеют приоритет над теми, что в корневой файловой системе."
 
 #. type: Plain text
 #: en/live-config.7:158
-msgid "Although the configuration files placed in the configuration directories do not require a particular name, it is suggested for consistency reasons to either use 'vendor.conf' or 'project.conf' as a naming scheme (whereas 'vendor' or 'project' is replaced with the actual name, resulting in a filename like 'progress-linux.conf')."
-msgstr "Хотя файлы конфигурации, размещенные в каталогах конфигурации, не требуют конкретного имени, для обеспечения согласованности рекомендуется использовать 'vendor.conf' или 'project.conf' в качестве схемы именования (где 'vendor' или 'project' заменяется фактическим именем, в результате чего получается имя файла, например 'progress-linux.conf')."
+msgid ""
+"Although the configuration files placed in the configuration directories do "
+"not require a particular name, it is suggested for consistency reasons to "
+"either use 'vendor.conf' or 'project.conf' as a naming scheme (whereas "
+"'vendor' or 'project' is replaced with the actual name, resulting in a "
+"filename like 'progress-linux.conf')."
+msgstr ""
+"Хотя файлы конфигурации, размещенные в каталогах конфигурации, не требуют "
+"конкретного имени, для обеспечения согласованности рекомендуется "
+"использовать 'vendor.conf' или 'project.conf' в качестве схемы именования "
+"(где 'vendor' или 'project' заменяется фактическим именем, в результате чего "
+"получается имя файла, например 'progress-linux.conf')."
 
 #. type: Plain text
 #: en/live-config.7:160
-msgid "The actual content of the configuration files consists of one or more of the following variables."
-msgstr "Фактическое содержимое файлов конфигурации состоит из одной или нескольких следующих переменных."
+msgid ""
+"The actual content of the configuration files consists of one or more of the "
+"following variables."
+msgstr ""
+"Фактическое содержимое файлов конфигурации состоит из одной или нескольких "
+"следующих переменных."
 
 #. type: IP
 #: en/live-config.7:161
@@ -723,8 +1060,12 @@ msgstr "B<LIVE_CONFIG_COMPONENTS>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>,
 
 #. type: Plain text
 #: en/live-config.7:165
-msgid "This variable corresponds to the 'B<live-config.components>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.components>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>, ... I<КОМПОНЕНТn>'."
+msgid ""
+"This variable corresponds to the 'B<live-"
+"config.components>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-"
+"config.components>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>, ... I<КОМПОНЕНТn>'."
 
 #. type: IP
 #: en/live-config.7:165
@@ -734,8 +1075,13 @@ msgstr "B<LIVE_CONFIG_NOCOMPONENTS>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2
 
 #. type: Plain text
 #: en/live-config.7:167
-msgid "This variable corresponds to the 'B<live-config.nocomponents>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.nocomponents>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>, ... I<КОМПОНЕНТn>'."
+msgid ""
+"This variable corresponds to the 'B<live-"
+"config.nocomponents>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-"
+"config.nocomponents>=I<КОМПОНЕНТ1>,I<КОМПОНЕНТ2>, ... I<КОМПОНЕНТn>'."
 
 #. type: IP
 #: en/live-config.7:167
@@ -745,8 +1091,12 @@ msgstr "B<LIVE_DEBCONF_PRESEED>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>"
 
 #. type: Plain text
 #: en/live-config.7:169
-msgid "This variable corresponds to the 'B<live-config.debconf-preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.debconf-preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.debconf-preseed>=filesystem|"
+"medium|I<URL1>|I<URL2>| ... |I<URLn>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.debconf-"
+"preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>'."
 
 #. type: IP
 #: en/live-config.7:169
@@ -756,8 +1106,12 @@ msgstr "B<LIVE_HOSTNAME>=I<ИМЯ_ХОСТА>"
 
 #. type: Plain text
 #: en/live-config.7:171
-msgid "This variable corresponds to the 'B<live-config.hostname>=I<HOSTNAME>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.hostname>=I<ИМЯ_ХОСТА>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.hostname>=I<HOSTNAME>' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-"
+"config.hostname>=I<ИМЯ_ХОСТА>'."
 
 #. type: IP
 #: en/live-config.7:171
@@ -767,8 +1121,12 @@ msgstr "B<LIVE_NETWORK_METHOD>=dhcp|static|off"
 
 #. type: Plain text
 #: en/live-config.7:173
-msgid "Selects wired network policy. DHCP and an unset value are no-ops and do not remove a previously created MiniOS static profile."
-msgstr "Определяет политику проводной сети. DHCP и отсутствие значения не изменяют ранее созданный статический профиль MiniOS."
+msgid ""
+"Selects wired network policy. DHCP and an unset value are no-ops and do not "
+"remove a previously created MiniOS static profile."
+msgstr ""
+"Определяет политику проводной сети. DHCP и отсутствие значения не изменяют "
+"ранее созданный статический профиль MiniOS."
 
 #. type: IP
 #: en/live-config.7:173
@@ -833,8 +1191,21 @@ msgstr "Выбирает используемый backend."
 
 #. type: Plain text
 #: en/live-config.7:187
-msgid "The network component writes policy once under persistent live systems and records /var/lib/live/config/network. Remove that stamp and edit /etc/live/config.conf to reapply changed policy. Updating only the media config does not overwrite an existing persistent /etc/live/config.conf. To return from a prior static profile, use method=off or remove the MiniOS-managed profile and stamp manually."
-msgstr "Сетевой компонент записывает политику один раз в постоянных live-системах и сохраняет /var/lib/live/config/network. Для повторного применения измененной политики удалите этот штамп и отредактируйте /etc/live/config.conf. Обновление только конфигурации носителя не перезаписывает существующий постоянный /etc/live/config.conf. Для возврата к предыдущему статическому профилю используйте method=off или вручную удалите профиль и штамп, управляемые MiniOS."
+msgid ""
+"The network component writes policy once under persistent live systems and "
+"records /var/lib/live/config/network. Remove that stamp and edit /etc/live/"
+"config.conf to reapply changed policy. Updating only the media config does "
+"not overwrite an existing persistent /etc/live/config.conf. To return from a "
+"prior static profile, use method=off or remove the MiniOS-managed profile "
+"and stamp manually."
+msgstr ""
+"Сетевой компонент записывает политику один раз в постоянных live-системах и "
+"сохраняет /var/lib/live/config/network. Для повторного применения измененной "
+"политики удалите этот штамп и отредактируйте /etc/live/config.conf. "
+"Обновление только конфигурации носителя не перезаписывает существующий "
+"постоянный /etc/live/config.conf. Для возврата к предыдущему статическому "
+"профилю используйте method=off или вручную удалите профиль и штамп, "
+"управляемые MiniOS."
 
 #. type: IP
 #: en/live-config.7:187
@@ -844,8 +1215,12 @@ msgstr "B<LIVE_USERNAME>=I<ИМЯ_ПОЛЬЗОВАТЕЛЯ>"
 
 #. type: Plain text
 #: en/live-config.7:189
-msgid "This variable corresponds to the 'B<live-config.username>=I<USERNAME>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.username>=I<ИМЯ_ПОЛЬЗОВАТЕЛЯ>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.username>=I<USERNAME>' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-"
+"config.username>=I<ИМЯ_ПОЛЬЗОВАТЕЛЯ>'."
 
 #. type: IP
 #: en/live-config.7:189
@@ -855,8 +1230,12 @@ msgstr "B<LIVE_USER_DEFAULT_GROUPS>=I<ГРУППА1>,I<ГРУППА2> ... I<ГР
 
 #. type: Plain text
 #: en/live-config.7:191
-msgid "This variable corresponds to the 'B<live-config.user-default-groups>=\"I<GROUP1>,I<GROUP2> ... I<GROUPn>\"' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.user-default-groups>=\"I<ГРУППА1>,I<ГРУППА2> ... I<ГРУППAn>\"'."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-default-"
+"groups>=\"I<GROUP1>,I<GROUP2> ... I<GROUPn>\"' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.user-default-"
+"groups>=\"I<ГРУППА1>,I<ГРУППА2> ... I<ГРУППAn>\"'."
 
 #. type: IP
 #: en/live-config.7:191
@@ -866,8 +1245,12 @@ msgstr "B<LIVE_USER_FULLNAME>=\"I<ПОЛНОЕ ИМЯ ПОЛЬЗОВАТЕЛЯ>\
 
 #. type: Plain text
 #: en/live-config.7:193
-msgid "This variable corresponds to the 'B<live-config.user-fullname>=\"I<USER FULLNAME>\"' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.user-fullname>=\"I<ПОЛНОЕ ИМЯ ПОЛЬЗОВАТЕЛЯ>\"'."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-fullname>=\"I<USER "
+"FULLNAME>\"' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.user-"
+"fullname>=\"I<ПОЛНОЕ ИМЯ ПОЛЬЗОВАТЕЛЯ>\"'."
 
 #. type: IP
 #: en/live-config.7:193
@@ -877,8 +1260,12 @@ msgstr "B<LIVE_ROOT_PASSWORD>=I<ПАРОЛЬ>"
 
 #. type: Plain text
 #: en/live-config.7:195
-msgid "This variable corresponds to the 'B<live-config.root-password>=I<PASSWORD>' parameter. It specifies the root password in plain text."
-msgstr "Эта переменная соответствует параметру 'B<live-config.root-password>=I<ПАРОЛЬ>'. Она указывает пароль root в виде открытого текста."
+msgid ""
+"This variable corresponds to the 'B<live-config.root-password>=I<PASSWORD>' "
+"parameter. It specifies the root password in plain text."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.root-"
+"password>=I<ПАРОЛЬ>'. Она указывает пароль root в виде открытого текста."
 
 #. type: IP
 #: en/live-config.7:195
@@ -888,8 +1275,13 @@ msgstr "B<LIVE_ROOT_PASSWORD_CRYPTED>=I<ПАРОЛЬ>"
 
 #. type: Plain text
 #: en/live-config.7:197
-msgid "This variable corresponds to the 'B<live-config.root-password-crypted>=I<PASSWORD>' parameter. It specifies the root password in crypted form."
-msgstr "Эта переменная соответствует параметру 'B<live-config.root-password-crypted>=I<ПАРОЛЬ>'. Она указывает пароль root в зашифрованном виде."
+msgid ""
+"This variable corresponds to the 'B<live-config.root-password-"
+"crypted>=I<PASSWORD>' parameter. It specifies the root password in crypted "
+"form."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.root-password-"
+"crypted>=I<ПАРОЛЬ>'. Она указывает пароль root в зашифрованном виде."
 
 #. type: IP
 #: en/live-config.7:197
@@ -899,8 +1291,13 @@ msgstr "B<LIVE_USER_PASSWORD>=I<ПАРОЛЬ>"
 
 #. type: Plain text
 #: en/live-config.7:199
-msgid "This variable corresponds to the 'B<live-config.user-password>=I<PASSWORD>' parameter. It specifies the user password in plain text."
-msgstr "Эта переменная соответствует параметру 'B<live-config.user-password>=I<ПАРОЛЬ>'. Она указывает пароль пользователя в виде открытого текста."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-password>=I<PASSWORD>' "
+"parameter. It specifies the user password in plain text."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.user-"
+"password>=I<ПАРОЛЬ>'. Она указывает пароль пользователя в виде открытого "
+"текста."
 
 #. type: IP
 #: en/live-config.7:199
@@ -910,8 +1307,13 @@ msgstr "B<LIVE_USER_PASSWORD_CRYPTED>=I<ПАРОЛЬ>"
 
 #. type: Plain text
 #: en/live-config.7:201
-msgid "This variable corresponds to the 'B<live-config.user-password-crypted>=I<PASSWORD>' parameter. It specifies the user password in crypted form."
-msgstr "Эта переменная соответствует параметру 'B<live-config.user-password-crypted>=I<ПАРОЛЬ>'. Она указывает пароль пользователя в зашифрованном виде."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-password-"
+"crypted>=I<PASSWORD>' parameter. It specifies the user password in crypted "
+"form."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.user-password-"
+"crypted>=I<ПАРОЛЬ>'. Она указывает пароль пользователя в зашифрованном виде."
 
 #. type: IP
 #: en/live-config.7:201
@@ -921,8 +1323,17 @@ msgstr "B<LIVE_SUDO_MODE>=B<passwordless>|password|disabled"
 
 #. type: Plain text
 #: en/live-config.7:203
-msgid "This variable corresponds to the 'B<live-config.sudo-mode>=...' parameter. If unset, MiniOS keeps the historical passwordless sudo behavior. Use B<password> to require the live user's password for sudo, or B<disabled> to remove the MiniOS sudo grant and sudo group membership during user creation."
-msgstr "Эта переменная соответствует параметру 'B<live-config.sudo-mode>=...'. Если не задано, MiniOS сохраняет историческое поведение sudo без пароля. Используйте B<password>, чтобы требовать пароль live-пользователя для sudo, или B<disabled>, чтобы удалить предоставление sudo от MiniOS и членство в группе sudo при создании пользователя."
+msgid ""
+"This variable corresponds to the 'B<live-config.sudo-mode>=...' parameter. "
+"If unset, MiniOS keeps the historical passwordless sudo behavior. Use "
+"B<password> to require the live user's password for sudo, or B<disabled> to "
+"remove the MiniOS sudo grant and sudo group membership during user creation."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.sudo-mode>=...'. Если "
+"не задано, MiniOS сохраняет историческое поведение sudo без пароля. "
+"Используйте B<password>, чтобы требовать пароль live-пользователя для sudo, "
+"или B<disabled>, чтобы удалить предоставление sudo от MiniOS и членство в "
+"группе sudo при создании пользователя."
 
 #. type: IP
 #: en/live-config.7:203
@@ -932,8 +1343,16 @@ msgstr "B<LIVE_POLKIT_MODE>=B<passwordless>|password|disabled"
 
 #. type: Plain text
 #: en/live-config.7:205
-msgid "This variable corresponds to the 'B<live-config.polkit-mode>=...' parameter. If unset, MiniOS keeps the historical passwordless PolicyKit rule. Use B<password> or B<disabled> to remove that rule and fall back to the distribution's normal PolicyKit authentication behavior."
-msgstr "Эта переменная соответствует параметру 'B<live-config.polkit-mode>=...'. Если не задано, MiniOS сохраняет историческое правило PolicyKit без пароля. Используйте B<password> или B<disabled> для удаления этого правила и возврата к стандартной аутентификации PolicyKit дистрибутива."
+msgid ""
+"This variable corresponds to the 'B<live-config.polkit-mode>=...' parameter. "
+"If unset, MiniOS keeps the historical passwordless PolicyKit rule. Use "
+"B<password> or B<disabled> to remove that rule and fall back to the "
+"distribution's normal PolicyKit authentication behavior."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.polkit-mode>=...'. "
+"Если не задано, MiniOS сохраняет историческое правило PolicyKit без пароля. "
+"Используйте B<password> или B<disabled> для удаления этого правила и "
+"возврата к стандартной аутентификации PolicyKit дистрибутива."
 
 #. type: IP
 #: en/live-config.7:205
@@ -943,8 +1362,12 @@ msgstr "B<LIVE_SSH_PERMIT_ROOT_LOGIN>=B<true>|false"
 
 #. type: Plain text
 #: en/live-config.7:207
-msgid "This variable corresponds to the 'B<live-config.ssh-permit-root-login>=...' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.ssh-permit-root-login>=...'."
+msgid ""
+"This variable corresponds to the 'B<live-config.ssh-permit-root-login>=...' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.ssh-permit-root-"
+"login>=...'."
 
 #. type: IP
 #: en/live-config.7:207
@@ -954,8 +1377,12 @@ msgstr "B<LIVE_SSH_PASSWORD_AUTHENTICATION>=B<true>|false"
 
 #. type: Plain text
 #: en/live-config.7:209
-msgid "This variable corresponds to the 'B<live-config.ssh-password-authentication>=...' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.ssh-password-authentication>=...'."
+msgid ""
+"This variable corresponds to the 'B<live-config.ssh-password-"
+"authentication>=...' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.ssh-password-"
+"authentication>=...'."
 
 #. type: IP
 #: en/live-config.7:209
@@ -965,7 +1392,8 @@ msgstr "B<LIVE_XRDP_MODE>=B<relaxed>|hardened|disabled"
 
 #. type: Plain text
 #: en/live-config.7:211
-msgid "This variable corresponds to the 'B<live-config.xrdp-mode>=...' parameter."
+msgid ""
+"This variable corresponds to the 'B<live-config.xrdp-mode>=...' parameter."
 msgstr "Эта переменная соответствует параметру 'B<live-config.xrdp-mode>=...'."
 
 #. type: IP
@@ -976,7 +1404,8 @@ msgstr "B<LIVE_X11_MODE>=B<relaxed>|hardened"
 
 #. type: Plain text
 #: en/live-config.7:213
-msgid "This variable corresponds to the 'B<live-config.x11-mode>=...' parameter."
+msgid ""
+"This variable corresponds to the 'B<live-config.x11-mode>=...' parameter."
 msgstr "Эта переменная соответствует параметру 'B<live-config.x11-mode>=...'."
 
 #. type: IP
@@ -987,8 +1416,12 @@ msgstr "B<LIVE_ISSUE_PASSWORD_HINTS>=B<true>|false"
 
 #. type: Plain text
 #: en/live-config.7:215
-msgid "This variable corresponds to the 'B<live-config.issue-password-hints>=...' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.issue-password-hints>=...'."
+msgid ""
+"This variable corresponds to the 'B<live-config.issue-password-hints>=...' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.issue-password-"
+"hints>=...'."
 
 #. type: IP
 #: en/live-config.7:215
@@ -998,8 +1431,11 @@ msgstr "B<LIVE_LOCKSCREEN_MODE>=B<relaxed>|hardened"
 
 #. type: Plain text
 #: en/live-config.7:217
-msgid "This variable corresponds to the 'B<live-config.lockscreen-mode>=...' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.lockscreen-mode>=...'."
+msgid ""
+"This variable corresponds to the 'B<live-config.lockscreen-mode>=...' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.lockscreen-mode>=...'."
 
 #. type: IP
 #: en/live-config.7:217
@@ -1009,8 +1445,12 @@ msgstr "B<LIVE_LOCALES>=I<ЛОКАЛЬ1>,I<ЛОКАЛЬ2> ... I<ЛОКАЛЬn>"
 
 #. type: Plain text
 #: en/live-config.7:219
-msgid "This variable corresponds to the 'B<live-config.locales>=I<LOCALE1>,I<LOCALE2> ... I<LOCALEn>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.locales>=I<ЛОКАЛЬ1>,I<ЛОКАЛЬ2> ... I<ЛОКАЛЬn>'."
+msgid ""
+"This variable corresponds to the 'B<live-"
+"config.locales>=I<LOCALE1>,I<LOCALE2> ... I<LOCALEn>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-"
+"config.locales>=I<ЛОКАЛЬ1>,I<ЛОКАЛЬ2> ... I<ЛОКАЛЬn>'."
 
 #. type: IP
 #: en/live-config.7:219
@@ -1020,8 +1460,12 @@ msgstr "B<LIVE_TIMEZONE>=I<ЧАСОВОЙ_ПОЯС>"
 
 #. type: Plain text
 #: en/live-config.7:221
-msgid "This variable corresponds to the 'B<live-config.timezone>=I<TIMEZONE>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.timezone>=I<ЧАСОВОЙ_ПОЯС>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.timezone>=I<TIMEZONE>' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-"
+"config.timezone>=I<ЧАСОВОЙ_ПОЯС>'."
 
 #. type: IP
 #: en/live-config.7:221
@@ -1031,8 +1475,12 @@ msgstr "B<LIVE_KEYBOARD_MODEL>=I<МОДЕЛЬ_КЛАВИАТУРЫ>"
 
 #. type: Plain text
 #: en/live-config.7:223
-msgid "This variable corresponds to the 'B<live-config.keyboard-model>=I<KEYBOARD_MODEL>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.keyboard-model>=I<МОДЕЛЬ_КЛАВИАТУРЫ>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.keyboard-"
+"model>=I<KEYBOARD_MODEL>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.keyboard-"
+"model>=I<МОДЕЛЬ_КЛАВИАТУРЫ>'."
 
 #. type: IP
 #: en/live-config.7:223
@@ -1042,8 +1490,14 @@ msgstr "B<LIVE_KEYBOARD_LAYOUTS>=I<РАСКЛАДКА_КЛАВИАТУРЫ1>,I<�
 
 #. type: Plain text
 #: en/live-config.7:225
-msgid "This variable corresponds to the 'B<live-config.keyboard-layouts>=I<KEYBOARD_LAYOUT1>,I<KEYBOARD_LAYOUT2> ... I<KEYBOARD_LAYOUTn>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.keyboard-layouts>=I<РАСКЛАДКА_КЛАВИАТУРЫ1>,I<РАСКЛАДКА_КЛАВИАТУРЫ2> ... I<РАСКЛАДКА_КЛАВИАТУРЫn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.keyboard-"
+"layouts>=I<KEYBOARD_LAYOUT1>,I<KEYBOARD_LAYOUT2> ... I<KEYBOARD_LAYOUTn>' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.keyboard-"
+"layouts>=I<РАСКЛАДКА_КЛАВИАТУРЫ1>,I<РАСКЛАДКА_КЛАВИАТУРЫ2> ... "
+"I<РАСКЛАДКА_КЛАВИАТУРЫn>'."
 
 #. type: IP
 #: en/live-config.7:225
@@ -1053,8 +1507,14 @@ msgstr "B<LIVE_KEYBOARD_VARIANTS>=I<ВАРИАНТ_КЛАВИАТУРЫ1>,I<ВА
 
 #. type: Plain text
 #: en/live-config.7:227
-msgid "This variable corresponds to the 'B<live-config.keyboard-variants>=I<KEYBOARD_VARIANT1>,I<KEYBOARD_VARIANT2> ... I<KEYBOARD_VARIANTn>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.keyboard-variants>=I<ВАРИАНТ_КЛАВИАТУРЫ1>,I<ВАРИАНТ_КЛАВИАТУРЫ2> ... I<ВАРИАНТ_КЛАВИАТУРЫn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.keyboard-"
+"variants>=I<KEYBOARD_VARIANT1>,I<KEYBOARD_VARIANT2> ... "
+"I<KEYBOARD_VARIANTn>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.keyboard-"
+"variants>=I<ВАРИАНТ_КЛАВИАТУРЫ1>,I<ВАРИАНТ_КЛАВИАТУРЫ2> ... "
+"I<ВАРИАНТ_КЛАВИАТУРЫn>'."
 
 #. type: IP
 #: en/live-config.7:227
@@ -1064,8 +1524,12 @@ msgstr "B<LIVE_KEYBOARD_OPTIONS>=I<ПАРАМЕТРЫ_КЛАВИАТУРЫ>"
 
 #. type: Plain text
 #: en/live-config.7:229
-msgid "This variable corresponds to the 'B<live-config.keyboard-options>=I<KEYBOARD_OPTIONS>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.keyboard-options>=I<ПАРАМЕТРЫ_КЛАВИАТУРЫ>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.keyboard-"
+"options>=I<KEYBOARD_OPTIONS>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.keyboard-"
+"options>=I<ПАРАМЕТРЫ_КЛАВИАТУРЫ>'."
 
 #. type: IP
 #: en/live-config.7:229
@@ -1075,8 +1539,12 @@ msgstr "B<LIVE_SYSV_RC>=I<СЛУЖБА1>,I<СЛУЖБА2> ... I<СЛУЖБАn>"
 
 #. type: Plain text
 #: en/live-config.7:231
-msgid "This variable corresponds to the 'B<live-config.sysv-rc>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.sysv-rc>=I<СЛУЖБА1>,I<СЛУЖБА2> ... I<СЛУЖБАn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.sysv-"
+"rc>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.sysv-"
+"rc>=I<СЛУЖБА1>,I<СЛУЖБА2> ... I<СЛУЖБАn>'."
 
 #. type: IP
 #: en/live-config.7:231
@@ -1086,7 +1554,8 @@ msgstr "B<LIVE_UTC>=B<yes>|no"
 
 #. type: Plain text
 #: en/live-config.7:233
-msgid "This variable corresponds to the 'B<live-config.utc>=B<yes>|no' parameter."
+msgid ""
+"This variable corresponds to the 'B<live-config.utc>=B<yes>|no' parameter."
 msgstr "Эта переменная соответствует параметру 'B<live-config.utc>=B<yes>|no'."
 
 #. type: IP
@@ -1097,8 +1566,12 @@ msgstr "B<LIVE_X_SESSION_MANAGER>=I<X_SESSION_MANAGER>"
 
 #. type: Plain text
 #: en/live-config.7:235
-msgid "This variable corresponds to the 'B<live-config.x-session-manager>=I<X_SESSION_MANAGER>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.x-session-manager>=I<X_SESSION_MANAGER>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.x-session-"
+"manager>=I<X_SESSION_MANAGER>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.x-session-"
+"manager>=I<X_SESSION_MANAGER>'."
 
 #. type: IP
 #: en/live-config.7:235
@@ -1108,8 +1581,12 @@ msgstr "B<LIVE_XORG_DRIVER>=I<XORG_DRIVER>"
 
 #. type: Plain text
 #: en/live-config.7:237
-msgid "This variable corresponds to the 'B<live-config.xorg-driver>=I<XORG_DRIVER>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.xorg-driver>=I<XORG_DRIVER>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.xorg-driver>=I<XORG_DRIVER>' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.xorg-"
+"driver>=I<XORG_DRIVER>'."
 
 #. type: IP
 #: en/live-config.7:237
@@ -1119,8 +1596,12 @@ msgstr "B<LIVE_XORG_RESOLUTION>=I<XORG_RESOLUTION>"
 
 #. type: Plain text
 #: en/live-config.7:239
-msgid "This variable corresponds to the 'B<live-config.xorg-resolution>=I<XORG_RESOLUTION>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.xorg-resolution>=I<XORG_RESOLUTION>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.xorg-"
+"resolution>=I<XORG_RESOLUTION>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.xorg-"
+"resolution>=I<XORG_RESOLUTION>'."
 
 #. type: IP
 #: en/live-config.7:239
@@ -1130,8 +1611,12 @@ msgstr "B<LIVE_WLAN_DRIVER>=I<WLAN_DRIVER>"
 
 #. type: Plain text
 #: en/live-config.7:241
-msgid "This variable corresponds to the 'B<live-config.wlan-driver>=I<WLAN_DRIVER>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.wlan-driver>=I<WLAN_DRIVER>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.wlan-driver>=I<WLAN_DRIVER>' "
+"parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.wlan-"
+"driver>=I<WLAN_DRIVER>'."
 
 #. type: IP
 #: en/live-config.7:241
@@ -1141,8 +1626,12 @@ msgstr "B<LIVE_HOOKS>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>"
 
 #. type: Plain text
 #: en/live-config.7:243
-msgid "This variable corresponds to the 'B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>' parameter."
-msgstr "Эта переменная соответствует параметру 'B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>'."
+msgid ""
+"This variable corresponds to the 'B<live-config.hooks>=filesystem|medium|"
+"I<URL1>|I<URL2>| ... |I<URLn>' parameter."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.hooks>=filesystem|"
+"medium|I<URL1>|I<URL2>| ... |I<URLn>'."
 
 #. type: IP
 #: en/live-config.7:243
@@ -1152,8 +1641,14 @@ msgstr "B<LIVE_LINK_USER_DIRS>=true|false"
 
 #. type: Plain text
 #: en/live-config.7:245
-msgid "This variable corresponds to the 'B<live-config.link-user-dirs>=true|false' parameter. It enables or disables creation of symbolic links for user directories."
-msgstr "Эта переменная соответствует параметру 'B<live-config.link-user-dirs>=true|false'. Она включает или отключает создание символических ссылок для пользовательских каталогов."
+msgid ""
+"This variable corresponds to the 'B<live-config.link-user-dirs>=true|false' "
+"parameter. It enables or disables creation of symbolic links for user "
+"directories."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.link-user-dirs>=true|"
+"false'. Она включает или отключает создание символических ссылок для "
+"пользовательских каталогов."
 
 #. type: IP
 #: en/live-config.7:245
@@ -1163,8 +1658,13 @@ msgstr "B<LIVE_BIND_USER_DIRS>=true|false"
 
 #. type: Plain text
 #: en/live-config.7:247
-msgid "This variable corresponds to the 'B<live-config.bind-user-dirs>=true|false' parameter. It enables or disables bind-mounting for user directories."
-msgstr "Эта переменная соответствует параметру 'B<live-config.bind-user-dirs>=true|false'. Она включает или отключает монтирование с привязкой для пользовательских каталогов."
+msgid ""
+"This variable corresponds to the 'B<live-config.bind-user-dirs>=true|false' "
+"parameter. It enables or disables bind-mounting for user directories."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.bind-user-dirs>=true|"
+"false'. Она включает или отключает монтирование с привязкой для "
+"пользовательских каталогов."
 
 #. type: IP
 #: en/live-config.7:247
@@ -1174,13 +1674,40 @@ msgstr "B<LIVE_USER_DIRS_PATH>=I<ПУТЬ>"
 
 #. type: Plain text
 #: en/live-config.7:249
-msgid "This variable corresponds to the 'B<live-config.user-dirs-path>=I<PATH>' parameter. It specifies the path for user directories on the media."
-msgstr "Эта переменная соответствует параметру 'B<live-config.user-dirs-path>=I<ПУТЬ>'. Она указывает путь для пользовательских каталогов на носителе."
+msgid ""
+"This variable corresponds to the 'B<live-config.user-dirs-path>=I<PATH>' "
+"parameter. It specifies the path for user directories on the media."
+msgstr ""
+"Эта переменная соответствует параметру 'B<live-config.user-dirs-"
+"path>=I<ПУТЬ>'. Она указывает путь для пользовательских каталогов на "
+"носителе."
 
 #. type: Plain text
 #: en/live-config.7:259
-msgid "User-media link and bind modes are mutually exclusive. The default path is /minios/userdata relative to the existing /run/initramfs/memory/data mount.  Only writable local block-backed FAT32, exFAT, and NTFS media are accepted.  Network, optical, RAM, overlay, read-only, unsupported filesystems, and toram, toram=full, or toram=trim are rejected. Paths may not contain traversal, empty segments, control characters, or unsafe names. Desktop, Documents, Downloads, Music, Pictures, Public, Templates, and Videos are managed. Migration refuses to merge two populated trees; disabling the feature copies managed data back.  State and status are recorded under /var/lib/live/config."
-msgstr "Режимы ссылки и bind для пользовательских данных являются взаимоисключающими. Путь по умолчанию — /minios/userdata относительно существующего монтирования /run/initramfs/memory/data. Принимаются только доступные для записи локальные носители на основе блочных устройств с FAT32, exFAT и NTFS. Сетевые, оптические, RAM, overlay, только для чтения, неподдерживаемые файловые системы, а также toram, toram=full или toram=trim отклоняются. Пути не должны содержать переходов, пустых сегментов, управляющих символов или небезопасных имен. Управляются каталоги Desktop, Documents, Downloads, Music, Pictures, Public, Templates и Videos. Миграция не объединяет два заполненных дерева; при отключении функции управляемые данные копируются обратно. Состояние и статус записываются в /var/lib/live/config."
+msgid ""
+"User-media link and bind modes are mutually exclusive. The default path is /"
+"minios/userdata relative to the existing /run/initramfs/memory/data mount.  "
+"Only writable local block-backed FAT32, exFAT, and NTFS media are accepted.  "
+"Network, optical, RAM, overlay, read-only, unsupported filesystems, and "
+"toram, toram=full, or toram=trim are rejected. Paths may not contain "
+"traversal, empty segments, control characters, or unsafe names. Desktop, "
+"Documents, Downloads, Music, Pictures, Public, Templates, and Videos are "
+"managed. Migration refuses to merge two populated trees; disabling the "
+"feature copies managed data back.  State and status are recorded under /var/"
+"lib/live/config."
+msgstr ""
+"Режимы ссылки и bind для пользовательских данных являются "
+"взаимоисключающими. Путь по умолчанию — /minios/userdata относительно "
+"существующего монтирования /run/initramfs/memory/data. Принимаются только "
+"доступные для записи локальные носители на основе блочных устройств с FAT32, "
+"exFAT и NTFS. Сетевые, оптические, RAM, overlay, только для чтения, "
+"неподдерживаемые файловые системы, а также toram, toram=full или toram=trim "
+"отклоняются. Пути не должны содержать переходов, пустых сегментов, "
+"управляющих символов или небезопасных имен. Управляются каталоги Desktop, "
+"Documents, Downloads, Music, Pictures, Public, Templates и Videos. Миграция "
+"не объединяет два заполненных дерева; при отключении функции управляемые "
+"данные копируются обратно. Состояние и статус записываются в /var/lib/live/"
+"config."
 
 #. type: IP
 #: en/live-config.7:259
@@ -1190,8 +1717,17 @@ msgstr "B<LIVE_MODULE_MODE>"
 
 #. type: Plain text
 #: en/live-config.7:261
-msgid "This variable holds the state specified by the 'live-config.module-mode' (or 'module-mode') parameter. When it is set to \"merged\", the live system applies updates (via minios-update-users, minios-update-cache, and minios-update-dpkg) to merge custom configurations with the base environment."
-msgstr "Эта переменная содержит состояние, заданное параметром 'live-config.module-mode' (или 'module-mode'). Когда она установлена в значение \"merged\", живая система применяет обновления (с помощью minios-update-users, minios-update-cache и minios-update-dpkg) для объединения пользовательских конфигураций с базовой средой."
+msgid ""
+"This variable holds the state specified by the 'live-config.module-mode' (or "
+"'module-mode') parameter. When it is set to \"merged\", the live system "
+"applies updates (via minios-update-users, minios-update-cache, and minios-"
+"update-dpkg) to merge custom configurations with the base environment."
+msgstr ""
+"Эта переменная содержит состояние, заданное параметром 'live-config.module-"
+"mode' (или 'module-mode'). Когда она установлена в значение \"merged\", "
+"живая система применяет обновления (с помощью minios-update-users, minios-"
+"update-cache и minios-update-dpkg) для объединения пользовательских "
+"конфигураций с базовой средой."
 
 #. type: IP
 #: en/live-config.7:261
@@ -1212,8 +1748,12 @@ msgstr "НАСТРОЙКА"
 
 #. type: Plain text
 #: en/live-config.7:266
-msgid "B<live-config> can be easily customized for downstream projects or local usage."
-msgstr "B<live-config> может быть легко настроен для дочерних проектов или локального использования."
+msgid ""
+"B<live-config> can be easily customized for downstream projects or local "
+"usage."
+msgstr ""
+"B<live-config> может быть легко настроен для дочерних проектов или "
+"локального использования."
 
 #. type: SS
 #: en/live-config.7:267
@@ -1223,13 +1763,25 @@ msgstr "Добавление новых компонентов конфигур�
 
 #. type: Plain text
 #: en/live-config.7:269
-msgid "Downstream projects can put their components into /usr/lib/live/config and do not need to do anything else, the components will be called automatically during boot."
-msgstr "Дочерние проекты могут помещать свои компоненты в /usr/lib/live/config и не нуждаются в чем-либо еще, компоненты будут вызываться автоматически во время загрузки."
+msgid ""
+"Downstream projects can put their components into /usr/lib/live/config and "
+"do not need to do anything else, the components will be called automatically "
+"during boot."
+msgstr ""
+"Дочерние проекты могут помещать свои компоненты в /usr/lib/live/config и не "
+"нуждаются в чем-либо еще, компоненты будут вызываться автоматически во время "
+"загрузки."
 
 #. type: Plain text
 #: en/live-config.7:271
-msgid "The components are best put into an own debian package. A sample package containing an example component can be found in /usr/share/doc/live-config/examples."
-msgstr "Компоненты лучше всего помещать в отдельный debian-пакет. Пример пакета, содержащего пример компонента, можно найти в /usr/share/doc/live-config/examples."
+msgid ""
+"The components are best put into an own debian package. A sample package "
+"containing an example component can be found in /usr/share/doc/live-config/"
+"examples."
+msgstr ""
+"Компоненты лучше всего помещать в отдельный debian-пакет. Пример пакета, "
+"содержащего пример компонента, можно найти в /usr/share/doc/live-config/"
+"examples."
 
 #. type: SS
 #: en/live-config.7:272
@@ -1239,13 +1791,32 @@ msgstr "Удаление существующих компонентов кон�
 
 #. type: Plain text
 #: en/live-config.7:274
-msgid "It is not really possible to remove components itself in a sane way yet without requiring either to ship a locally modified B<live-config> package or using dpkg-divert. However, the same can be achieved by disabling the respective components through the live-config.nocomponents mechanism, see above. To avoid to always need specifying disabled components through the boot parameter, a configuration file should be used, see above."
-msgstr "На самом деле пока невозможно разумным способом удалить компоненты, не требуя либо поставки локально модифицированного пакета B<live-config>, либо использования dpkg-divert. Однако того же можно достичь, отключив соответствующие компоненты с помощью механизма live-config.nocomponents, см. выше. Чтобы избежать постоянной необходимости указывать отключенные компоненты через параметр загрузки, следует использовать файл конфигурации, см. выше."
+msgid ""
+"It is not really possible to remove components itself in a sane way yet "
+"without requiring either to ship a locally modified B<live-config> package "
+"or using dpkg-divert. However, the same can be achieved by disabling the "
+"respective components through the live-config.nocomponents mechanism, see "
+"above. To avoid to always need specifying disabled components through the "
+"boot parameter, a configuration file should be used, see above."
+msgstr ""
+"На самом деле пока невозможно разумным способом удалить компоненты, не "
+"требуя либо поставки локально модифицированного пакета B<live-config>, либо "
+"использования dpkg-divert. Однако того же можно достичь, отключив "
+"соответствующие компоненты с помощью механизма live-config.nocomponents, см. "
+"выше. Чтобы избежать постоянной необходимости указывать отключенные "
+"компоненты через параметр загрузки, следует использовать файл конфигурации, "
+"см. выше."
 
 #. type: Plain text
 #: en/live-config.7:276
-msgid "The configuration files for the live system itself are best put into an own debian package. A sample package containing an example configuration can be found in /usr/share/doc/live-config/examples."
-msgstr "Файлы конфигурации для самой Live-системы лучше всего помещать в отдельный пакет debian. Пример пакета, содержащего пример конфигурации, можно найти в /usr/share/doc/live-config/examples."
+msgid ""
+"The configuration files for the live system itself are best put into an own "
+"debian package. A sample package containing an example configuration can be "
+"found in /usr/share/doc/live-config/examples."
+msgstr ""
+"Файлы конфигурации для самой Live-системы лучше всего помещать в отдельный "
+"пакет debian. Пример пакета, содержащего пример конфигурации, можно найти в /"
+"usr/share/doc/live-config/examples."
 
 #. type: SH
 #: en/live-config.7:277
@@ -1255,8 +1826,12 @@ msgstr "КОМПОНЕНТЫ"
 
 #. type: Plain text
 #: en/live-config.7:279
-msgid "B<live-config> currently features the following components in /usr/lib/live/config."
-msgstr "B<live-config> в настоящее время включает следующие компоненты в /usr/lib/live/config."
+msgid ""
+"B<live-config> currently features the following components in /usr/lib/live/"
+"config."
+msgstr ""
+"B<live-config> в настоящее время включает следующие компоненты в /usr/lib/"
+"live/config."
 
 #. type: IP
 #: en/live-config.7:280
@@ -1266,8 +1841,12 @@ msgstr "B<nss-systemd>"
 
 #. type: Plain text
 #: en/live-config.7:282
-msgid "removes or restores the systemd NSS module in /etc/nsswitch.conf to work around a known systemd issue."
-msgstr "удаляет или восстанавливает модуль NSS systemd в /etc/nsswitch.conf для обхода известной проблемы systemd."
+msgid ""
+"removes or restores the systemd NSS module in /etc/nsswitch.conf to work "
+"around a known systemd issue."
+msgstr ""
+"удаляет или восстанавливает модуль NSS systemd в /etc/nsswitch.conf для "
+"обхода известной проблемы systemd."
 
 #. type: IP
 #: en/live-config.7:282
@@ -1277,8 +1856,12 @@ msgstr "B<debconf>"
 
 #. type: Plain text
 #: en/live-config.7:284
-msgid "allows one to apply arbitrary preseed files placed on the live media or an http/ftp server."
-msgstr "позволяет применять произвольные предварительные файлы, размещенные на Live-носителе или на http/ftp сервере."
+msgid ""
+"allows one to apply arbitrary preseed files placed on the live media or an "
+"http/ftp server."
+msgstr ""
+"позволяет применять произвольные предварительные файлы, размещенные на Live-"
+"носителе или на http/ftp сервере."
 
 #. type: IP
 #: en/live-config.7:284
@@ -1299,8 +1882,14 @@ msgstr "B<сеть>"
 
 #. type: Plain text
 #: en/live-config.7:288
-msgid "configures durable wired IPv4 policy through a secure NetworkManager keyfile or ifupdown stanza. It runs before networking services, validates all values, and stamps only after a successful write."
-msgstr "настраивает устойчивую проводную политику IPv4 через защищенный keyfile NetworkManager или секцию ifupdown. Выполняется до запуска сетевых служб, проверяет все значения и отмечает только после успешной записи."
+msgid ""
+"configures durable wired IPv4 policy through a secure NetworkManager keyfile "
+"or ifupdown stanza. It runs before networking services, validates all "
+"values, and stamps only after a successful write."
+msgstr ""
+"настраивает устойчивую проводную политику IPv4 через защищенный keyfile "
+"NetworkManager или секцию ifupdown. Выполняется до запуска сетевых служб, "
+"проверяет все значения и отмечает только после успешной записи."
 
 #. type: IP
 #: en/live-config.7:288
@@ -1310,8 +1899,12 @@ msgstr "B<issue-setup>"
 
 #. type: Plain text
 #: en/live-config.7:290
-msgid "sets up the /etc/issue file with a welcome banner and distribution information."
-msgstr "настраивает файл /etc/issue с приветственным баннером и информацией о дистрибутиве."
+msgid ""
+"sets up the /etc/issue file with a welcome banner and distribution "
+"information."
+msgstr ""
+"настраивает файл /etc/issue с приветственным баннером и информацией о "
+"дистрибутиве."
 
 #. type: IP
 #: en/live-config.7:290
@@ -1343,8 +1936,11 @@ msgstr "B<root-setup>"
 
 #. type: Plain text
 #: en/live-config.7:296
-msgid "sets or updates the root password and configures the root user environment."
-msgstr "устанавливает или обновляет пароль root и настраивает среду пользователя root."
+msgid ""
+"sets or updates the root password and configures the root user environment."
+msgstr ""
+"устанавливает или обновляет пароль root и настраивает среду пользователя "
+"root."
 
 #. type: IP
 #: en/live-config.7:296
@@ -1365,8 +1961,13 @@ msgstr "B<user-media>"
 
 #. type: Plain text
 #: en/live-config.7:301
-msgid "links or bind-mounts validated user directories on the existing writable MiniOS data medium, with safe migration and copy-back when disabled."
-msgstr "создает ссылки или bind-монтирует проверенные пользовательские каталоги на существующем доступном для записи носителе данных MiniOS с безопасной миграцией и возвратом данных при отключении."
+msgid ""
+"links or bind-mounts validated user directories on the existing writable "
+"MiniOS data medium, with safe migration and copy-back when disabled."
+msgstr ""
+"создает ссылки или bind-монтирует проверенные пользовательские каталоги на "
+"существующем доступном для записи носителе данных MiniOS с безопасной "
+"миграцией и возвратом данных при отключении."
 
 #. type: IP
 #: en/live-config.7:301
@@ -1376,8 +1977,17 @@ msgstr "B<user-ssh-keys>"
 
 #. type: Plain text
 #: en/live-config.7:303
-msgid "synchronizes SSH keys from user-specific I<authorized_keys.E<lt>usernameE<gt>> files on the live media to individual user home directories. Supports multiple users simultaneously (e.g., I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
-msgstr "синхронизирует SSH-ключи из пользовательских файлов I<authorized_keys.E<lt>имя_пользователяE<gt>> с живого носителя в индивидуальные домашние каталоги пользователей. Поддерживает одновременную работу с несколькими пользователями (например, I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
+msgid ""
+"synchronizes SSH keys from user-specific "
+"I<authorized_keys.E<lt>usernameE<gt>> files on the live media to individual "
+"user home directories. Supports multiple users simultaneously (e.g., "
+"I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
+msgstr ""
+"синхронизирует SSH-ключи из пользовательских файлов "
+"I<authorized_keys.E<lt>имя_пользователяE<gt>> с живого носителя в "
+"индивидуальные домашние каталоги пользователей. Поддерживает одновременную "
+"работу с несколькими пользователями (например, I<authorized_keys.root>, "
+"I<authorized_keys.live>, I<authorized_keys.admin>)."
 
 #. type: IP
 #: en/live-config.7:303
@@ -1409,8 +2019,11 @@ msgstr "B<xorg-service>"
 
 #. type: Plain text
 #: en/live-config.7:309
-msgid "configures username in xorg.service and applies X11 posture when supported."
-msgstr "настраивает имя пользователя в xorg.service и применяет политику X11, если поддерживается."
+msgid ""
+"configures username in xorg.service and applies X11 posture when supported."
+msgstr ""
+"настраивает имя пользователя в xorg.service и применяет политику X11, если "
+"поддерживается."
 
 #. type: IP
 #: en/live-config.7:309
@@ -1508,8 +2121,13 @@ msgstr "B<sysvinit>"
 
 #. type: Plain text
 #: en/live-config.7:328
-msgid "configures console autologin through /etc/inittab when sysvinit is installed.  The noautologin and nottyautologin shortcuts suppress that setup."
-msgstr "настраивает автологин в консоли через /etc/inittab при установленном sysvinit. Краткие параметры noautologin и nottyautologin отключают эту настройку."
+msgid ""
+"configures console autologin through /etc/inittab when sysvinit is "
+"installed.  The noautologin and nottyautologin shortcuts suppress that setup."
+msgstr ""
+"настраивает автологин в консоли через /etc/inittab при установленном "
+"sysvinit. Краткие параметры noautologin и nottyautologin отключают эту "
+"настройку."
 
 #. type: IP
 #: en/live-config.7:328
@@ -1597,7 +2215,8 @@ msgstr "B<gnome-screensaver>"
 #. type: Plain text
 #: en/live-config.7:344
 msgid "controls GNOME screen locking according to LIVE_LOCKSCREEN_MODE."
-msgstr "управляет блокировкой экрана GNOME в соответствии с LIVE_LOCKSCREEN_MODE."
+msgstr ""
+"управляет блокировкой экрана GNOME в соответствии с LIVE_LOCKSCREEN_MODE."
 
 #. type: IP
 #: en/live-config.7:344
@@ -1635,252 +2254,331 @@ msgstr "предоставляет пользовательские привил
 #. type: IP
 #: en/live-config.7:350
 #, no-wrap
+msgid "B<user-groups>"
+msgstr "B<user-groups>"
+
+#. type: Plain text
+#: en/live-config.7:352
+msgid ""
+"adds the live user to supplementary groups declared by installed modules. "
+"Existing groups listed in /usr/share/live/config/user-default-groups.d/"
+"*.groups are applied after user creation and on later live-config runs."
+msgstr ""
+"добавляет live-пользователя во вспомогательные группы, объявленные "
+"установленными модулями. Существующие группы, перечисленные в /usr/share/"
+"live/config/user-default-groups.d/*.groups, применяются после создания "
+"пользователя и при последующих запусках live-config."
+
+#. type: IP
+#: en/live-config.7:352
+#, no-wrap
 msgid "B<ssl-cert>"
 msgstr "B<ssl-cert>"
 
 #. type: Plain text
-#: en/live-config.7:352
+#: en/live-config.7:354
 msgid "regenerating ssl snake-oil certificates."
 msgstr "перегенерация SSL-сертификатов snake-oil."
 
 #. type: IP
-#: en/live-config.7:352
+#: en/live-config.7:354
 #, no-wrap
 msgid "B<xrdp>"
 msgstr "B<xrdp>"
 
 #. type: Plain text
-#: en/live-config.7:354
-msgid "configures relaxed, hardened, or disabled XRDP posture when XRDP is installed."
-msgstr "настраивает режим XRDP: расслабленный, усиленный или отключенный, если XRDP установлен."
+#: en/live-config.7:356
+msgid ""
+"configures relaxed, hardened, or disabled XRDP posture when XRDP is "
+"installed."
+msgstr ""
+"настраивает режим XRDP: расслабленный, усиленный или отключенный, если XRDP "
+"установлен."
 
 #. type: IP
-#: en/live-config.7:354
+#: en/live-config.7:356
 #, no-wrap
 msgid "B<xfce4-panel>"
 msgstr "B<xfce4-panel>"
 
 #. type: Plain text
-#: en/live-config.7:356
+#: en/live-config.7:358
 msgid "configures xfce4-panel to default settings."
 msgstr "настраивает xfce4-panel на настройки по умолчанию."
 
 #. type: IP
-#: en/live-config.7:356
+#: en/live-config.7:358
 #, no-wrap
 msgid "B<xscreensaver>"
 msgstr "B<xscreensaver>"
 
 #. type: Plain text
-#: en/live-config.7:358
+#: en/live-config.7:360
 msgid "controls xscreensaver locking according to LIVE_LOCKSCREEN_MODE."
-msgstr "управляет блокировкой xscreensaver в соответствии с LIVE_LOCKSCREEN_MODE."
+msgstr ""
+"управляет блокировкой xscreensaver в соответствии с LIVE_LOCKSCREEN_MODE."
 
 #. type: IP
-#: en/live-config.7:358
+#: en/live-config.7:360
 #, no-wrap
 msgid "B<broadcom-sta>"
 msgstr "B<broadcom-sta>"
 
 #. type: Plain text
-#: en/live-config.7:360
+#: en/live-config.7:362
 msgid "configures broadcom-sta WLAN drivers."
 msgstr "настраивает драйверы WLAN broadcom-sta."
 
 #. type: IP
-#: en/live-config.7:360
+#: en/live-config.7:362
 #, no-wrap
 msgid "B<xserver-xorg>"
 msgstr "B<xserver-xorg>"
 
 #. type: Plain text
-#: en/live-config.7:362
+#: en/live-config.7:364
 msgid "configures xserver-xorg."
 msgstr "настраивает xserver-xorg."
 
 #. type: IP
-#: en/live-config.7:362
+#: en/live-config.7:364
 #, no-wrap
 msgid "B<openssh-server>"
 msgstr "B<openssh-server>"
 
 #. type: Plain text
-#: en/live-config.7:365
-msgid "recreates OpenSSH host keys and writes explicitly requested root-login or password-authentication policy."
-msgstr "воссоздает ключи хоста OpenSSH и явно записывает запрошенную политику root-login или password-authentication."
+#: en/live-config.7:367
+msgid ""
+"recreates OpenSSH host keys and writes explicitly requested root-login or "
+"password-authentication policy."
+msgstr ""
+"воссоздает ключи хоста OpenSSH и явно записывает запрошенную политику root-"
+"login или password-authentication."
 
 #. type: IP
-#: en/live-config.7:365
+#: en/live-config.7:367
 #, no-wrap
 msgid "B<xhyper-v>"
 msgstr "B<xhyper-v>"
 
 #. type: Plain text
-#: en/live-config.7:367
-msgid "configures X11 settings to improve compatibility on Microsoft Hyper-V platforms."
-msgstr "настраивает параметры X11 для улучшения совместимости на платформах Microsoft Hyper-V."
+#: en/live-config.7:369
+msgid ""
+"configures X11 settings to improve compatibility on Microsoft Hyper-V "
+"platforms."
+msgstr ""
+"настраивает параметры X11 для улучшения совместимости на платформах "
+"Microsoft Hyper-V."
 
 #. type: IP
-#: en/live-config.7:367
+#: en/live-config.7:369
 #, no-wrap
 msgid "B<ntfs3>"
 msgstr "B<ntfs3>"
 
 #. type: Plain text
-#: en/live-config.7:369
+#: en/live-config.7:371
 msgid "manages udev rules for NTFS3 support."
 msgstr "управляет правилами udev для поддержки NTFS3."
 
 #. type: IP
-#: en/live-config.7:369
+#: en/live-config.7:371
 #, no-wrap
 msgid "B<config-module-mode>"
 msgstr "B<config-module-mode>"
 
 #. type: Plain text
-#: en/live-config.7:371
-msgid "configures system module mode and updates caches, user settings, and dpkg."
-msgstr "настраивает режим системных модулей и обновляет кэши, пользовательские настройки и dpkg."
+#: en/live-config.7:373
+msgid ""
+"configures system module mode and updates caches, user settings, and dpkg."
+msgstr ""
+"настраивает режим системных модулей и обновляет кэши, пользовательские "
+"настройки и dpkg."
 
 #. type: IP
-#: en/live-config.7:371
+#: en/live-config.7:373
 #, no-wrap
 msgid "B<hooks>"
 msgstr "B<hooks>"
 
 #. type: Plain text
-#: en/live-config.7:373
-msgid "allows one to run arbitrary commands from a file placed on the live media or an http/ftp server."
-msgstr "позволяет запускать произвольные команды из файла, размещенного на Live-носителе или на http/ftp сервере."
+#: en/live-config.7:375
+msgid ""
+"allows one to run arbitrary commands from a file placed on the live media or "
+"an http/ftp server."
+msgstr ""
+"позволяет запускать произвольные команды из файла, размещенного на Live-"
+"носителе или на http/ftp сервере."
 
 #. type: SH
-#: en/live-config.7:374
+#: en/live-config.7:376
 #, no-wrap
 msgid "FILES"
 msgstr "ФАЙЛЫ"
 
 #. type: IP
-#: en/live-config.7:375
+#: en/live-config.7:377
 #, no-wrap
 msgid "B</etc/live/config.conf>"
 msgstr "B</etc/live/config.conf>"
 
 #. type: IP
-#: en/live-config.7:376
+#: en/live-config.7:378
 #, no-wrap
 msgid "B</etc/live/config.conf.d/*.conf>"
 msgstr "B</etc/live/config.conf.d/*.conf>"
 
 #. type: IP
-#: en/live-config.7:377
+#: en/live-config.7:379
 #, no-wrap
 msgid "B<live/config.conf>"
 msgstr "B<live/config.conf>"
 
 #. type: IP
-#: en/live-config.7:378
+#: en/live-config.7:380
 #, no-wrap
 msgid "B<live/config.conf.d/*.conf>"
 msgstr "B<live/config.conf.d/*.conf>"
 
 #. type: IP
-#: en/live-config.7:379
+#: en/live-config.7:381
 #, no-wrap
 msgid "B</lib/live/config.sh>"
 msgstr "B</lib/live/config.sh>"
 
 #. type: IP
-#: en/live-config.7:380
+#: en/live-config.7:382
 #, no-wrap
 msgid "B</lib/live/config/>"
 msgstr "B</lib/live/config/>"
 
 #. type: IP
-#: en/live-config.7:381
+#: en/live-config.7:383
+#, no-wrap
+msgid "B</usr/share/live/config/user-default-groups.d/*.groups>"
+msgstr "B</usr/share/live/config/user-default-groups.d/*.groups>"
+
+#. type: Plain text
+#: en/live-config.7:385
+msgid ""
+"Module-provided supplementary groups for the live user. Group names may be "
+"separated by whitespace; blank lines and comments beginning with # are "
+"ignored. Only groups that exist in the running system are applied."
+msgstr ""
+"Дополнительные группы для live-пользователя, предоставляемые модулями. "
+"Названия групп могут быть разделены пробелами; пустые строки и комментарии, "
+"начинающиеся с #, игнорируются. Применяются только те группы, которые "
+"существуют в текущей системе."
+
+#. type: IP
+#: en/live-config.7:385
 #, no-wrap
 msgid "B</var/lib/live/config/>"
 msgstr "B</var/lib/live/config/>"
 
 #. type: IP
-#: en/live-config.7:382
+#: en/live-config.7:386
 #, no-wrap
 msgid "B</var/log/live/config.log>"
 msgstr "B</var/log/live/config.log>"
 
 #. type: IP
-#: en/live-config.7:384
+#: en/live-config.7:388
 #, no-wrap
 msgid "B</live/config-hooks/*>"
 msgstr "B</live/config-hooks/*>"
 
 #. type: IP
-#: en/live-config.7:385
+#: en/live-config.7:389
 #, no-wrap
 msgid "B<live/config-hooks/*>"
 msgstr "B<live/config-hooks/*>"
 
 #. type: IP
-#: en/live-config.7:386
+#: en/live-config.7:390
 #, no-wrap
 msgid "B</live/config-preseed/*>"
 msgstr "B</live/config-preseed/*>"
 
 #. type: IP
-#: en/live-config.7:387
+#: en/live-config.7:391
 #, no-wrap
 msgid "B<live/config-preseed/* >"
 msgstr "B<live/config-preseed/* >"
 
 #. type: SH
-#: en/live-config.7:389
+#: en/live-config.7:393
 #, no-wrap
 msgid "SEE ALSO"
 msgstr "СМ. ТАКЖЕ"
 
 #. type: Plain text
-#: en/live-config.7:391
+#: en/live-config.7:395
 msgid "I<live-boot>(7)"
 msgstr "I<live-boot>(7)"
 
 #. type: Plain text
-#: en/live-config.7:393
+#: en/live-config.7:397
 msgid "I<live-build>(7)"
 msgstr "I<live-build>(7)"
 
 #. type: Plain text
-#: en/live-config.7:395
+#: en/live-config.7:399
 msgid "I<live-tools>(7)"
 msgstr "I<live-tools>(7)"
 
 #. type: SH
-#: en/live-config.7:396
+#: en/live-config.7:400
 #, no-wrap
 msgid "HOMEPAGE"
 msgstr "ДОМАШНЯЯ СТРАНИЦА"
 
 #. type: Plain text
-#: en/live-config.7:398
-msgid "More information about live-config and the Debian Live project can be found on the homepage at E<lt>I<https://wiki.debian.org/DebianLive>E<gt> and in the manual at E<lt>I<https://live-team.pages.debian.net/live-manual/>E<gt>."
-msgstr "Больше информации о live-config и проекте Debian Live можно найти на домашней странице по адресу E<lt>I<https://wiki.debian.org/DebianLive>E<gt> и в руководстве по адресу E<lt>I<https://live-team.pages.debian.net/live-manual/>E<gt>."
+#: en/live-config.7:402
+msgid ""
+"More information about live-config and the Debian Live project can be found "
+"on the homepage at E<lt>I<https://wiki.debian.org/DebianLive>E<gt> and in "
+"the manual at E<lt>I<https://live-team.pages.debian.net/live-manual/>E<gt>."
+msgstr ""
+"Больше информации о live-config и проекте Debian Live можно найти на "
+"домашней странице по адресу E<lt>I<https://wiki.debian.org/DebianLive>E<gt> "
+"и в руководстве по адресу E<lt>I<https://live-team.pages.debian.net/live-"
+"manual/>E<gt>."
 
 #. type: SH
-#: en/live-config.7:399
+#: en/live-config.7:403
 #, no-wrap
 msgid "BUGS"
 msgstr "ОШИБКИ"
 
 #. type: Plain text
-#: en/live-config.7:401
-msgid "Bugs can be reported by submitting a bugreport for the live-config package in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by writing a mail to the Debian Live mailing list at E<lt>I<debian-live@lists.debian.org>E<gt>."
-msgstr "Об ошибках можно сообщать, отправляя отчет об ошибке для пакета live-config в системе отслеживания ошибок по адресу E<lt>I<http://bugs.debian.org/>E<gt> или написав письмо в список рассылки Debian Live по адресу E<lt>I<debian-live@lists.debian.org>E<gt>."
+#: en/live-config.7:405
+msgid ""
+"Bugs can be reported by submitting a bugreport for the live-config package "
+"in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by "
+"writing a mail to the Debian Live mailing list at E<lt>I<debian-"
+"live@lists.debian.org>E<gt>."
+msgstr ""
+"Об ошибках можно сообщать, отправляя отчет об ошибке для пакета live-config "
+"в системе отслеживания ошибок по адресу E<lt>I<http://bugs.debian.org/>E<gt> "
+"или написав письмо в список рассылки Debian Live по адресу E<lt>I<debian-"
+"live@lists.debian.org>E<gt>."
 
 #. type: SH
-#: en/live-config.7:402
+#: en/live-config.7:406
 #, no-wrap
 msgid "AUTHOR"
 msgstr "АВТОР"
 
 #. type: Plain text
-#: en/live-config.7:403
-msgid "live-config was originally written by Daniel Baumann E<lt>I<mail@daniel-baumann.ch>E<gt>. Since 2016 development has been continued by the Debian Live team. Since 2025 development of the modified version has been continued by the MiniOS Live team."
-msgstr "Изначально live-config был написан Даниэлем Бауманом E<lt>I<mail@daniel-baumann.ch>E<gt>. С 2016 года разработка продолжается командой Debian Live. С 2025 года разработка модифицированной версии продолжается командой MiniOS Live."
+#: en/live-config.7:407
+msgid ""
+"live-config was originally written by Daniel Baumann E<lt>I<mail@daniel-"
+"baumann.ch>E<gt>. Since 2016 development has been continued by the Debian "
+"Live team. Since 2025 development of the modified version has been continued "
+"by the MiniOS Live team."
+msgstr ""
+"Изначально live-config был написан Даниэлем Бауманом E<lt>I<mail@daniel-"
+"baumann.ch>E<gt>. С 2016 года разработка продолжается командой Debian Live. "
+"С 2025 года разработка модифицированной версии продолжается командой MiniOS "
+"Live."

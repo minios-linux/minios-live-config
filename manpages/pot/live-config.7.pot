@@ -6,8 +6,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: live-config 11.0.5.13\n"
-"POT-Creation-Date: 2026-07-19 01:49+0300\n"
+"Project-Id-Version: live-config 11.0.5.16\n"
+"POT-Creation-Date: 2026-08-19 20:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1927,240 +1927,268 @@ msgstr ""
 #. type: IP
 #: en/live-config.7:350
 #, no-wrap
-msgid "B<ssl-cert>"
+msgid "B<user-groups>"
 msgstr ""
 
 #. type: Plain text
 #: en/live-config.7:352
-msgid "regenerating ssl snake-oil certificates."
+msgid ""
+"adds the live user to supplementary groups declared by installed modules. "
+"Existing groups listed in /usr/share/live/config/user-default-groups.d/"
+"*.groups are applied after user creation and on later live-config runs."
 msgstr ""
 
 #. type: IP
 #: en/live-config.7:352
 #, no-wrap
-msgid "B<xrdp>"
+msgid "B<ssl-cert>"
 msgstr ""
 
 #. type: Plain text
 #: en/live-config.7:354
+msgid "regenerating ssl snake-oil certificates."
+msgstr ""
+
+#. type: IP
+#: en/live-config.7:354
+#, no-wrap
+msgid "B<xrdp>"
+msgstr ""
+
+#. type: Plain text
+#: en/live-config.7:356
 msgid ""
 "configures relaxed, hardened, or disabled XRDP posture when XRDP is "
 "installed."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:354
+#: en/live-config.7:356
 #, no-wrap
 msgid "B<xfce4-panel>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:356
+#: en/live-config.7:358
 msgid "configures xfce4-panel to default settings."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:356
+#: en/live-config.7:358
 #, no-wrap
 msgid "B<xscreensaver>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:358
+#: en/live-config.7:360
 msgid "controls xscreensaver locking according to LIVE_LOCKSCREEN_MODE."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:358
+#: en/live-config.7:360
 #, no-wrap
 msgid "B<broadcom-sta>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:360
+#: en/live-config.7:362
 msgid "configures broadcom-sta WLAN drivers."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:360
+#: en/live-config.7:362
 #, no-wrap
 msgid "B<xserver-xorg>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:362
+#: en/live-config.7:364
 msgid "configures xserver-xorg."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:362
+#: en/live-config.7:364
 #, no-wrap
 msgid "B<openssh-server>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:365
+#: en/live-config.7:367
 msgid ""
 "recreates OpenSSH host keys and writes explicitly requested root-login or "
 "password-authentication policy."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:365
+#: en/live-config.7:367
 #, no-wrap
 msgid "B<xhyper-v>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:367
+#: en/live-config.7:369
 msgid ""
 "configures X11 settings to improve compatibility on Microsoft Hyper-V "
 "platforms."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:367
+#: en/live-config.7:369
 #, no-wrap
 msgid "B<ntfs3>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:369
+#: en/live-config.7:371
 msgid "manages udev rules for NTFS3 support."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:369
+#: en/live-config.7:371
 #, no-wrap
 msgid "B<config-module-mode>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:371
+#: en/live-config.7:373
 msgid ""
 "configures system module mode and updates caches, user settings, and dpkg."
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:371
+#: en/live-config.7:373
 #, no-wrap
 msgid "B<hooks>"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:373
+#: en/live-config.7:375
 msgid ""
 "allows one to run arbitrary commands from a file placed on the live media or "
 "an http/ftp server."
 msgstr ""
 
 #. type: SH
-#: en/live-config.7:374
+#: en/live-config.7:376
 #, no-wrap
 msgid "FILES"
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:375
+#: en/live-config.7:377
 #, no-wrap
 msgid "B</etc/live/config.conf>"
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:376
+#: en/live-config.7:378
 #, no-wrap
 msgid "B</etc/live/config.conf.d/*.conf>"
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:377
+#: en/live-config.7:379
 #, no-wrap
 msgid "B<live/config.conf>"
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:378
+#: en/live-config.7:380
 #, no-wrap
 msgid "B<live/config.conf.d/*.conf>"
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:379
+#: en/live-config.7:381
 #, no-wrap
 msgid "B</lib/live/config.sh>"
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:380
+#: en/live-config.7:382
 #, no-wrap
 msgid "B</lib/live/config/>"
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:381
+#: en/live-config.7:383
 #, no-wrap
-msgid "B</var/lib/live/config/>"
+msgid "B</usr/share/live/config/user-default-groups.d/*.groups>"
 msgstr ""
 
-#. type: IP
-#: en/live-config.7:382
-#, no-wrap
-msgid "B</var/log/live/config.log>"
-msgstr ""
-
-#. type: IP
-#: en/live-config.7:384
-#, no-wrap
-msgid "B</live/config-hooks/*>"
+#. type: Plain text
+#: en/live-config.7:385
+msgid ""
+"Module-provided supplementary groups for the live user. Group names may be "
+"separated by whitespace; blank lines and comments beginning with # are "
+"ignored. Only groups that exist in the running system are applied."
 msgstr ""
 
 #. type: IP
 #: en/live-config.7:385
 #, no-wrap
-msgid "B<live/config-hooks/*>"
+msgid "B</var/lib/live/config/>"
 msgstr ""
 
 #. type: IP
 #: en/live-config.7:386
 #, no-wrap
+msgid "B</var/log/live/config.log>"
+msgstr ""
+
+#. type: IP
+#: en/live-config.7:388
+#, no-wrap
+msgid "B</live/config-hooks/*>"
+msgstr ""
+
+#. type: IP
+#: en/live-config.7:389
+#, no-wrap
+msgid "B<live/config-hooks/*>"
+msgstr ""
+
+#. type: IP
+#: en/live-config.7:390
+#, no-wrap
 msgid "B</live/config-preseed/*>"
 msgstr ""
 
 #. type: IP
-#: en/live-config.7:387
+#: en/live-config.7:391
 #, no-wrap
 msgid "B<live/config-preseed/* >"
 msgstr ""
 
 #. type: SH
-#: en/live-config.7:389
+#: en/live-config.7:393
 #, no-wrap
 msgid "SEE ALSO"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:391
+#: en/live-config.7:395
 msgid "I<live-boot>(7)"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:393
+#: en/live-config.7:397
 msgid "I<live-build>(7)"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:395
+#: en/live-config.7:399
 msgid "I<live-tools>(7)"
 msgstr ""
 
 #. type: SH
-#: en/live-config.7:396
+#: en/live-config.7:400
 #, no-wrap
 msgid "HOMEPAGE"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:398
+#: en/live-config.7:402
 msgid ""
 "More information about live-config and the Debian Live project can be found "
 "on the homepage at E<lt>I<https://wiki.debian.org/DebianLive>E<gt> and in "
@@ -2168,13 +2196,13 @@ msgid ""
 msgstr ""
 
 #. type: SH
-#: en/live-config.7:399
+#: en/live-config.7:403
 #, no-wrap
 msgid "BUGS"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:401
+#: en/live-config.7:405
 msgid ""
 "Bugs can be reported by submitting a bugreport for the live-config package "
 "in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by "
@@ -2183,13 +2211,13 @@ msgid ""
 msgstr ""
 
 #. type: SH
-#: en/live-config.7:402
+#: en/live-config.7:406
 #, no-wrap
 msgid "AUTHOR"
 msgstr ""
 
 #. type: Plain text
-#: en/live-config.7:403
+#: en/live-config.7:407
 msgid ""
 "live-config was originally written by Daniel Baumann E<lt>I<mail@daniel-"
 "baumann.ch>E<gt>. Since 2016 development has been continued by the Debian "
