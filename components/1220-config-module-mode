@@ -62,7 +62,7 @@ Config() {
             minios-update-users "$BUNDLES" "$CHANGES" >/var/log/minios/minios-update-users.output.log 2>&1
         fi
 
-        if [ -x /usr/sbin/inios-update-cache ]; then
+        if [ -x /usr/sbin/minios-update-cache ]; then
             echo "Updating cache with minios-update-cache"
             minios-update-cache "$BUNDLES" >/var/log/minios/minios-update-cache.output.log 2>&1 &
         fi

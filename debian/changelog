@@ -1,3 +1,12 @@
+minios-live-config (11.0.5.17) unstable; urgency=medium
+
+  * Restore explicit systemd enablement for live-config.service so clean package
+    builds reliably start live-config and create the live user at boot.
+  * Fix the minios-update-cache executable path in config-module-mode so cache
+    updates run in merged module mode.
+
+ -- crims0n <crims0n@minios.dev>  Sun, 23 Aug 2026 14:40:00 +0300
+
 minios-live-config (11.0.5.16) unstable; urgency=medium
 
   * Honor LIVE_CONFIG_CMDLINE from config.conf in the systemd getty generator
