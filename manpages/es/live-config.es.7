@@ -1,7 +1,7 @@
 .\" live-config(7) - System Configuration Components
 .\" Copyright (C) 2016-2020 The Debian Live team
 .\" Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
-.\" Copyright (C) 2025 crims0n <crims0n@minios.dev>
+.\" Copyright (C) 2025-2026 crims0n <crims0n@minios.dev>
 .\"
 .\" This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 .\" This is free software, and you are welcome to redistribute it
@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-07\-19 11.0.5.13 "Proyecto MiniOS Live"
+.TH LIVE\-CONFIG 7 2026\-08\-31 11.0.5.18 "Proyecto MiniOS Live"
 
 .SH NOMBRE
 \fBlive\-config\fP \- Componentes de configuración del sistema
@@ -23,11 +23,12 @@
 durante el proceso de arranque (late userspace).
 
 .SH CONFIGURACIÓN
-\fBlive\-config\fP se puede configurar mediante parámetros durante el proceso de
-arranque o mediante ficheros de configuración. Si se usan ambos métodos para
-una misma opción, los parámetros de arranque tienen preferencia sobre los
-ficheros de configuración. Cuando se utiliza la persistencia, los
-componentes de \fBlive\-config\fP sólo se ejecutan una vez.
+\fBlive\-config\fP se puede configurar mediante parámetros de arranque o
+archivos de configuración. Si se utilizan ambos mecanismos para una opción
+determinada, los parámetros de arranque tienen prioridad sobre los archivos
+de configuración. Los componentes que almacenan estado en
+/var/lib/live/config normalmente se ejecutan solo una vez; los componentes
+de sincronización y sin estado pueden ejecutarse en cada invocación.
 .PP
 Si se utiliza \fIlive\-build\fP(7) para construir el sistema en vivo, los
 parámetros de live\-config utilizados por defecto se pueden establecer
@@ -35,27 +36,22 @@ mediante la opción \-\-bootappend\-live, ver la página del manual
 \fIlb_config\fP(1)
 
 .SS "Parámetros de arranque (componentes)"
-\fBlive\-config\fP sólo se activa si se utiliza como parámetro de arranque
-«boot=live». Adicionalmente, se debe especificar a \fBlive\-config\fP qué
-componentes tiene que ejecutar mediante el parámetro
-«live\-config.components» o qué componentes no tiene que ejecutar mediante la
-opción «live\-config.nocomponents». Si se usan las dos opciones
-«live\-config.components» y «live\-config.nocomponents» a la vez, o si alguna
-de las dos se especifica varias veces, la última tiene prioridad sobre las
-anteriores.
+\fBlive\-config\fP solo se activa si se utiliza 'boot=live' como parámetro de
+arranque. De forma predeterminada, se ejecutan todos los componentes. El
+parámetro 'live\-config.components' puede restringir qué componentes se
+ejecutan, y 'live\-config.nocomponents' puede excluir componentes. Si se usan
+ambos parámetros, o alguno de ellos se especifica varias veces, prevalece la
+última aparición.
 
 .IP "\fBlive\-config.components\fP | \fBcomponents\fP" 4
 Se ejecutan todos los componentes. Esto es lo que las imágenes en vivo
 utilizan por defecto.
 .IP "\fBlive\-config.components\fP=\fICOMPONENT1\fP,\fICOMPONENT2\fP, ... \fICOMPONENTn\fP | \fBcomponents\fP=\fICOMPONENT1\fP,\fICOMPONENT2\fP, ... \fICOMPONENTn\fP" 4
-Sólo se ejecutan los scripts especificados. Se debe tener en cuenta que el
-orden es importante. p.ej. «live\-config=sudo,user\-setup» no funcionaría ya
-que el usuario debe añadirse antes de configurarse como «sudo». Puede
-revisarse los nombres de los scripts en /usr/lib/live/config para ver su
-orden.
+Solo se ejecutan los componentes especificados. Los componentes se ejecutan
+en el orden codificado en sus nombres de archivo bajo /usr/lib/live/config,
+independientemente del orden en esta lista.
 .IP "\fBlive\-config.nocomponents\fP | \fBnocomponents\fP" 4
-No se ejecuta ningún componente. Es lo mismo que no utilizar ninguno de
-«live\-config.components» o «live\-config.nocomponents».
+No se ejecuta ningún componente.
 .IP "\fBlive\-config.nocomponents\fP=\fICOMPONENT1\fP,\fICOMPONENT2\fP, ... \fICOMPONENTn\fP | \fBnocomponents\fP=\fICOMPONENT1\fP,\fICOMPONENT2\fP, ... \fICOMPONENTn\fP" 4
 Se ejecutan todos los componentes, a excepción de los especificados.
 
@@ -86,10 +82,10 @@ preconfiguración del medio, y en último lugar los de red.
 Permite establecer el nombre de host del sistema. El valor predeterminado en
 MiniOS es 'minios'.
 .IP "\fBlive\-config.network\-method\fP=dhcp|static|off | \fBnetwork\-method\fP=dhcp|static|off" 4
-Selecciona la política de red cableada. Si no se define o se usa dhcp, la
-imagen mantiene el valor predeterminado. Static escribe un archivo keyfile
-de NetworkManager; off desactiva la configuración automática de IPv4 para la
-interfaz seleccionada.
+Selecciona la política de red cableada. Si no se establece o se usa dhcp, la
+imagen mantiene la configuración predeterminada. Static escribe la
+configuración para el backend seleccionado; off desactiva la configuración
+automática de IPv4 para la interfaz seleccionada.
 .IP "\fBlive\-config.network\-interface\fP=\fIINTERFACE\fP | \fBnetwork\-interface\fP=\fIINTERFACE\fP" 4
 Selecciona la interfaz cableada. Si se omite para static u off, se
 selecciona automáticamente la única interfaz cableada que no sea loopback;
@@ -111,10 +107,12 @@ no gestionada por NetworkManager cuando ambos sistemas están instalados.
 Permite definir el nombre de usuario que se crea para el inicio de sesión
 automático. El valor predeterminado en MiniOS es 'live'.
 .IP "\fBlive\-config.user\-default\-groups\fP=\fIGROUP1\fP,\fIGROUP2\fP ... \fIGROUPn\fP | \fBuser\-default\-groups\fP=\fIGROUP1\fP,\fIGROUP2\fP ... \fIGROUPn\fP" 4
-Permite establecer los grupos por defecto a los que pertenecen los usuarios
-que se crean para iniciar sesión automáticamente. Los grupos predeterminados
-son 'audio cdrom dip floppy video plugdev netdev powerdev scanner
-bluetooth'.
+Establece los grupos suplementarios para el usuario creado para el inicio de
+sesión automático. Los nombres de grupo pueden estar separados por comas o
+espacios. El valor predeterminado en MiniOS es 'dialout cdrom floppy audio
+video plugdev users fuse plugdev netdev powerdev scanner bluetooth
+weston\-launch kvm libvirt libvirt\-qemu vboxusers lpadmin dip sambashare
+docker wireshark'.
 .IP "\fBlive\-config.user\-fullname\fP=\(dq\fINOMBRE COMPLETO DE USUARIO\fP\(dq | \fBuser\-fullname\fP=\(dq\fINOMBRE COMPLETO DE USUARIO\fP\(dq" 4
 Permite definir el nombre completo del usuario creado para el inicio de
 sesión automático. El valor predeterminado en MiniOS es 'MiniOS Live User'.
@@ -153,7 +151,7 @@ Permite desactivar los servicios «sysv» mediante «update\-rc.d».
 .IP "\fBlive\-config.utc\fP=\fByes\fP|no | \fButc\fP=\fByes\fP|no" 4
 Permite cambiar si el sistema debe asumir que el reloj de la máquina está
 ajustado a la hora UTC o no. Por defecto es «Si».
-.IP "\fBlive\-config.x\-session\-manager=\fP\fIX_SESSION_MANAGER\fP | \fBx\-session\-manager\fP=\fIX_SESSION_MANAGER\fP" 4
+.IP "\fBlive\-config.xorg\-xsession\-manager=\fP\fIX_SESSION_MANAGER\fP | \fBx\-session\-manager\fP=\fIX_SESSION_MANAGER\fP" 4
 Permite seleccionar el gestor de sesión gráfica «x\-session\-manager» mediante
 «update\-alternatives».
 .IP "\fBlive\-config.xorg\-driver\fP=\fICONTROLADOR XORG\fP | \fBxorg\-driver\fP=\fICONTROLADOR XORG\fP" 4
@@ -173,11 +171,21 @@ automática. Si se especifica un PCI ID en
 vivo,  se aplica \fIDRIVER\fP para estos dispositivos. Si se encuentran juntos
 un parámetro de arranque y un override, el parámetro de arranque tiene
 prioridad.
-.IP "\fBlive\-config.module\-mode\fP=\fIMODO\fP | \fBmodule\-mode\fP=\fIMODO\fP" 4
+.IP "\fBlive\-config.module\-mode\fP=simple|merged | \fBmodule\-mode\fP=simple|merged" 4
 Permite especificar el modo del módulo para la configuración en vivo. Cuando
 se establece en "merged", el sistema actualizará las cuentas de usuario,
 reconstruirá las memorias caché y actualizará la configuración de paquetes
 para que los cambios se integren dinámicamente en el sistema en ejecución.
+.IP "\fBlive\-config.link\-user\-dirs\fP | \fBlink\-user\-dirs\fP" 4
+Enlaza los directorios de usuario gestionados a la ruta configurada en el
+medio de datos de MiniOS.
+.IP "\fBlive\-config.bind\-user\-dirs\fP | \fBbind\-user\-dirs\fP" 4
+Realiza un montaje bind de los directorios de usuario gestionados desde la
+ruta configurada en el medio de datos de MiniOS. Esta opción es excluyente
+con link\-user\-dirs.
+.IP "\fBlive\-config.user\-dirs\-path\fP=\fIPATH\fP | \fBuser\-dirs\-path\fP=\fIPATH\fP" 4
+Establece la ruta relativa al medio utilizada por link\-user\-dirs o
+bind\-user\-dirs. El valor predeterminado es /minios/userdata.
 .IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
 Permite buscar y ejecutar uno o más ficheros de forma arbitraria. Tener en
 cuenta que las URLs deben ser descargadas usando wget (http, ftp o file://),
@@ -207,8 +215,8 @@ tener control total sobre todas las opciones así como poder hacer las cosas
 de forma sencilla.
 
 .IP "\fBlive\-config.noroot\fP | \fBnoroot\fP" 4
-Desactiva sudo y policyKit, el usuario no puede obtener privilegios de
-superusuario en el sistema.
+Desactiva la configuración de la contraseña de root y las concesiones de
+privilegios de sudo y PolicyKit de MiniOS.
 .IP "\fBlive\-config.sudo\-mode\fP=\fBpasswordless\fP|password|disabled | \fBsudo\-mode\fP=\fBpasswordless\fP|password|disabled" 4
 Controla la configuración de sudo para el usuario live. El valor
 predeterminado, y el comportamiento histórico de MiniOS si no se define, es
@@ -227,11 +235,11 @@ de PolicyKit de la distribución. \fBdisabled\fP no es una política de
 denegación total en PolicyKit; utilice \fBnoroot\fP si el usuario live no debe
 obtener privilegios administrativos.
 .IP "\fBlive\-config.ssh\-permit\-root\-login\fP=\fBtrue\fP|false | \fBssh\-permit\-root\-login\fP=\fBtrue\fP|false" 4
-Crea un archivo drop\-in de política OpenSSH PermitRootLogin cuando
-openssh\-server está instalado.
+Escribe una política OpenSSH PermitRootLogin cuando se establece
+explícitamente y openssh\-server está instalado.
 .IP "\fBlive\-config.ssh\-password\-authentication\fP=\fBtrue\fP|false | \fBssh\-password\-authentication\fP=\fBtrue\fP|false" 4
-Crea un archivo drop\-in de política OpenSSH PasswordAuthentication cuando
-openssh\-server está instalado.
+Escribe una política OpenSSH PasswordAuthentication cuando se establece
+explícitamente y openssh\-server está instalado.
 .IP "\fBlive\-config.xrdp\-mode\fP=\fBrelaxed\fP|hardened|disabled | \fBxrdp\-mode\fP=\fBrelaxed\fP|hardened|disabled" 4
 Controla la configuración de XRDP cuando xrdp está instalado. \fBrelaxed\fP
 mantiene los valores predeterminados históricos de MiniOS. \fBhardened\fP
@@ -251,14 +259,17 @@ la conveniencia histórica de la sesión live. \fBhardened\fP evita desactivar e
 bloqueo de GNOME y habilita el bloqueo de xscreensaver cuando ese archivo
 está presente.
 .IP "\fBlive\-config.noautologin\fP | \fBnoautologin\fP" 4
-Desactiva el inicio de sesión automático en la consola y el inicio de sesión
-automático en la interfaz gráfica.
+Impide la configuración tanto del inicio de sesión automático en consola
+como del inicio de sesión automático gráfico. La configuración persistente
+existente no se elimina.
 .IP "\fBlive\-config.nottyautologin\fP | \fBnottyautologin\fP" 4
-Desactiva el inicio de sesión automático en la consola, sin afectar al
-inicio de sesión automático gráfico.
+Impide la configuración del inicio de sesión automático en consola sin
+afectar el inicio de sesión automático gráfico. La configuración persistente
+existente no se elimina.
 .IP "\fBlive\-config.nox11autologin\fP | \fBnox11autologin\fP" 4
-Desactiva el inicio de sesión automático con cualquier gestor de ventanas,
-sin afectar el inicio de sesión automático en un terminal tty.
+Impide la configuración del inicio de sesión automático gráfico sin afectar
+el inicio de sesión automático en consola. La configuración persistente
+existente no se elimina.
 
 .SS "Parámetros de arranque (opciones especiales)"
 Para casos de uso especial hay algunos parámetros de arranque especiales.
@@ -267,11 +278,11 @@ Para casos de uso especial hay algunos parámetros de arranque especiales.
 Activa la información sobre errores en live\-config.
 
 .SS "Ficheros de configuración"
-\fBlive\-config\fP se puede configurar (pero no activar) mediante ficheros de
-configuración. Todo, excepto los atajos que se pueden configurar con un
-parámetro de arranque, puede ser, alternativamente, configurado a través de
-uno o más ficheros. Aunque se utilicen los ficheros de configuración, el
-parámetro «boot =live» es necesario para activar \fBlive\-config\fP.
+\fBlive\-config\fP se puede configurar (pero no activar) mediante archivos de
+configuración. Cualquier parámetro de arranque compatible puede colocarse en
+\fBLIVE_CONFIG_CMDLINE\fP, y la mayoría de las opciones pueden establecerse
+alternativamente mediante variables individuales. El parámetro 'boot=live'
+sigue siendo necesario para activar \fBlive\-config\fP.
 .PP
 \fBNota:\fP Si se utilizan ficheros de configuración, todos los parámetros de
 arranque deben (preferiblemente) ser especificados en la variable
@@ -279,11 +290,11 @@ arranque deben (preferiblemente) ser especificados en la variable
 el usuario debe asegurarse de crear todas las variables necesarias para
 tener una configuración válida.
 .PP
-Los ficheros de configuración se pueden colocar en el sistema de ficheros
-raíz (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), o en el medio
-en vivo (minios/config.conf, minios/config.conf.d/*.conf). Si ambos
-directorios se utilizan para una determinada opción, la del medio en vivo
-tienen prioridad sobre la del sistema de ficheros raíz.
+Los archivos de configuración se leen de /etc/live/config.conf y
+/etc/live/config.conf.d/*.conf. Al iniciar, minios/config.conf del medio en
+vivo se copia a /etc/live/config.conf solo si ese archivo no existe. Los
+directorios de configuración en el medio en vivo no se leen. Los archivos en
+/etc/live/config.conf.d se incluyen después de /etc/live/config.conf.
 .PP
 Aunque los ficheros de configuración situados en los directorios de
 configuración no requieren un nombre en concreto, se sugiere, por
@@ -356,6 +367,10 @@ usuario en texto plano.
 Esta variable corresponde al parámetro
 \&'\fBlive\-config.user\-password\-crypted\fP=\fICONTRASEÑA\fP'. Especifica la
 contraseña de usuario en formato cifrado.
+.IP \fBLIVE_CONFIG_NOROOT\fP=true|false 4
+Esta variable corresponde al parámetro '\fBlive\-config.noroot\fP' y desactiva
+la configuración de privilegios de root, sudo y PolicyKit cuando se
+establece en true.
 .IP \fBLIVE_SUDO_MODE\fP=\fBsin_contraseña\fP|password|disabled 4
 Esta variable corresponde al parámetro '\fBlive\-config.sudo\-mode\fP=...'. Si no
 se define, MiniOS mantiene el comportamiento histórico de sudo sin
@@ -407,7 +422,7 @@ Esta variable corresponde al parámetro
 Esta variable corresponde al parámetro '\fBlive\-config.utc\fP=\fByes\fP|no'
 .IP \fBLIVE_X_SESSION_MANAGER\fP=\fIX_SESSION_MANAGER\fP 4
 Esta variable corresponde al parámetro
-\&'\fBlive\-config.x\-session\-manager\fP=\fIX_SESSION_MANAGER\fP'
+\&'\fBlive\-config.xorg\-xsession\-manager\fP=\fIX_SESSION_MANAGER\fP'.
 .IP "\fBLIVE_XORG_DRIVER\fP=\fICONTROLADOR XORG\fP" 4
 Esta variable corresponde al parámetro
 \&'\fBlive\-config.xorg\-driver\fP=\fICONTROLADOR XORG\fP'
@@ -421,13 +436,13 @@ Esta variable corresponde al parámetro
 Esta variable corresponde al parámetro
 \&'\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP'
 .IP \fBLIVE_LINK_USER_DIRS\fP=true|false 4
-Esta variable corresponde al parámetro
-\&'\fBlive\-config.link\-user\-dirs\fP=true|false'. Habilita o deshabilita la
-creación de enlaces simbólicos para los directorios de usuario.
+Activa o desactiva la creación de enlaces simbólicos para los directorios de
+usuario. El parámetro de arranque correspondiente es el indicador simple
+\&'\fBlive\-config.link\-user\-dirs\fP'.
 .IP \fBLIVE_BIND_USER_DIRS\fP=true|false 4
-Esta variable corresponde al parámetro
-\&'\fBlive\-config.bind\-user\-dirs\fP=true|false'. Habilita o deshabilita el
-montaje de enlace para los directorios de usuario.
+Activa o desactiva el montaje bind para los directorios de usuario. El
+parámetro de arranque correspondiente es el indicador simple
+\&'\fBlive\-config.bind\-user\-dirs\fP'.
 .IP \fBLIVE_USER_DIRS_PATH\fP=\fIRUTA\fP 4
 Esta variable corresponde al parámetro
 \&'\fBlive\-config.user\-dirs\-path\fP=\fIRUTA\fP'. Especifica la ruta para los
@@ -444,7 +459,7 @@ gestionan Desktop, Documents, Downloads, Music, Pictures, Public, Templates
 y Videos. La migración rechaza fusionar dos árboles poblados; al desactivar
 la función, los datos gestionados se copian de vuelta. El estado y el
 registro se almacenan en /var/lib/live/config.
-.IP \fBLIVE_MODULE_MODE\fP 4
+.IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 Esta variable contiene el estado especificado por el parámetro
 \&'live\-config.module\-mode' (o 'module\-mode'). Cuando está configurada como
 "merged", el sistema en vivo aplica actualizaciones (a través de
@@ -491,33 +506,32 @@ permite aplicar de forma arbitraria ficheros de preconfiguración situados en
 el medios en vivo o en un servidor http/ftp.
 .IP \fBhostname\fP 4
 configura /etc/hostname y /etc/hosts.
-.IP \fBred\fP 4
-configura la política IPv4 cableada y duradera mediante un archivo de claves
-seguro de NetworkManager o un bloque ifupdown. Se ejecuta antes de los
-servicios de red, valida todos los valores y solo sella tras una escritura
-exitosa.
 .IP \fBissue\-setup\fP 4
 Configura el archivo /etc/issue con un banner de bienvenida e información de
 la distribución.
-.IP "\fBlive\-debconfig (passwd)\fP" 4
+.IP \fBlive\-debconfig_passwd\fP 4
 Configura las contraseñas de usuario y root a través de live\-debconfig.
 .IP \fBuser\-setup\fP 4
 Añade una cuenta de usuario en vivo.
+.IP \fBuser\-groups\fP 4
+agrega el usuario en vivo a los grupos suplementarios declarados por los
+módulos instalados. Los grupos existentes listados en
+/usr/share/live/config/user\-default\-groups.d/*.groups se aplican después de
+la creación del usuario y en ejecuciones posteriores de live\-config.
 .IP \fBroot\-setup\fP 4
 Establece o actualiza la contraseña de root y configura el entorno de
 usuario root.
 .IP \fBsudo\fP 4
 garantiza privilegios de sudo al usuario del sistema en vivo.
+.IP \fBuser\-ssh\-keys\fP 4
+sincroniza los archivos \fIauthorized_keys.<username>\fP específicos de
+usuario entre el medio en vivo y los directorios personales de cada
+usuario. Permite múltiples usuarios simultáneamente (por ejemplo,
+\fIauthorized_keys.root\fP, \fIauthorized_keys.live\fP, \fIauthorized_keys.admin\fP).
 .IP \fBuser\-media\fP 4
 enlaza o monta mediante bind los directorios de usuario validados en el
 medio de datos MiniOS existente y con escritura, con migración segura y
 copia de retorno al desactivar.
-.IP \fBuser\-ssh\-keys\fP 4
-sincroniza claves SSH de archivos específicos de usuario
-\fIauthorized_keys.<nombreusuario>\fP en el medio live a directorios
-home individuales de usuario. Soporta múltiples usuarios simultáneamente
-(ej. \fIauthorized_keys.root\fP, \fIauthorized_keys.live\fP,
-\fIauthorized_keys.admin\fP).
 .IP \fBlocales\fP 4
 configura las variantes locales.
 .IP \fBtzdata\fP 4
@@ -527,6 +541,8 @@ configura el nombre de usuario en xorg.service y aplica la postura X11
 cuando sea compatible.
 .IP \fBgdm3\fP 4
 configura el inicio de sesión automático en gdm3.
+.IP \fBsddm\fP 4
+configura el inicio de sesión automático en sddm.
 .IP \fBkdm\fP 4
 configura el inicio de sesión automático en kdm.
 .IP \fBlightdm\fP 4
@@ -547,12 +563,6 @@ cuando sysvinit está instalado. Los atajos noautologin y nottyautologin
 suprimen esa configuración.
 .IP \fBsysv\-rc\fP 4
 configura sysv\-rc desactivando los sevicios listados.
-.IP \fBlogin\fP 4
-Desactiva lastlog.
-.IP \fBanacron\fP 4
-Desactiva anacron.
-.IP \fButil\-linux\fP 4
-Desactiva util\-linux' hwclock.
 .IP \fBapport\fP 4
 Desactiva apport.
 .IP \fBgnome\-panel\-data\fP 4
@@ -566,29 +576,35 @@ Desactiva el asistente de migración de KDE (Squeeze y superior).
 .IP \fBkde\-services\fP 4
 Desactiva algunos servicios de KDE no deseados (squeeze y superior).
 .IP \fBpolicykit\fP 4
-garantiza privilegios de usuario mediante policykit.
-.IP \fBuser\-groups\fP 4
-agrega el usuario en vivo a los grupos suplementarios declarados por los
-módulos instalados. Los grupos existentes listados en
-/usr/share/live/config/user\-default\-groups.d/*.groups se aplican después de
-la creación del usuario y en ejecuciones posteriores de live\-config.
+concede privilegios de usuario mediante PolicyKit.
 .IP \fBssl\-cert\fP 4
-Regenera los certificados ssl snake\-oil.
+regenera los certificados SSL snake\-oil.
 .IP \fBxrdp\fP 4
 configura la postura XRDP como relajada, reforzada o deshabilitada cuando
 XRDP está instalado.
+.IP \fBanacron\fP 4
+Desactiva anacron.
+.IP \fButil\-linux\fP 4
+desactiva el servicio hwclock de util\-linux.
+.IP \fBlogin\fP 4
+Desactiva lastlog.
+.IP \fBxserver\-xorg\fP 4
+configura xserver\-xorg.
+.IP \fBred\fP 4
+configura la política IPv4 cableada y duradera mediante un archivo de claves
+seguro de NetworkManager o un bloque ifupdown. Se ejecuta antes de los
+servicios de red, valida todos los valores y solo sella tras una escritura
+exitosa.
+.IP \fBopenssh\-server\fP 4
+recrea las claves de host de OpenSSH y escribe la política de inicio de
+sesión root o autenticación por contraseña solicitada explícitamente.
 .IP \fBxfce4\-panel\fP 4
 configura xfce4\-panel utilizando las opciones por defecto.
 .IP \fBxscreensaver\fP 4
 controla el bloqueo de xscreensaver según LIVE_LOCKSCREEN_MODE.
 .IP \fBbroadcom\-sta\fP 4
 configura el controlador broadcom\-sta WLAN.
-.IP \fBxserver\-xorg\fP 4
-configura xserver\-xorg.
-.IP \fBopenssh\-server\fP 4
-recrea las claves de host de OpenSSH y escribe la política de inicio de
-sesión root o autenticación por contraseña solicitada explícitamente.
-.IP \fBxhyper\-v\fP 4
+.IP \fBhyperv\fP 4
 Configura los ajustes de X11 para mejorar la compatibilidad en las
 plataformas Microsoft Hyper\-V.
 .IP \fBntfs3\fP 4
@@ -603,22 +619,26 @@ el medio en vivo o en un servidor http/ftp.
 .SH FICHEROS
 .IP \fB/etc/live/config.conf\fP 4
 .IP \fB/etc/live/config.conf.d/*.conf\fP 4
-.IP \fBlive/config.conf\fP 4
-.IP \fBlive/config.conf.d/*.conf\fP 4
-.IP \fB/lib/live/config.sh\fP 4
-.IP \fB/lib/live/config/\fP 4
+.IP \fBminios/config.conf\fP 4
+Archivo de configuración en el medio en vivo, copiado a
+/etc/live/config.conf solo cuando el destino no existe.
+.IP \fB/usr/lib/live/init\-config.sh\fP 4
+.IP \fB/usr/lib/live/config.sh\fP 4
+.IP \fB/usr/lib/live/config/\fP 4
 .IP \fB/usr/share/live/config/user\-default\-groups.d/*.groups\fP 4
 Grupos suplementarios proporcionados por módulos para el usuario en
 vivo. Los nombres de los grupos pueden estar separados por espacios en
 blanco; las líneas en blanco y los comentarios que comienzan con # se
 ignoran. Solo se aplican los grupos que existen en el sistema en ejecución.
+.IP \fB/usr/share/minios/capabilities/minios\-live\-config.json\fP 4
+Inventario legible por máquina de las funciones compatibles de live\-config.
 .IP \fB/var/lib/live/config/\fP 4
 .IP \fB/var/log/live/config.log\fP 4
 .PP
-.IP \fB/live/config\-hooks/*\fP 4
-.IP \fBlive/config\-hooks/*\fP 4
-.IP \fB/live/config\-preseed/*\fP 4
-.IP "\fBlive/config\-preseed/* \fP" 4
+.IP \fB/usr/lib/live/config\-hooks/*\fP 4
+.IP \fBminios/config\-hooks/*\fP 4
+.IP \fB/usr/lib/live/config\-preseed/*\fP 4
+.IP \fBminios/config\-preseed/*\fP 4
 
 .SH "VER ADEMÁS"
 \fIlive\-boot\fP(7)
@@ -628,17 +648,14 @@ ignoran. Solo se aplican los grupos que existen en el sistema en ejecución.
 \fIlive\-tools\fP(7)
 
 .SH "PÁGINA PRINCIPAL"
-Se puede encontrar más información acerca de live\-config y el proyecto
-Debian Live en su página principal en
-<\fIhttps://wiki.debian.org/DebianLive\fP> y en el manual en
-<\fIhttps://live\-team.pages.debian.net/live\-manual/\fP>.
+Puede encontrar más información sobre MiniOS live\-config en
+<\fIhttps://github.com/minios\-linux/minios\-live\-config\fP>. La
+información sobre el proyecto Debian Live original está disponible en
+<\fIhttps://wiki.debian.org/DebianLive\fP>.
 
 .SH ERRORES
-Se puede notificar los fallos enviando un informe de errores sobre el
-paquete live\-config al Sistema de Seguimiento de Errores en
-<\fIhttp://bugs.debian.org/\fP> o escribiendo un mensaje a la lista de
-correo de Debian Live a la dirección
-<\fIdebian\-live@lists.debian.org\fP>.
+Los errores pueden reportarse en
+<\fIhttps://github.com/minios\-linux/minios\-live\-config/issues\fP>.
 
 .SH AUTOR
 live\-config fue originalmente escrito por Daniel Baumann

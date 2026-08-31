@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2026-08-19 20:55+0300\n"
-"PO-Revision-Date: 2026-08-19 17:59+0000\n"
+"POT-Creation-Date: 2026-08-31 03:44+0300\n"
+"PO-Revision-Date: 2026-08-31 00:44+0000\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -27,14 +27,14 @@ msgstr "LIVE-CONFIG"
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "2026-07-19"
-msgstr "2026-07-19"
+msgid "2026-08-31"
+msgstr "2026-08-31"
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "11.0.5.13"
-msgstr "11.0.5.13"
+msgid "11.0.5.18"
+msgstr "11.0.5.18"
 
 #. type: TH
 #: en/live-config.7:11
@@ -79,14 +79,16 @@ msgstr "CONFIGURATION"
 msgid ""
 "B<live-config> can be configured through boot parameters or configuration "
 "files. If both mechanisms are used for a certain option, the boot parameters "
-"take precedence over the configuration files. When using persistency, B<live-"
-"config> components are only run once."
+"take precedence over the configuration files. Components that record state "
+"under /var/lib/live/config normally run only once; synchronization and "
+"stateless components may run on each invocation."
 msgstr ""
-"B<live-config> peut être configuré en utilisant des paramètres d'amorçage ou "
-"des fichiers de configuration. Si ces deux mécanismes sont utilisés pour "
-"certaines options, les paramètres d'amorçage sont prioritaires sur les "
-"fichiers de configuration. Lorsque la persistance est utilisée, les "
-"composants de B<live-config> ne sont lancés qu'une seule fois."
+"B<live-config> peut être configuré via des paramètres de démarrage ou des "
+"fichiers de configuration. Si les deux mécanismes sont utilisés pour une "
+"option donnée, les paramètres de démarrage priment sur les fichiers de "
+"configuration. Les composants qui enregistrent un état sous /var/lib/live/"
+"config ne s'exécutent normalement qu'une seule fois ; les composants de "
+"synchronisation et sans état peuvent s'exécuter à chaque invocation."
 
 #. type: Plain text
 #: en/live-config.7:23
@@ -109,20 +111,17 @@ msgstr "Paramètres d'amorçage (composants)"
 #: en/live-config.7:26
 msgid ""
 "B<live-config> is only activated if 'boot=live' is used as a boot parameter. "
-"Additionally, B<live-config> needs to be told which components to run "
-"through the 'live-config.components' parameter or which components to not "
-"run through the 'live-config.nocomponents' parameter. If both 'live-"
-"config.components' and 'live-config.nocomponents' are used, or, if either "
-"one is specified multiple times, always the later one takes precedence over "
-"the previous one(s)."
+"By default, all components are run. The 'live-config.components' parameter "
+"can restrict which components run, and 'live-config.nocomponents' can "
+"exclude components. If both parameters are used, or either one is specified "
+"multiple times, the last occurrence takes precedence."
 msgstr ""
-"B<live-config> est uniquement activé si 'boot=live' est utilisé en tant que "
-"paramètre d'amorçage. De plus, B<live-config> a besoin d'être informé des "
-"composants qui seront lancés via le paramètre «live-config.components» ou de "
-"ceux qui ne doivent pas être lancés en utilisant le paramètre «live-"
-"config.nocomponents». Si «live-config.components» et «live-"
-"config.nocomponents» sont utilisés ou, si l'un d'eux est spécifié plusieurs "
-"fois, c'est toujours le dernier qui prévaut sur ceux qui précèdent."
+"B<live-config> n'est activé que si 'boot=live' est utilisé comme paramètre "
+"de démarrage. Par défaut, tous les composants sont exécutés. Le paramètre "
+"'live-config.components' permet de restreindre les composants lancés, et "
+"'live-config.nocomponents' permet d'en exclure. Si les deux paramètres sont "
+"utilisés, ou si l'un d'eux est spécifié plusieurs fois, la dernière "
+"occurrence prévaut."
 
 #. type: IP
 #: en/live-config.7:27
@@ -146,15 +145,13 @@ msgstr "B<live-config.components>=I<COMPOSANT1>,I<COMPOSANT2>, ... I<COMPOSANTn>
 #. type: Plain text
 #: en/live-config.7:31
 msgid ""
-"Only the specified components are run. Note that the order matters, e.g. "
-"'live-config.components=sudo,user-setup' would not work since the user needs "
-"to be added before it can be configured for sudo. Look at the filenames of "
-"the components in /usr/lib/live/config for their ordering number."
+"Only the specified components are run. Components are executed in the order "
+"encoded in their filenames under /usr/lib/live/config, regardless of their "
+"order in this list."
 msgstr ""
-"Seuls les scripts spécifiés sont lancés. Notez que leur ordre importe, ainsi "
-"'live-config=sudo,user-setup' ne peut pas fonctionner tant que l'utilisateur "
-"configuré pour utiliser sudo n'a pas été créé. Regardez l'ordre numérique "
-"des noms de fichiers des composants dans /usr/lib/live/config."
+"Seuls les composants spécifiés sont exécutés. Les composants sont lancés "
+"dans l'ordre défini par leurs noms de fichiers sous /usr/lib/live/config, "
+"indépendamment de leur ordre dans cette liste."
 
 #. type: IP
 #: en/live-config.7:31
@@ -164,12 +161,8 @@ msgstr "B<live-config.nocomponents> | B<nocomponents>"
 
 #. type: Plain text
 #: en/live-config.7:33
-msgid ""
-"No component is run. This is the same as not using any of 'live-"
-"config.components' or 'live-config.nocomponents'."
-msgstr ""
-"Aucun composant n'est lancé. Cela revient au même que de n'utiliser ni «live-"
-"config.components», ni «live-config.nocomponents»."
+msgid "No component is run."
+msgstr "Aucun composant n'est exécuté."
 
 #. type: IP
 #: en/live-config.7:33
@@ -214,7 +207,7 @@ msgstr ""
 "doivent pouvoir être utilisables par wget (http, ftp ou file://)."
 
 #. type: Plain text
-#: en/live-config.7:43 en/live-config.7:109
+#: en/live-config.7:43 en/live-config.7:115
 msgid ""
 "If the file is placed on the live medium, it can be fetched with file:///run/"
 "initramfs/memory/data/I<FILE>, or with file:///I<FILE> if it is in the root "
@@ -278,13 +271,13 @@ msgstr "B<live-config.network-method>=dhcp|static|off | B<network-method>=dhcp|s
 #: en/live-config.7:53
 msgid ""
 "Selects wired network policy. Unset and dhcp leave the image default "
-"unchanged. Static writes a NetworkManager keyfile; off disables automatic "
-"IPv4 configuration for the selected interface."
+"unchanged. Static writes configuration for the selected backend; off "
+"disables automatic IPv4 configuration for the selected interface."
 msgstr ""
-"Sélectionne la politique réseau filaire. Si non défini ou en dhcp, l\\"
-"[aq]image conserve la valeur par défaut. Le mode static écrit un fichier "
-"keyfile pour NetworkManager ; off désactive la configuration IPv4 "
-"automatique pour l\\[aq]interface sélectionnée."
+"Sélectionne la politique réseau filaire. Les valeurs non définies et dhcp "
+"laissent l'image inchangée par défaut. Static écrit la configuration pour le "
+"backend sélectionné ; off désactive la configuration IPv4 automatique pour "
+"l'interface sélectionnée."
 
 #. type: IP
 #: en/live-config.7:53
@@ -310,7 +303,7 @@ msgid "B<live-config.network-address>=I<IPV4> | B<network-address>=I<IPV4>"
 msgstr "B<live-config.network-address>=I<IPV4> | B<network-address>=I<IPV4>"
 
 #. type: Plain text
-#: en/live-config.7:57 en/live-config.7:177
+#: en/live-config.7:57 en/live-config.7:183
 msgid "Sets the static IPv4 address."
 msgstr "Définit l\\[aq]adresse IPv4 statique."
 
@@ -392,13 +385,18 @@ msgstr "B<live-config.user-default-groups>=I<GROUP1>,I<GROUP2> ... I<GROUPn> | B
 #. type: Plain text
 #: en/live-config.7:69
 msgid ""
-"Allows one to set the default groups of the users that gets created for "
-"autologin is member of. The default is 'audio cdrom dip floppy video plugdev "
-"netdev powerdev scanner bluetooth'."
+"Sets the supplementary groups for the user created for autologin. Group "
+"names may be separated by commas or spaces. The MiniOS default is 'dialout "
+"cdrom floppy audio video plugdev users fuse plugdev netdev powerdev scanner "
+"bluetooth weston-launch kvm libvirt libvirt-qemu vboxusers lpadmin dip "
+"sambashare docker wireshark'."
 msgstr ""
-"Permet de spécifier les groupes par défaut dont sont membre les utilisateurs "
-"qui sont créés pour l'auto-login. Par défaut, c'est 'audio cdrom dip floppy "
-"video plugdev netdev powerdev scanner bluetooth'."
+"Définit les groupes supplémentaires pour l'utilisateur créé pour la "
+"connexion automatique. Les noms de groupes peuvent être séparés par des "
+"virgules ou des espaces. La valeur par défaut de MiniOS est 'dialout cdrom "
+"floppy audio video plugdev users fuse plugdev netdev powerdev scanner "
+"bluetooth weston-launch kvm libvirt libvirt-qemu vboxusers lpadmin dip "
+"sambashare docker wireshark'."
 
 #. type: IP
 #: en/live-config.7:69
@@ -590,8 +588,8 @@ msgstr ""
 #. type: IP
 #: en/live-config.7:95
 #, no-wrap
-msgid "B<live-config.x-session-manager=>I<X_SESSION_MANAGER> | B<x-session-manager>=I<X_SESSION_MANAGER>"
-msgstr "B<live-config.x-session-manager=>I<GESTIONNAIRE_DE_SESSION_X> | B<x-session-manager>=I<GESTIONNAIRE_DE_SESSION_X>"
+msgid "B<live-config.xorg-xsession-manager=>I<X_SESSION_MANAGER> | B<x-session-manager>=I<X_SESSION_MANAGER>"
+msgstr "B<live-config.xorg-xsession-manager=>I<X_SESSION_MANAGER> | B<x-session-manager>=I<X_SESSION_MANAGER>"
 
 #. type: Plain text
 #: en/live-config.7:97
@@ -655,8 +653,8 @@ msgstr ""
 #. type: IP
 #: en/live-config.7:103
 #, no-wrap
-msgid "B<live-config.module-mode>=I<MODE> | B<module-mode>=I<MODE>"
-msgstr "B<live-config.module-mode>=I<MODE> | B<module-mode>=I<MODE>"
+msgid "B<live-config.module-mode>=simple|merged | B<module-mode>=simple|merged"
+msgstr "B<live-config.module-mode>=simple|merged | B<module-mode>=simple|merged"
 
 #. type: Plain text
 #: en/live-config.7:105
@@ -675,11 +673,57 @@ msgstr ""
 #. type: IP
 #: en/live-config.7:105
 #, no-wrap
+msgid "B<live-config.link-user-dirs> | B<link-user-dirs>"
+msgstr "B<live-config.link-user-dirs> | B<link-user-dirs>"
+
+#. type: Plain text
+#: en/live-config.7:107
+msgid ""
+"Links the managed user directories to the configured path on the MiniOS data "
+"medium."
+msgstr ""
+"Lie les répertoires utilisateur gérés vers le chemin configuré sur le "
+"support de données MiniOS."
+
+#. type: IP
+#: en/live-config.7:107
+#, no-wrap
+msgid "B<live-config.bind-user-dirs> | B<bind-user-dirs>"
+msgstr "B<live-config.bind-user-dirs> | B<bind-user-dirs>"
+
+#. type: Plain text
+#: en/live-config.7:109
+msgid ""
+"Bind-mounts the managed user directories from the configured path on the "
+"MiniOS data medium. This option is mutually exclusive with link-user-dirs."
+msgstr ""
+"Monte en bind les répertoires utilisateur gérés depuis le chemin configuré "
+"sur le support de données MiniOS. Cette option est mutuellement exclusive "
+"avec link-user-dirs."
+
+#. type: IP
+#: en/live-config.7:109
+#, no-wrap
+msgid "B<live-config.user-dirs-path>=I<PATH> | B<user-dirs-path>=I<PATH>"
+msgstr "B<live-config.user-dirs-path>=I<PATH> | B<user-dirs-path>=I<PATH>"
+
+#. type: Plain text
+#: en/live-config.7:111
+msgid ""
+"Sets the media-relative path used by link-user-dirs or bind-user-dirs. The "
+"default is /minios/userdata."
+msgstr ""
+"Définit le chemin relatif au support utilisé par link-user-dirs ou bind-user-"
+"dirs. La valeur par défaut est /minios/userdata."
+
+#. type: IP
+#: en/live-config.7:111
+#, no-wrap
 msgid "B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn> | B<hooks>=medium|filesystem|I<URL1>|I<URL2>| ... |I<URLn>"
 msgstr "B<live-config.hooks>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn> | B<hooks>=I<URL1>|I<URL2>| ... |I<URLn>"
 
 #. type: Plain text
-#: en/live-config.7:107
+#: en/live-config.7:113
 msgid ""
 "Allows one to fetch and execute one or more arbitrary files. Note that the "
 "URLs must be fetchable by wget (http, ftp or file://), the files are "
@@ -699,7 +743,7 @@ msgstr ""
 "E<lt>I<http://live.debian.net/other/hooks>E<gt>."
 
 #. type: Plain text
-#: en/live-config.7:111
+#: en/live-config.7:117
 msgid ""
 "All hooks in /usr/lib/live/config-hooks/ in the root filesystem of the live "
 "system can be automatically enabled with the keyword 'filesystem'."
@@ -709,7 +753,7 @@ msgstr ""
 "'filesystem'."
 
 #. type: Plain text
-#: en/live-config.7:113
+#: en/live-config.7:119
 msgid ""
 "All hooks in /minios/config-hooks/ of the live medium can be automatically "
 "enabled with the keyword 'medium'."
@@ -718,7 +762,7 @@ msgstr ""
 "automatiquement activés avec le mot clé 'medium'."
 
 #. type: Plain text
-#: en/live-config.7:115
+#: en/live-config.7:121
 msgid ""
 "If several mechanisms are combined, then filesystem hooks are executed "
 "first, then medium hooks, and last the network hooks."
@@ -728,13 +772,13 @@ msgstr ""
 "les hooks du réseau."
 
 #. type: SS
-#: en/live-config.7:116
+#: en/live-config.7:122
 #, no-wrap
 msgid "Boot Parameters (shortcuts)"
 msgstr "Paramètres d'amorçage (raccourcis)"
 
 #. type: Plain text
-#: en/live-config.7:118
+#: en/live-config.7:124
 msgid ""
 "For some common use cases where it would require to combine several "
 "individual parameters, B<live-config> provides shortcuts. This allows both "
@@ -746,28 +790,28 @@ msgstr ""
 "de rester simples."
 
 #. type: IP
-#: en/live-config.7:119
+#: en/live-config.7:125
 #, no-wrap
 msgid "B<live-config.noroot> | B<noroot>"
 msgstr "B<live-config.noroot> | B<noroot>"
 
 #. type: Plain text
-#: en/live-config.7:121
+#: en/live-config.7:127
 msgid ""
-"Disables sudo and policykit, the user cannot gain root privileges on the "
-"system."
+"Disables root password setup and the MiniOS sudo and PolicyKit privilege "
+"grants."
 msgstr ""
-"Désactive sudo et policykit, dans ce cas l'utilisateur ne peut pas obtenir "
-"des privilèges d'administrateur (root) sur le système."
+"Désactive la configuration du mot de passe root ainsi que les droits sudo et "
+"PolicyKit de MiniOS."
 
 #. type: IP
-#: en/live-config.7:121
+#: en/live-config.7:127
 #, no-wrap
 msgid "B<live-config.sudo-mode>=B<passwordless>|password|disabled | B<sudo-mode>=B<passwordless>|password|disabled"
 msgstr "B<live-config.sudo-mode>=B<passwordless>|password|disabled | B<sudo-mode>=B<passwordless>|password|disabled"
 
 #. type: Plain text
-#: en/live-config.7:123
+#: en/live-config.7:129
 msgid ""
 "Controls sudo setup for the live user. The default, and historical MiniOS "
 "behavior when unset, is B<passwordless>. The B<password> mode keeps sudo "
@@ -785,13 +829,13 @@ msgstr ""
 "désactive plus largement la configuration des privilèges root."
 
 #. type: IP
-#: en/live-config.7:123
+#: en/live-config.7:129
 #, no-wrap
 msgid "B<live-config.polkit-mode>=B<passwordless>|password|disabled | B<polkit-mode>=B<passwordless>|password|disabled"
 msgstr "B<live-config.polkit-mode>=B<passwordless>|password|disabled | B<polkit-mode>=B<passwordless>|password|disabled"
 
 #. type: Plain text
-#: en/live-config.7:125
+#: en/live-config.7:131
 msgid ""
 "Controls MiniOS PolicyKit convenience rules. The default, and historical "
 "MiniOS behavior when unset, is B<passwordless>, which grants local "
@@ -812,43 +856,43 @@ msgstr ""
 "administratifs."
 
 #. type: IP
-#: en/live-config.7:125
+#: en/live-config.7:131
 #, no-wrap
 msgid "B<live-config.ssh-permit-root-login>=B<true>|false | B<ssh-permit-root-login>=B<true>|false"
 msgstr "B<live-config.ssh-permit-root-login>=B<true>|false | B<ssh-permit-root-login>=B<true>|false"
 
 #. type: Plain text
-#: en/live-config.7:127
+#: en/live-config.7:133
 msgid ""
-"Writes an OpenSSH PermitRootLogin policy drop-in when openssh-server is "
-"installed."
+"Writes an OpenSSH PermitRootLogin policy when explicitly set and openssh-"
+"server is installed."
 msgstr ""
-"Écrit une règle complémentaire OpenSSH PermitRootLogin lorsque openssh-"
-"server est installé."
+"Écrit une politique OpenSSH PermitRootLogin lorsqu'elle est explicitement "
+"définie et que openssh-server est installé."
 
 #. type: IP
-#: en/live-config.7:127
+#: en/live-config.7:133
 #, no-wrap
 msgid "B<live-config.ssh-password-authentication>=B<true>|false | B<ssh-password-authentication>=B<true>|false"
 msgstr "B<live-config.ssh-password-authentication>=B<true>|false | B<ssh-password-authentication>=B<true>|false"
 
 #. type: Plain text
-#: en/live-config.7:129
+#: en/live-config.7:135
 msgid ""
-"Writes an OpenSSH PasswordAuthentication policy drop-in when openssh-server "
-"is installed."
+"Writes an OpenSSH PasswordAuthentication policy when explicitly set and "
+"openssh-server is installed."
 msgstr ""
-"Écrit une règle complémentaire OpenSSH PasswordAuthentication lorsque "
-"openssh-server est installé."
+"Écrit une politique OpenSSH PasswordAuthentication lorsqu'elle est "
+"explicitement définie et que openssh-server est installé."
 
 #. type: IP
-#: en/live-config.7:129
+#: en/live-config.7:135
 #, no-wrap
 msgid "B<live-config.xrdp-mode>=B<relaxed>|hardened|disabled | B<xrdp-mode>=B<relaxed>|hardened|disabled"
 msgstr "B<live-config.xrdp-mode>=B<relaxed>|hardened|disabled | B<xrdp-mode>=B<relaxed>|hardened|disabled"
 
 #. type: Plain text
-#: en/live-config.7:131
+#: en/live-config.7:137
 msgid ""
 "Controls XRDP posture when xrdp is installed. B<relaxed> preserves "
 "historical MiniOS defaults. B<hardened> binds XRDP to localhost, restores "
@@ -862,13 +906,13 @@ msgstr ""
 "disponible."
 
 #. type: IP
-#: en/live-config.7:131
+#: en/live-config.7:137
 #, no-wrap
 msgid "B<live-config.x11-mode>=B<relaxed>|hardened | B<x11-mode>=B<relaxed>|hardened"
 msgstr "B<live-config.x11-mode>=B<relaxed>|hardened | B<x11-mode>=B<relaxed>|hardened"
 
 #. type: Plain text
-#: en/live-config.7:133
+#: en/live-config.7:139
 msgid ""
 "Controls MiniOS X11 convenience posture. B<relaxed> preserves historical "
 "compatibility. B<hardened> removes the permissive -ac X server option and "
@@ -879,13 +923,13 @@ msgstr ""
 "serveur X et renforce Xwrapper.config si présent."
 
 #. type: IP
-#: en/live-config.7:133
+#: en/live-config.7:139
 #, no-wrap
 msgid "B<live-config.issue-password-hints>=B<true>|false | B<issue-password-hints>=B<true>|false"
 msgstr "B<live-config.issue-password-hints>=B<true>|false | B<issue-password-hints>=B<true>|false"
 
 #. type: Plain text
-#: en/live-config.7:135
+#: en/live-config.7:141
 msgid ""
 "Controls whether /etc/issue shows the default MiniOS root/live password "
 "hints."
@@ -894,13 +938,13 @@ msgstr ""
 "défaut dans /etc/issue."
 
 #. type: IP
-#: en/live-config.7:135
+#: en/live-config.7:141
 #, no-wrap
 msgid "B<live-config.lockscreen-mode>=B<relaxed>|hardened | B<lockscreen-mode>=B<relaxed>|hardened"
 msgstr "B<live-config.lockscreen-mode>=B<relaxed>|hardened | B<lockscreen-mode>=B<relaxed>|hardened"
 
 #. type: Plain text
-#: en/live-config.7:137
+#: en/live-config.7:143
 msgid ""
 "Controls whether live-config relaxes screen locking. B<relaxed> preserves "
 "historical live-session convenience. B<hardened> avoids disabling GNOME "
@@ -912,94 +956,99 @@ msgstr ""
 "le fichier est présent."
 
 #. type: IP
-#: en/live-config.7:137
+#: en/live-config.7:143
 #, no-wrap
 msgid "B<live-config.noautologin> | B<noautologin>"
 msgstr "B<live-config.noautologin> | B<noautologin>"
 
 #. type: Plain text
-#: en/live-config.7:139
-msgid "Disables both the automatic console login and the graphical autologin."
-msgstr "Désactive l'auto-login sur la console et l'auto-login graphique."
+#: en/live-config.7:145
+msgid ""
+"Prevents setup of both automatic console login and graphical autologin. "
+"Existing persistent configuration is not removed."
+msgstr ""
+"Empêche la configuration de la connexion automatique à la console et de la "
+"connexion graphique automatique. Les configurations persistantes existantes "
+"ne sont pas supprimées."
 
 #. type: IP
-#: en/live-config.7:139
+#: en/live-config.7:145
 #, no-wrap
 msgid "B<live-config.nottyautologin> | B<nottyautologin>"
 msgstr "B<live-config.nottyautologin> | B<nottyautologin>"
 
 #. type: Plain text
-#: en/live-config.7:141
+#: en/live-config.7:147
 msgid ""
-"Disables the automatic login on the console, not affecting the graphical "
-"autologin."
+"Prevents setup of automatic console login without affecting graphical "
+"autologin. Existing persistent configuration is not removed."
 msgstr ""
-"Désactive l'auto-login sur la console, mais ne concerne pas l'auto-login "
-"graphique."
+"Empêche la configuration de la connexion automatique à la console sans "
+"affecter la connexion graphique automatique. Les configurations persistantes "
+"existantes ne sont pas supprimées."
 
 #. type: IP
-#: en/live-config.7:141
+#: en/live-config.7:147
 #, no-wrap
 msgid "B<live-config.nox11autologin> | B<nox11autologin>"
 msgstr "B<live-config.nox11autologin> | B<nox11autologin>"
 
 #. type: Plain text
-#: en/live-config.7:143
+#: en/live-config.7:149
 msgid ""
-"Disables the automatic login with any display manager, not affecting tty "
-"autologin."
+"Prevents setup of graphical autologin without affecting console autologin. "
+"Existing persistent configuration is not removed."
 msgstr ""
-"Désactive l'auto-login avec tout gestionnaire graphique, sans affecter "
-"l'auto-login en console (tty)."
+"Empêche la configuration de la connexion graphique automatique sans affecter "
+"la connexion automatique à la console. Les configurations persistantes "
+"existantes ne sont pas supprimées."
 
 #. type: SS
-#: en/live-config.7:144
+#: en/live-config.7:150
 #, no-wrap
 msgid "Boot Parameters (special options)"
 msgstr "Paramètres d'amorçage (options particulières)"
 
 #. type: Plain text
-#: en/live-config.7:146
+#: en/live-config.7:152
 msgid "For special use cases there are some special boot parameters."
 msgstr ""
 "Pour certains cas d'utilisation, il existe des paramètres de démarrage "
 "spécifiques."
 
 #. type: IP
-#: en/live-config.7:147
+#: en/live-config.7:153
 #, no-wrap
 msgid "B<live-config.debug> | B<debug>"
 msgstr "B<live-config.debug> | B<debug>"
 
 #. type: Plain text
-#: en/live-config.7:149
+#: en/live-config.7:155
 msgid "Enables debug output in live-config."
 msgstr "Active les messages de debug dans live-config."
 
 #. type: SS
-#: en/live-config.7:150
+#: en/live-config.7:156
 #, no-wrap
 msgid "Configuration Files"
 msgstr "Fichiers de configuration"
 
 #. type: Plain text
-#: en/live-config.7:152
+#: en/live-config.7:158
 msgid ""
 "B<live-config> can be configured (but not activated) through configuration "
-"files. Everything but the shortcuts that can be configured with a boot "
-"parameter can also alternatively be configured through one or more files. If "
-"configuration files are used, the 'boot=live' parameter is still required to "
-"activate B<live-config>."
+"files. Any supported boot parameter can be placed in B<LIVE_CONFIG_CMDLINE>, "
+"and most options can alternatively be set through individual variables. The "
+"'boot=live' parameter is still required to activate B<live-config>."
 msgstr ""
-"B<live-config> peut être configuré (but not activated) par certains fichiers "
-"de configuration. Tout, sauf les touches de raccourcis qui peuvent être "
-"configurées avec un paramètre d'amorçage, peut alternativement être "
-"configuré via un ou plusieurs fichiers. Si des fichiers de configuration "
-"sont utilisés, le paramètre 'boot=live' est toujours requis pour activer "
-"B<live-config>."
+"B<live-config> peut être configuré (mais pas activé) via des fichiers de "
+"configuration. Tout paramètre de démarrage supporté peut être placé dans "
+"B<LIVE_CONFIG_CMDLINE>, et la plupart des options peuvent aussi être "
+"définies via des variables individuelles. Le paramètre 'boot=live' reste "
+"nécessaire pour activer B<live-config>."
 
 #. type: Plain text
-#: en/live-config.7:154
+#: en/live-config.7:160
 msgid ""
 "B<Note:> If configuration files are used, either (preferably) all boot "
 "parameters should be put into the B<LIVE_CONFIG_CMDLINE> variable, or "
@@ -1015,22 +1064,23 @@ msgstr ""
 "une configuration valide."
 
 #. type: Plain text
-#: en/live-config.7:156
+#: en/live-config.7:162
 msgid ""
-"Configuration files can be placed either in the root filesystem itself (/etc/"
-"live/config.conf, /etc/live/config.conf.d/*.conf), or on the live media "
-"(minios/config.conf, minios/config.conf.d/*.conf). If both places are used "
-"for a certain option, the ones from the live media take precedence over the "
-"ones from the root filesystem."
+"Configuration files are read from /etc/live/config.conf and /etc/live/"
+"config.conf.d/*.conf. At startup, minios/config.conf from the live medium is "
+"copied to /etc/live/config.conf only if that file does not already exist. "
+"Configuration directories on the live medium are not read. Files in /etc/"
+"live/config.conf.d are sourced after /etc/live/config.conf."
 msgstr ""
-"Les fichiers de configuration peuvent être placés soit dans la racine du "
-"système de fichiers (/etc/live/config.conf, /etc/live/config.conf.d/*.conf), "
-"soit sur le média live (minios/config.conf, minios/config.conf.d/*.conf). Si "
-"ces deux emplacements sont utilisés pour une même option, ceux placés dans "
-"le média live sont prioritaires sur ceux dans la racine du système."
+"Les fichiers de configuration sont lus depuis /etc/live/config.conf et /etc/"
+"live/config.conf.d/*.conf. Au démarrage, minios/config.conf du support live "
+"est copié vers /etc/live/config.conf uniquement si ce fichier n'existe pas "
+"déjà. Les répertoires de configuration sur le support live ne sont pas lus. "
+"Les fichiers dans /etc/live/config.conf.d sont inclus après /etc/live/"
+"config.conf."
 
 #. type: Plain text
-#: en/live-config.7:158
+#: en/live-config.7:164
 msgid ""
 "Although the configuration files placed in the configuration directories do "
 "not require a particular name, it is suggested for consistency reasons to "
@@ -1046,7 +1096,7 @@ msgstr ""
 "linux.conf»)."
 
 #. type: Plain text
-#: en/live-config.7:160
+#: en/live-config.7:166
 msgid ""
 "The actual content of the configuration files consists of one or more of the "
 "following variables."
@@ -1055,25 +1105,25 @@ msgstr ""
 "des variables suivantes."
 
 #. type: IP
-#: en/live-config.7:161
+#: en/live-config.7:167
 #, no-wrap
 msgid "B<LIVE_CONFIG_CMDLINE>=I<PARAMETER1> I<PARAMETER2> ... I<PARAMETERn>"
 msgstr "B<LIVE_CONFIG_CMDLINE>=I<PARAMÈTRE1> I<PARAMÈTRE2> ... I<PARAMETREn>"
 
 #. type: Plain text
-#: en/live-config.7:163
+#: en/live-config.7:169
 msgid "This variable corresponds to the bootloader command line."
 msgstr ""
 "Cette variable correspond à la ligne de commande du chargeur d'amorçage."
 
 #. type: IP
-#: en/live-config.7:163
+#: en/live-config.7:169
 #, no-wrap
 msgid "B<LIVE_CONFIG_COMPONENTS>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>"
 msgstr "B<LIVE_CONFIG_COMPONENTS>=I<COMPOSANT1>,I<COMPOSANT2>, ... I<COMPOSANTn>"
 
 #. type: Plain text
-#: en/live-config.7:165
+#: en/live-config.7:171
 msgid ""
 "This variable corresponds to the 'B<live-"
 "config.components>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' parameter."
@@ -1082,13 +1132,13 @@ msgstr ""
 "config.components>=I<COMPOSANT1>,I<COMPOSANT2>, ... I<COMPOSANTn>'"
 
 #. type: IP
-#: en/live-config.7:165
+#: en/live-config.7:171
 #, no-wrap
 msgid "B<LIVE_CONFIG_NOCOMPONENTS>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>"
 msgstr "B<LIVE_CONFIG_NOCOMPONENTS>=I<COMPOSANT1>,I<COMPOSANT2>, ... I<COMPOSANTn>"
 
 #. type: Plain text
-#: en/live-config.7:167
+#: en/live-config.7:173
 msgid ""
 "This variable corresponds to the 'B<live-"
 "config.nocomponents>=I<COMPONENT1>,I<COMPONENT2>, ... I<COMPONENTn>' "
@@ -1098,13 +1148,13 @@ msgstr ""
 "config.nocomponents>=I<COMPOSANT1>,I<COMPOSANT2>, ... I<COMPOSANTn>'"
 
 #. type: IP
-#: en/live-config.7:167
+#: en/live-config.7:173
 #, no-wrap
 msgid "B<LIVE_DEBCONF_PRESEED>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>"
 msgstr "B<LIVE_DEBCONF_PRESEED>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>"
 
 #. type: Plain text
-#: en/live-config.7:169
+#: en/live-config.7:175
 msgid ""
 "This variable corresponds to the 'B<live-config.debconf-preseed>=filesystem|"
 "medium|I<URL1>|I<URL2>| ... |I<URLn>' parameter."
@@ -1113,13 +1163,13 @@ msgstr ""
 "preseed>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>'."
 
 #. type: IP
-#: en/live-config.7:169
+#: en/live-config.7:175
 #, no-wrap
 msgid "B<LIVE_HOSTNAME>=I<HOSTNAME>"
 msgstr "B<LIVE_HOSTNAME>=I<NOM_D_HÔTE>"
 
 #. type: Plain text
-#: en/live-config.7:171
+#: en/live-config.7:177
 msgid ""
 "This variable corresponds to the 'B<live-config.hostname>=I<HOSTNAME>' "
 "parameter."
@@ -1128,13 +1178,13 @@ msgstr ""
 "config.hostname>=I<NOM_D_HÔTE>'."
 
 #. type: IP
-#: en/live-config.7:171
+#: en/live-config.7:177
 #, no-wrap
 msgid "B<LIVE_NETWORK_METHOD>=dhcp|static|off"
 msgstr "B<LIVE_NETWORK_METHOD>=dhcp|static|off"
 
 #. type: Plain text
-#: en/live-config.7:173
+#: en/live-config.7:179
 msgid ""
 "Selects wired network policy. DHCP and an unset value are no-ops and do not "
 "remove a previously created MiniOS static profile."
@@ -1143,68 +1193,68 @@ msgstr ""
 "modifient pas et ne suppriment pas un profil statique MiniOS déjà créé."
 
 #. type: IP
-#: en/live-config.7:173
+#: en/live-config.7:179
 #, no-wrap
 msgid "B<LIVE_NETWORK_INTERFACE>=I<INTERFACE>"
 msgstr "B<LIVE_NETWORK_INTERFACE>=I<INTERFACE>"
 
 #. type: Plain text
-#: en/live-config.7:175
+#: en/live-config.7:181
 msgid "Selects the wired interface for static or off policy."
 msgstr "Sélectionne l\\[aq]interface filaire pour la politique static ou off."
 
 #. type: IP
-#: en/live-config.7:175
+#: en/live-config.7:181
 #, no-wrap
 msgid "B<LIVE_NETWORK_ADDRESS>=I<IPV4>"
 msgstr "B<ADRESSE_RÉSEAU_LIVE>=I<IPV4>"
 
 #. type: IP
-#: en/live-config.7:177
+#: en/live-config.7:183
 #, no-wrap
 msgid "B<LIVE_NETWORK_PREFIX>=I<PREFIX>"
 msgstr "B<PRÉFIXE_RÉSEAU_LIVE>=I<PRÉFIXE>"
 
 #. type: Plain text
-#: en/live-config.7:179
+#: en/live-config.7:185
 msgid "Sets the static prefix length; defaults to 24."
 msgstr "Définit la longueur du préfixe statique ; la valeur par défaut est 24."
 
 #. type: IP
-#: en/live-config.7:179
+#: en/live-config.7:185
 #, no-wrap
 msgid "B<LIVE_NETWORK_GATEWAY>=I<IPV4>"
 msgstr "B<PASSERELLE_RÉSEAU_LIVE>=I<IPV4>"
 
 #. type: Plain text
-#: en/live-config.7:181
+#: en/live-config.7:187
 msgid "Sets the optional static gateway."
 msgstr "Définit la passerelle statique optionnelle."
 
 #. type: IP
-#: en/live-config.7:181
+#: en/live-config.7:187
 #, no-wrap
 msgid "B<LIVE_NETWORK_DNS>=I<ADDRESS1,ADDRESS2>"
 msgstr "B<LIVE_NETWORK_DNS>=I<ADRESSE1,ADRESSE2>"
 
 #. type: Plain text
-#: en/live-config.7:183
+#: en/live-config.7:189
 msgid "Sets optional comma-separated DNS servers."
 msgstr "Définit les serveurs DNS optionnels, séparés par des virgules."
 
 #. type: IP
-#: en/live-config.7:183
+#: en/live-config.7:189
 #, no-wrap
 msgid "B<LIVE_NETWORK_BACKEND>=auto|nm|ifupdown"
 msgstr "B<LIVE_NETWORK_BACKEND>=auto|nm|ifupdown"
 
 #. type: Plain text
-#: en/live-config.7:185
+#: en/live-config.7:191
 msgid "Selects the implemented backend."
 msgstr "Sélectionne le backend implémenté."
 
 #. type: Plain text
-#: en/live-config.7:187
+#: en/live-config.7:193
 msgid ""
 "The network component writes policy once under persistent live systems and "
 "records /var/lib/live/config/network. Remove that stamp and edit /etc/live/"
@@ -1222,13 +1272,13 @@ msgstr ""
 "témoin gérés par MiniOS."
 
 #. type: IP
-#: en/live-config.7:187
+#: en/live-config.7:193
 #, no-wrap
 msgid "B<LIVE_USERNAME>=I<USERNAME>"
 msgstr "B<LIVE_USERNAME>=I<NOM_D_UTILISATEUR>"
 
 #. type: Plain text
-#: en/live-config.7:189
+#: en/live-config.7:195
 msgid ""
 "This variable corresponds to the 'B<live-config.username>=I<USERNAME>' "
 "parameter."
@@ -1237,13 +1287,13 @@ msgstr ""
 "config.username>=I<NOM_D_UTILISATEUR>'."
 
 #. type: IP
-#: en/live-config.7:189
+#: en/live-config.7:195
 #, no-wrap
 msgid "B<LIVE_USER_DEFAULT_GROUPS>=I<GROUP1>,I<GROUP2> ... I<GROUPn>"
 msgstr "B<LIVE_USER_DEFAULT_GROUPS>=I<GROUPE1>,I<GROUPE2> ... I<GROUPEn>"
 
 #. type: Plain text
-#: en/live-config.7:191
+#: en/live-config.7:197
 msgid ""
 "This variable corresponds to the 'B<live-config.user-default-"
 "groups>=\"I<GROUP1>,I<GROUP2> ... I<GROUPn>\"' parameter."
@@ -1252,13 +1302,13 @@ msgstr ""
 "groups>=\"I<GROUPE1>,I<GROUPE2> ... I<GROUPEn>\"'"
 
 #. type: IP
-#: en/live-config.7:191
+#: en/live-config.7:197
 #, no-wrap
 msgid "B<LIVE_USER_FULLNAME>=\"I<USER FULLNAME>\""
 msgstr "B<LIVE_USER_FULLNAME>=\"I<NOM_COMPLET_D_UTILISATEUR\">"
 
 #. type: Plain text
-#: en/live-config.7:193
+#: en/live-config.7:199
 msgid ""
 "This variable corresponds to the 'B<live-config.user-fullname>=\"I<USER "
 "FULLNAME>\"' parameter."
@@ -1267,13 +1317,13 @@ msgstr ""
 "fullname>=\"I<NOM_COMPLET_D_UTILISATEUR\">'."
 
 #. type: IP
-#: en/live-config.7:193
+#: en/live-config.7:199
 #, no-wrap
 msgid "B<LIVE_ROOT_PASSWORD>=I<PASSWORD>"
 msgstr "B<LIVE_ROOT_PASSWORD>=I<MOT_DE_PASSE>"
 
 #. type: Plain text
-#: en/live-config.7:195
+#: en/live-config.7:201
 msgid ""
 "This variable corresponds to the 'B<live-config.root-password>=I<PASSWORD>' "
 "parameter. It specifies the root password in plain text."
@@ -1283,13 +1333,13 @@ msgstr ""
 "clair."
 
 #. type: IP
-#: en/live-config.7:195
+#: en/live-config.7:201
 #, no-wrap
 msgid "B<LIVE_ROOT_PASSWORD_CRYPTED>=I<PASSWORD>"
 msgstr "B<LIVE_ROOT_PASSWORD_CRYPTED>=I<MOT_DE_PASSE>"
 
 #. type: Plain text
-#: en/live-config.7:197
+#: en/live-config.7:203
 msgid ""
 "This variable corresponds to the 'B<live-config.root-password-"
 "crypted>=I<PASSWORD>' parameter. It specifies the root password in crypted "
@@ -1300,13 +1350,13 @@ msgstr ""
 "chiffrée."
 
 #. type: IP
-#: en/live-config.7:197
+#: en/live-config.7:203
 #, no-wrap
 msgid "B<LIVE_USER_PASSWORD>=I<PASSWORD>"
 msgstr "B<LIVE_USER_PASSWORD>=I<MOT_DE_PASSE>"
 
 #. type: Plain text
-#: en/live-config.7:199
+#: en/live-config.7:205
 msgid ""
 "This variable corresponds to the 'B<live-config.user-password>=I<PASSWORD>' "
 "parameter. It specifies the user password in plain text."
@@ -1316,13 +1366,13 @@ msgstr ""
 "texte clair."
 
 #. type: IP
-#: en/live-config.7:199
+#: en/live-config.7:205
 #, no-wrap
 msgid "B<LIVE_USER_PASSWORD_CRYPTED>=I<PASSWORD>"
 msgstr "B<LIVE_USER_PASSWORD_CRYPTED>=I<MOT_DE_PASSE>"
 
 #. type: Plain text
-#: en/live-config.7:201
+#: en/live-config.7:207
 msgid ""
 "This variable corresponds to the 'B<live-config.user-password-"
 "crypted>=I<PASSWORD>' parameter. It specifies the user password in crypted "
@@ -1333,13 +1383,29 @@ msgstr ""
 "forme chiffrée."
 
 #. type: IP
-#: en/live-config.7:201
+#: en/live-config.7:207
+#, no-wrap
+msgid "B<LIVE_CONFIG_NOROOT>=true|false"
+msgstr "B<LIVE_CONFIG_NOROOT>=true|false"
+
+#. type: Plain text
+#: en/live-config.7:209
+msgid ""
+"This variable corresponds to the 'B<live-config.noroot>' parameter and "
+"disables root, sudo, and PolicyKit privilege setup when set to true."
+msgstr ""
+"Cette variable correspond au paramètre 'B<live-config.noroot>' et désactive "
+"la configuration des privilèges root, sudo et PolicyKit lorsqu'elle est "
+"définie à true."
+
+#. type: IP
+#: en/live-config.7:209
 #, no-wrap
 msgid "B<LIVE_SUDO_MODE>=B<passwordless>|password|disabled"
 msgstr "B<LIVE_SUDO_MODE>=B<passwordless>|password|disabled"
 
 #. type: Plain text
-#: en/live-config.7:203
+#: en/live-config.7:211
 msgid ""
 "This variable corresponds to the 'B<live-config.sudo-mode>=...' parameter. "
 "If unset, MiniOS keeps the historical passwordless sudo behavior. Use "
@@ -1354,13 +1420,13 @@ msgstr ""
 "l'utilisateur."
 
 #. type: IP
-#: en/live-config.7:203
+#: en/live-config.7:211
 #, no-wrap
 msgid "B<LIVE_POLKIT_MODE>=B<passwordless>|password|disabled"
 msgstr "B<LIVE_POLKIT_MODE>=B<passwordless>|password|disabled"
 
 #. type: Plain text
-#: en/live-config.7:205
+#: en/live-config.7:213
 msgid ""
 "This variable corresponds to the 'B<live-config.polkit-mode>=...' parameter. "
 "If unset, MiniOS keeps the historical passwordless PolicyKit rule. Use "
@@ -1374,13 +1440,13 @@ msgstr ""
 "distribution."
 
 #. type: IP
-#: en/live-config.7:205
+#: en/live-config.7:213
 #, no-wrap
 msgid "B<LIVE_SSH_PERMIT_ROOT_LOGIN>=B<true>|false"
 msgstr "B<LIVE_SSH_PERMIT_ROOT_LOGIN>=B<true>|false"
 
 #. type: Plain text
-#: en/live-config.7:207
+#: en/live-config.7:215
 msgid ""
 "This variable corresponds to the 'B<live-config.ssh-permit-root-login>=...' "
 "parameter."
@@ -1389,13 +1455,13 @@ msgstr ""
 "login>=...'."
 
 #. type: IP
-#: en/live-config.7:207
+#: en/live-config.7:215
 #, no-wrap
 msgid "B<LIVE_SSH_PASSWORD_AUTHENTICATION>=B<true>|false"
 msgstr "B<LIVE_SSH_PASSWORD_AUTHENTICATION>=B<true>|false"
 
 #. type: Plain text
-#: en/live-config.7:209
+#: en/live-config.7:217
 msgid ""
 "This variable corresponds to the 'B<live-config.ssh-password-"
 "authentication>=...' parameter."
@@ -1404,37 +1470,37 @@ msgstr ""
 "authentication>=...'."
 
 #. type: IP
-#: en/live-config.7:209
+#: en/live-config.7:217
 #, no-wrap
 msgid "B<LIVE_XRDP_MODE>=B<relaxed>|hardened|disabled"
 msgstr "B<LIVE_XRDP_MODE>=B<relaxed>|hardened|disabled"
 
 #. type: Plain text
-#: en/live-config.7:211
+#: en/live-config.7:219
 msgid ""
 "This variable corresponds to the 'B<live-config.xrdp-mode>=...' parameter."
 msgstr "Cette variable correspond au paramètre 'B<live-config.xrdp-mode>=...'."
 
 #. type: IP
-#: en/live-config.7:211
+#: en/live-config.7:219
 #, no-wrap
 msgid "B<LIVE_X11_MODE>=B<relaxed>|hardened"
 msgstr "B<LIVE_X11_MODE>=B<relaxed>|hardened"
 
 #. type: Plain text
-#: en/live-config.7:213
+#: en/live-config.7:221
 msgid ""
 "This variable corresponds to the 'B<live-config.x11-mode>=...' parameter."
 msgstr "Cette variable correspond au paramètre 'B<live-config.x11-mode>=...'."
 
 #. type: IP
-#: en/live-config.7:213
+#: en/live-config.7:221
 #, no-wrap
 msgid "B<LIVE_ISSUE_PASSWORD_HINTS>=B<true>|false"
 msgstr "B<LIVE_ISSUE_PASSWORD_HINTS>=B<true>|false"
 
 #. type: Plain text
-#: en/live-config.7:215
+#: en/live-config.7:223
 msgid ""
 "This variable corresponds to the 'B<live-config.issue-password-hints>=...' "
 "parameter."
@@ -1443,13 +1509,13 @@ msgstr ""
 "hints>=...'."
 
 #. type: IP
-#: en/live-config.7:215
+#: en/live-config.7:223
 #, no-wrap
 msgid "B<LIVE_LOCKSCREEN_MODE>=B<relaxed>|hardened"
 msgstr "B<LIVE_LOCKSCREEN_MODE>=B<relaxed>|hardened"
 
 #. type: Plain text
-#: en/live-config.7:217
+#: en/live-config.7:225
 msgid ""
 "This variable corresponds to the 'B<live-config.lockscreen-mode>=...' "
 "parameter."
@@ -1457,13 +1523,13 @@ msgstr ""
 "Cette variable correspond au paramètre 'B<live-config.lockscreen-mode>=...'."
 
 #. type: IP
-#: en/live-config.7:217
+#: en/live-config.7:225
 #, no-wrap
 msgid "B<LIVE_LOCALES>=I<LOCALE1>,I<LOCALE2> ... I<LOCALEn>"
 msgstr "B<LIVE_LOCALES>=I<LOCALISATION1>,I<LOCALISATION2> ... I<LOCALISATIONn>"
 
 #. type: Plain text
-#: en/live-config.7:219
+#: en/live-config.7:227
 msgid ""
 "This variable corresponds to the 'B<live-"
 "config.locales>=I<LOCALE1>,I<LOCALE2> ... I<LOCALEn>' parameter."
@@ -1472,13 +1538,13 @@ msgstr ""
 "config.locales>=I<LOCALISATION1>,I<LOCALISATION2> ... I<LOCALISATIONn>'."
 
 #. type: IP
-#: en/live-config.7:219
+#: en/live-config.7:227
 #, no-wrap
 msgid "B<LIVE_TIMEZONE>=I<TIMEZONE>"
 msgstr "B<LIVE_TIMEZONE>=I<TIMEZONE>"
 
 #. type: Plain text
-#: en/live-config.7:221
+#: en/live-config.7:229
 msgid ""
 "This variable corresponds to the 'B<live-config.timezone>=I<TIMEZONE>' "
 "parameter."
@@ -1486,13 +1552,13 @@ msgstr ""
 "Cette variable correspond au paramètre 'B<live-config.timezone>=I<TIMEZONE>'."
 
 #. type: IP
-#: en/live-config.7:221
+#: en/live-config.7:229
 #, no-wrap
 msgid "B<LIVE_KEYBOARD_MODEL>=I<KEYBOARD_MODEL>"
 msgstr "B<LIVE_KEYBOARD_MODEL>=I<MODELE_DE_CLAVIER>"
 
 #. type: Plain text
-#: en/live-config.7:223
+#: en/live-config.7:231
 msgid ""
 "This variable corresponds to the 'B<live-config.keyboard-"
 "model>=I<KEYBOARD_MODEL>' parameter."
@@ -1501,13 +1567,13 @@ msgstr ""
 "model>=I<MODELE_DE_CLAVIER>'."
 
 #. type: IP
-#: en/live-config.7:223
+#: en/live-config.7:231
 #, no-wrap
 msgid "B<LIVE_KEYBOARD_LAYOUTS>=I<KEYBOARD_LAYOUT1>,I<KEYBOARD_LAYOUT2> ... I<KEYBOARD_LAYOUTn>"
 msgstr "B<LIVE_KEYBOARD_LAYOUTS>=I<CONFIG_CLAVIER1>,I<CONFIG_CLAVIER2> ... I<CONFIG_CLAVIERn>"
 
 #. type: Plain text
-#: en/live-config.7:225
+#: en/live-config.7:233
 msgid ""
 "This variable corresponds to the 'B<live-config.keyboard-"
 "layouts>=I<KEYBOARD_LAYOUT1>,I<KEYBOARD_LAYOUT2> ... I<KEYBOARD_LAYOUTn>' "
@@ -1518,13 +1584,13 @@ msgstr ""
 "I<CONFIGURATIONn_DU_CLAVIER>'."
 
 #. type: IP
-#: en/live-config.7:225
+#: en/live-config.7:233
 #, no-wrap
 msgid "B<LIVE_KEYBOARD_VARIANTS>=I<KEYBOARD_VARIANT1>,I<KEYBOARD_VARIANT2> ... I<KEYBOARD_VARIANTn>"
 msgstr "B<LIVE_KEYBOARD_VARIANTS>=I<VARIANTE_CLAVIER1>,I<VARIANTE_CLAVIER2> ... I<VARIANTE_CLAVIERn>"
 
 #. type: Plain text
-#: en/live-config.7:227
+#: en/live-config.7:235
 msgid ""
 "This variable corresponds to the 'B<live-config.keyboard-"
 "variants>=I<KEYBOARD_VARIANT1>,I<KEYBOARD_VARIANT2> ... "
@@ -1535,13 +1601,13 @@ msgstr ""
 "I<VARIANTE_CLAVIERn>'."
 
 #. type: IP
-#: en/live-config.7:227
+#: en/live-config.7:235
 #, no-wrap
 msgid "B<LIVE_KEYBOARD_OPTIONS>=I<KEYBOARD_OPTIONS>"
 msgstr "B<LIVE_KEYBOARD_OPTIONS>=I<OPTIONS_DU_CLAVIER>"
 
 #. type: Plain text
-#: en/live-config.7:229
+#: en/live-config.7:237
 msgid ""
 "This variable corresponds to the 'B<live-config.keyboard-"
 "options>=I<KEYBOARD_OPTIONS>' parameter."
@@ -1550,13 +1616,13 @@ msgstr ""
 "options>=I<OPTIONS_DU_CLAVIER>'."
 
 #. type: IP
-#: en/live-config.7:229
+#: en/live-config.7:237
 #, no-wrap
 msgid "B<LIVE_SYSV_RC>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>"
 msgstr "B<LIVE_SYSV_RC>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>"
 
 #. type: Plain text
-#: en/live-config.7:231
+#: en/live-config.7:239
 msgid ""
 "This variable corresponds to the 'B<live-config.sysv-"
 "rc>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>' parameter."
@@ -1565,40 +1631,40 @@ msgstr ""
 "rc>=I<SERVICE1>,I<SERVICE2> ... I<SERVICEn>'."
 
 #. type: IP
-#: en/live-config.7:231
+#: en/live-config.7:239
 #, no-wrap
 msgid "B<LIVE_UTC>=B<yes>|no"
 msgstr "B<LIVE_UTC>=B<yes>|no"
 
 #. type: Plain text
-#: en/live-config.7:233
+#: en/live-config.7:241
 msgid ""
 "This variable corresponds to the 'B<live-config.utc>=B<yes>|no' parameter."
 msgstr "Cette variable correspond au paramètre 'B<live-config.utc>=B<yes>|no'."
 
 #. type: IP
-#: en/live-config.7:233
+#: en/live-config.7:241
 #, no-wrap
 msgid "B<LIVE_X_SESSION_MANAGER>=I<X_SESSION_MANAGER>"
 msgstr "B<LIVE_X_SESSION_MANAGER>=I<GESTIONNAIRE_DE_SESSION_X>"
 
 #. type: Plain text
-#: en/live-config.7:235
+#: en/live-config.7:243
 msgid ""
-"This variable corresponds to the 'B<live-config.x-session-"
+"This variable corresponds to the 'B<live-config.xorg-xsession-"
 "manager>=I<X_SESSION_MANAGER>' parameter."
 msgstr ""
-"Cette variable correspond au paramètre 'B<live-config.x-session-"
-"manager>=I<GESTIONNAIRE_DE_SESSION_X>'."
+"Cette variable correspond au paramètre 'B<live-config.xorg-xsession-"
+"manager>=I<X_SESSION_MANAGER>'."
 
 #. type: IP
-#: en/live-config.7:235
+#: en/live-config.7:243
 #, no-wrap
 msgid "B<LIVE_XORG_DRIVER>=I<XORG_DRIVER>"
 msgstr "B<LIVE_XORG_DRIVER>=I<PILOTE_XORG>"
 
 #. type: Plain text
-#: en/live-config.7:237
+#: en/live-config.7:245
 msgid ""
 "This variable corresponds to the 'B<live-config.xorg-driver>=I<XORG_DRIVER>' "
 "parameter."
@@ -1607,13 +1673,13 @@ msgstr ""
 "driver>=I<PILOTE_XORG>."
 
 #. type: IP
-#: en/live-config.7:237
+#: en/live-config.7:245
 #, no-wrap
 msgid "B<LIVE_XORG_RESOLUTION>=I<XORG_RESOLUTION>"
 msgstr "B<LIVE_XORG_RESOLUTION>=I<RESOLUTION_XORG>"
 
 #. type: Plain text
-#: en/live-config.7:239
+#: en/live-config.7:247
 msgid ""
 "This variable corresponds to the 'B<live-config.xorg-"
 "resolution>=I<XORG_RESOLUTION>' parameter."
@@ -1622,13 +1688,13 @@ msgstr ""
 "resolution>=I<RESOLUTION_XORG>'."
 
 #. type: IP
-#: en/live-config.7:239
+#: en/live-config.7:247
 #, no-wrap
 msgid "B<LIVE_WLAN_DRIVER>=I<WLAN_DRIVER>"
 msgstr "B<LIVE_WLAN_DRIVER>=I<PILOTE_WLAN>"
 
 #. type: Plain text
-#: en/live-config.7:241
+#: en/live-config.7:249
 msgid ""
 "This variable corresponds to the 'B<live-config.wlan-driver>=I<WLAN_DRIVER>' "
 "parameter."
@@ -1637,13 +1703,13 @@ msgstr ""
 "driver>=I<PILOTE_WLAN>."
 
 #. type: IP
-#: en/live-config.7:241
+#: en/live-config.7:249
 #, no-wrap
 msgid "B<LIVE_HOOKS>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>"
 msgstr "B<LIVE_HOOKS>=filesystem|medium|I<URL1>|I<URL2>| ... |I<URLn>"
 
 #. type: Plain text
-#: en/live-config.7:243
+#: en/live-config.7:251
 msgid ""
 "This variable corresponds to the 'B<live-config.hooks>=filesystem|medium|"
 "I<URL1>|I<URL2>| ... |I<URLn>' parameter."
@@ -1652,46 +1718,46 @@ msgstr ""
 "medium|I<URL1>|I<URL2>| ... |I<URLn>'."
 
 #. type: IP
-#: en/live-config.7:243
+#: en/live-config.7:251
 #, no-wrap
 msgid "B<LIVE_LINK_USER_DIRS>=true|false"
 msgstr "B<LIVE_LINK_USER_DIRS>=true|false"
 
 #. type: Plain text
-#: en/live-config.7:245
+#: en/live-config.7:253
 msgid ""
-"This variable corresponds to the 'B<live-config.link-user-dirs>=true|false' "
-"parameter. It enables or disables creation of symbolic links for user "
-"directories."
+"Enables or disables creation of symbolic links for user directories. The "
+"corresponding boot parameter is the bare 'B<live-config.link-user-dirs>' "
+"flag."
 msgstr ""
-"Cette variable correspond au paramètre 'B<live-config.link-user-dirs>=true|"
-"false'. Elle active ou désactive la création de liens symboliques pour les "
-"répertoires d'utilisateurs."
+"Active ou désactive la création de liens symboliques pour les répertoires "
+"utilisateur. Le paramètre de démarrage correspondant est le drapeau simple "
+"'B<live-config.link-user-dirs>'."
 
 #. type: IP
-#: en/live-config.7:245
+#: en/live-config.7:253
 #, no-wrap
 msgid "B<LIVE_BIND_USER_DIRS>=true|false"
 msgstr "B<LIVE_BIND_USER_DIRS>=true|false"
 
 #. type: Plain text
-#: en/live-config.7:247
+#: en/live-config.7:255
 msgid ""
-"This variable corresponds to the 'B<live-config.bind-user-dirs>=true|false' "
-"parameter. It enables or disables bind-mounting for user directories."
+"Enables or disables bind-mounting for user directories. The corresponding "
+"boot parameter is the bare 'B<live-config.bind-user-dirs>' flag."
 msgstr ""
-"Cette variable correspond au paramètre 'B<live-config.bind-user-dirs>=true|"
-"false'. Elle active ou désactive le montage de liaison pour les répertoires "
-"d'utilisateurs."
+"Active ou désactive le montage en bind pour les répertoires utilisateur. Le "
+"paramètre de démarrage correspondant est le drapeau simple 'B<live-"
+"config.bind-user-dirs>'."
 
 #. type: IP
-#: en/live-config.7:247
+#: en/live-config.7:255
 #, no-wrap
 msgid "B<LIVE_USER_DIRS_PATH>=I<PATH>"
 msgstr "B<LIVE_USER_DIRS_PATH>=I<CHEMIN>"
 
 #. type: Plain text
-#: en/live-config.7:249
+#: en/live-config.7:257
 msgid ""
 "This variable corresponds to the 'B<live-config.user-dirs-path>=I<PATH>' "
 "parameter. It specifies the path for user directories on the media."
@@ -1701,7 +1767,7 @@ msgstr ""
 "le média."
 
 #. type: Plain text
-#: en/live-config.7:259
+#: en/live-config.7:267
 msgid ""
 "User-media link and bind modes are mutually exclusive. The default path is /"
 "minios/userdata relative to the existing /run/initramfs/memory/data mount.  "
@@ -1728,13 +1794,13 @@ msgstr ""
 "retour. L'état et le statut sont enregistrés sous /var/lib/live/config."
 
 #. type: IP
-#: en/live-config.7:259
+#: en/live-config.7:267
 #, no-wrap
-msgid "B<LIVE_MODULE_MODE>"
-msgstr "B<LIVE_MODULE_MODE>"
+msgid "B<LIVE_MODULE_MODE>=simple|merged"
+msgstr "B<LIVE_MODULE_MODE>=simple|merged"
 
 #. type: Plain text
-#: en/live-config.7:261
+#: en/live-config.7:269
 msgid ""
 "This variable holds the state specified by the 'live-config.module-mode' (or "
 "'module-mode') parameter. When it is set to \"merged\", the live system "
@@ -1748,24 +1814,24 @@ msgstr ""
 "personnalisées avec l'environnement de base."
 
 #. type: IP
-#: en/live-config.7:261
+#: en/live-config.7:269
 #, no-wrap
 msgid "B<LIVE_CONFIG_DEBUG>=true|false"
 msgstr "B<LIVE_CONFIG_DEBUG>=true|false"
 
 #. type: Plain text
-#: en/live-config.7:263
+#: en/live-config.7:271
 msgid "This variable corresponds to the 'B<live-config.debug>' parameter."
 msgstr "Cette variable correspond au paramètre 'B<live-config.debug>'."
 
 #. type: SH
-#: en/live-config.7:264
+#: en/live-config.7:272
 #, no-wrap
 msgid "CUSTOMIZATION"
 msgstr "PERSONNALISATION"
 
 #. type: Plain text
-#: en/live-config.7:266
+#: en/live-config.7:274
 msgid ""
 "B<live-config> can be easily customized for downstream projects or local "
 "usage."
@@ -1774,13 +1840,13 @@ msgstr ""
 "ou pour un usage local."
 
 #. type: SS
-#: en/live-config.7:267
+#: en/live-config.7:275
 #, no-wrap
 msgid "Adding new config components"
 msgstr "Ajout de nouveaux composants de configuration"
 
 #. type: Plain text
-#: en/live-config.7:269
+#: en/live-config.7:277
 msgid ""
 "Downstream projects can put their components into /usr/lib/live/config and "
 "do not need to do anything else, the components will be called automatically "
@@ -1791,7 +1857,7 @@ msgstr ""
 "du démarrage."
 
 #. type: Plain text
-#: en/live-config.7:271
+#: en/live-config.7:279
 msgid ""
 "The components are best put into an own debian package. A sample package "
 "containing an example component can be found in /usr/share/doc/live-config/"
@@ -1802,13 +1868,13 @@ msgstr ""
 "share/doc/live-config/examples."
 
 #. type: SS
-#: en/live-config.7:272
+#: en/live-config.7:280
 #, no-wrap
 msgid "Removing existing config components"
 msgstr "Enlever des composants de configuration existants"
 
 #. type: Plain text
-#: en/live-config.7:274
+#: en/live-config.7:282
 msgid ""
 "It is not really possible to remove components itself in a sane way yet "
 "without requiring either to ship a locally modified B<live-config> package "
@@ -1826,7 +1892,7 @@ msgstr ""
 "fichier de configuration devrait être utilisé, voir ci-dessus."
 
 #. type: Plain text
-#: en/live-config.7:276
+#: en/live-config.7:284
 msgid ""
 "The configuration files for the live system itself are best put into an own "
 "debian package. A sample package containing an example configuration can be "
@@ -1838,13 +1904,13 @@ msgstr ""
 "share/doc/live-config/examples."
 
 #. type: SH
-#: en/live-config.7:277
+#: en/live-config.7:285
 #, no-wrap
 msgid "COMPONENTS"
 msgstr "COMPOSANTS"
 
 #. type: Plain text
-#: en/live-config.7:279
+#: en/live-config.7:287
 msgid ""
 "B<live-config> currently features the following components in /usr/lib/live/"
 "config."
@@ -1853,13 +1919,13 @@ msgstr ""
 "config."
 
 #. type: IP
-#: en/live-config.7:280
+#: en/live-config.7:288
 #, no-wrap
 msgid "B<nss-systemd>"
 msgstr "B<nss-systemd>"
 
 #. type: Plain text
-#: en/live-config.7:282
+#: en/live-config.7:290
 msgid ""
 "removes or restores the systemd NSS module in /etc/nsswitch.conf to work "
 "around a known systemd issue."
@@ -1868,13 +1934,13 @@ msgstr ""
 "contourner un problème connu de systemd."
 
 #. type: IP
-#: en/live-config.7:282
+#: en/live-config.7:290
 #, no-wrap
 msgid "B<debconf>"
 msgstr "B<debconf>"
 
 #. type: Plain text
-#: en/live-config.7:284
+#: en/live-config.7:292
 msgid ""
 "allows one to apply arbitrary preseed files placed on the live media or an "
 "http/ftp server."
@@ -1883,42 +1949,24 @@ msgstr ""
 "les média live ou un serveur http/ftp."
 
 #. type: IP
-#: en/live-config.7:284
+#: en/live-config.7:292
 #, no-wrap
 msgid "B<hostname>"
 msgstr "B<hostname>"
 
 #. type: Plain text
-#: en/live-config.7:286
+#: en/live-config.7:294
 msgid "configures /etc/hostname and /etc/hosts."
 msgstr "configure /etc/hostname et /etc/hosts."
 
 #. type: IP
-#: en/live-config.7:286
-#, no-wrap
-msgid "B<network>"
-msgstr "B<réseau>"
-
-#. type: Plain text
-#: en/live-config.7:288
-msgid ""
-"configures durable wired IPv4 policy through a secure NetworkManager keyfile "
-"or ifupdown stanza. It runs before networking services, validates all "
-"values, and stamps only after a successful write."
-msgstr ""
-"configure une politique IPv4 filaire durable via un fichier clé sécurisé "
-"NetworkManager ou une strophe ifupdown. S'exécute avant les services réseau, "
-"valide toutes les valeurs et n'applique la configuration qu'après une "
-"écriture réussie."
-
-#. type: IP
-#: en/live-config.7:288
+#: en/live-config.7:294
 #, no-wrap
 msgid "B<issue-setup>"
 msgstr "B<issue-setup>"
 
 #. type: Plain text
-#: en/live-config.7:290
+#: en/live-config.7:296
 msgid ""
 "sets up the /etc/issue file with a welcome banner and distribution "
 "information."
@@ -1927,358 +1975,36 @@ msgstr ""
 "informations de distribution."
 
 #. type: IP
-#: en/live-config.7:290
+#: en/live-config.7:296
 #, no-wrap
-msgid "B<live-debconfig (passwd)>"
-msgstr "B<live-debconfig (passwd)>"
+msgid "B<live-debconfig_passwd>"
+msgstr "B<live-debconfig_passwd>"
 
 #. type: Plain text
-#: en/live-config.7:292
+#: en/live-config.7:298
 msgid "configures user and root passwords via live-debconfig."
 msgstr ""
 "configure les mots de passe de l'utilisateur et de root via live-debconfig."
 
 #. type: IP
-#: en/live-config.7:292
+#: en/live-config.7:298
 #, no-wrap
 msgid "B<user-setup>"
 msgstr "B<user-setup>"
 
 #. type: Plain text
-#: en/live-config.7:294
+#: en/live-config.7:300
 msgid "adds a live user account."
 msgstr "ajoute un compte d'utilisateur live."
 
 #. type: IP
-#: en/live-config.7:294
-#, no-wrap
-msgid "B<root-setup>"
-msgstr "B<root-setup>"
-
-#. type: Plain text
-#: en/live-config.7:296
-msgid ""
-"sets or updates the root password and configures the root user environment."
-msgstr ""
-"définit ou met à jour le mot de passe de root et configure l'environnement "
-"de l'utilisateur root."
-
-#. type: IP
-#: en/live-config.7:296
-#, no-wrap
-msgid "B<sudo>"
-msgstr "B<sudo>"
-
-#. type: Plain text
-#: en/live-config.7:298
-msgid "grants sudo privileges to the live user."
-msgstr "offre les privilèges sudo à l'utilisateur live."
-
-#. type: IP
-#: en/live-config.7:298
-#, no-wrap
-msgid "B<user-media>"
-msgstr "B<user-media>"
-
-#. type: Plain text
-#: en/live-config.7:301
-msgid ""
-"links or bind-mounts validated user directories on the existing writable "
-"MiniOS data medium, with safe migration and copy-back when disabled."
-msgstr ""
-"lie ou monte en mode bind les répertoires utilisateur validés sur le support "
-"de données MiniOS existant en écriture, avec migration sécurisée et copie de "
-"retour lors de la désactivation."
-
-#. type: IP
-#: en/live-config.7:301
-#, no-wrap
-msgid "B<user-ssh-keys>"
-msgstr "B<user-ssh-keys>"
-
-#. type: Plain text
-#: en/live-config.7:303
-msgid ""
-"synchronizes SSH keys from user-specific "
-"I<authorized_keys.E<lt>usernameE<gt>> files on the live media to individual "
-"user home directories. Supports multiple users simultaneously (e.g., "
-"I<authorized_keys.root>, I<authorized_keys.live>, I<authorized_keys.admin>)."
-msgstr ""
-"synchronise les clés SSH à partir de fichiers spécifiques à l'utilisateur "
-"I<authorized_keys.E<lt>nomd'utilisateurE<gt>> sur le média live vers les "
-"répertoires home individuels des utilisateurs. Prend en charge plusieurs "
-"utilisateurs simultanément (ex. I<authorized_keys.root>, "
-"I<authorized_keys.live>, I<authorized_keys.admin>)."
-
-#. type: IP
-#: en/live-config.7:303
-#, no-wrap
-msgid "B<locales>"
-msgstr "B<locales>"
-
-#. type: Plain text
-#: en/live-config.7:305
-msgid "configures locales."
-msgstr "configure les locales."
-
-#. type: IP
-#: en/live-config.7:305
-#, no-wrap
-msgid "B<tzdata>"
-msgstr "B<tzdata>"
-
-#. type: Plain text
-#: en/live-config.7:307
-msgid "configures /etc/timezone."
-msgstr "configure /etc/timezone."
-
-#. type: IP
-#: en/live-config.7:307
-#, no-wrap
-msgid "B<xorg-service>"
-msgstr "B<xorg-service>"
-
-#. type: Plain text
-#: en/live-config.7:309
-msgid ""
-"configures username in xorg.service and applies X11 posture when supported."
-msgstr ""
-"configure le nom d'utilisateur dans xorg.service et applique la posture X11 "
-"lorsque cela est pris en charge."
-
-#. type: IP
-#: en/live-config.7:309
-#, no-wrap
-msgid "B<gdm3>"
-msgstr "B<gdm3>"
-
-#. type: Plain text
-#: en/live-config.7:311
-msgid "configures autologin in gdm3."
-msgstr "configure l'auto-login dans gdm3."
-
-#. type: IP
-#: en/live-config.7:311
-#, no-wrap
-msgid "B<kdm>"
-msgstr "B<kdm>"
-
-#. type: Plain text
-#: en/live-config.7:313
-msgid "configures autologin in kdm."
-msgstr "configure l'auto-login dans kdm."
-
-#. type: IP
-#: en/live-config.7:313
-#, no-wrap
-msgid "B<lightdm>"
-msgstr "B<lightdm>"
-
-#. type: Plain text
-#: en/live-config.7:315
-msgid "configures autologin in lightdm."
-msgstr "configure l'auto-login dans lightdm."
-
-#. type: IP
-#: en/live-config.7:315
-#, no-wrap
-msgid "B<lxdm>"
-msgstr "B<lxdm>"
-
-#. type: Plain text
-#: en/live-config.7:317
-msgid "configures autologin in lxdm."
-msgstr "configure l'auto-login dans lxdm."
-
-#. type: IP
-#: en/live-config.7:317
-#, no-wrap
-msgid "B<nodm>"
-msgstr "B<nodm>"
-
-#. type: Plain text
-#: en/live-config.7:319
-msgid "configures autologin in nodm."
-msgstr "configure l'auto-login dans nodm."
-
-#. type: IP
-#: en/live-config.7:319
-#, no-wrap
-msgid "B<slim>"
-msgstr "B<slim>"
-
-#. type: Plain text
-#: en/live-config.7:321
-msgid "configures autologin in slim."
-msgstr "configure l'auto-login dans slim."
-
-#. type: IP
-#: en/live-config.7:321
-#, no-wrap
-msgid "B<xinit>"
-msgstr "B<xinit>"
-
-#. type: Plain text
-#: en/live-config.7:323
-msgid "configures autologin with xinit."
-msgstr "configure l'auto-login avec xinit."
-
-#. type: IP
-#: en/live-config.7:323
-#, no-wrap
-msgid "B<keyboard-configuration>"
-msgstr "B<keyboard-configuration>"
-
-#. type: Plain text
-#: en/live-config.7:325
-msgid "configures the keyboard."
-msgstr "configure le clavier."
-
-#. type: IP
-#: en/live-config.7:325
-#, no-wrap
-msgid "B<sysvinit>"
-msgstr "B<sysvinit>"
-
-#. type: Plain text
-#: en/live-config.7:328
-msgid ""
-"configures console autologin through /etc/inittab when sysvinit is "
-"installed.  The noautologin and nottyautologin shortcuts suppress that setup."
-msgstr ""
-"configure la connexion automatique sur la console via /etc/inittab lorsque "
-"sysvinit est installé. Les raccourcis noautologin et nottyautologin "
-"désactivent cette configuration."
-
-#. type: IP
-#: en/live-config.7:328
-#, no-wrap
-msgid "B<sysv-rc>"
-msgstr "B<sysv-rc>"
-
-#. type: Plain text
-#: en/live-config.7:330
-msgid "configures sysv-rc by disabling listed services."
-msgstr "configure sysv-rc en désactivant les services listés."
-
-#. type: IP
-#: en/live-config.7:330
-#, no-wrap
-msgid "B<login>"
-msgstr "B<login>"
-
-#. type: Plain text
-#: en/live-config.7:332
-msgid "disables lastlog."
-msgstr "désactive lastlog."
-
-#. type: IP
-#: en/live-config.7:332
-#, no-wrap
-msgid "B<anacron>"
-msgstr "B<anacron>"
-
-#. type: Plain text
-#: en/live-config.7:334
-msgid "disables anacron."
-msgstr "désactive anacron."
-
-#. type: IP
-#: en/live-config.7:334
-#, no-wrap
-msgid "B<util-linux>"
-msgstr "B<util-linux>"
-
-#. type: Plain text
-#: en/live-config.7:336
-msgid "disables util-linux' hwclock."
-msgstr "désactive hwclock d'util-linux."
-
-#. type: IP
-#: en/live-config.7:336
-#, no-wrap
-msgid "B<apport>"
-msgstr "B<apport>"
-
-#. type: Plain text
-#: en/live-config.7:338
-msgid "disables apport."
-msgstr "désactive apport."
-
-#. type: IP
-#: en/live-config.7:338
-#, no-wrap
-msgid "B<gnome-panel-data>"
-msgstr "B<gnome-panel-data>"
-
-#. type: Plain text
-#: en/live-config.7:340
-msgid "disables lock button for the screen."
-msgstr "désactive le bouton de verrouillage de l'écran."
-
-#. type: IP
-#: en/live-config.7:340
-#, no-wrap
-msgid "B<gnome-power-manager>"
-msgstr "B<gnome-power-manager>"
-
-#. type: Plain text
-#: en/live-config.7:342
-msgid "disables hibernation."
-msgstr "désactive l'hibernation."
-
-#. type: IP
-#: en/live-config.7:342
-#, no-wrap
-msgid "B<gnome-screensaver>"
-msgstr "B<gnome-screensaver>"
-
-#. type: Plain text
-#: en/live-config.7:344
-msgid "controls GNOME screen locking according to LIVE_LOCKSCREEN_MODE."
-msgstr "contrôle le verrouillage d'écran GNOME selon LIVE_LOCKSCREEN_MODE."
-
-#. type: IP
-#: en/live-config.7:344
-#, no-wrap
-msgid "B<kaboom>"
-msgstr "B<kaboom>"
-
-#. type: Plain text
-#: en/live-config.7:346
-msgid "disables KDE migration wizard (squeeze and newer)."
-msgstr "désactive l'assistant de migration de KDE (squeeze et plus récent)."
-
-#. type: IP
-#: en/live-config.7:346
-#, no-wrap
-msgid "B<kde-services>"
-msgstr "B<kde-services>"
-
-#. type: Plain text
-#: en/live-config.7:348
-msgid "disables some unwanted KDE services (squeeze and newer)."
-msgstr "désactive des services de KDE non souhaités (squeeze et plus récent)."
-
-#. type: IP
-#: en/live-config.7:348
-#, no-wrap
-msgid "B<policykit>"
-msgstr "B<policykit>"
-
-#. type: Plain text
-#: en/live-config.7:350
-msgid "grant user privilegies through policykit."
-msgstr "accorde à l'utilisateur des privilèges via le policykit."
-
-#. type: IP
-#: en/live-config.7:350
+#: en/live-config.7:300
 #, no-wrap
 msgid "B<user-groups>"
 msgstr "B<user-groups>"
 
 #. type: Plain text
-#: en/live-config.7:352
+#: en/live-config.7:302
 msgid ""
 "adds the live user to supplementary groups declared by installed modules. "
 "Existing groups listed in /usr/share/live/config/user-default-groups.d/"
@@ -2290,24 +2016,324 @@ msgstr ""
 "l'utilisateur et lors des exécutions ultérieures de live-config."
 
 #. type: IP
+#: en/live-config.7:302
+#, no-wrap
+msgid "B<root-setup>"
+msgstr "B<root-setup>"
+
+#. type: Plain text
+#: en/live-config.7:304
+msgid ""
+"sets or updates the root password and configures the root user environment."
+msgstr ""
+"définit ou met à jour le mot de passe de root et configure l'environnement "
+"de l'utilisateur root."
+
+#. type: IP
+#: en/live-config.7:304
+#, no-wrap
+msgid "B<sudo>"
+msgstr "B<sudo>"
+
+#. type: Plain text
+#: en/live-config.7:306
+msgid "grants sudo privileges to the live user."
+msgstr "offre les privilèges sudo à l'utilisateur live."
+
+#. type: IP
+#: en/live-config.7:306
+#, no-wrap
+msgid "B<user-ssh-keys>"
+msgstr "B<user-ssh-keys>"
+
+#. type: Plain text
+#: en/live-config.7:308
+msgid ""
+"synchronizes user-specific I<authorized_keys.E<lt>usernameE<gt>> files "
+"between the live medium and individual user home directories. Supports "
+"multiple users simultaneously (e.g., I<authorized_keys.root>, "
+"I<authorized_keys.live>, I<authorized_keys.admin>)."
+msgstr ""
+"synchronise les fichiers I<authorized_keys.E<lt>usernameE<gt>> spécifiques à "
+"chaque utilisateur entre le support live et les répertoires personnels des "
+"utilisateurs. Prend en charge plusieurs utilisateurs simultanément (par "
+"exemple, I<authorized_keys.root>, I<authorized_keys.live>, "
+"I<authorized_keys.admin>)."
+
+#. type: IP
+#: en/live-config.7:308
+#, no-wrap
+msgid "B<user-media>"
+msgstr "B<user-media>"
+
+#. type: Plain text
+#: en/live-config.7:311
+msgid ""
+"links or bind-mounts validated user directories on the existing writable "
+"MiniOS data medium, with safe migration and copy-back when disabled."
+msgstr ""
+"lie ou monte en mode bind les répertoires utilisateur validés sur le support "
+"de données MiniOS existant en écriture, avec migration sécurisée et copie de "
+"retour lors de la désactivation."
+
+#. type: IP
+#: en/live-config.7:311
+#, no-wrap
+msgid "B<locales>"
+msgstr "B<locales>"
+
+#. type: Plain text
+#: en/live-config.7:313
+msgid "configures locales."
+msgstr "configure les locales."
+
+#. type: IP
+#: en/live-config.7:313
+#, no-wrap
+msgid "B<tzdata>"
+msgstr "B<tzdata>"
+
+#. type: Plain text
+#: en/live-config.7:315
+msgid "configures /etc/timezone."
+msgstr "configure /etc/timezone."
+
+#. type: IP
+#: en/live-config.7:315
+#, no-wrap
+msgid "B<xorg-service>"
+msgstr "B<xorg-service>"
+
+#. type: Plain text
+#: en/live-config.7:317
+msgid ""
+"configures username in xorg.service and applies X11 posture when supported."
+msgstr ""
+"configure le nom d'utilisateur dans xorg.service et applique la posture X11 "
+"lorsque cela est pris en charge."
+
+#. type: IP
+#: en/live-config.7:317
+#, no-wrap
+msgid "B<gdm3>"
+msgstr "B<gdm3>"
+
+#. type: Plain text
+#: en/live-config.7:319
+msgid "configures autologin in gdm3."
+msgstr "configure l'auto-login dans gdm3."
+
+#. type: IP
+#: en/live-config.7:319
+#, no-wrap
+msgid "B<sddm>"
+msgstr "B<sddm>"
+
+#. type: Plain text
+#: en/live-config.7:321
+msgid "configures autologin in sddm."
+msgstr "configure la connexion automatique dans sddm."
+
+#. type: IP
+#: en/live-config.7:321
+#, no-wrap
+msgid "B<kdm>"
+msgstr "B<kdm>"
+
+#. type: Plain text
+#: en/live-config.7:323
+msgid "configures autologin in kdm."
+msgstr "configure l'auto-login dans kdm."
+
+#. type: IP
+#: en/live-config.7:323
+#, no-wrap
+msgid "B<lightdm>"
+msgstr "B<lightdm>"
+
+#. type: Plain text
+#: en/live-config.7:325
+msgid "configures autologin in lightdm."
+msgstr "configure l'auto-login dans lightdm."
+
+#. type: IP
+#: en/live-config.7:325
+#, no-wrap
+msgid "B<lxdm>"
+msgstr "B<lxdm>"
+
+#. type: Plain text
+#: en/live-config.7:327
+msgid "configures autologin in lxdm."
+msgstr "configure l'auto-login dans lxdm."
+
+#. type: IP
+#: en/live-config.7:327
+#, no-wrap
+msgid "B<nodm>"
+msgstr "B<nodm>"
+
+#. type: Plain text
+#: en/live-config.7:329
+msgid "configures autologin in nodm."
+msgstr "configure l'auto-login dans nodm."
+
+#. type: IP
+#: en/live-config.7:329
+#, no-wrap
+msgid "B<slim>"
+msgstr "B<slim>"
+
+#. type: Plain text
+#: en/live-config.7:331
+msgid "configures autologin in slim."
+msgstr "configure l'auto-login dans slim."
+
+#. type: IP
+#: en/live-config.7:331
+#, no-wrap
+msgid "B<xinit>"
+msgstr "B<xinit>"
+
+#. type: Plain text
+#: en/live-config.7:333
+msgid "configures autologin with xinit."
+msgstr "configure l'auto-login avec xinit."
+
+#. type: IP
+#: en/live-config.7:333
+#, no-wrap
+msgid "B<keyboard-configuration>"
+msgstr "B<keyboard-configuration>"
+
+#. type: Plain text
+#: en/live-config.7:335
+msgid "configures the keyboard."
+msgstr "configure le clavier."
+
+#. type: IP
+#: en/live-config.7:335
+#, no-wrap
+msgid "B<sysvinit>"
+msgstr "B<sysvinit>"
+
+#. type: Plain text
+#: en/live-config.7:338
+msgid ""
+"configures console autologin through /etc/inittab when sysvinit is "
+"installed.  The noautologin and nottyautologin shortcuts suppress that setup."
+msgstr ""
+"configure la connexion automatique sur la console via /etc/inittab lorsque "
+"sysvinit est installé. Les raccourcis noautologin et nottyautologin "
+"désactivent cette configuration."
+
+#. type: IP
+#: en/live-config.7:338
+#, no-wrap
+msgid "B<sysv-rc>"
+msgstr "B<sysv-rc>"
+
+#. type: Plain text
+#: en/live-config.7:340
+msgid "configures sysv-rc by disabling listed services."
+msgstr "configure sysv-rc en désactivant les services listés."
+
+#. type: IP
+#: en/live-config.7:340
+#, no-wrap
+msgid "B<apport>"
+msgstr "B<apport>"
+
+#. type: Plain text
+#: en/live-config.7:342
+msgid "disables apport."
+msgstr "désactive apport."
+
+#. type: IP
+#: en/live-config.7:342
+#, no-wrap
+msgid "B<gnome-panel-data>"
+msgstr "B<gnome-panel-data>"
+
+#. type: Plain text
+#: en/live-config.7:344
+msgid "disables lock button for the screen."
+msgstr "désactive le bouton de verrouillage de l'écran."
+
+#. type: IP
+#: en/live-config.7:344
+#, no-wrap
+msgid "B<gnome-power-manager>"
+msgstr "B<gnome-power-manager>"
+
+#. type: Plain text
+#: en/live-config.7:346
+msgid "disables hibernation."
+msgstr "désactive l'hibernation."
+
+#. type: IP
+#: en/live-config.7:346
+#, no-wrap
+msgid "B<gnome-screensaver>"
+msgstr "B<gnome-screensaver>"
+
+#. type: Plain text
+#: en/live-config.7:348
+msgid "controls GNOME screen locking according to LIVE_LOCKSCREEN_MODE."
+msgstr "contrôle le verrouillage d'écran GNOME selon LIVE_LOCKSCREEN_MODE."
+
+#. type: IP
+#: en/live-config.7:348
+#, no-wrap
+msgid "B<kaboom>"
+msgstr "B<kaboom>"
+
+#. type: Plain text
+#: en/live-config.7:350
+msgid "disables KDE migration wizard (squeeze and newer)."
+msgstr "désactive l'assistant de migration de KDE (squeeze et plus récent)."
+
+#. type: IP
+#: en/live-config.7:350
+#, no-wrap
+msgid "B<kde-services>"
+msgstr "B<kde-services>"
+
+#. type: Plain text
 #: en/live-config.7:352
+msgid "disables some unwanted KDE services (squeeze and newer)."
+msgstr "désactive des services de KDE non souhaités (squeeze et plus récent)."
+
+#. type: IP
+#: en/live-config.7:352
+#, no-wrap
+msgid "B<policykit>"
+msgstr "B<policykit>"
+
+#. type: Plain text
+#: en/live-config.7:354
+msgid "grants user privileges through PolicyKit."
+msgstr "octroie les privilèges utilisateur via PolicyKit."
+
+#. type: IP
+#: en/live-config.7:354
 #, no-wrap
 msgid "B<ssl-cert>"
 msgstr "B<ssl-cert>"
 
 #. type: Plain text
-#: en/live-config.7:354
-msgid "regenerating ssl snake-oil certificates."
-msgstr "regénère les certificats snake-oil ssl."
+#: en/live-config.7:356
+msgid "regenerates SSL snake-oil certificates."
+msgstr "régénère les certificats SSL snake-oil."
 
 #. type: IP
-#: en/live-config.7:354
+#: en/live-config.7:356
 #, no-wrap
 msgid "B<xrdp>"
 msgstr "B<xrdp>"
 
 #. type: Plain text
-#: en/live-config.7:356
+#: en/live-config.7:358
 msgid ""
 "configures relaxed, hardened, or disabled XRDP posture when XRDP is "
 "installed."
@@ -2316,57 +2342,75 @@ msgstr ""
 "installé."
 
 #. type: IP
-#: en/live-config.7:356
-#, no-wrap
-msgid "B<xfce4-panel>"
-msgstr "B<xfce4-panel>"
-
-#. type: Plain text
-#: en/live-config.7:358
-msgid "configures xfce4-panel to default settings."
-msgstr "configure xfce4-panel avec les réglages par défaut."
-
-#. type: IP
 #: en/live-config.7:358
 #, no-wrap
-msgid "B<xscreensaver>"
-msgstr "B<xscreensaver>"
+msgid "B<anacron>"
+msgstr "B<anacron>"
 
 #. type: Plain text
 #: en/live-config.7:360
-msgid "controls xscreensaver locking according to LIVE_LOCKSCREEN_MODE."
-msgstr "contrôle le verrouillage xscreensaver selon LIVE_LOCKSCREEN_MODE."
+msgid "disables anacron."
+msgstr "désactive anacron."
 
 #. type: IP
 #: en/live-config.7:360
 #, no-wrap
-msgid "B<broadcom-sta>"
-msgstr "B<broadcom-sta>"
+msgid "B<util-linux>"
+msgstr "B<util-linux>"
 
 #. type: Plain text
 #: en/live-config.7:362
-msgid "configures broadcom-sta WLAN drivers."
-msgstr "configure les pilotes WLAN broadcom-sta."
+msgid "disables the util-linux hwclock service."
+msgstr "désactive le service hwclock de util-linux."
 
 #. type: IP
 #: en/live-config.7:362
+#, no-wrap
+msgid "B<login>"
+msgstr "B<login>"
+
+#. type: Plain text
+#: en/live-config.7:364
+msgid "disables lastlog."
+msgstr "désactive lastlog."
+
+#. type: IP
+#: en/live-config.7:364
 #, no-wrap
 msgid "B<xserver-xorg>"
 msgstr "B<xserver-xorg>"
 
 #. type: Plain text
-#: en/live-config.7:364
+#: en/live-config.7:366
 msgid "configures xserver-xorg."
 msgstr "configure xserver-xorg."
 
 #. type: IP
-#: en/live-config.7:364
+#: en/live-config.7:366
+#, no-wrap
+msgid "B<network>"
+msgstr "B<réseau>"
+
+#. type: Plain text
+#: en/live-config.7:368
+msgid ""
+"configures durable wired IPv4 policy through a secure NetworkManager keyfile "
+"or ifupdown stanza. It runs before networking services, validates all "
+"values, and stamps only after a successful write."
+msgstr ""
+"configure une politique IPv4 filaire durable via un fichier clé sécurisé "
+"NetworkManager ou une strophe ifupdown. S'exécute avant les services réseau, "
+"valide toutes les valeurs et n'applique la configuration qu'après une "
+"écriture réussie."
+
+#. type: IP
+#: en/live-config.7:368
 #, no-wrap
 msgid "B<openssh-server>"
 msgstr "B<openssh-server>"
 
 #. type: Plain text
-#: en/live-config.7:367
+#: en/live-config.7:371
 msgid ""
 "recreates OpenSSH host keys and writes explicitly requested root-login or "
 "password-authentication policy."
@@ -2375,13 +2419,46 @@ msgstr ""
 "demandée pour la connexion root ou l'authentification par mot de passe."
 
 #. type: IP
-#: en/live-config.7:367
+#: en/live-config.7:371
 #, no-wrap
-msgid "B<xhyper-v>"
-msgstr "B<xhyper-v>"
+msgid "B<xfce4-panel>"
+msgstr "B<xfce4-panel>"
 
 #. type: Plain text
-#: en/live-config.7:369
+#: en/live-config.7:373
+msgid "configures xfce4-panel to default settings."
+msgstr "configure xfce4-panel avec les réglages par défaut."
+
+#. type: IP
+#: en/live-config.7:373
+#, no-wrap
+msgid "B<xscreensaver>"
+msgstr "B<xscreensaver>"
+
+#. type: Plain text
+#: en/live-config.7:375
+msgid "controls xscreensaver locking according to LIVE_LOCKSCREEN_MODE."
+msgstr "contrôle le verrouillage xscreensaver selon LIVE_LOCKSCREEN_MODE."
+
+#. type: IP
+#: en/live-config.7:375
+#, no-wrap
+msgid "B<broadcom-sta>"
+msgstr "B<broadcom-sta>"
+
+#. type: Plain text
+#: en/live-config.7:377
+msgid "configures broadcom-sta WLAN drivers."
+msgstr "configure les pilotes WLAN broadcom-sta."
+
+#. type: IP
+#: en/live-config.7:377
+#, no-wrap
+msgid "B<hyperv>"
+msgstr "B<hyperv>"
+
+#. type: Plain text
+#: en/live-config.7:379
 msgid ""
 "configures X11 settings to improve compatibility on Microsoft Hyper-V "
 "platforms."
@@ -2390,24 +2467,24 @@ msgstr ""
 "plateformes Microsoft Hyper-V."
 
 #. type: IP
-#: en/live-config.7:369
+#: en/live-config.7:379
 #, no-wrap
 msgid "B<ntfs3>"
 msgstr "B<ntfs3>"
 
 #. type: Plain text
-#: en/live-config.7:371
+#: en/live-config.7:381
 msgid "manages udev rules for NTFS3 support."
 msgstr "gère les règles udev pour le support NTFS3."
 
 #. type: IP
-#: en/live-config.7:371
+#: en/live-config.7:381
 #, no-wrap
 msgid "B<config-module-mode>"
 msgstr "B<config-module-mode>"
 
 #. type: Plain text
-#: en/live-config.7:373
+#: en/live-config.7:383
 msgid ""
 "configures system module mode and updates caches, user settings, and dpkg."
 msgstr ""
@@ -2415,13 +2492,13 @@ msgstr ""
 "utilisateur et dpkg."
 
 #. type: IP
-#: en/live-config.7:373
+#: en/live-config.7:383
 #, no-wrap
 msgid "B<hooks>"
 msgstr "B<hooks>"
 
 #. type: Plain text
-#: en/live-config.7:375
+#: en/live-config.7:385
 msgid ""
 "allows one to run arbitrary commands from a file placed on the live media or "
 "an http/ftp server."
@@ -2430,55 +2507,64 @@ msgstr ""
 "média live, ou sur un serveur http/ftp."
 
 #. type: SH
-#: en/live-config.7:376
+#: en/live-config.7:386
 #, no-wrap
 msgid "FILES"
 msgstr "FICHIERS"
 
 #. type: IP
-#: en/live-config.7:377
+#: en/live-config.7:387
 #, no-wrap
 msgid "B</etc/live/config.conf>"
 msgstr "B</etc/live/config.conf>"
 
 #. type: IP
-#: en/live-config.7:378
+#: en/live-config.7:388
 #, no-wrap
 msgid "B</etc/live/config.conf.d/*.conf>"
 msgstr "B</etc/live/config.conf.d/*.conf>"
 
 #. type: IP
-#: en/live-config.7:379
+#: en/live-config.7:389
 #, no-wrap
-msgid "B<live/config.conf>"
-msgstr "B<live/config.conf>"
+msgid "B<minios/config.conf>"
+msgstr "B<minios/config.conf>"
+
+#. type: Plain text
+#: en/live-config.7:391
+msgid ""
+"Configuration file on the live medium, copied to /etc/live/config.conf only "
+"when the destination does not exist."
+msgstr ""
+"Fichier de configuration sur le support live, copié vers /etc/live/"
+"config.conf uniquement si la destination n'existe pas."
 
 #. type: IP
-#: en/live-config.7:380
+#: en/live-config.7:391
 #, no-wrap
-msgid "B<live/config.conf.d/*.conf>"
-msgstr "B<live/config.conf.d/*.conf>"
+msgid "B</usr/lib/live/init-config.sh>"
+msgstr "B</usr/lib/live/init-config.sh>"
 
 #. type: IP
-#: en/live-config.7:381
+#: en/live-config.7:392
 #, no-wrap
-msgid "B</lib/live/config.sh>"
-msgstr "B</lib/live/config.sh>"
+msgid "B</usr/lib/live/config.sh>"
+msgstr "B</usr/lib/live/config.sh>"
 
 #. type: IP
-#: en/live-config.7:382
+#: en/live-config.7:393
 #, no-wrap
-msgid "B</lib/live/config/>"
-msgstr "B</lib/live/config/>"
+msgid "B</usr/lib/live/config/>"
+msgstr "B</usr/lib/live/config/>"
 
 #. type: IP
-#: en/live-config.7:383
+#: en/live-config.7:394
 #, no-wrap
 msgid "B</usr/share/live/config/user-default-groups.d/*.groups>"
 msgstr "B</usr/share/live/config/user-default-groups.d/*.groups>"
 
 #. type: Plain text
-#: en/live-config.7:385
+#: en/live-config.7:396
 msgid ""
 "Module-provided supplementary groups for the live user. Group names may be "
 "separated by whitespace; blank lines and comments beginning with # are "
@@ -2490,107 +2576,117 @@ msgstr ""
 "sur le système en cours d'exécution sont appliqués."
 
 #. type: IP
-#: en/live-config.7:385
+#: en/live-config.7:396
+#, no-wrap
+msgid "B</usr/share/minios/capabilities/minios-live-config.json>"
+msgstr "B</usr/share/minios/capabilities/minios-live-config.json>"
+
+#. type: Plain text
+#: en/live-config.7:398
+msgid "Machine-readable inventory of supported live-config features."
+msgstr ""
+"Inventaire lisible par machine des fonctionnalités prises en charge par live-"
+"config."
+
+#. type: IP
+#: en/live-config.7:398
 #, no-wrap
 msgid "B</var/lib/live/config/>"
 msgstr "B</var/lib/live/config/>"
 
 #. type: IP
-#: en/live-config.7:386
+#: en/live-config.7:399
 #, no-wrap
 msgid "B</var/log/live/config.log>"
 msgstr "B</var/log/live/config.log>"
 
 #. type: IP
-#: en/live-config.7:388
+#: en/live-config.7:401
 #, no-wrap
-msgid "B</live/config-hooks/*>"
-msgstr "B</live/config-hooks/*>"
+msgid "B</usr/lib/live/config-hooks/*>"
+msgstr "B</usr/lib/live/config-hooks/*>"
 
 #. type: IP
-#: en/live-config.7:389
+#: en/live-config.7:402
 #, no-wrap
-msgid "B<live/config-hooks/*>"
-msgstr "B<live/config-hooks/*>"
+msgid "B<minios/config-hooks/*>"
+msgstr "B<minios/config-hooks/*>"
 
 #. type: IP
-#: en/live-config.7:390
+#: en/live-config.7:403
 #, no-wrap
-msgid "B</live/config-preseed/*>"
-msgstr "B</live/config-preseed/*>"
+msgid "B</usr/lib/live/config-preseed/*>"
+msgstr "B</usr/lib/live/config-preseed/*>"
 
 #. type: IP
-#: en/live-config.7:391
+#: en/live-config.7:404
 #, no-wrap
-msgid "B<live/config-preseed/* >"
-msgstr "B<live/config-preseed/* >"
+msgid "B<minios/config-preseed/*>"
+msgstr "B<minios/config-preseed/*>"
 
 #. type: SH
-#: en/live-config.7:393
+#: en/live-config.7:406
 #, no-wrap
 msgid "SEE ALSO"
 msgstr "VOIR AUSSI"
 
 #. type: Plain text
-#: en/live-config.7:395
+#: en/live-config.7:408
 msgid "I<live-boot>(7)"
 msgstr "I<live-boot>(7)"
 
 #. type: Plain text
-#: en/live-config.7:397
+#: en/live-config.7:410
 msgid "I<live-build>(7)"
 msgstr "I<live-build>(7)"
 
 #. type: Plain text
-#: en/live-config.7:399
+#: en/live-config.7:412
 msgid "I<live-tools>(7)"
 msgstr "I<live-tools>(7)"
 
 #. type: SH
-#: en/live-config.7:400
+#: en/live-config.7:413
 #, no-wrap
 msgid "HOMEPAGE"
 msgstr "PAGE D'ACCUEIL"
 
 #. type: Plain text
-#: en/live-config.7:402
+#: en/live-config.7:415
 msgid ""
-"More information about live-config and the Debian Live project can be found "
-"on the homepage at E<lt>I<https://wiki.debian.org/DebianLive>E<gt> and in "
-"the manual at E<lt>I<https://live-team.pages.debian.net/live-manual/>E<gt>."
+"More information about MiniOS live-config can be found at E<lt>I<https://"
+"github.com/minios-linux/minios-live-config>E<gt>. Information about the "
+"upstream Debian Live project is available at E<lt>I<https://wiki.debian.org/"
+"DebianLive>E<gt>."
 msgstr ""
-"Davantage d'informations sur live-config et le projet Debian Live peuvent "
-"être trouvées sur la page d'accueil à E<lt>I<https://wiki.debian.org/"
-"DebianLive>E<gt> et dans le manuel à E<lt>I<https://live-"
-"team.pages.debian.net/live-manual/>E<gt>."
+"Vous trouverez plus d'informations sur MiniOS live-config à l'adresse "
+"E<lt>I<https://github.com/minios-linux/minios-live-config>E<gt>. Des "
+"informations sur le projet Debian Live en amont sont disponibles à l'adresse "
+"E<lt>I<https://wiki.debian.org/DebianLive>E<gt>."
 
 #. type: SH
-#: en/live-config.7:403
+#: en/live-config.7:416
 #, no-wrap
 msgid "BUGS"
 msgstr "BOGUES"
 
 #. type: Plain text
-#: en/live-config.7:405
+#: en/live-config.7:418
 msgid ""
-"Bugs can be reported by submitting a bugreport for the live-config package "
-"in the Bug Tracking System at E<lt>I<http://bugs.debian.org/>E<gt> or by "
-"writing a mail to the Debian Live mailing list at E<lt>I<debian-"
-"live@lists.debian.org>E<gt>."
+"Bugs can be reported at E<lt>I<https://github.com/minios-linux/minios-live-"
+"config/issues>E<gt>."
 msgstr ""
-"Les bogues peuvent être signalés en soumettant un rapport de bogue pour le "
-"paquet live-config dans le Système de Suivi des Bogues à E<lt>I<http://"
-"bugs.debian.org/>E<gt> ou en écrivant un courriel à la liste de diffusion "
-"Debian Live à E<lt>I<debian-live@lists.debian.org>E<gt>."
+"Les anomalies peuvent être signalées à l'adresse E<lt>I<https://github.com/"
+"minios-linux/minios-live-config/issues>E<gt>."
 
 #. type: SH
-#: en/live-config.7:406
+#: en/live-config.7:419
 #, no-wrap
 msgid "AUTHOR"
 msgstr "AUTEUR"
 
 #. type: Plain text
-#: en/live-config.7:407
+#: en/live-config.7:420
 msgid ""
 "live-config was originally written by Daniel Baumann E<lt>I<mail@daniel-"
 "baumann.ch>E<gt>. Since 2016 development has been continued by the Debian "

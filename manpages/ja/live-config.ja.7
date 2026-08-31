@@ -1,7 +1,7 @@
 .\" live-config(7) - System Configuration Components
 .\" Copyright (C) 2016-2020 The Debian Live team
 .\" Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
-.\" Copyright (C) 2025 crims0n <crims0n@minios.dev>
+.\" Copyright (C) 2025-2026 crims0n <crims0n@minios.dev>
 .\"
 .\" This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 .\" This is free software, and you are welcome to redistribute it
@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-07\-19 11.0.5.13 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-08\-31 11.0.5.18 "MiniOS Live Project"
 
 .SH 名前
 \fBlive\-config\fP \- システム設定構成要素
@@ -23,24 +23,25 @@
 
 .SH 設定
 \fBlive\-config\fP
-はブートパラメータまたは設定ファイルから設定できます。両方の仕組みで特定のオプションの設定が指示された場合はブートパラメータを設定ファイルよりも優先します。保持機能を使っている場合、\fBlive\-config\fP
-構成要素は一度だけ実行されます。
+は、ブートパラメータまたは設定ファイルによって設定できます。いずれの方法も同じオプションに対して使用された場合は、ブートパラメータが設定ファイルよりも優先されます。/var/lib/live/config
+以下に状態を記録するコンポーネントは通常1回のみ実行されますが、同期型やステートレスなコンポーネントは呼び出しごとに実行される場合があります。
 .PP
 \fIlive\-build\fP(7) を使って Live システムをビルドした場合にデフォルトで利用される live\-config パラメータは
 \-\-bootappend\-live オプションによりセットできます。\fIlb_config\fP(1) マニュアルページを見てください。
 
 .SS "ブートパラメータ (構成要素)"
-\fBlive\-config\fP はブートパラメータとして「boot=live」が与えられた場合にのみ有効になります。さらに、\fBlive\-config\fP
-は「live\-config.components」パラメータによりどの構成要素を実行するか、あるいは「live\-config.nocomponents」パラメータによりどの構成要素を実行しないのか指示する必要があります。「live\-config.components」と「live\-config.nocomponents」が両方とも使われた、あるいは一方が複数回指定された場合は、後で指定されたものが先に指定されたものよりも常に優先されます。
+\fBlive\-config\fP は、ブートパラメータとして 'boot=live'
+が指定された場合のみ有効になります。デフォルトでは、すべてのコンポーネントが実行されます。'live\-config.components'
+パラメータで実行するコンポーネントを制限でき、'live\-config.nocomponents'
+で除外できます。両方のパラメータが指定された場合や、いずれかが複数回指定された場合は、最後の指定が優先されます。
 
 .IP "\fBlive\-config.components\fP | \fBcomponents\fP" 4
 構成要素は全て実行されます。これは Live イメージのデフォルトです。
 .IP "\fBlive\-config.components\fP=\fI構成要素1\fP,\fI構成要素2\fP, ... \fI構成要素n\fP | \fBcomponents\fP=\fI構成要素1\fP,\fI構成要素2\fP, ... \fI構成要素n\fP" 4
-指定した構成要素だけが実行されます。順序が重要であることに注意してください。例えば「live\-config.components=sudo,user\-setup」は、sudo
-の設定前にユーザを追加しておく必要があるため機能しません。実行順については /usr/lib/live/config
-にある構成要素のファイル名を見てください。
+指定されたコンポーネントのみが実行されます。コンポーネントは、このリスト内の順序に関わらず、/usr/lib/live/config
+以下のファイル名にエンコードされた順序で実行されます。
 .IP "\fBlive\-config.nocomponents\fP | \fBnocomponents\fP" 4
-構成要素は何も実行されません。これは「live\-config.components」や「live\-config.nocomponents」を何も指定しないのと同じです。
+いずれのコンポーネントも実行されません。
 .IP "\fBlive\-config.nocomponents\fP=\fI構成要素1\fP,\fI構成要素2\fP, ... \fI構成要素n\fP | \fBnocomponents\fP=\fI構成要素1\fP,\fI構成要素2\fP, ... \fI構成要素n\fP" 4
 構成要素は指定されたものを除いて全て実行されます。
 
@@ -65,8 +66,8 @@ debconf データベースに適用する debconf の preseed ファイルを取
 .IP "\fBlive\-config.hostname\fP=\fIホスト名\fP | \fBhostname\fP=\fIホスト名\fP" 4
 システムのホスト名を設定できます。MiniOS のデフォルトは「minios」です。
 .IP "\fBlive\-config.network\-method\fP=dhcp|static|off | \fBnetwork\-method\fP=dhcp|static|off" 4
-有線ネットワークポリシーを選択します。未設定または dhcp の場合、イメージのデフォルトは変更されません。static を指定すると
-NetworkManager の keyfile が作成され、off を指定すると選択したインターフェースの自動 IPv4 設定が無効化されます。
+有線ネットワークポリシーを選択します。unset および dhcp はイメージのデフォルト設定を変更しません。static
+は選択したバックエンド用の設定を書き込みます。off は選択したインターフェースの自動 IPv4 設定を無効にします。
 .IP "\fBlive\-config.network\-interface\fP=\fIINTERFACE\fP | \fBnetwork\-interface\fP=\fIINTERFACE\fP" 4
 有線インターフェースを選択します。static または off で省略した場合、唯一の有線非ループバックインターフェースが自動的に選択されます。候補が
 0 または複数の場合は明示的な値が必要です。
@@ -84,8 +85,10 @@ IPv4 プレフィックス長（0～32）を設定します。static のデフ�
 .IP "\fBlive\-config.username\fP=\fIユーザ名\fP | \fBusername\fP=\fIユーザ名\fP" 4
 自動ログイン用に作成されるユーザー名を設定できます。MiniOS のデフォルトは「live」です。
 .IP "\fBlive\-config.user\-default\-groups\fP=\fIグループ1\fP,\fIグループ2\fP ... \fIグループn\fP | \fBuser\-default\-groups\fP=\fIグループ1\fP,\fIグループ2\fP ... \fIグループn\fP" 4
-自動ログイン用に作成するユーザがメンバーとなるデフォルトのグループをセットします。デフォルトは「audio cdrom dip floppy video
-plugdev netdev powerdev scanner bluetooth」です。
+自動ログイン用に作成されるユーザーの補助グループを設定します。グループ名はカンマまたはスペースで区切ることができます。MiniOS のデフォルトは
+\&'dialout cdrom floppy audio video plugdev users fuse plugdev netdev powerdev
+scanner bluetooth weston\-launch kvm libvirt libvirt\-qemu vboxusers lpadmin
+dip sambashare docker wireshark' です。
 .IP "\fBlive\-config.user\-fullname\fP=\(dq\fIユーザのフルネーム\fP\(dq | \fBuser\-fullname\fP=\(dq\fIユーザのフルネーム\fP\(dq" 4
 自動ログイン用ユーザーのフルネームを設定できます。MiniOS のデフォルトは「MiniOS Live User」です。
 .IP "\fBlive\-config.root\-password\fP=\fIパスワード\fP | \fBroot\-password\fP=\fIパスワード\fP" 4
@@ -114,7 +117,7 @@ root パスワードを暗号化された形式で設定できます。
 update\-rc.d から sysv サービスを無効化します。
 .IP "\fBlive\-config.utc\fP=\fByes\fP|no | \fButc\fP=\fByes\fP|no" 4
 ハードウェア時刻が UTC でセットされているとシステムが仮定するか否かを変更します。デフォルトは「yes」です。
-.IP "\fBlive\-config.x\-session\-manager=\fP\fIXセッションマネージャ\fP | \fBx\-session\-manager\fP=\fIXセッションマネージャ\fP" 4
+.IP "\fBlive\-config.xorg\-xsession\-manager=\fP\fIX_SESSION_MANAGER\fP | \fBx\-session\-manager\fP=\fIX_SESSION_MANAGER\fP" 4
 update\-alternatives から x\-session\-manager をセットします。
 .IP "\fBlive\-config.xorg\-driver\fP=\fIXORGドライバ\fP | \fBxorg\-driver\fP=\fIXORGドライバ\fP" 4
 xorg ドライバを自動検出に代えてセットします。Live システム内の
@@ -126,8 +129,16 @@ xorg 解像度を自動検出に代えてセットします。例えば 1024x768
 WLAN ドライバを自動検出に代えてセットします。Live システム内の
 /usr/share/live/config/broadcom\-sta/\fIドライバ\fP.ids で PCI ID
 が指定された場合は対象デバイスについてその\fIドライバ\fPを強制的に使います。ブートパラメータと別の設定が両方ともある場合はブートパラメータが優先されます。
-.IP "\fBlive\-config.module\-mode\fP=\fIモード\fP | \fBmodule\-mode\fP=\fIモード\fP" 4
+.IP "\fBlive\-config.module\-mode\fP=simple|merged | \fBmodule\-mode\fP=simple|merged" 4
 ライブ構成のモジュールモードを指定できます。"merged"に設定すると、システムはユーザーアカウントを更新し、キャッシュを再構築し、パッケージ設定を更新して、構成変更を動的に稼働中のシステムに統合します。
+.IP "\fBlive\-config.link\-user\-dirs\fP | \fBlink\-user\-dirs\fP" 4
+管理対象のユーザーディレクトリを、MiniOS データメディア上の設定されたパスにシンボリックリンクします。
+.IP "\fBlive\-config.bind\-user\-dirs\fP | \fBbind\-user\-dirs\fP" 4
+MiniOS データメディア上の設定されたパスから、管理対象のユーザーディレクトリをバインドマウントします。このオプションは
+link\-user\-dirs とは排他的です。
+.IP "\fBlive\-config.user\-dirs\-path\fP=\fIPATH\fP | \fBuser\-dirs\-path\fP=\fIPATH\fP" 4
+link\-user\-dirs または bind\-user\-dirs で使用されるメディア相対パスを設定します。デフォルトは
+/minios/userdata です。
 .IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
 任意のファイルを取得、実行します。URL は wget により取得できるもの (http、 ftp、 file:// のどれか)
 でないといけないことと、そのファイルは実行中の Live システムの /tmp
@@ -151,7 +162,7 @@ WLAN ドライバを自動検出に代えてセットします。Live システ�
 がショートカットを提供しています。これにより、全オプションについて細かな指示を出しつつ、同時にパラメータを単純なものにしておくことができます。
 
 .IP "\fBlive\-config.noroot\fP | \fBnoroot\fP" 4
-sudo と policykit を無効にします。ユーザがそのシステムの root 権限を得ることはできなくなります。
+root パスワードの設定および MiniOS の sudo と PolicyKit 権限付与を無効にします。
 .IP "\fBlive\-config.sudo\-mode\fP=\fBpasswordless\fP|password|disabled | \fBsudo\-mode\fP=\fBpasswordless\fP|password|disabled" 4
 ライブユーザーの sudo 設定を制御します。デフォルトおよび未設定時の従来の MiniOS の動作は \fBpasswordless\fP
 です。\fBpassword\fP モードは sudo 権限を維持しますが、ライブユーザーのパスワードが必要です。\fBdisabled\fP モードは
@@ -163,10 +174,11 @@ MiniOS の PolicyKit 便宜ルールを制御します。デフォルトおよ�
 MiniOS のパスワードなしルールを削除し、通常のディストリビューションの PolicyKit 認証が適用されます。\fBdisabled\fP
 は完全な拒否ポリシーではありません。ライブユーザーに管理権限を与えたくない場合は \fBnoroot\fP を使用してください。
 .IP "\fBlive\-config.ssh\-permit\-root\-login\fP=\fBtrue\fP|false | \fBssh\-permit\-root\-login\fP=\fBtrue\fP|false" 4
-openssh\-server がインストールされている場合、OpenSSH の PermitRootLogin ポリシーのドロップインを作成します。
+明示的に設定され、かつ openssh\-server がインストールされている場合に、OpenSSH の PermitRootLogin
+ポリシーを書き込みます。
 .IP "\fBlive\-config.ssh\-password\-authentication\fP=\fBtrue\fP|false | \fBssh\-password\-authentication\fP=\fBtrue\fP|false" 4
-openssh\-server がインストールされている場合、OpenSSH の PasswordAuthentication
-ポリシーのドロップインを作成します。
+明示的に設定され、かつ openssh\-server がインストールされている場合に、OpenSSH の PasswordAuthentication
+ポリシーを書き込みます。
 .IP "\fBlive\-config.xrdp\-mode\fP=\fBrelaxed\fP|hardened|disabled | \fBxrdp\-mode\fP=\fBrelaxed\fP|hardened|disabled" 4
 xrdp がインストールされている場合の XRDP の動作を制御します。\fBrelaxed\fP は従来の MiniOS
 デフォルトを維持します。\fBhardened\fP は XRDP を localhost
@@ -182,11 +194,11 @@ live\-config がスクリーンロックを緩和するかどうかを制御し�
 は従来のライブセッションの利便性を維持します。\fBhardened\fP は GNOME ロックの無効化を避け、xscreensaver
 のロックが存在する場合は有効化します。
 .IP "\fBlive\-config.noautologin\fP | \fBnoautologin\fP" 4
-自動化でのコンソールログインとグラフィカルな自動ログインを両方とも無効にします。
+自動コンソールログインおよびグラフィカル自動ログインの両方の設定を防止します。既存の永続的な設定は削除されません。
 .IP "\fBlive\-config.nottyautologin\fP | \fBnottyautologin\fP" 4
-自動化でのコンソールログインを無効にします。グラフィカルな自動ログインには影響しません。
+グラフィカル自動ログインには影響を与えず、自動コンソールログインの設定のみを防止します。既存の永続的な設定は削除されません。
 .IP "\fBlive\-config.nox11autologin\fP | \fBnox11autologin\fP" 4
-あらゆるディスプレイマネージャによる自動化でのログインを無効にします。tty の自動ログインには影響しません。
+コンソール自動ログインには影響を与えず、グラフィカル自動ログインの設定のみを防止します。既存の永続的な設定は削除されません。
 
 .SS "ブートパラメータ (特別なオプション)"
 特定用途向けに特別なブートパラメータがいくつかあります。
@@ -195,17 +207,18 @@ live\-config がスクリーンロックを緩和するかどうかを制御し�
 live\-config のデバッグ用出力を有効化します。
 
 .SS 設定ファイル
-\fBlive\-config\fP は設定ファイルにより設定 (ただし有効化しない)
-することができます。ブートパラメータにより設定できるものはショートカットを除いて全てファイルによる設定もできます。設定ファイルを使う場合でも
-\fBlive\-config\fP を有効化するためには「boot=live」パラメータが必要となります。
+\fBlive\-config\fP は、設定ファイルを通して設定できます（ただし有効化はされません）。サポートされている任意のブートパラメータを
+\fBLIVE_CONFIG_CMDLINE\fP に記述でき、ほとんどのオプションは個別の変数としても設定可能です。ただし、\fBlive\-config\fP
+を有効にするには 'boot=live' パラメータが必要です。
 .PP
 \fB注意:\fP 設定ファイルを使う場合はブートパラメータを全て \fBLIVE_CONFIG_CMDLINE\fP 変数に配置する (好ましい)
 か、変数を個々にセットすることができます。個々にセットする場合、有効な設定を作成するためにユーザは必ず必要な変数を全てセットすることが要求されます。
 .PP
-設定ファイルはルートファイルシステム自体 (/etc/live/config.conf、
-/etc/live/config.conf.d/*.conf)、 または Live メディア (live/config.conf、
-live/config.conf.d/*.conf)
-に配置できます。特定のオプションについて両方に配置されている場合はルートファイルシステムにあるものよりも Live メディアにあるものを優先します。
+設定ファイルは /etc/live/config.conf および /etc/live/config.conf.d/*.conf
+から読み込まれます。起動時、ライブメディア上の minios/config.conf は、/etc/live/config.conf
+が存在しない場合のみ /etc/live/config.conf
+にコピーされます。ライブメディア上の設定ディレクトリは読み込まれません。/etc/live/config.conf.d 内のファイルは
+/etc/live/config.conf の後に読み込まれます。
 .PP
 設定ディレクトリに置かれる設定ファイルには特定の名前が要求されるわけではありませんが、命名規則を整合性のため「vendor.conf」や「project.conf」のようにすることを提案します
 (「vendor」や「project」は実際の名前に置き換え、ファイル名は「progress\-linux.conf」のようになります)。
@@ -260,6 +273,9 @@ static または off ポリシー用の有線インターフェースを選択�
 この変数は「\fBlive\-config.user\-password\fP=\fIパスワード\fP」パラメータに相当します。ユーザパスワードを平文で指定します。
 .IP \fBLIVE_USER_PASSWORD_CRYPTED\fP=\fIパスワード\fP 4
 この変数は「\fBlive\-config.user\-password\-crypted\fP=\fIパスワード\fP」パラメータに相当します。ユーザパスワードを暗号化された形式で指定します。
+.IP \fBLIVE_CONFIG_NOROOT\fP=true|false 4
+この変数は '\fBlive\-config.noroot\fP' パラメータに対応し、true に設定すると root、sudo、PolicyKit
+の権限設定を無効にします。
 .IP \fBLIVE_SUDO_MODE\fP=\fBpasswordless\fP|password|disabled 4
 この変数は '\fBlive\-config.sudo\-mode\fP=...' パラメータに対応します。未設定の場合、MiniOS は従来のパスワードなし
 sudo 動作を維持します。sudo 実行時にライブユーザーのパスワードを要求するには \fBpassword\fP を、ユーザー作成時に MiniOS の
@@ -299,7 +315,8 @@ sudo 権限および sudo グループメンバーシップを削除するには
 .IP \fBLIVE_UTC\fP=\fByes\fP|no 4
 この変数は「\fBlive\-config.utc\fP=\fByes\fP|no」パラメータに相当します。
 .IP \fBLIVE_X_SESSION_MANAGER\fP=\fIXセッションマネージャ\fP 4
-この変数は「\fBlive\-config.x\-session\-manager\fP=\fIXセッションマネージャ\fP」パラメータに相当します。
+この変数は '\fBlive\-config.xorg\-xsession\-manager\fP=\fIX_SESSION_MANAGER\fP'
+パラメータに対応します。
 .IP \fBLIVE_XORG_DRIVER\fP=\fIXORGドライバ\fP 4
 この変数は「\fBlive\-config.xorg\-driver\fP=\fIXORGドライバ\fP」パラメータに相当します。
 .IP \fBLIVE_XORG_RESOLUTION\fP=\fIXORG解像度\fP 4
@@ -310,9 +327,11 @@ sudo 権限および sudo グループメンバーシップを削除するには
 この変数は「\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP|
 \&... |\fIURLn\fP」パラメータに相当します。
 .IP \fBLIVE_LINK_USER_DIRS\fP=true|false 4
-この変数は「\fBlive\-config.link\-user\-dirs\fP=true|false」パラメータに相当します。ユーザディレクトリのシンボリックリンクの作成を有効または無効にします。
+ユーザーディレクトリのシンボリックリンク作成を有効または無効にします。対応するブートパラメータは
+\&'\fBlive\-config.link\-user\-dirs\fP' フラグです。
 .IP \fBLIVE_BIND_USER_DIRS\fP=true|false 4
-この変数は「\fBlive\-config.bind\-user\-dirs\fP=true|false」パラメータに相当します。ユーザディレクトリのバインドマウントを有効または無効にします。
+ユーザーディレクトリのバインドマウントを有効または無効にします。対応するブートパラメータは
+\&'\fBlive\-config.bind\-user\-dirs\fP' フラグです。
 .IP \fBLIVE_USER_DIRS_PATH\fP=\fIパス\fP 4
 この変数は「\fBlive\-config.user\-dirs\-path\fP=\fIパス\fP」パラメータに相当します。メディア上のユーザディレクトリのパスを指定します。
 .PP
@@ -323,7 +342,7 @@ toram、toram=full、toram=trim
 は拒否されます。パスには、ディレクトリトラバーサル、空のセグメント、制御文字、または安全でない名前を含めることはできません。Desktop、Documents、Downloads、Music、Pictures、Public、Templates、Videos
 が管理対象です。マイグレーションでは、2つのデータツリーが両方ともデータを持つ場合は統合を拒否します。機能を無効にすると、管理対象データが戻されてコピーされます。状態とステータスは
 /var/lib/live/config に記録されます。
-.IP \fBLIVE_MODULE_MODE\fP 4
+.IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 この変数は 'live\-config.module\-mode'（または
 \&'module\-mode'）パラメータで指定された状態を保持します。"merged"に設定されている場合、ライブシステムは更新（minios\-update\-users、minios\-update\-cache、minios\-update\-dpkg
 を介して）を適用し、カスタム構成を基本環境と統合します。
@@ -358,23 +377,26 @@ Live システム自体の設定ファイルは自分の Debian パッケージ�
 Live メディアや http/ftp サーバに置かれた任意の preseed ファイルを適用します。
 .IP \fBhostname\fP 4
 /etc/hostname 及び /etc/hosts を設定します。
-.IP \fBnetwork\fP 4
-有線IPv4の永続的なポリシーを、安全なNetworkManagerキーファイルまたはifupdownステンザを通じて設定します。ネットワークサービスの起動前に実行され、すべての値を検証し、書き込みが成功した場合のみスタンプします。
 .IP \fBissue\-setup\fP 4
 /etc/issue ファイルをウェルカムバナーとディストリビューション情報で設定します。
-.IP "\fBlive\-debconfig (passwd)\fP" 4
+.IP \fBlive\-debconfig_passwd\fP 4
 live\-debconfig を介してユーザーパスワードと root パスワードを設定します。
 .IP \fBuser\-setup\fP 4
 Live ユーザアカウントを追加します。
+.IP \fBuser\-groups\fP 4
+インストール済みモジュールによって宣言された補助グループにライブユーザーを追加します。/usr/share/live/config/user\-default\-groups.d/*.groups
+に記載された既存のグループは、ユーザー作成後およびその後の live\-config 実行時に適用されます。
 .IP \fBroot\-setup\fP 4
 root パスワードを設定または更新し、root ユーザー環境を設定します。
 .IP \fBsudo\fP 4
 Live ユーザに sudo 権限を与えます。
+.IP \fBuser\-ssh\-keys\fP 4
+ユーザーごとの \fIauthorized_keys.<username>\fP
+ファイルを、ライブメディアと各ユーザーのホームディレクトリ間で同期します。複数ユーザー（例:
+\fIauthorized_keys.root\fP、\fIauthorized_keys.live\fP、\fIauthorized_keys.admin\fP）を同時にサポートします。
 .IP \fBuser\-media\fP 4
 既存の書き込み可能な MiniOS
 データメディア上の検証済みユーザーディレクトリに対して、リンクまたはバインドマウントを行い、無効化時には安全に移行およびコピー・バックを実施します。
-.IP \fBuser\-ssh\-keys\fP 4
-ライブメディア上のユーザーごとの\fIauthorized_keys.<username>\fPファイルから、各ユーザーのホームディレクトリへSSH鍵を同期します。複数ユーザーを同時にサポートします（例：\fIauthorized_keys.root\fP、\fIauthorized_keys.live\fP、\fIauthorized_keys.admin\fP）。
 .IP \fBlocales\fP 4
 ロケールを設定します。
 .IP \fBtzdata\fP 4
@@ -383,6 +405,8 @@ Live ユーザに sudo 権限を与えます。
 xorg.service でユーザー名を設定し、対応していればX11のポスチャを適用します。
 .IP \fBgdm3\fP 4
 gdm3 の自動ログインを設定します。
+.IP \fBsddm\fP 4
+sddm で自動ログインを設定します。
 .IP \fBkdm\fP 4
 kdm の自動ログインを設定します。
 .IP \fBlightdm\fP 4
@@ -402,12 +426,6 @@ sysvinitがインストールされている場合、/etc/inittab を通じて�
 nottyautologin ショートカットはこの設定を抑制します。
 .IP \fBsysv\-rc\fP 4
 一覧にあるサービスを無効にして sysv\-rc を設定します。
-.IP \fBlogin\fP 4
-lastlog を無効にします。
-.IP \fBanacron\fP 4
-anacron を無効にします。
-.IP \fButil\-linux\fP 4
-util\-linux の hwclock を無効にします。
 .IP \fBapport\fP 4
 apport を無効にします。
 .IP \fBgnome\-panel\-data\fP 4
@@ -421,25 +439,30 @@ KDE 移行ウイザードを無効にします (squeeze 以降)。
 .IP \fBkde\-services\fP 4
 望まれていない KDE サービスの一部を無効にします (squeeze 以降)。
 .IP \fBpolicykit\fP 4
-policykit を使ってユーザ権限を与えます。
-.IP \fBuser\-groups\fP 4
-インストール済みモジュールによって宣言された補助グループにライブユーザーを追加します。/usr/share/live/config/user\-default\-groups.d/*.groups
-に記載された既存のグループは、ユーザー作成後およびその後の live\-config 実行時に適用されます。
+PolicyKit を通じてユーザー権限を付与します。
 .IP \fBssl\-cert\fP 4
-SSL の snake\-oil 証明書を再生成します。
+SSL スネークオイル証明書を再生成します。
 .IP \fBxrdp\fP 4
 XRDPがインストールされている場合、リラックス、強化、または無効化されたXRDPポスチャを設定します。
+.IP \fBanacron\fP 4
+anacron を無効にします。
+.IP \fButil\-linux\fP 4
+util\-linux の hwclock サービスを無効にします。
+.IP \fBlogin\fP 4
+lastlog を無効にします。
+.IP \fBxserver\-xorg\fP 4
+xserver\-xorg を設定します。
+.IP \fBnetwork\fP 4
+有線IPv4の永続的なポリシーを、安全なNetworkManagerキーファイルまたはifupdownステンザを通じて設定します。ネットワークサービスの起動前に実行され、すべての値を検証し、書き込みが成功した場合のみスタンプします。
+.IP \fBopenssh\-server\fP 4
+OpenSSHホスト鍵を再作成し、明示的に指定されたrootログインまたはパスワード認証ポリシーを書き込みます。
 .IP \fBxfce4\-panel\fP 4
 xfce4\-panel をデフォルト設定にします。
 .IP \fBxscreensaver\fP 4
 LIVE_LOCKSCREEN_MODE に従って xscreensaver のロックを制御します。
 .IP \fBbroadcom\-sta\fP 4
 broadcom\-sta WLAN ドライバを設定します。
-.IP \fBxserver\-xorg\fP 4
-xserver\-xorg を設定します。
-.IP \fBopenssh\-server\fP 4
-OpenSSHホスト鍵を再作成し、明示的に指定されたrootログインまたはパスワード認証ポリシーを書き込みます。
-.IP \fBxhyper\-v\fP 4
+.IP \fBhyperv\fP 4
 Microsoft Hyper\-Vプラットフォーム上での互換性向上のため、X11設定を構成します。
 .IP \fBntfs3\fP 4
 NTFS3 サポートのための udev ルールを管理します。
@@ -451,20 +474,23 @@ Live メディアや http/ftp サーバに置かれたファイルから任意�
 .SH ファイル
 .IP \fB/etc/live/config.conf\fP 4
 .IP \fB/etc/live/config.conf.d/*.conf\fP 4
-.IP \fBlive/config.conf\fP 4
-.IP \fBlive/config.conf.d/*.conf\fP 4
-.IP \fB/lib/live/config.sh\fP 4
-.IP \fB/lib/live/config/\fP 4
+.IP \fBminios/config.conf\fP 4
+ライブメディア上の設定ファイルであり、宛先が存在しない場合のみ /etc/live/config.conf にコピーされます。
+.IP \fB/usr/lib/live/init\-config.sh\fP 4
+.IP \fB/usr/lib/live/config.sh\fP 4
+.IP \fB/usr/lib/live/config/\fP 4
 .IP \fB/usr/share/live/config/user\-default\-groups.d/*.groups\fP 4
 ライブユーザー用にモジュールで提供される補助グループです。グループ名は空白で区切ることができ、空行や #
 で始まるコメント行は無視されます。実行中のシステムに存在するグループのみが適用されます。
+.IP \fB/usr/share/minios/capabilities/minios\-live\-config.json\fP 4
+サポートされている live\-config 機能の機械可読なインベントリです。
 .IP \fB/var/lib/live/config/\fP 4
 .IP \fB/var/log/live/config.log\fP 4
 .PP
-.IP \fB/live/config\-hooks/*\fP 4
-.IP \fBlive/config\-hooks/*\fP 4
-.IP \fB/live/config\-preseed/*\fP 4
-.IP "\fBlive/config\-preseed/* \fP" 4
+.IP \fB/usr/lib/live/config\-hooks/*\fP 4
+.IP \fBminios/config\-hooks/*\fP 4
+.IP \fB/usr/lib/live/config\-preseed/*\fP 4
+.IP \fBminios/config\-preseed/*\fP 4
 
 .SH 関連項目
 \fIlive\-boot\fP(7)
@@ -474,14 +500,14 @@ Live メディアや http/ftp サーバに置かれたファイルから任意�
 \fIlive\-tools\fP(7)
 
 .SH ホームページ
-live\-config および Debian Live
-プロジェクトに関する詳細情報は、<\fIhttps://wiki.debian.org/DebianLive\fP> のホームページと
-<\fIhttps://live\-team.pages.debian.net/live\-manual/\fP> のマニュアルで確認できます。
+MiniOS live\-config
+の詳細は、<\fIhttps://github.com/minios\-linux/minios\-live\-config\fP>
+でご覧いただけます。上流の Debian Live
+プロジェクトに関する情報は、<\fIhttps://wiki.debian.org/DebianLive\fP> にあります。
 
 .SH バグ
-バグは <\fIhttp://bugs.debian.org/\fP> にあるバグ追跡システムに live\-config
-パッケージのバグ報告として提出するか、<\fIdebian\-live@lists.debian.org\fP> にある Debian Live
-のメーリングリスト宛てにメールを書くことにより報告できます。
+バグ報告は <\fIhttps://github.com/minios\-linux/minios\-live\-config/issues\fP>
+で受け付けています。
 
 .SH 作者
 live\-config は Daniel Baumann <\fImail@daniel\-baumann.ch\fP>

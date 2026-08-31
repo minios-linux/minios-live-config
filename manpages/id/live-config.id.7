@@ -1,7 +1,7 @@
 .\" live-config(7) - System Configuration Components
 .\" Copyright (C) 2016-2020 The Debian Live team
 .\" Copyright (C) 2006-2015 Daniel Baumann <mail@daniel-baumann.ch>
-.\" Copyright (C) 2025 crims0n <crims0n@minios.dev>
+.\" Copyright (C) 2025-2026 crims0n <crims0n@minios.dev>
 .\"
 .\" This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 .\" This is free software, and you are welcome to redistribute it
@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-07\-19 11.0.5.13 "Proyek MiniOS Live"
+.TH LIVE\-CONFIG 7 2026\-08\-31 11.0.5.18 "Proyek MiniOS Live"
 
 .SH NAMA
 \fBlive\-config\fP \- Komponen Konfigurasi Sistem
@@ -23,10 +23,12 @@
 selama proses boot (userspace akhir).
 
 .SH KONFIGURASI
-\fBlive\-config\fP dapat dikonfigurasi melalui parameter boot atau file
-konfigurasi. Jika kedua mekanisme digunakan untuk opsi tertentu, parameter
-boot akan mengambil prioritas di atas file konfigurasi. Saat menggunakan
-persistensi, komponen \fBlive\-config\fP hanya akan dijalankan sekali.
+\fBlive\-config\fP dapat dikonfigurasi melalui parameter boot atau berkas
+konfigurasi. Jika kedua mekanisme digunakan untuk suatu opsi, parameter boot
+memiliki prioritas dibandingkan berkas konfigurasi. Komponen yang mencatat
+status di bawah /var/lib/live/config biasanya hanya dijalankan satu kali;
+komponen sinkronisasi dan stateless dapat dijalankan pada setiap
+pemanggilan.
 .PP
 Jika \fIlive\-build\fP(7) digunakan untuk membangun sistem live, parameter
 live\-config yang digunakan secara default dapat diatur melalui opsi
@@ -34,26 +36,21 @@ live\-config yang digunakan secara default dapat diatur melalui opsi
 
 .SS "Parameter Boot (komponen)"
 \fBlive\-config\fP hanya diaktifkan jika 'boot=live' digunakan sebagai parameter
-boot. Selain itu, \fBlive\-config\fP perlu diberitahu komponen mana yang akan
-dijalankan melalui parameter 'live\-config.components' atau komponen mana
-yang tidak akan dijalankan melalui parameter
-\&'live\-config.nocomponents'. Jika kedua 'live\-config.components' dan
-\&'live\-config.nocomponents' digunakan, atau, jika salah satunya ditentukan
-beberapa kali, selalu yang terakhir yang lebih diutamakan daripada yang
-sebelumnya.
+boot. Secara default, semua komponen dijalankan. Parameter
+\&'live\-config.components' dapat membatasi komponen mana yang dijalankan, dan
+\&'live\-config.nocomponents' dapat mengecualikan komponen tertentu. Jika kedua
+parameter digunakan, atau salah satu disebutkan beberapa kali, kemunculan
+terakhir yang berlaku.
 
 .IP "\fBlive\-config.components\fP | \fBcomponents\fP" 4
 Semua komponen dijalankan. Ini adalah apa yang digunakan oleh citra live
 secara default.
 .IP "\fBlive\-config.components\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP | \fBcomponents\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP" 4
-Hanya komponen yang ditentukan yang dijalankan. Perlu diperhatikan bahwa
-urutan penting, misalnya 'live\-config.components=sudo,user\-setup' tidak akan
-berfungsi karena pengguna perlu ditambahkan sebelum dapat dikonfigurasi
-untuk sudo. Lihat nama file komponen di /usr/lib/live/config untuk nomor
-urutannya.
+Hanya komponen yang ditentukan yang dijalankan. Komponen dieksekusi sesuai
+urutan yang dikodekan dalam nama berkasnya di bawah /usr/lib/live/config,
+tanpa memperhatikan urutan dalam daftar ini.
 .IP "\fBlive\-config.nocomponents\fP | \fBnocomponents\fP" 4
-Tidak ada komponen yang dijalankan. Ini sama dengan tidak menggunakan
-\&'live\-config.components' atau 'live\-config.nocomponents'.
+Tidak ada komponen yang dijalankan.
 .IP "\fBlive\-config.nocomponents\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP | \fBnocomponents\fP=\fIKOMPONEN1\fP,\fIKOMPONEN2\fP, ... \fIKOMPONENn\fP" 4
 Semua komponen dijalankan, kecuali yang ditentukan.
 
@@ -84,9 +81,9 @@ Memungkinkan pengguna untuk mengatur nama host sistem. Nilai default MiniOS
 adalah 'minios'.
 .IP "\fBlive\-config.network\-method\fP=dhcp|static|off | \fBnetwork\-method\fP=dhcp|static|off" 4
 Memilih kebijakan jaringan kabel. Jika tidak diatur atau menggunakan dhcp,
-pengaturan default image tidak berubah. Static akan menulis berkas keyfile
-NetworkManager; off menonaktifkan konfigurasi IPv4 otomatis untuk antarmuka
-yang dipilih.
+pengaturan default image tidak berubah. Static menulis konfigurasi untuk
+backend yang dipilih; off menonaktifkan konfigurasi IPv4 otomatis untuk
+antarmuka yang dipilih.
 .IP "\fBlive\-config.network\-interface\fP=\fIINTERFACE\fP | \fBnetwork\-interface\fP=\fIINTERFACE\fP" 4
 Memilih antarmuka kabel. Jika tidak ditentukan untuk static atau off,
 satu\-satunya antarmuka kabel non\-loopback akan dipilih secara otomatis; jika
@@ -108,9 +105,11 @@ ditandai sebagai unmanaged oleh NetworkManager ketika kedua stack terpasang.
 Memungkinkan pengguna untuk mengatur nama pengguna yang dibuat untuk
 autologin. Nilai default MiniOS adalah 'live'.
 .IP "\fBlive\-config.user\-default\-groups\fP=\fIGRUP1\fP,\fIGRUP2\fP ... \fIGRUPn\fP | \fBuser\-default\-groups\fP=\fIGRUP1\fP,\fIGRUP2\fP ... \fIGRUPn\fP" 4
-Memungkinkan untuk mengatur grup default dari pengguna yang dibuat untuk
-autologin. Defaultnya adalah 'audio cdrom dip floppy video plugdev netdev
-powerdev scanner bluetooth'.
+Mengatur grup tambahan untuk pengguna yang dibuat untuk autologin. Nama grup
+dapat dipisahkan dengan koma atau spasi. Default MiniOS adalah 'dialout
+cdrom floppy audio video plugdev users fuse plugdev netdev powerdev scanner
+bluetooth weston\-launch kvm libvirt libvirt\-qemu vboxusers lpadmin dip
+sambashare docker wireshark'.
 .IP "\fBlive\-config.user\-fullname\fP=\(dq\fINAMA LENGKAP PENGGUNA\fP\(dq | \fBuser\-fullname\fP=\(dq\fINAMA LENGKAP PENGGUNA\fP\(dq" 4
 Memungkinkan pengguna untuk mengatur nama lengkap pengguna yang dibuat untuk
 autologin. Nilai default MiniOS adalah 'MiniOS Live User'.
@@ -151,7 +150,7 @@ Memungkinkan seseorang untuk menonaktifkan layanan sysv melalui update\-rc.d.
 .IP "\fBlive\-config.utc\fP=\fBya\fP|tidak | \fButc\fP=\fBya\fP|tidak" 4
 Memungkinkan seseorang untuk mengubah apakah sistem mengasumsikan bahwa jam
 perangkat keras diatur ke UTC atau tidak. Defaultnya adalah 'ya'.
-.IP "\fBlive\-config.x\-session\-manager=\fP\fIMANAJER_SESI_X\fP | \fBx\-session\-manager\fP=\fIMANAJER_SESI_X\fP" 4
+.IP "\fBlive\-config.xorg\-xsession\-manager=\fP\fIX_SESSION_MANAGER\fP | \fBx\-session\-manager\fP=\fIX_SESSION_MANAGER\fP" 4
 Memungkinkan seseorang untuk mengatur manajer sesi X melalui
 update\-alternatives.
 .IP "\fBlive\-config.xorg\-driver\fP=\fIDRIVER_XORG\fP | \fBxorg\-driver\fP=\fIDRIVER_XORG\fP" 4
@@ -169,11 +168,21 @@ secara otomatis. Jika ID PCI ditentukan dalam
 /usr/share/live/config/broadcom\-sta/\fIDRIVER\fP.ids dalam sistem live,
 \fIDRIVER\fP diberlakukan untuk perangkat ini. Jika parameter boot dan override
 ditemukan, parameter boot yang diutamakan.
-.IP "\fBlive\-config.module\-mode\fP=\fIMODE\fP | \fBmodule\-mode\fP=\fIMODE\fP" 4
+.IP "\fBlive\-config.module\-mode\fP=simple|merged | \fBmodule\-mode\fP=simple|merged" 4
 Memungkinkan Anda menentukan mode modul untuk konfigurasi live. Jika disetel
 ke "merged", sistem akan memperbarui akun pengguna, membangun ulang cache,
 dan menyegarkan pengaturan paket agar perubahan konfigurasi terintegrasi
 secara dinamis ke dalam sistem yang sedang berjalan.
+.IP "\fBlive\-config.link\-user\-dirs\fP | \fBlink\-user\-dirs\fP" 4
+Membuat tautan direktori pengguna yang dikelola ke path yang dikonfigurasi
+pada media data MiniOS.
+.IP "\fBlive\-config.bind\-user\-dirs\fP | \fBbind\-user\-dirs\fP" 4
+Melakukan bind\-mount direktori pengguna yang dikelola dari path yang
+dikonfigurasi pada media data MiniOS. Opsi ini tidak dapat digunakan
+bersamaan dengan link\-user\-dirs.
+.IP "\fBlive\-config.user\-dirs\-path\fP=\fIPATH\fP | \fBuser\-dirs\-path\fP=\fIPATH\fP" 4
+Mengatur path relatif media yang digunakan oleh link\-user\-dirs atau
+bind\-user\-dirs. Default\-nya adalah /minios/userdata.
 .IP "\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP | \fBhooks\fP=medium|filesystem|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP" 4
 Memungkinkan seseorang untuk mengambil dan menjalankan satu atau lebih file
 arbitrer. Perhatikan bahwa URL harus dapat diambil oleh wget (http, ftp atau
@@ -203,8 +212,8 @@ untuk memiliki granularitas penuh atas semua opsi, serta menjaga semuanya
 tetap sederhana.
 
 .IP "\fBlive\-config.noroot\fP | \fBnoroot\fP" 4
-Menonaktifkan sudo dan policykit, pengguna tidak dapat memperoleh hak
-istimewa root di sistem.
+Menonaktifkan pengaturan sandi root serta pemberian hak istimewa sudo dan
+PolicyKit pada MiniOS.
 .IP "\fBlive\-config.sudo\-mode\fP=\fBpasswordless\fP|password|disabled | \fBsudo\-mode\fP=\fBpasswordless\fP|password|disabled" 4
 Mengatur konfigurasi sudo untuk pengguna live. Default, dan perilaku MiniOS
 sebelumnya jika tidak diatur, adalah \fBpasswordless\fP. Mode \fBpassword\fP tetap
@@ -221,11 +230,11 @@ sehingga autentikasi PolicyKit distribusi normal berlaku. \fBdisabled\fP bukan
 kebijakan PolicyKit tolak\-semua secara ketat; gunakan \fBnoroot\fP jika
 pengguna live tidak boleh mendapatkan hak administratif.
 .IP "\fBlive\-config.ssh\-permit\-root\-login\fP=\fBtrue\fP|false | \fBssh\-permit\-root\-login\fP=\fBtrue\fP|false" 4
-Menulis kebijakan OpenSSH PermitRootLogin drop\-in ketika openssh\-server
-terpasang.
-.IP "\fBlive\-config.ssh\-password\-authentication\fP=\fBtrue\fP|false | \fBssh\-password\-authentication\fP=\fBtrue\fP|false" 4
-Menulis kebijakan OpenSSH PasswordAuthentication drop\-in ketika
+Menulis kebijakan OpenSSH PermitRootLogin ketika diatur secara eksplisit dan
 openssh\-server terpasang.
+.IP "\fBlive\-config.ssh\-password\-authentication\fP=\fBtrue\fP|false | \fBssh\-password\-authentication\fP=\fBtrue\fP|false" 4
+Menulis kebijakan OpenSSH PasswordAuthentication ketika diatur secara
+eksplisit dan openssh\-server terpasang.
 .IP "\fBlive\-config.xrdp\-mode\fP=\fBrelaxed\fP|hardened|disabled | \fBxrdp\-mode\fP=\fBrelaxed\fP|hardened|disabled" 4
 Mengatur postur XRDP saat xrdp terpasang. \fBrelaxed\fP mempertahankan default
 MiniOS historis. \fBhardened\fP mengikat XRDP ke localhost, mengaktifkan
@@ -245,12 +254,14 @@ mempertahankan kemudahan sesi live historis. \fBhardened\fP menghindari
 penonaktifan penguncian GNOME dan mengaktifkan penguncian xscreensaver jika
 berkas tersebut ada.
 .IP "\fBlive\-config.noautologin\fP | \fBnoautologin\fP" 4
-Menonaktifkan login konsol otomatis dan autologin grafis.
+Mencegah pengaturan login konsol otomatis dan autologin grafis
+sekaligus. Konfigurasi persisten yang sudah ada tidak dihapus.
 .IP "\fBlive\-config.nottyautologin\fP | \fBnottyautologin\fP" 4
-Menonaktifkan login otomatis di konsol, tidak memengaruhi autologin grafis.
+Mencegah pengaturan login konsol otomatis tanpa memengaruhi autologin
+grafis. Konfigurasi persisten yang sudah ada tidak dihapus.
 .IP "\fBlive\-config.nox11autologin\fP | \fBnox11autologin\fP" 4
-Menonaktifkan login otomatis dengan manajer tampilan apa pun, tidak
-memengaruhi autologin tty.
+Mencegah pengaturan autologin grafis tanpa memengaruhi autologin
+konsol. Konfigurasi persisten yang sudah ada tidak dihapus.
 
 .SS "Parameter Boot (opsi khusus)"
 Untuk kasus penggunaan khusus ada beberapa parameter boot khusus.
@@ -259,10 +270,10 @@ Untuk kasus penggunaan khusus ada beberapa parameter boot khusus.
 Mengaktifkan output debug di live\-config.
 
 .SS "File Konfigurasi"
-\fBlive\-config\fP dapat dikonfigurasi (tetapi tidak diaktifkan) melalui file
-konfigurasi. Segala sesuatu kecuali pintasan yang dapat dikonfigurasi dengan
-parameter boot juga dapat dikonfigurasi melalui satu atau lebih file. Jika
-file konfigurasi digunakan, parameter 'boot=live' masih diperlukan untuk
+\fBlive\-config\fP dapat dikonfigurasi (namun tidak diaktifkan) melalui berkas
+konfigurasi. Parameter boot yang didukung dapat ditempatkan di
+\fBLIVE_CONFIG_CMDLINE\fP, dan sebagian besar opsi juga dapat diatur melalui
+variabel individual. Parameter 'boot=live' tetap diperlukan untuk
 mengaktifkan \fBlive\-config\fP.
 .PP
 \fBCatatan:\fP Jika file konfigurasi digunakan, sebaiknya semua parameter boot
@@ -271,11 +282,11 @@ individual dapat diatur. Jika variabel individual digunakan, pengguna
 diwajibkan untuk memastikan bahwa semua variabel yang diperlukan diatur
 untuk membuat konfigurasi yang valid.
 .PP
-File konfigurasi dapat ditempatkan baik di sistem file root itu sendiri
-(/etc/live/config.conf, /etc/live/config.conf.d/*.conf), atau di media live
-(minios/config.conf, minios/config.conf.d/*.conf). Jika kedua lokasi
-digunakan untuk opsi tertentu, yang dari media live lebih diutamakan
-daripada yang dari sistem file root.
+Berkas konfigurasi dibaca dari /etc/live/config.conf dan
+/etc/live/config.conf.d/*.conf. Saat startup, minios/config.conf dari media
+live akan disalin ke /etc/live/config.conf hanya jika berkas tujuan belum
+ada. Direktori konfigurasi pada media live tidak dibaca. Berkas di
+/etc/live/config.conf.d akan dimuat setelah /etc/live/config.conf.
 .PP
 Meskipun file konfigurasi yang ditempatkan di direktori konfigurasi tidak
 memerlukan nama tertentu, disarankan untuk alasan konsistensi untuk
@@ -347,6 +358,10 @@ sandi pengguna dalam teks biasa.
 Variabel ini sesuai dengan parameter
 \&'\fBlive\-config.user\-password\-crypted\fP=\fIPASSWORD\fP'. Variabel ini menentukan
 kata sandi pengguna dalam bentuk terenkripsi.
+.IP \fBLIVE_CONFIG_NOROOT\fP=true|false 4
+Variabel ini sesuai dengan parameter '\fBlive\-config.noroot\fP' dan
+menonaktifkan pengaturan hak istimewa root, sudo, dan PolicyKit jika diatur
+ke true.
 .IP \fBMODE_SUDO_LIVE\fP=\fBtanpa_sandi\fP|password|disabled 4
 Variabel ini sesuai dengan parameter '\fBlive\-config.sudo\-mode\fP=...'. Jika
 tidak disetel, MiniOS mempertahankan perilaku sudo tanpa sandi secara
@@ -400,7 +415,7 @@ Variabel ini sesuai dengan parameter
 Variabel ini sesuai dengan parameter '\fBlive\-config.utc\fP=\fBya\fP|tidak'.
 .IP \fBLIVE_X_SESSION_MANAGER\fP=\fIMANAJER_SESI_X\fP 4
 Variabel ini sesuai dengan parameter
-\&'\fBlive\-config.x\-session\-manager\fP=\fIMANAJER_SESI_X\fP'.
+\&'\fBlive\-config.xorg\-xsession\-manager\fP=\fIX_SESSION_MANAGER\fP'.
 .IP \fBLIVE_XORG_DRIVER\fP=\fIDRIVER_XORG\fP 4
 Variabel ini sesuai dengan parameter
 \&'\fBlive\-config.xorg\-driver\fP=\fIDRIVER_XORG\fP'.
@@ -414,13 +429,13 @@ Variabel ini sesuai dengan parameter
 Variabel ini sesuai dengan parameter
 \&'\fBlive\-config.hooks\fP=filesystem|medium|\fIURL1\fP|\fIURL2\fP| ... |\fIURLn\fP'.
 .IP \fBLIVE_LINK_USER_DIRS\fP=true|false 4
-Variabel ini sesuai dengan parameter
-\&'\fBlive\-config.link\-user\-dirs\fP=true|false'. Ini mengaktifkan atau
-menonaktifkan pembuatan tautan simbolis untuk direktori pengguna.
+Mengaktifkan atau menonaktifkan pembuatan tautan simbolik untuk direktori
+pengguna. Parameter boot yang sesuai adalah flag
+\&'\fBlive\-config.link\-user\-dirs\fP' tanpa nilai tambahan.
 .IP \fBLIVE_BIND_USER_DIRS\fP=true|false 4
-Variabel ini sesuai dengan parameter
-\&'\fBlive\-config.bind\-user\-dirs\fP=true|false'. Ini mengaktifkan atau
-menonaktifkan pemasangan ikatan untuk direktori pengguna.
+Mengaktifkan atau menonaktifkan bind\-mount untuk direktori
+pengguna. Parameter boot yang sesuai adalah flag
+\&'\fBlive\-config.bind\-user\-dirs\fP' tanpa nilai tambahan.
 .IP \fBLIVE_USER_DIRS_PATH\fP=\fIJALUR\fP 4
 Variabel ini sesuai dengan parameter
 \&'\fBlive\-config.user\-dirs\-path\fP=\fIJALUR\fP'. Variabel ini menentukan jalur
@@ -437,7 +452,7 @@ tidak aman. Direktori Desktop, Documents, Downloads, Music, Pictures,
 Public, Templates, dan Videos dikelola. Migrasi menolak menggabungkan dua
 pohon yang sudah berisi data; menonaktifkan fitur ini akan menyalin data
 yang dikelola kembali. Status dan informasi dicatat di /var/lib/live/config.
-.IP \fBLIVE_MODULE_MODE\fP 4
+.IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 Variabel ini menyimpan status yang ditentukan oleh parameter
 \&'live\-config.module\-mode' (atau 'module\-mode'). Jika disetel ke "merged",
 sistem live akan menerapkan pembaruan (melalui minios\-update\-users,
@@ -484,32 +499,32 @@ Memungkinkan seseorang untuk menerapkan file preseed arbitrer yang
 ditempatkan di media live atau server http/ftp.
 .IP \fBhostname\fP 4
 Mengonfigurasi /etc/hostname dan /etc/hosts.
-.IP \fBjaringan\fP 4
-mengonfigurasi kebijakan IPv4 kabel yang tahan lama melalui keyfile
-NetworkManager yang aman atau stanza ifupdown. Proses ini dijalankan sebelum
-layanan jaringan, memvalidasi semua nilai, dan hanya menandai setelah
-penulisan berhasil.
 .IP \fBissue\-setup\fP 4
 Mengatur file /etc/issue dengan spanduk selamat datang dan informasi
 distribusi.
-.IP "\fBlive\-debconfig (passwd)\fP" 4
+.IP \fBlive\-debconfig_passwd\fP 4
 Mengonfigurasi kata sandi pengguna dan root melalui live\-debconfig.
 .IP \fBuser\-setup\fP 4
 Menambahkan akun pengguna live.
+.IP \fBuser\-groups\fP 4
+menambahkan pengguna live ke grup tambahan yang dideklarasikan oleh modul
+yang terpasang. Grup yang sudah ada dan tercantum di
+/usr/share/live/config/user\-default\-groups.d/*.groups akan diterapkan
+setelah pembuatan pengguna dan pada eksekusi live\-config berikutnya.
 .IP \fBroot\-setup\fP 4
 Mengatur atau memperbarui kata sandi root dan mengonfigurasi lingkungan
 pengguna root.
 .IP \fBsudo\fP 4
 Memberikan hak istimewa sudo kepada pengguna live.
+.IP \fBuser\-ssh\-keys\fP 4
+menyinkronkan berkas \fIauthorized_keys.<username>\fP khusus pengguna
+antara media live dan direktori home masing\-masing pengguna. Mendukung
+beberapa pengguna secara bersamaan (misalnya, \fIauthorized_keys.root\fP,
+\fIauthorized_keys.live\fP, \fIauthorized_keys.admin\fP).
 .IP \fBuser\-media\fP 4
 menautkan atau bind\-mount direktori pengguna yang telah divalidasi pada
 media data MiniOS yang dapat ditulis, dengan migrasi dan penyalinan kembali
 yang aman saat dinonaktifkan.
-.IP \fBuser\-ssh\-keys\fP 4
-mensinkronkan kunci SSH dari berkas \fIauthorized_keys.<username>\fP
-yang spesifik untuk pengguna pada media live ke direktori home masing\-masing
-pengguna. Mendukung beberapa pengguna secara bersamaan (misal:
-\fIauthorized_keys.root\fP, \fIauthorized_keys.live\fP, \fIauthorized_keys.admin\fP).
 .IP \fBlocales\fP 4
 Mengonfigurasi lokal.
 .IP \fBtzdata\fP 4
@@ -519,6 +534,8 @@ mengonfigurasi nama pengguna di xorg.service dan menerapkan posture X11 jika
 didukung.
 .IP \fBgdm3\fP 4
 Mengonfigurasi autologin di gdm3.
+.IP \fBsddm\fP 4
+mengonfigurasi autologin di sddm.
 .IP \fBkdm\fP 4
 Mengonfigurasi autologin di kdm.
 .IP \fBlightdm\fP 4
@@ -539,12 +556,6 @@ terpasang. Pintasan noautologin dan nottyautologin akan menonaktifkan
 pengaturan tersebut.
 .IP \fBsysv\-rc\fP 4
 Mengonfigurasi sysv\-rc dengan menonaktifkan layanan yang terdaftar.
-.IP \fBlogin\fP 4
-Menonaktifkan lastlog.
-.IP \fBanacron\fP 4
-Menonaktifkan anacron.
-.IP \fButil\-linux\fP 4
-Menonaktifkan hwclock util\-linux.
 .IP \fBapport\fP 4
 Menonaktifkan apport.
 .IP \fBgnome\-panel\-data\fP 4
@@ -559,29 +570,35 @@ Menonaktifkan wizard migrasi KDE (squeeze dan yang lebih baru).
 Menonaktifkan beberapa layanan KDE yang tidak diinginkan (squeeze dan yang
 lebih baru).
 .IP \fBpolicykit\fP 4
-Memberikan hak istimewa pengguna melalui policykit.
-.IP \fBuser\-groups\fP 4
-menambahkan pengguna live ke grup tambahan yang dideklarasikan oleh modul
-yang terpasang. Grup yang sudah ada dan tercantum di
-/usr/share/live/config/user\-default\-groups.d/*.groups akan diterapkan
-setelah pembuatan pengguna dan pada eksekusi live\-config berikutnya.
+memberikan hak istimewa pengguna melalui PolicyKit.
 .IP \fBssl\-cert\fP 4
-Meregenerasi sertifikat SSL snake\-oil.
+menghasilkan ulang sertifikat SSL snake\-oil.
 .IP \fBxrdp\fP 4
 mengonfigurasi posture XRDP relaxed, hardened, atau disabled saat XRDP
 terpasang.
+.IP \fBanacron\fP 4
+Menonaktifkan anacron.
+.IP \fButil\-linux\fP 4
+menonaktifkan layanan util\-linux hwclock.
+.IP \fBlogin\fP 4
+Menonaktifkan lastlog.
+.IP \fBxserver\-xorg\fP 4
+Mengonfigurasi xserver\-xorg.
+.IP \fBjaringan\fP 4
+mengonfigurasi kebijakan IPv4 kabel yang tahan lama melalui keyfile
+NetworkManager yang aman atau stanza ifupdown. Proses ini dijalankan sebelum
+layanan jaringan, memvalidasi semua nilai, dan hanya menandai setelah
+penulisan berhasil.
+.IP \fBopenssh\-server\fP 4
+membuat ulang kunci host OpenSSH dan menulis kebijakan root\-login atau
+password\-authentication yang diminta secara eksplisit.
 .IP \fBxfce4\-panel\fP 4
 Mengonfigurasi xfce4\-panel ke pengaturan default.
 .IP \fBxscreensaver\fP 4
 mengontrol penguncian xscreensaver sesuai dengan LIVE_LOCKSCREEN_MODE.
 .IP \fBbroadcom\-sta\fP 4
 Mengonfigurasi driver WLAN broadcom\-sta.
-.IP \fBxserver\-xorg\fP 4
-Mengonfigurasi xserver\-xorg.
-.IP \fBopenssh\-server\fP 4
-membuat ulang kunci host OpenSSH dan menulis kebijakan root\-login atau
-password\-authentication yang diminta secara eksplisit.
-.IP \fBxhyper\-v\fP 4
+.IP \fBhyperv\fP 4
 mengonfigurasi pengaturan X11 untuk meningkatkan kompatibilitas pada
 platform Microsoft Hyper\-V.
 .IP \fBntfs3\fP 4
@@ -596,22 +613,26 @@ yang ditempatkan di media live atau server http/ftp.
 .SH FILE
 .IP \fB/etc/live/config.conf\fP 4
 .IP \fB/etc/live/config.conf.d/*.conf\fP 4
-.IP \fBlive/config.conf\fP 4
-.IP \fBlive/config.conf.d/*.conf\fP 4
-.IP \fB/lib/live/config.sh\fP 4
-.IP \fB/lib/live/config/\fP 4
+.IP \fBminios/config.conf\fP 4
+Berkas konfigurasi pada media live, disalin ke /etc/live/config.conf hanya
+jika tujuan belum ada.
+.IP \fB/usr/lib/live/init\-config.sh\fP 4
+.IP \fB/usr/lib/live/config.sh\fP 4
+.IP \fB/usr/lib/live/config/\fP 4
 .IP \fB/usr/share/live/config/user\-default\-groups.d/*.groups\fP 4
 Grup tambahan yang disediakan modul untuk pengguna live. Nama grup dapat
 dipisahkan dengan spasi; baris kosong dan komentar yang diawali dengan #
 akan diabaikan. Hanya grup yang sudah ada di sistem berjalan yang akan
 diterapkan.
+.IP \fB/usr/share/minios/capabilities/minios\-live\-config.json\fP 4
+Inventaris yang dapat dibaca mesin mengenai fitur live\-config yang didukung.
 .IP \fB/var/lib/live/config/\fP 4
 .IP \fB/var/log/live/config.log\fP 4
 .PP
-.IP \fB/live/config\-hooks/*\fP 4
-.IP \fBlive/config\-hooks/*\fP 4
-.IP \fB/live/config\-preseed/*\fP 4
-.IP "\fBlive/config\-preseed/* \fP" 4
+.IP \fB/usr/lib/live/config\-hooks/*\fP 4
+.IP \fBminios/config\-hooks/*\fP 4
+.IP \fB/usr/lib/live/config\-preseed/*\fP 4
+.IP \fBminios/config\-preseed/*\fP 4
 
 .SH "LIHAT JUGA"
 \fIlive\-boot\fP(7)
@@ -621,16 +642,14 @@ diterapkan.
 \fIlive\-tools\fP(7)
 
 .SH "HALAMAN UTAMA"
-Informasi lebih lanjut tentang live\-config dan proyek Debian Live dapat
-ditemukan di halaman utama di
-<\fIhttps://wiki.debian.org/DebianLive\fP> dan di manual di
-<\fIhttps://live\-team.pages.debian.net/live\-manual/\fP>.
+Informasi lebih lanjut tentang MiniOS live\-config dapat ditemukan di
+<\fIhttps://github.com/minios\-linux/minios\-live\-config\fP>. Informasi
+mengenai proyek Debian Live upstream tersedia di
+<\fIhttps://wiki.debian.org/DebianLive\fP>.
 
 .SH BUG
-Bug dapat dilaporkan dengan mengirimkan laporan bug untuk paket live\-config
-di Sistem Pelacak Bug di <\fIhttp://bugs.debian.org/\fP> atau dengan
-menulis email ke daftar milis Debian Live di
-<\fIdebian\-live@lists.debian.org\fP>.
+Bug dapat dilaporkan di
+<\fIhttps://github.com/minios\-linux/minios\-live\-config/issues\fP>.
 
 .SH PENULIS
 live\-config awalnya ditulis oleh Daniel Baumann
