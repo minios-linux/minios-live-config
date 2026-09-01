@@ -1,3 +1,11 @@
+minios-live-config (11.0.5.19) unstable; urgency=medium
+
+  * Apply module-declared live-user groups after config-module-mode merges
+    passwd/group data from additional modules, so groups introduced by an .sb
+    module are available before membership is updated.
+
+ -- crims0n <crims0n@minios.dev>  Wed, 02 Sep 2026 00:15:12 +0300
+
 minios-live-config (11.0.5.18) unstable; urgency=medium
 
   * Update live-config(7) to match current options, components, defaults,
