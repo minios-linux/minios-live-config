@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-config\n"
-"POT-Creation-Date: 2026-08-31 03:44+0300\n"
-"PO-Revision-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-07 02:27+0300\n"
+"PO-Revision-Date: 2026-09-06 23:27+0000\n"
 "Last-Translator: crims0n <crims0n@minios.dev>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -25,14 +25,14 @@ msgstr "LIVE-CONFIG"
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "2026-08-31"
-msgstr "2026-08-31"
+msgid "2026-09-07"
+msgstr "2026-09-07"
 
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "11.0.5.18"
-msgstr "11.0.5.18"
+msgid "11.0.5.20"
+msgstr "11.0.5.20"
 
 #. type: TH
 #: en/live-config.7:11

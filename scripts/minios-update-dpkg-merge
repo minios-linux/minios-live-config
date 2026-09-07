@@ -1,0 +1,194 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Dpkg::Version qw(version_compare);
+
+@ARGV == 6 or die "Usage: $0 MODULE_STATUS CURRENT_STATUS PREVIOUS_BASE CHANGES_INFO BASE_OUT FINAL_OUT\n";
+my ($module_path, $current_path, $previous_path, $info_dir, $base_out, $final_out) = @ARGV;
+
+sub fields_for {
+    my ($paragraph, $path, $number) = @_;
+    my %fields;
+    my $current;
+    for my $line (split /\n/, $paragraph, -1) {
+        if ($line =~ /^([A-Za-z0-9][A-Za-z0-9-]*):\s?(.*)$/) {
+            $current = lc $1;
+            die "Malformed status paragraph $number in $path: duplicate $1 field\n"
+                if defined($path) && exists $fields{$current};
+            $fields{$current} = $2;
+        } elsif (defined $current && $line =~ /^[ \t](.*)$/) {
+            $fields{$current} .= "\n" . $1;
+        } elsif ($line ne '') {
+            die "Malformed status paragraph $number in $path: invalid line '$line'\n"
+                if defined $path;
+        }
+    }
+    return \%fields;
+}
+
+sub require_fields {
+    my ($fields, $path, $number, @required) = @_;
+    for my $field (@required) {
+        my $name = lc $field;
+        die "Malformed status paragraph $number in $path: missing or empty $field field\n"
+            if !defined($fields->{$name}) || $fields->{$name} !~ /\S/;
+    }
+}
+
+sub key_for {
+    my ($fields) = @_;
+    my $pkg = $fields->{package};
+    return undef if !defined($pkg) || $pkg eq '';
+    return $pkg . "\x1f" . ($fields->{architecture} // '');
+}
+
+sub signature_for {
+    my ($paragraph) = @_;
+    my $fields = fields_for($paragraph);
+    return join "\n", map { $_ . "=" . $fields->{$_} } sort keys %$fields;
+}
+
+sub parse_status {
+    my ($path) = @_;
+    my %records;
+    my $number = 0;
+    return \%records if !defined($path) || !-f $path;
+    open my $fh, '<', $path or die "Cannot read $path: $!\n";
+    local $/;
+    my $text = <$fh> // '';
+    close $fh;
+    for my $paragraph (split /\n\s*\n/, $text) {
+        next if $paragraph !~ /\S/;
+        $number++;
+        $paragraph =~ s/\s+\z/\n/;
+        my $fields = fields_for($paragraph, $path, $number);
+        require_fields($fields, $path, $number, 'Package');
+        my $key = key_for($fields);
+        $records{$key} = $paragraph;
+    }
+    return \%records;
+}
+
+sub merge_modules {
+    my ($path) = @_;
+    my %records;
+    my $number = 0;
+    return \%records if !-f $path;
+    open my $fh, '<', $path or die "Cannot read $path: $!\n";
+    local $/;
+    my $text = <$fh> // '';
+    close $fh;
+    for my $paragraph (split /\n\s*\n/, $text) {
+        next if $paragraph !~ /\S/;
+        $number++;
+        $paragraph =~ s/\s+\z/\n/;
+        my $fields = fields_for($paragraph, $path, $number);
+        require_fields($fields, $path, $number, 'Package', 'Version');
+        my $key = key_for($fields);
+        my $ver = $fields->{version};
+        if (!exists $records{$key}) {
+            $records{$key} = $paragraph;
+            next;
+        }
+        my $old_ver = fields_for($records{$key})->{version} // '';
+        $records{$key} = $paragraph if version_compare($ver, $old_ver) > 0;
+    }
+    return \%records;
+}
+
+sub info_names {
+    my ($dir) = @_;
+    my @names;
+    return \@names if !defined($dir) || !-d $dir;
+    opendir my $dh, $dir or return \@names;
+    @names = grep { $_ ne '.' && $_ ne '..' } readdir $dh;
+    closedir $dh;
+    return \@names;
+}
+
+sub has_local_info {
+    my ($names, $paragraph) = @_;
+    my $fields = fields_for($paragraph);
+    my $pkg = $fields->{package} // '';
+    my $arch = $fields->{architecture} // '';
+    return 0 if $pkg eq '';
+    my @prefixes = ($pkg . '.');
+    push @prefixes, $pkg . ':' . $arch . '.' if $arch ne '';
+    for my $name (@$names) {
+        $name =~ s/^\.wh\.//;
+        for my $prefix (@prefixes) {
+            return 1 if index($name, $prefix) == 0;
+        }
+    }
+    return 0;
+}
+
+sub same_record {
+    my ($left, $right) = @_;
+    return 0 if !defined($left) || !defined($right);
+    return signature_for($left) eq signature_for($right);
+}
+
+sub write_status {
+    my ($path, $records) = @_;
+    open my $fh, '>', $path or die "Cannot write $path: $!\n";
+    for my $key (sort keys %$records) {
+        my $paragraph = $records->{$key};
+        $paragraph =~ s/\s+\z//;
+        print {$fh} $paragraph, "\n\n";
+    }
+    close $fh or die "Cannot close $path: $!\n";
+}
+
+my $base = merge_modules($module_path);
+my $current = parse_status($current_path);
+my $previous = parse_status($previous_path);
+my $names = info_names($info_dir);
+my (%override, %remove);
+
+if (%$previous) {
+    # Previous baseline contains only mounted-module state.  Any semantic
+    # difference still needs writable dpkg metadata to prove a local install
+    # or version change.  State-only changes at the same version (for example
+    # dpkg --set-selections) do not create info files and remain valid.
+    for my $key (keys %$current) {
+        next if exists($previous->{$key}) && same_record($current->{$key}, $previous->{$key});
+        my $keep = has_local_info($names, $current->{$key});
+        if (!$keep && exists $previous->{$key}) {
+            my $cur = fields_for($current->{$key});
+            my $old = fields_for($previous->{$key});
+            $keep = 1 if (($cur->{version} // '') eq ($old->{version} // ''));
+        }
+        $override{$key} = $current->{$key} if $keep;
+    }
+    for my $key (keys %$previous) {
+        $remove{$key} = 1 if !exists $current->{$key};
+    }
+} else {
+    # Migration from older minios-update-dpkg versions.  Their synthesized
+    # status was written into the writable branch and then fed back into the
+    # next rebuild.  Keep a differing record only when raw dpkg metadata in the
+    # writable layer proves a local package change, or when only package state
+    # changed while the installed version stayed the same.
+    for my $key (keys %$current) {
+        next if exists($base->{$key}) && same_record($current->{$key}, $base->{$key});
+        my $keep = has_local_info($names, $current->{$key});
+        if (!$keep && exists $base->{$key}) {
+            my $cur = fields_for($current->{$key});
+            my $mod = fields_for($base->{$key});
+            $keep = 1 if (($cur->{version} // '') eq ($mod->{version} // ''));
+        }
+        $override{$key} = $current->{$key} if $keep;
+    }
+    for my $key (keys %$base) {
+        next if exists $current->{$key};
+        $remove{$key} = 1 if has_local_info($names, $base->{$key});
+    }
+}
+
+my %final = %$base;
+delete $final{$_} for keys %remove;
+$final{$_} = $override{$_} for keys %override;
+write_status($base_out, $base);
+write_status($final_out, \%final);

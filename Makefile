@@ -33,6 +33,11 @@ test:
 	@./scripts/validate-capabilities "$(CAPABILITIES_JSON)"
 	@echo " done."
 
+	@echo -n "Testing merged dpkg database rebuild"
+	@perl -c scripts/minios-update-dpkg-merge >/dev/null
+	@./tests/minios-update-dpkg-merge.sh
+	@echo " done."
+
 build:
 	@echo "Nothing to build."
 
@@ -50,6 +55,7 @@ install:
 	cp frontend/live-* $(DESTDIR)/usr/bin
 	cp frontend/minios-* $(DESTDIR)/usr/sbin
 	cp frontend/*.sh $(DESTDIR)/usr/lib/live/
+	install -m 0755 scripts/minios-update-dpkg-merge $(DESTDIR)/usr/lib/live/minios-update-dpkg-merge
 	cp components/* $(DESTDIR)/usr/lib/live/config
 
 	mkdir -p $(DESTDIR)/var/lib/live/config
