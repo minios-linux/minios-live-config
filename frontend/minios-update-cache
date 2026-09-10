@@ -12,6 +12,9 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
+# System-wide caches must stay readable regardless of the caller's umask.
+umask 022
+
 mkdir -p /var/log/minios
 exec 19>/var/log/minios/minios-update-cache.trace.log
 BASH_XTRACEFD=19
@@ -20,17 +23,21 @@ set -x
 
 # Function to update various system caches from bundles
 update_caches() {
-    if [ ! "$UPDATE_MIME" ]; then
-        [ -d "$1/usr/share/mime/" ] && UPDATE_MIME=true && update-mime-database /usr/share/mime &
+    if [ ! "$UPDATE_MIME" ] && [ -d "$1/usr/share/mime/" ]; then
+        UPDATE_MIME=true
+        update-mime-database /usr/share/mime &
     fi
-    if [ ! "$UPDATE_BUFFERS" ]; then
-        [ -d "$1/usr/lib/gdk-pixbuf-2.0/" ] && UPDATE_BUFFERS=true && gdk-pixbuf-query-loaders --update-cache &
+    if [ ! "$UPDATE_BUFFERS" ] && [ -d "$1/usr/lib/gdk-pixbuf-2.0/" ]; then
+        UPDATE_BUFFERS=true
+        gdk-pixbuf-query-loaders --update-cache &
     fi
-    if [ ! "$UPDATE_ICONS" ]; then
-        [ -d "$1/usr/share/icons/hicolor/" ] && UPDATE_ICONS=true && gtk-update-icon-cache -f -i -q /usr/share/icons/hicolor &
+    if [ ! "$UPDATE_ICONS" ] && [ -d "$1/usr/share/icons/hicolor/" ]; then
+        UPDATE_ICONS=true
+        gtk-update-icon-cache -f -i -q /usr/share/icons/hicolor &
     fi
-    if [ ! "$UPDATE_SCHEMAS" ]; then
-        [ -d "$1/usr/share/glib-2.0/schemas/" ] && UPDATE_SCHEMAS=true && glib-compile-schemas /usr/share/glib-2.0/schemas/ &
+    if [ ! "$UPDATE_SCHEMAS" ] && [ -d "$1/usr/share/glib-2.0/schemas/" ]; then
+        UPDATE_SCHEMAS=true
+        glib-compile-schemas /usr/share/glib-2.0/schemas/ &
     fi
     if [ ! "$UPDATE_APPLICATIONS" ]; then
         if [ -d "$1/usr/share/applications/" -o -d "$1/usr/local/share/applications/" ]; then
@@ -80,6 +87,9 @@ ldconfig
 for BUNDLE in $(ls -d $BUNDLES/*.$BEXT | egrep -v "^$BUNDLES/00"); do
     update_caches "$BUNDLE"
 done
+
+# Cache updates are part of the module transaction; do not return while they are still running.
+wait
 
 # Call configure_kernel_modules function to load kernel modules from bundles
 configure_kernel_modules

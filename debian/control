@@ -76,6 +76,8 @@ Description: Live System Configuration Components (systemd backend)
 Package: minios-live-config-sysvinit
 Architecture: all
 Depends: sysvinit-core | sysvinit (<< 2.88dsf-44),
+         mount,
+         util-linux,
          ${misc:Depends}
 Conflicts: minios-live-config-backend, live-config-backend, live-config-sysvinit
 Provides: minios-live-config-backend, live-config-backend

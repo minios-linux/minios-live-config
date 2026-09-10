@@ -1,0 +1,124 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          minios-dracut-exitrd
+# Required-Start:
+# Required-Stop:
+# Should-Stop:       halt reboot kexec
+# X-Stop-After:      umountroot mdadm-waitidle
+# Default-Start:
+# Default-Stop:      0 6
+# Short-Description: Enter the dracut shutdown initramfs
+# Description:       Switch to /run/initramfs and run dracut shutdown hooks.
+### END INIT INFO
+
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+NEWROOT=/run/initramfs
+BOUND=""
+
+log_error() {
+    echo "minios-dracut-exitrd: $*" >&2
+}
+
+undo_binds() {
+    for target in $BOUND; do
+        umount "$target" 2>/dev/null || true
+    done
+}
+
+bind_fs() {
+    source=$1
+    target=$2
+    mode=$3
+    mountpoint -q "$target" && return 0
+
+    if [ "$mode" = recursive ]; then
+        mount --rbind "$source" "$target" || return 1
+    else
+        mount --bind "$source" "$target" || return 1
+    fi
+
+    BOUND="$target $BOUND"
+    return 0
+}
+
+shutdown_action() {
+    case "${RUNLEVEL:-}" in
+        0)
+            init_halt=${INIT_HALT:-}
+            halt_mode=${HALT:-}
+            if [ -r /etc/default/halt ]; then
+                . /etc/default/halt
+                halt_mode=${HALT:-$halt_mode}
+            fi
+            case "$init_halt:$halt_mode" in
+                HALT:*|:[Hh]*) echo halt ;;
+                *)             echo poweroff ;;
+            esac
+            ;;
+        6) echo reboot ;;
+        *) return 1 ;;
+    esac
+}
+enter_exitrd() {
+    action=$(shutdown_action) || return 0
+
+    [ -x "$NEWROOT/shutdown" ] || return 0
+    [ -x "$NEWROOT/bin/sh" ] || return 0
+    command -v pivot_root >/dev/null 2>&1 || return 0
+
+    mkdir -p "$NEWROOT/dev" "$NEWROOT/proc" "$NEWROOT/sys" \
+        "$NEWROOT/run" "$NEWROOT/oldroot" 2>/dev/null || {
+        log_error "cannot prepare shutdown initramfs"
+        return 0
+    }
+
+    mount --make-rprivate / || {
+        log_error "cannot make mount tree private; using normal SysV shutdown"
+        return 0
+    }
+
+    if ! mountpoint -q "$NEWROOT"; then
+        mount --bind "$NEWROOT" "$NEWROOT" || {
+            log_error "cannot make $NEWROOT a mount point; using normal SysV shutdown"
+            return 0
+        }
+        BOUND="$NEWROOT $BOUND"
+    fi
+
+    bind_fs /dev  "$NEWROOT/dev"  recursive || return 1
+    bind_fs /sys  "$NEWROOT/sys"  recursive || return 1
+    bind_fs /proc "$NEWROOT/proc" recursive || return 1
+    bind_fs /run  "$NEWROOT/run"  plain     || return 1
+    sync
+    cd "$NEWROOT" || return 1
+    if ! pivot_root . oldroot; then
+        cd /
+        log_error "pivot_root failed; using normal SysV shutdown"
+        undo_binds
+        return 0
+    fi
+
+    cd /
+    echo "Entering MiniOS shutdown initramfs..."
+    exec /shutdown "$action"
+
+    log_error "cannot execute /shutdown after pivot_root"
+    exec /bin/busybox "$action" -f
+}
+
+case "${1:-}" in
+    stop)
+        if ! enter_exitrd; then
+            log_error "cannot bind API filesystems; using normal SysV shutdown"
+            undo_binds
+        fi
+        ;;
+    start|status|restart|reload|force-reload)
+        ;;
+    *)
+        echo "Usage: $0 stop" >&2
+        exit 3
+        ;;
+esac
+
+exit 0

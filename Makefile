@@ -33,6 +33,8 @@ test:
 	@./scripts/validate-capabilities "$(CAPABILITIES_JSON)"
 	@echo " done."
 
+	@bash tests/minios-update-cache.sh
+
 	@echo -n "Testing merged dpkg database rebuild"
 	@perl -c scripts/minios-update-dpkg-merge >/dev/null
 	@./tests/minios-update-dpkg-merge.sh
@@ -45,6 +47,8 @@ install:
 	# Installing backend
 	mkdir -p $(DESTDIR)/etc/init.d
 	cp backend/sysvinit/live-config.init $(DESTDIR)/etc/init.d/live-config
+	install -m 0755 backend/sysvinit/minios-dracut-exitrd.init \
+		$(DESTDIR)/etc/init.d/minios-dracut-exitrd
 
 	mkdir -p $(DESTDIR)/usr/lib/systemd/system $(DESTDIR)/usr/lib/systemd/system-generators
 	cp backend/systemd/live-config.systemd $(DESTDIR)/usr/lib/systemd/system/live-config.service

@@ -28,3 +28,4 @@ override_dh_compress:
 
 override_dh_installinit:
 	dh_installinit -p minios-live-config-sysvinit --no-stop-on-upgrade --no-start --update-rcd-params='start 00 S .' --name live-config --onlyscripts
+	dh_installinit -p minios-live-config-sysvinit --no-stop-on-upgrade --no-start --name minios-dracut-exitrd --onlyscripts
