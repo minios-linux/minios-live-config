@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.21 "Projet MiniOS Live"
+.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "Projet MiniOS Live"
 
 .SH NOM
 \fBlive\-config\fP \- Composants de configuration du système
@@ -474,16 +474,21 @@ répertoires d'utilisateurs sur le média.
 .PP
 Les modes de liaison et de montage utilisateur\-média sont mutuellement
 exclusifs. Le chemin par défaut est /minios/userdata, relatif au point de
-montage /run/initramfs/memory/data existant. Seuls les supports locaux en
-écriture de type FAT32, exFAT et NTFS avec support bloc sont acceptés. Les
-supports réseau, optiques, RAM, overlay, en lecture seule, systèmes de
-fichiers non pris en charge, ainsi que toram, toram=full ou toram=trim sont
-rejetés. Les chemins ne doivent pas contenir de traversée, de segments
-vides, de caractères de contrôle ou de noms non sûrs. Les répertoires
-Desktop, Documents, Downloads, Music, Pictures, Public, Templates et Videos
-sont gérés. La migration refuse de fusionner deux arborescences déjà
-peuplées ; la désactivation de la fonctionnalité copie les données gérées en
-retour. L'état et le statut sont enregistrés sous /var/lib/live/config.
+montage existant /run/initramfs/memory/data. Seuls les médias locaux,
+inscriptibles et basés sur un bloc FAT32, exFAT ou NTFS sont acceptés. Les
+systèmes de fichiers réseau, optiques, RAM, overlay, en lecture seule, non
+pris en charge, ainsi que toram, toram=full ou toram=trim sont
+refusés. L’activation utilisateur\-média et la copie de retour sont également
+bloquées lorsque la session de persistance active est chiffrée avec
+LUKS. L’état réel du chiffrement actif est utilisé ; perchencrypt=luks ne
+demande le chiffrement que lors de la création d’une nouvelle session et ne
+décrit pas une session existante. Les chemins ne doivent pas contenir de
+traversée, de segments vides, de caractères de contrôle ou de noms non
+sûrs. Les répertoires Desktop, Documents, Downloads, Music, Pictures,
+Public, Templates et Videos sont gérés. La migration refuse de fusionner
+deux arborescences déjà peuplées ; désactiver la fonctionnalité copie les
+données gérées en retour. L’état et le statut sont enregistrés sous
+/var/lib/live/config.
 .IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 Cette variable contient l'état défini par le paramètre
 \&'live\-config.module\-mode' (ou 'module\-mode'). Lorsqu'il est réglé sur

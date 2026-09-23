@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.21 "Proyecto MiniOS Live"
+.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "Proyecto MiniOS Live"
 
 .SH NOMBRE
 \fBlive\-config\fP \- Componentes de configuración del sistema
@@ -448,17 +448,21 @@ Esta variable corresponde al parámetro
 \&'\fBlive\-config.user\-dirs\-path\fP=\fIRUTA\fP'. Especifica la ruta para los
 directorios de usuario en el medio.
 .PP
-Los modos de enlace y montaje bind de usuario y medio son mutuamente
-excluyentes. La ruta predeterminada es /minios/userdata relativa al punto de
-montaje existente /run/initramfs/memory/data. Solo se aceptan medios locales
-de bloque FAT32, exFAT y NTFS con escritura permitida. Se rechazan medios de
-red, ópticos, RAM, overlay, solo lectura, sistemas de archivos no
-soportados, y toram, toram=full o toram=trim. Las rutas no pueden contener
-recorridos, segmentos vacíos, caracteres de control ni nombres inseguros. Se
-gestionan Desktop, Documents, Downloads, Music, Pictures, Public, Templates
-y Videos. La migración rechaza fusionar dos árboles poblados; al desactivar
-la función, los datos gestionados se copian de vuelta. El estado y el
-registro se almacenan en /var/lib/live/config.
+Los modos de enlace y vinculación de usuario\-media son mutuamente
+excluyentes. La ruta predeterminada es /minios/userdata, relativa al punto
+de montaje existente /run/initramfs/memory/data. Solo se aceptan medios
+locales de bloque con soporte de escritura en FAT32, exFAT y NTFS. Se
+rechazan medios de red, ópticos, RAM, overlay, sistemas de archivos de solo
+lectura o no soportados, y las opciones toram, toram=full o toram=trim. La
+activación de usuario\-media y la copia de retorno también se bloquean
+mientras la sesión de persistencia activa está cifrada con LUKS. Se utiliza
+el estado real de cifrado activo; perchencrypt=luks solo solicita cifrado al
+crear una nueva sesión y no describe una sesión existente. Las rutas no
+pueden contener recorridos, segmentos vacíos, caracteres de control ni
+nombres inseguros. Se gestionan las carpetas Desktop, Documents, Downloads,
+Music, Pictures, Public, Templates y Videos. La migración rechaza fusionar
+dos árboles poblados; desactivar la función copia los datos gestionados de
+vuelta. El estado y el registro se almacenan en /var/lib/live/config.
 .IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 Esta variable contiene el estado especificado por el parámetro
 \&'live\-config.module\-mode' (o 'module\-mode'). Cuando está configurada como

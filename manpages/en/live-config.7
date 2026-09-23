@@ -8,7 +8,7 @@
 .\" under certain conditions; see COPYING for details.
 .\"
 .\"
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.21 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "MiniOS Live Project"
 
 .SH NAME
 \fBlive\-config\fR \- System Configuration Components
@@ -259,11 +259,15 @@ User-media link and bind modes are mutually exclusive. The default path is
 /minios/userdata relative to the existing /run/initramfs/memory/data mount.
 Only writable local block-backed FAT32, exFAT, and NTFS media are accepted.
 Network, optical, RAM, overlay, read-only, unsupported filesystems, and toram,
-toram=full, or toram=trim are rejected. Paths may not contain traversal, empty
-segments, control characters, or unsafe names. Desktop, Documents, Downloads,
-Music, Pictures, Public, Templates, and Videos are managed. Migration refuses
-to merge two populated trees; disabling the feature copies managed data back.
-State and status are recorded under /var/lib/live/config.
+toram=full, or toram=trim are rejected. User-media activation and copy-back are
+also blocked while the active persistence session is LUKS-encrypted. The
+actual active encryption state is used; perchencrypt=luks only requests
+encryption when creating a new session and does not describe an existing
+session. Paths may not contain traversal, empty segments, control characters,
+or unsafe names. Desktop, Documents, Downloads, Music, Pictures, Public,
+Templates, and Videos are managed. Migration refuses to merge two populated
+trees; disabling the feature copies managed data back. State and status are
+recorded under /var/lib/live/config.
 .IP "\fBLIVE_MODULE_MODE\fR=simple|merged" 4
 This variable holds the state specified by the 'live-config.module-mode' (or 'module-mode') parameter. When it is set to "merged", the live system applies updates (via minios-update-users, minios-update-cache, and minios-update-dpkg) to merge custom configurations with the base environment.
 .IP "\fBLIVE_CONFIG_DEBUG\fR=true|false" 4

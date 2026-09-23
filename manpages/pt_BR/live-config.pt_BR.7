@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.21 "Projeto MiniOS Live"
+.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "Projeto MiniOS Live"
 
 .SH NOME
 \fBlive\-config\fP \- Componentes de Configuração do Sistema
@@ -449,15 +449,20 @@ Esta variável corresponde ao parâmetro
 diretórios de usuário na mídia.
 .PP
 Os modos de link e bind de mídia do usuário são mutuamente exclusivos. O
-caminho padrão é /minios/userdata relativo ao ponto de montagem existente
-/run/initramfs/memory/data. Apenas mídias locais graváveis baseadas em bloco
-FAT32, exFAT e NTFS são aceitas. Mídias de rede, ópticas, RAM, overlay,
-somente leitura, sistemas de arquivos não suportados e as opções toram,
-toram=full ou toram=trim são rejeitadas. Os caminhos não podem conter
-travessias, segmentos vazios, caracteres de controle ou nomes inseguros. As
-pastas Desktop, Documents, Downloads, Music, Pictures, Public, Templates e
-Videos são gerenciadas. A migração recusa mesclar duas árvores populadas; ao
-desabilitar o recurso, os dados gerenciados são copiados de volta. Estado e
+caminho padrão é /minios/userdata, relativo ao ponto de montagem
+/run/initramfs/memory/data já existente. Apenas mídias locais graváveis
+baseadas em bloco e com sistemas de arquivos FAT32, exFAT e NTFS são
+aceitas. Mídias de rede, ópticas, RAM, overlay, somente leitura, sistemas de
+arquivos não suportados, além de toram, toram=full ou toram=trim, são
+rejeitados. A ativação de mídia do usuário e o copy\-back também são
+bloqueados enquanto a sessão de persistência ativa estiver criptografada com
+LUKS. O estado real de criptografia ativa é utilizado; perchencrypt=luks
+apenas solicita criptografia ao criar uma nova sessão e não descreve uma
+sessão já existente. Os caminhos não podem conter travessia de diretórios,
+segmentos vazios, caracteres de controle ou nomes inseguros. As pastas
+Desktop, Documents, Downloads, Music, Pictures, Public, Templates e Videos
+são gerenciadas. A migração recusa mesclar duas árvores já populadas;
+desabilitar o recurso copia os dados gerenciados de volta. O estado e o
 status são registrados em /var/lib/live/config.
 .IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 Esta variável mantém o estado especificado pelo parâmetro

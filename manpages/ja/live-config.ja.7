@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.21 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "MiniOS Live Project"
 
 .SH 名前
 \fBlive\-config\fP \- システム設定構成要素
@@ -335,13 +335,14 @@ sudo 権限および sudo グループメンバーシップを削除するには
 .IP \fBLIVE_USER_DIRS_PATH\fP=\fIパス\fP 4
 この変数は「\fBlive\-config.user\-dirs\-path\fP=\fIパス\fP」パラメータに相当します。メディア上のユーザディレクトリのパスを指定します。
 .PP
-ユーザーメディアのリンクモードとバインドモードは排他的です。デフォルトのパスは、既存の /run/initramfs/memory/data
-マウントに対する /minios/userdata です。書き込み可能なローカルブロックバック型の FAT32、exFAT、NTFS
-メディアのみが許可されます。ネットワーク、光学、RAM、オーバーレイ、読み取り専用、未対応のファイルシステム、および
-toram、toram=full、toram=trim
-は拒否されます。パスには、ディレクトリトラバーサル、空のセグメント、制御文字、または安全でない名前を含めることはできません。Desktop、Documents、Downloads、Music、Pictures、Public、Templates、Videos
-が管理対象です。マイグレーションでは、2つのデータツリーが両方ともデータを持つ場合は統合を拒否します。機能を無効にすると、管理対象データが戻されてコピーされます。状態とステータスは
-/var/lib/live/config に記録されます。
+ユーザーメディアのリンクモードとバインドモードは相互に排他的です。デフォルトのパスは、既存の /run/initramfs/memory/data
+マウントに対して相対的な /minios/userdata です。書き込み可能なローカルのブロックバック型 FAT32、exFAT、および NTFS
+メディアのみが受け入れられます。ネットワーク、光学式、RAM、オーバーレイ、読み取り専用、非対応ファイルシステム、および
+toram、toram=full、toram=trim は拒否されます。アクティブな永続セッションが LUKS
+で暗号化されている場合、ユーザーメディアの有効化およびコピー・バックもブロックされます。実際のアクティブな暗号化状態が使用されます。perchencrypt=luks
+は新しいセッション作成時にのみ暗号化を要求し、既存のセッションについては説明しません。パスにはトラバーサル、空のセグメント、制御文字、または安全でない名前を含めることはできません。Desktop、Documents、Downloads、Music、Pictures、Public、Templates、Videos
+が管理されます。マイグレーションは、2つのデータツリーがすでにデータを持っている場合は統合を拒否します。機能を無効にすると、管理対象データがバックアップとしてコピーされます。状態とステータスは
+/var/lib/live/config 以下に記録されます。
 .IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 この変数は 'live\-config.module\-mode'（または
 \&'module\-mode'）パラメータで指定された状態を保持します。"merged"に設定されている場合、ライブシステムは更新（minios\-update\-users、minios\-update\-cache、minios\-update\-dpkg

@@ -1,6 +1,13 @@
 # Debian build artifacts
-*.tar.xz
-*.dsc
+/.pc/
+/obj-*/
+/*.build
+/*.buildinfo
+/*.changes
+/*.deb
+/*.dsc
+/*.tar.*
+/*.udeb
 debian/.debhelper/
 debian/debhelper-build-stamp
 debian/files

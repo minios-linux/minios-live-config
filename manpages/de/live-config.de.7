@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.21 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "MiniOS Live Project"
 
 .SH NAME
 \fBlive\-config\fP \- Systemkonfigurationskomponenten
@@ -473,17 +473,21 @@ Diese Variable entspricht dem Parameter
 Benutzerverzeichnisse auf den Medien an.
 .PP
 Benutzer\-Medien\-Link\- und Bind\-Modi schließen sich gegenseitig aus. Der
-Standardpfad ist /minios/userdata relativ zum vorhandenen
+Standardpfad ist /minios/userdata relativ zum bestehenden
 /run/initramfs/memory/data\-Einhängepunkt. Es werden nur beschreibbare lokale
 blockbasierte FAT32\-, exFAT\- und NTFS\-Medien akzeptiert. Netzwerk\-,
-optische, RAM\-, Overlay\-, Nur\-Lese\-Medien, nicht unterstützte Dateisysteme
-sowie toram, toram=full oder toram=trim werden abgelehnt. Pfade dürfen keine
-Traversierungen, leere Segmente, Steuerzeichen oder unsichere Namen
-enthalten. Desktop, Documents, Downloads, Music, Pictures, Public, Templates
-und Videos werden verwaltet. Die Migration verweigert das Zusammenführen
-zweier gefüllter Verzeichnisbäume; das Deaktivieren der Funktion kopiert
-verwaltete Daten zurück. Status und Zustand werden unter
-/var/lib/live/config protokolliert.
+optische, RAM, Overlay\-, Nur\-Lese\-, nicht unterstützte Dateisysteme sowie
+toram, toram=full oder toram=trim werden abgelehnt. Die Aktivierung von
+Benutzer\-Medien und das Zurückkopieren sind ebenfalls blockiert, solange die
+aktive Persistenz\-Sitzung LUKS\-verschlüsselt ist. Der tatsächlich aktive
+Verschlüsselungsstatus wird verwendet; perchencrypt=luks fordert die
+Verschlüsselung nur bei der Erstellung einer neuen Sitzung an und beschreibt
+keine bestehende Sitzung. Pfade dürfen keine Traversierungen, leere
+Segmente, Steuerzeichen oder unsichere Namen enthalten. Desktop, Documents,
+Downloads, Music, Pictures, Public, Templates und Videos werden
+verwaltet. Die Migration verweigert das Zusammenführen zweier befüllter
+Bäume; das Deaktivieren der Funktion kopiert verwaltete Daten zurück. Status
+und Zustand werden unter /var/lib/live/config protokolliert.
 .IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 Diese Variable enthält den Zustand, der durch den Parameter
 \&'live\-config.module\-mode' (oder 'module\-mode') festgelegt wurde. Wenn dieser

@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.21 "Proyek MiniOS Live"
+.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "Proyek MiniOS Live"
 
 .SH NAMA
 \fBlive\-config\fP \- Komponen Konfigurasi Sistem
@@ -441,17 +441,20 @@ Variabel ini sesuai dengan parameter
 \&'\fBlive\-config.user\-dirs\-path\fP=\fIJALUR\fP'. Variabel ini menentukan jalur
 untuk direktori pengguna di media.
 .PP
-Mode tautan dan bind media pengguna bersifat eksklusif satu sama lain. Jalur
-default adalah /minios/userdata relatif terhadap mount
-/run/initramfs/memory/data yang sudah ada. Hanya media FAT32, exFAT, dan
-NTFS lokal yang dapat ditulis dan berbasis blok yang diterima. Media
-jaringan, optik, RAM, overlay, hanya\-baca, sistem berkas yang tidak
-didukung, serta toram, toram=full, atau toram=trim akan ditolak. Jalur tidak
-boleh mengandung traversal, segmen kosong, karakter kontrol, atau nama yang
-tidak aman. Direktori Desktop, Documents, Downloads, Music, Pictures,
-Public, Templates, dan Videos dikelola. Migrasi menolak menggabungkan dua
-pohon yang sudah berisi data; menonaktifkan fitur ini akan menyalin data
-yang dikelola kembali. Status dan informasi dicatat di /var/lib/live/config.
+Mode tautan dan bind user\-media bersifat saling eksklusif. Jalur default
+adalah /minios/userdata relatif terhadap mount /run/initramfs/memory/data
+yang sudah ada. Hanya media FAT32, exFAT, dan NTFS lokal yang dapat ditulis
+dan berbasis blok yang diterima. Media jaringan, optik, RAM, overlay, sistem
+berkas hanya\-baca, tidak didukung, serta toram, toram=full, atau toram=trim
+akan ditolak. Aktivasi user\-media dan copy\-back juga diblokir jika sesi
+persistensi aktif dienkripsi dengan LUKS. Status enkripsi aktif yang
+sebenarnya digunakan; perchencrypt=luks hanya meminta enkripsi saat membuat
+sesi baru dan tidak menggambarkan sesi yang sudah ada. Jalur tidak boleh
+mengandung traversal, segmen kosong, karakter kontrol, atau nama yang tidak
+aman. Desktop, Documents, Downloads, Music, Pictures, Public, Templates, dan
+Videos dikelola. Migrasi menolak menggabungkan dua pohon yang sudah berisi
+data; menonaktifkan fitur akan menyalin data yang dikelola kembali. Status
+dan catatan dicatat di bawah /var/lib/live/config.
 .IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 Variabel ini menyimpan status yang ditentukan oleh parameter
 \&'live\-config.module\-mode' (atau 'module\-mode'). Jika disetel ke "merged",

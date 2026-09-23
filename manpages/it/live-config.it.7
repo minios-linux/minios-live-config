@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.21 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "MiniOS Live Project"
 
 .SH NOME
 \fBlive\-config\fP \- Componenti di configurazione del sistema
@@ -455,17 +455,22 @@ Questa variabile corrisponde al parametro
 \&'\fBlive\-config.user\-dirs\-path\fP=\fIPATH\fP'. Specifica il percorso per le
 directory utente sui media.
 .PP
-Le modalità di collegamento e bind dei dati utente sono mutuamente
-esclusive. Il percorso predefinito è /minios/userdata relativo al mount
+Le modalità di collegamento e bind dei supporti utente sono mutuamente
+esclusive. Il percorso predefinito è /minios/userdata, relativo al mount
 esistente /run/initramfs/memory/data. Sono accettati solo supporti locali
-scrivibili con backend a blocchi FAT32, exFAT e NTFS. Supporti di rete,
-ottici, RAM, overlay, in sola lettura, filesystem non supportati e le
-opzioni toram, toram=full o toram=trim vengono rifiutati. I percorsi non
-possono contenere traversamenti, segmenti vuoti, caratteri di controllo o
-nomi non sicuri. Sono gestite le directory Desktop, Documents, Downloads,
-Music, Pictures, Public, Templates e Videos. La migrazione rifiuta di unire
-due alberi già popolati; disabilitare la funzione copia i dati gestiti
-indietro. Stato e informazioni vengono registrati in /var/lib/live/config.
+scrivibili basati su blocchi con filesystem FAT32, exFAT e NTFS. Supporti di
+rete, ottici, RAM, overlay, filesystem di sola lettura o non supportati, e
+le modalità toram, toram=full o toram=trim vengono rifiutati. L'attivazione
+dei supporti utente e la copia di ritorno sono inoltre bloccate quando la
+sessione di persistenza attiva è cifrata con LUKS. Viene utilizzato lo stato
+effettivo di cifratura attivo; perchencrypt=luks richiede la cifratura solo
+durante la creazione di una nuova sessione e non descrive una sessione
+esistente. I percorsi non possono contenere traversamenti, segmenti vuoti,
+caratteri di controllo o nomi non sicuri. Vengono gestite le directory
+Desktop, Documents, Downloads, Music, Pictures, Public, Templates e
+Videos. La migrazione rifiuta di unire due alberi popolati; disabilitando la
+funzione, i dati gestiti vengono copiati indietro. Stato e informazioni
+vengono registrati in /var/lib/live/config.
 .IP \fBLIVE_MODULE_MODE\fP=simple|merged 4
 Questa variabile contiene lo stato specificato dal parametro
 \&'live\-config.module\-mode' (o 'module\-mode'). Quando è impostata su "merged",

@@ -34,6 +34,7 @@ test:
 	@echo " done."
 
 	@bash tests/minios-update-cache.sh
+	@./tests/user-media.sh
 
 	@echo -n "Testing merged dpkg database rebuild"
 	@perl -c scripts/minios-update-dpkg-merge >/dev/null

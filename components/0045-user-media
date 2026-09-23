@@ -14,6 +14,8 @@ STATE_DIR=/var/lib/live/config
 STATE_FILE=${STATE_DIR}/user-media.state
 STATUS_FILE=${STATE_DIR}/user-media.status
 LOCK_DIR=/run/lock/minios-user-media.lock
+PERSISTENCE_STATE_FILE=/run/initramfs/minios-persistence/boot-state
+CRYPT_MAPPER_DIR=/dev/mapper
 TORAM=false
 ROLLBACK_ACTIVE=false
 
@@ -138,6 +140,19 @@ verify_path_components() {
 
 directory_empty() {
     [ -d "$1" ] && [ -z "$(find "$1" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]
+}
+
+session_is_encrypted() {
+    mapper=
+    if [ -r "${PERSISTENCE_STATE_FILE}" ]; then
+        grep -Fqx 'boot_level=ok' "${PERSISTENCE_STATE_FILE}" 2>/dev/null &&
+            grep -Fqx 'encryption=luks' "${PERSISTENCE_STATE_FILE}" 2>/dev/null
+        return
+    fi
+    for mapper in "${CRYPT_MAPPER_DIR}"/minios-perch-*; do
+        [ -b "${mapper}" ] && return 0
+    done
+    return 1
 }
 
 validate_tree() {
@@ -317,10 +332,8 @@ disable_user_media() {
         elif command -v mountpoint >/dev/null 2>&1 && mountpoint -q "${target}"; then
             fail "cannot disable user media while ${target} is mounted; reboot and try again"
         elif [ -d "${target}" ] && ! directory_empty "${target}"; then
-            rm -rf "${stage}"
             fail "local ${target} contains data; automatic copy-back would overwrite it"
         elif [ -e "${target}" ] && [ ! -d "${target}" ]; then
-            rm -rf "${stage}"
             fail "local ${target} is not a directory"
         fi
     done
@@ -365,6 +378,9 @@ Config() {
     if [ "${link}" != true ] && [ "${bind}" != true ]; then
         if [ -s "${STATE_FILE}" ]; then
             [ "${TORAM}" = false ] || fail "user directories cannot be copied back while toram is active"
+            if session_is_encrypted; then
+                fail "user directories cannot be copied back while an encrypted session is active"
+            fi
             detect_media
             disable_user_media
         fi
@@ -372,6 +388,9 @@ Config() {
         exit 0
     fi
     [ "${TORAM}" = false ] || fail "user directories are unavailable with toram, toram=full, or toram=trim"
+    if session_is_encrypted; then
+        fail "user directories are unavailable with encrypted sessions"
+    fi
 
     MODE=bind
     [ "${link}" = true ] && MODE=link
