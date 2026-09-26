@@ -47,10 +47,17 @@ command -v flock >/dev/null 2>&1 || {
 export HOME=/root
 export LC_ALL=C
 
-mkdir -p /var/log/minios /run/lock
-exec 19>/var/log/minios/minios-update-dpkg.trace.log
-BASH_XTRACEFD=19
-set -x
+. /usr/lib/live/config.sh
+if minios_debug_enabled; then
+    umask 077
+    mkdir -p /var/log/minios
+    touch /var/log/minios/minios-update-dpkg.trace.log
+    chmod 600 /var/log/minios/minios-update-dpkg.trace.log
+    exec 19>/var/log/minios/minios-update-dpkg.trace.log
+    BASH_XTRACEFD=19
+    set -x
+fi
+mkdir -p /run/lock
 
 # Boot-time live-config and runtime sb changes can request a refresh at the
 # same time.  Never let two writers rebuild /var/lib/dpkg/status concurrently.

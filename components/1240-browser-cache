@@ -1,0 +1,78 @@
+#!/bin/sh
+# Apply the bootloader's validated browser-cache policy after user creation.
+# This runs before the display manager; minios-boot cannot mount a new user's
+# cache directories because live-config has not created the user yet.
+
+POLICY=${MINIOS_BROWSER_POLICY_FILE:-/etc/live/minios-browser-cache.policy}
+FIREFOX_POLICY=${MINIOS_FIREFOX_POLICY_FILE:-/etc/firefox/policies/policies.json}
+FIREFOX_MARKER="${FIREFOX_POLICY}.minios-managed"
+FIREFOX_CONTENT='{"policies":{"Preferences":{"browser.cache.disk.enable":{"Value":false,"Status":"locked"}}}}'
+if [ "$(cat "$POLICY" 2>/dev/null)" != volatile ]; then
+    if [ "$(cat "$FIREFOX_MARKER" 2>/dev/null)" = minios-browser-cache-v1 ] &&
+       [ "$(cat "$FIREFOX_POLICY" 2>/dev/null)" = "$FIREFOX_CONTENT" ]; then
+        rm -f "$FIREFOX_POLICY" "$FIREFOX_MARKER"
+    fi
+    exit 0
+fi
+
+if awk 'NR > 1 && $1 !~ /\/dev\/zram[0-9]+$/ { found=1 } END { exit !found }' "${MINIOS_BROWSER_SWAPS_FILE:-/proc/swaps}"; then
+    echo 'Browser RAM cache skipped: non-zRAM swap is active' >&2
+    exit 0
+fi
+AVAILABLE=$(awk '$1 == "MemAvailable:" { print $2 }' "${MINIOS_BROWSER_MEMINFO_FILE:-/proc/meminfo}")
+[ "${AVAILABLE:-0}" -ge 1048576 ] || {
+    echo 'Browser RAM cache skipped: less than 1 GiB available' >&2
+    exit 0
+}
+
+USER_NAME=${LIVE_USERNAME:-live}
+case "$USER_NAME" in ''|*[!a-zA-Z0-9_.-]*) exit 1 ;; esac
+ENTRY=$(getent passwd "$USER_NAME") || exit 0
+IFS=: read -r _ _ USER_ID GROUP_ID _ USER_HOME _ <<EOF
+$ENTRY
+EOF
+case "$USER_ID:$GROUP_ID" in *[!0-9:]*|:*|*:) exit 1 ;; esac
+[ -d "$USER_HOME" ] && [ ! -L "$USER_HOME" ] || exit 0
+
+ROOT=${MINIOS_BROWSER_CACHE_ROOT:-/run/minios-browser-cache}
+mkdir -p "$ROOT" || exit 1
+mount -t tmpfs -o size=512m,mode=0700 tmpfs "$ROOT" || exit 1
+mkdir -p "$ROOT/$USER_ID" || exit 1
+chown "$USER_ID:$GROUP_ID" "$ROOT/$USER_ID" || exit 1
+chmod 700 "$ROOT/$USER_ID" || exit 1
+
+# Only application cache trees, not the whole ~/.cache or browser profiles.
+# Directory names are separate to prevent browsers sharing one cache store.
+CACHE_HOME="$USER_HOME/.cache"
+if [ ! -L "$CACHE_HOME" ]; then
+    if [ ! -d "$CACHE_HOME" ]; then
+        mkdir -p "$CACHE_HOME" && chown "$USER_ID:$GROUP_ID" "$CACHE_HOME" || exit 1
+    fi
+    for NAME in mozilla chromium google-chrome google-chrome-beta microsoft-edge \
+        microsoft-edge-beta BraveSoftware vivaldi opera opera-beta yandex-browser; do
+        TARGET="$CACHE_HOME/$NAME"
+        [ ! -L "$TARGET" ] || continue
+        [ ! -e "$TARGET" ] || [ -d "$TARGET" ] || continue
+        SOURCE="$ROOT/$USER_ID/$NAME"
+        mkdir -p "$SOURCE" "$TARGET" || exit 1
+        chown "$USER_ID:$GROUP_ID" "$SOURCE" "$TARGET" || exit 1
+        mount --bind "$SOURCE" "$TARGET" || {
+            echo "Cannot redirect browser cache: $TARGET" >&2
+            exit 1
+        }
+    done
+else
+    echo 'Browser RAM cache skipped: user cache root is a symlink' >&2
+fi
+
+# Firefox/ESR can also keep a cache inside a profile. The system-wide policy
+# covers existing and future profiles without moving cookies or site data.
+# Never replace a policy installed by the user or another package.
+if [ -e "$FIREFOX_POLICY" ] || [ -L "$FIREFOX_POLICY" ]; then
+    [ "$(cat "$FIREFOX_POLICY" 2>/dev/null)" = "$FIREFOX_CONTENT" ] ||
+        echo 'Firefox RAM cache policy skipped: another policies.json exists' >&2
+else
+    mkdir -p "${FIREFOX_POLICY%/*}" || exit 1
+    printf '%s\n' "$FIREFOX_CONTENT" >"$FIREFOX_POLICY" || exit 1
+    printf 'minios-browser-cache-v1\n' >"$FIREFOX_MARKER" || exit 1
+fi

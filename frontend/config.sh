@@ -142,3 +142,26 @@ get_live_changes_path() {
         echo ""
     fi
 }
+
+# The live-config process exports the resolved setting to its children. Tools
+# invoked later can still use the files from which live-config reads it.
+minios_debug_enabled() {
+    (
+    local debug=${LIVE_CONFIG_DEBUG:-} token file
+    if [ -z "$debug" ]; then
+        for file in /etc/live/config.conf /etc/live/config.conf.d/*.conf; do
+            [ -f "$file" ] || continue
+            # Configuration files are shell files throughout live-config.
+            . "$file"
+            debug=${LIVE_CONFIG_DEBUG:-}
+        done
+    fi
+    for token in ${LIVE_CONFIG_CMDLINE:-} $(cat "${MINIOS_DEBUG_CMDLINE_FILE:-/proc/cmdline}" 2>/dev/null); do
+        case "$token" in
+            live-config.debug|debug) debug=true ;;
+            live-config.debug=false|debug=false) debug=false ;;
+        esac
+    done
+    [ "$debug" = true ]
+    )
+}

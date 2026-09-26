@@ -1,3 +1,12 @@
+minios-live-config (11.0.5.23) unstable; urgency=medium
+
+  * Add browser-cache setup for healthy persistent MiniOS live sessions,
+    keeping standard browser caches in bounded RAM while preserving profiles.
+  * Retain boot diagnostics and make merged-mode tracing conditional on debug.
+  * Run the live configuration regression suites with Bats in package builds.
+
+ -- crims0n <crims0n@minios.dev>  Sat, 26 Sep 2026 18:54:28 +0300
+
 minios-live-config (11.0.5.22) unstable; urgency=medium
 
   * Prevent user-media linking, binding, and copy-back while encrypted
@@ -6,7 +15,7 @@ minios-live-config (11.0.5.22) unstable; urgency=medium
 
  -- crims0n <crims0n@minios.dev>  Wed, 23 Sep 2026 17:56:48 +0300
 
-minios-live-config (11.0.5.22) unstable; urgency=medium
+minios-live-config (11.0.5.21) unstable; urgency=medium
 
   * Add a SysVinit shutdown bridge that enters the preserved dracut exitrd on
     halt and reboot, allowing MiniOS shutdown hooks to run on Devuan.

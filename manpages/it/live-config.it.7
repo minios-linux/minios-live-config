@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-09\-25 11.0.5.23 "MiniOS Live Project"
 
 .SH NOME
 \fBlive\-config\fP \- Componenti di configurazione del sistema
@@ -479,6 +479,31 @@ minios\-update\-cache e minios\-update\-dpkg) per unire le configurazioni
 personalizzate con l'ambiente di base.
 .IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
 Questa variabile corrisponde al parametro "\fBlive\-config.debug\fP".
+.IP \fBLIVE_LOG_STORAGE\fP=persistente|volatile 4
+Impostato con \fBlog\-storage\fP o \fBlive\-config.log\-storage\fP. Su un avvio
+durevole e integro, volatile memorizza il journal di systemd e i normali
+file /var/log in RAM delimitati. MiniOS diagnostica di boot e live\-config
+rimangono nell'archivio persistente.
+.IP \fBLIVE_APT_CACHE\fP=persistente|volatile 4
+Impostato tramite \fBapt\-cache\fP o \fBlive\-config.apt\-cache\fP. Volatile
+posiziona gli archivi APT scaricati in un filesystem RAM limitato quando
+sono disponibili almeno 1 GiB di memoria e non è attivo alcuno swap
+non\-zRAM. I download di grandi dimensioni possono esaurire lo spazio. Il
+database di dpkg e le liste dei repository non vengono spostati.
+.IP \fBLIVE_BROWSER_CACHE\fP=persistente|volatile 4
+Impostato tramite \fBbrowser\-cache\fP o \fBlive\-config.browser\-cache\fP. Volatile
+reindirizza i percorsi cache noti dei browser nativi verso RAM limitato dopo
+la creazione dell'utente live; una policy dedicata di Firefox disabilita la
+cache su disco. I profili dei browser e le cache utente non correlate
+rimangono persistenti. Percorsi personalizzati e installazioni di browser in
+sandbox non sono gestiti automaticamente.
+.PP
+Queste policy vengono analizzate e autorizzate da minios\-boot prima
+dell'avvio di live\-config. Un'attivazione della persistenza non riuscita o
+non durevole mantiene il comportamento di archiviazione originale. Gli
+argomenti del kernel hanno priorità sui file di configurazione; questo
+initrd pubblicizza il contratto di policy tramite
+/run/initramfs/etc/minios\-initramfs\-storage.
 
 .SH PERSONALIZZAZIONE
 \fBlive\-config\fP può essere facilmente personalizzato per progetti downstream

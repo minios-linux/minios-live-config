@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "Proyek MiniOS Live"
+.TH LIVE\-CONFIG 7 2026\-09\-25 11.0.5.23 "Proyek MiniOS Live"
 
 .SH NAMA
 \fBlive\-config\fP \- Komponen Konfigurasi Sistem
@@ -463,6 +463,30 @@ minios\-update\-cache, dan minios\-update\-dpkg) untuk menggabungkan konfigurasi
 khusus dengan lingkungan dasar.
 .IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
 Variabel ini sesuai dengan parameter '\fBlive\-config.debug\fP'.
+.IP \fBLIVE_LOG_STORAGE\fP=persistent|volatile 4
+Diatur dengan \fBlog\-storage\fP atau \fBlive\-config.log\-storage\fP. Pada proses
+boot yang tahan lama dan sehat, volatile menyimpan jurnal systemd dan berkas
+/var/log biasa dalam RAM. Diagnostik boot dan live\-config MiniOS tetap
+berada di penyimpanan persisten.
+.IP \fBLIVE_APT_CACHE\fP=persistent|volatile 4
+Diatur menggunakan \fBapt\-cache\fP atau \fBlive\-config.apt\-cache\fP. Volatile
+menempatkan arsip APT yang diunduh pada sistem berkas RAM yang terbatas jika
+tersedia minimal 1 GiB memori dan tidak ada swap non\-zRAM yang
+aktif. Unduhan berukuran besar dapat kehabisan ruang. Basis data dpkg dan
+daftar repositori tidak dipindahkan.
+.IP \fBLIVE_BROWSER_CACHE\fP=persistent|volatile 4
+Diatur menggunakan \fBbrowser\-cache\fP atau
+\fBlive\-config.browser\-cache\fP. Volatile mengarahkan ulang jalur cache
+browser\-native yang dikenal ke RAM yang terbatas setelah pembuatan pengguna
+live; kebijakan khusus Firefox menonaktifkan cache disk\-nya. Profil browser
+dan cache pengguna lain tetap persisten. Lokasi khusus dan instalasi browser
+yang terisolasi (sandboxed) tidak tercakup secara otomatis.
+.PP
+Kebijakan ini diurai dan diotorisasi oleh minios\-boot sebelum live\-config
+dijalankan. Aktivasi persistensi yang gagal atau tidak tahan lama akan
+mempertahankan perilaku penyimpanan asli. Argumen kernel akan menimpa berkas
+konfigurasi; initrd ini mengumumkan kontrak kebijakan dengan
+/run/initramfs/etc/minios\-initramfs\-storage.
 
 .SH KUSTOMISASI
 \fBlive\-config\fP dapat dengan mudah disesuaikan untuk proyek\-proyek hilir atau

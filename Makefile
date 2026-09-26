@@ -33,13 +33,8 @@ test:
 	@./scripts/validate-capabilities "$(CAPABILITIES_JSON)"
 	@echo " done."
 
-	@bash tests/minios-update-cache.sh
-	@./tests/user-media.sh
-
-	@echo -n "Testing merged dpkg database rebuild"
 	@perl -c scripts/minios-update-dpkg-merge >/dev/null
-	@./tests/minios-update-dpkg-merge.sh
-	@echo " done."
+	@bats tests/*.bats
 
 build:
 	@echo "Nothing to build."

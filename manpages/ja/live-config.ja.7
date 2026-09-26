@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-09\-25 11.0.5.23 "MiniOS Live Project"
 
 .SH 名前
 \fBlive\-config\fP \- システム設定構成要素
@@ -349,6 +349,22 @@ toram、toram=full、toram=trim は拒否されます。アクティブな永続
 を介して）を適用し、カスタム構成を基本環境と統合します。
 .IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
 この変数は「\fBlive\-config.debug\fP」パラメータに相当します。
+.IP \fBLIVE_LOG_STORAGE\fP=persistent|volatile 4
+\fBlog\-storage\fP または \fBlive\-config.log\-storage\fP
+で設定します。正常な耐久性のあるパーチ起動時には、volatile は systemd ジャーナルおよび通常の /var/log ファイルを制限付きの
+RAM に保存します。MiniOS の起動および live\-config の診断情報は永続ストアに保持されます。
+.IP \fBLIVE_APT_CACHE\fP=persistent|volatile 4
+\fBapt\-cache\fP または \fBlive\-config.apt\-cache\fP で設定します。volatile を選択すると、1 GiB
+以上のメモリが利用可能で非 zRAM スワップが有効でない場合、ダウンロードされた APT アーカイブが制限された RAM
+ファイルシステムに配置されます。大きなダウンロードでは空き容量が不足する場合があります。dpkg データベースおよびリポジトリリストは移動されません。
+.IP \fBLIVE_BROWSER_CACHE\fP=persistent|volatile 4
+\fBbrowser\-cache\fP または \fBlive\-config.browser\-cache\fP で設定します。volatile
+を選択すると、ライブユーザー作成後に既知のネイティブブラウザのキャッシュパスが制限された RAM にリダイレクトされます。Firefox
+のディスクキャッシュは専用ポリシーにより無効化されます。ブラウザプロファイルや関連しないユーザーキャッシュは永続的に保持されます。カスタムの保存場所やサンドボックス化されたブラウザのインストールには自動的に適用されません。
+.PP
+これらのポリシーは、live\-config の起動前に minios\-boot
+によって解析および認証されます。永続化の有効化に失敗した場合や耐久性がない場合、元のストレージ動作が維持されます。カーネル引数は設定ファイルより優先されます。この
+initrd は /run/initramfs/etc/minios\-initramfs\-storage でポリシー契約を通知します。
 
 .SH 独自化
 \fBlive\-config\fP は下流プロジェクトやローカル用途向けに簡単に独自化できます。

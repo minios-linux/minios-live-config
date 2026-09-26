@@ -17,16 +17,21 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-# Enable debug trace logging
-mkdir -p /var/log/minios
-exec 19>/var/log/minios/minios-update-users.trace.log
-BASH_XTRACEFD=19
-PS4='${LINENO}: '
-set -x
-
-# Create log directory for user files merge logs
-DEBUG_DIR="/var/log/minios/users"
-mkdir -p "$DEBUG_DIR"
+# Debug copies include shadow and gshadow; never create them on a normal boot.
+. /usr/lib/live/config.sh
+DEBUG_DIR=""
+if minios_debug_enabled; then
+    umask 077
+    DEBUG_DIR="/var/log/minios/users"
+    mkdir -p "$DEBUG_DIR"
+    chmod 700 "$DEBUG_DIR"
+    touch /var/log/minios/minios-update-users.trace.log
+    chmod 600 /var/log/minios/minios-update-users.trace.log
+    exec 19>/var/log/minios/minios-update-users.trace.log
+    BASH_XTRACEFD=19
+    PS4='${LINENO}: '
+    set -x
+fi
 
 # Set necessary environment variables
 export HOME=/root
@@ -65,7 +70,7 @@ merge_file() {
     local CORE_FILE="$CORE_BUNDLE_PATH/etc/$FILE"
     if [ -f "$CORE_FILE" ]; then
         cp "$CORE_FILE" "$TMP_FILE"
-        cp "$CORE_FILE" "$DEBUG_DIR/${FILE}.core"
+        [ -z "$DEBUG_DIR" ] || cp "$CORE_FILE" "$DEBUG_DIR/${FILE}.core"
     else
         # Create an empty FILE if the core bundle does not provide it
         touch "$TMP_FILE"
@@ -85,7 +90,7 @@ merge_file() {
 
         if [ -f "$BUNDLE_FILE" ]; then
             echo "  Processing bundle: $BUNDLE_NAME"
-            cp "$BUNDLE_FILE" "$DEBUG_DIR/${FILE}.${BUNDLE_NAME}"
+            [ -z "$DEBUG_DIR" ] || cp "$BUNDLE_FILE" "$DEBUG_DIR/${FILE}.${BUNDLE_NAME}"
 
             # Merge current merged content with the bundle FILE:
             # - Read the current TMP_FILE (from previous layers)
@@ -93,7 +98,7 @@ merge_file() {
             awk -F: 'NR==FNR { rec[$1]=$0; next } { rec[$1]=$0 } END { for (k in rec) print rec[k] }' \
                 "$TMP_FILE" "$BUNDLE_FILE" >"$TMP/${FILE}.merged"
             mv "$TMP/${FILE}.merged" "$TMP_FILE"
-            cp "$TMP_FILE" "$DEBUG_DIR/${FILE}.tmp"
+            [ -z "$DEBUG_DIR" ] || cp "$TMP_FILE" "$DEBUG_DIR/${FILE}.tmp"
         fi
     done < <(find "$BUNDLES" -maxdepth 1 -type d -name "*.${BEXT}" -print0 | sort -zV)
 
@@ -102,11 +107,11 @@ merge_file() {
         local CHANGES_FILE="$CHANGES/etc/$FILE"
         if [ -f "$CHANGES_FILE" ]; then
             echo "  Processing changes directory"
-            cp "$CHANGES_FILE" "$DEBUG_DIR/${FILE}.changes"
+            [ -z "$DEBUG_DIR" ] || cp "$CHANGES_FILE" "$DEBUG_DIR/${FILE}.changes"
             awk -F: 'NR==FNR { rec[$1]=$0; next } { rec[$1]=$0 } END { for (k in rec) print rec[k] }' \
                 "$TMP_FILE" "$CHANGES_FILE" >"$TMP/${FILE}.merged"
             mv "$TMP/${FILE}.merged" "$TMP_FILE"
-            cp "$TMP_FILE" "$DEBUG_DIR/${FILE}.tmp"
+            [ -z "$DEBUG_DIR" ] || cp "$TMP_FILE" "$DEBUG_DIR/${FILE}.tmp"
         fi
     fi
 

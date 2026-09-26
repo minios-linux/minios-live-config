@@ -15,11 +15,16 @@ fi
 # System-wide caches must stay readable regardless of the caller's umask.
 umask 022
 
-mkdir -p /var/log/minios
-exec 19>/var/log/minios/minios-update-cache.trace.log
-BASH_XTRACEFD=19
-PS4='${LINENO}: '
-set -x
+. /usr/lib/live/config.sh
+if minios_debug_enabled; then
+    mkdir -p /var/log/minios
+    (umask 077; : >/var/log/minios/minios-update-cache.trace.log)
+    chmod 600 /var/log/minios/minios-update-cache.trace.log
+    exec 19>/var/log/minios/minios-update-cache.trace.log
+    BASH_XTRACEFD=19
+    PS4='${LINENO}: '
+    set -x
+fi
 
 # Function to update various system caches from bundles
 update_caches() {

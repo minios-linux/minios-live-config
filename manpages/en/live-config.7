@@ -8,7 +8,7 @@
 .\" under certain conditions; see COPYING for details.
 .\"
 .\"
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-09\-25 11.0.5.23 "MiniOS Live Project"
 
 .SH NAME
 \fBlive\-config\fR \- System Configuration Components
@@ -272,6 +272,14 @@ recorded under /var/lib/live/config.
 This variable holds the state specified by the 'live-config.module-mode' (or 'module-mode') parameter. When it is set to "merged", the live system applies updates (via minios-update-users, minios-update-cache, and minios-update-dpkg) to merge custom configurations with the base environment.
 .IP "\fBLIVE_CONFIG_DEBUG\fR=true|false" 4
 This variable corresponds to the '\fBlive\-config.debug\fR' parameter.
+.IP "\fBLIVE_LOG_STORAGE\fR=persistent|volatile" 4
+Set with \fBlog\-storage\fR or \fBlive\-config.log\-storage\fR. On a healthy durable perch boot, volatile stores the systemd journal and ordinary /var/log files in bounded RAM. MiniOS boot and live-config diagnostics stay in the persistent store.
+.IP "\fBLIVE_APT_CACHE\fR=persistent|volatile" 4
+Set with \fBapt\-cache\fR or \fBlive\-config.apt\-cache\fR. Volatile puts downloaded APT archives in a bounded RAM filesystem when at least 1 GiB of memory is available and no non-zRAM swap is active. Large downloads may run out of space. The dpkg database and repository lists are not moved.
+.IP "\fBLIVE_BROWSER_CACHE\fR=persistent|volatile" 4
+Set with \fBbrowser\-cache\fR or \fBlive\-config.browser\-cache\fR. Volatile redirects known native-browser cache paths to bounded RAM after live user creation; a dedicated Firefox policy disables its disk cache. Browser profiles and unrelated user caches remain persistent. Custom locations and sandboxed browser installations are not covered automatically.
+.PP
+These policies are parsed and authorized by minios-boot before live-config starts. A failed or non-durable persistence activation leaves the original storage behavior in place. Kernel arguments override configuration files; this initrd advertises the policy contract with /run/initramfs/etc/minios-initramfs-storage.
 
 .SH CUSTOMIZATION
 \fBlive\-config\fR can be easily customized for downstream projects or local usage.

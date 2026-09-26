@@ -43,9 +43,28 @@ Modules that require supplementary groups for the live user can install `*.group
 
 Unset posture settings preserve historical MiniOS behavior. Explicit settings are applied only when their component or package is present. `noroot` takes precedence over sudo and PolicyKit convenience settings. PolicyKit `disabled` removes the MiniOS passwordless rule; it is not a deny-all policy.
 
+## Persistent-session caches
+
+The early `minios-boot` helper owns the `LIVE_LOG_STORAGE`, `LIVE_APT_CACHE`, and
+`LIVE_BROWSER_CACHE` policy (and `log-storage=`, `apt-cache=`,
+`browser-cache=` boot parameters). It writes a validated browser marker only
+after a durable `perch` activation. Component `1240-browser-cache` reads that
+marker after the live user exists and redirects known native-browser cache
+directories to a shared, bounded tmpfs. It does not remount a profile, the
+whole home directory, or all of `~/.cache`.
+
+The component leaves an existing Firefox enterprise policy untouched. When it
+creates its own policy to disable Firefox disk caching, it records ownership so
+returning to persistent mode removes only that policy. Custom browser cache
+paths and sandboxed installations need independent handling. Normal boot
+diagnostics are not redirected by this component.
+
 See `live-config(7)` for all boot parameters and variables and `capabilities/README.md` for the capability schema.
 
 ## Development
+
+`make test` requires Bats and runs the regression suites on both Bionic and
+Trixie alongside shell syntax and capabilities validation.
 
 ```bash
 make test

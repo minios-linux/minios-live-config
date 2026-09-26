@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "Projeto MiniOS Live"
+.TH LIVE\-CONFIG 7 2026\-09\-25 11.0.5.23 "Projeto MiniOS Live"
 
 .SH NOME
 \fBlive\-config\fP \- Componentes de Configuração do Sistema
@@ -472,6 +472,31 @@ minios\-update\-cache e minios\-update\-dpkg) para mesclar configurações
 personalizadas com o ambiente base.
 .IP \fBLIVE_CONFIG_DEBUG\fP=verdadeiro|falso 4
 Esta variável corresponde ao parâmetro '\fBlive\-config.debug\fP'.
+.IP \fBLIVE_LOG_STORAGE\fP=persistente|volátil 4
+Definido com \fBlog\-storage\fP ou \fBlive\-config.log\-storage\fP. Em uma
+inicialização durável e saudável, volatile armazena o journal do systemd e
+os arquivos comuns de /var/log em RAM limitados. MiniOS de inicialização e
+diagnósticos do live\-config permanecem no armazenamento persistente.
+.IP \fBLIVE_APT_CACHE\fP=persistente|volátil 4
+Definido com \fBapt\-cache\fP ou \fBlive\-config.apt\-cache\fP. Volátil armazena os
+arquivos baixados do APT em um sistema de arquivos RAM com limite de tamanho
+quando pelo menos 1 GiB de memória está disponível e nenhuma swap não\-zRAM
+está ativa. Downloads grandes podem ficar sem espaço. O banco de dados do
+dpkg e as listas de repositórios não são movidos.
+.IP \fBLIVE_BROWSER_CACHE\fP=persistente|volátil 4
+Definido com \fBbrowser\-cache\fP ou \fBlive\-config.browser\-cache\fP. Volátil
+redireciona caminhos de cache conhecidos de navegadores nativos para RAM com
+limite de tamanho após a criação do usuário live; uma política dedicada do
+Firefox desabilita seu cache em disco. Perfis de navegador e caches de
+usuário não relacionados permanecem persistentes. Localizações
+personalizadas e instalações de navegador em sandbox não são cobertas
+automaticamente.
+.PP
+Essas políticas são analisadas e autorizadas pelo minios\-boot antes do
+início do live\-config. Uma ativação de persistência malsucedida ou não
+durável mantém o comportamento original de armazenamento. Argumentos do
+kernel substituem arquivos de configuração; este initrd divulga o contrato
+de política em /run/initramfs/etc/minios\-initramfs\-storage.
 
 .SH CUSTOMIZAÇÃO
 \fBlive\-config\fP pode ser facilmente personalizado para projetos downstream ou

@@ -13,7 +13,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH LIVE\-CONFIG 7 2026\-09\-08 11.0.5.22 "MiniOS Live Project"
+.TH LIVE\-CONFIG 7 2026\-09\-25 11.0.5.23 "MiniOS Live Project"
 
 .SH NAME
 \fBlive\-config\fP \- Systemkonfigurationskomponenten
@@ -496,6 +496,31 @@ minios\-update\-users, minios\-update\-cache und minios\-update\-dpkg), um
 benutzerdefinierte Konfigurationen mit der Basisumgebung zu verschmelzen.
 .IP \fBLIVE_CONFIG_DEBUG\fP=true|false 4
 Diese Variable entspricht dem Parameter '\fBlive\-config.debug\fP'.
+.IP \fBLIVE_LOG_STORAGE\fP=persistent|volatile 4
+Festgelegt mit \fBlog\-storage\fP oder \fBlive\-config.log\-storage\fP. Bei einem
+fehlerfreien, dauerhaften Perch\-Boot speichert volatile das systemd\-Journal
+und die üblichen /var/log\-Dateien in begrenztem RAM. MiniOS\-Boot\- und
+Live\-Config\-Diagnosen verbleiben im persistenten Speicher.
+.IP \fBLIVE_APT_CACHE\fP=persistent|volatile 4
+Wird mit \fBapt\-cache\fP oder \fBlive\-config.apt\-cache\fP gesetzt. "Volatile" legt
+heruntergeladene APT\-Archive in einem begrenzten RAM\-Dateisystem ab, sofern
+mindestens 1 GiB Arbeitsspeicher verfügbar ist und kein nicht\-zRAM\-Swap
+aktiv ist. Große Downloads können den Speicherplatz überschreiten. Die
+dpkg\-Datenbank und die Repository\-Listen werden nicht verschoben.
+.IP \fBLIVE_BROWSER_CACHE\fP=persistent|volatile 4
+Wird mit \fBbrowser\-cache\fP oder \fBlive\-config.browser\-cache\fP
+gesetzt. "Volatile" leitet bekannte native Browser\-Cache\-Pfade nach der
+Erstellung des Live\-Benutzers auf ein begrenztes RAM um; eine spezielle
+Firefox\-Policy deaktiviert dessen Festplatten\-Cache. Browser\-Profile und
+nicht zugehörige Benutzer\-Caches bleiben persistent. Benutzerdefinierte
+Speicherorte und sandboxed Browser\-Installationen werden nicht automatisch
+abgedeckt.
+.PP
+Diese Richtlinien werden von minios\-boot analysiert und autorisiert, bevor
+live\-config startet. Ein fehlgeschlagenes oder nicht\-dauerhaftes Aktivieren
+der Persistenz belässt das ursprüngliche Speicherverhalten. Kernel\-Parameter
+überschreiben Konfigurationsdateien; dieses initrd gibt den Policy\-Vertrag
+mit /run/initramfs/etc/minios\-initramfs\-storage bekannt.
 
 .SH ANPASSUNG
 \fBlive\-config\fP kann leicht für nachgelagerte Projekte oder den lokalen

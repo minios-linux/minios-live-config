@@ -144,7 +144,13 @@ Main ()
 	fi
 
 	# Setting up log redirection
-	rm -f /var/log/live/config.log
+	# Keep prior boot diagnostics. If rotation cannot complete, append rather
+	# than truncate the only remaining copy of a failed boot log.
+	if [ -f /var/log/live/config.log ]; then
+		mv -f /var/log/live/config.log.2 /var/log/live/config.log.3 2>/dev/null || true
+		mv -f /var/log/live/config.log.1 /var/log/live/config.log.2 2>/dev/null || true
+		mv -f /var/log/live/config.log /var/log/live/config.log.1 2>/dev/null || true
+	fi
 	rm -f /tmp/live-config.pipe
 
 	mkdir -p /var/log/live
@@ -153,11 +159,12 @@ Main ()
 
 	if [ "${_MINIOS_QUIET_LOG}" = "true" ]
 	then
-		cat < /tmp/live-config.pipe > /var/log/live/config.log &
+		cat < /tmp/live-config.pipe >> /var/log/live/config.log &
 	else
-		tee < /tmp/live-config.pipe /var/log/live/config.log &
+		tee -a < /tmp/live-config.pipe /var/log/live/config.log &
 	fi
 	exec > /tmp/live-config.pipe 2>&1
+	echo "=== live-config boot $(date -u +%Y-%m-%dT%H:%M:%SZ) ==="
 
 	if [ "${_MINIOS_QUIET_LOG}" = "true" ]
 	then

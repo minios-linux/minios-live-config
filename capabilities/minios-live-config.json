@@ -278,6 +278,15 @@
       "description": "merged runs minios-update-users/cache/dpkg integration",
       "implements": ["1220-config-module-mode"]
     },
+    "live-config.browser-cache": {
+      "type": "enum",
+      "values": ["persistent", "volatile"],
+      "config_key": "LIVE_BROWSER_CACHE",
+      "cmdline": ["browser-cache", "live-config.browser-cache"],
+      "default": "persistent",
+      "description": "Late per-user cache mounts require a volatile policy marker from a compatible minios-boot initrd",
+      "implements": ["1240-browser-cache"]
+    },
     "live-config.issue.password-hints": {
       "type": "boolean",
       "config_key": "LIVE_ISSUE_PASSWORD_HINTS",
