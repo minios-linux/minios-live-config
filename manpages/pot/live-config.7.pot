@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: minios-live-config 11.0.5.23\n"
+"Project-Id-Version: minios-live-config 11.0.5.24\n"
 "POT-Creation-Date: 2026-09-25 18:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -31,7 +31,7 @@ msgstr ""
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "11.0.5.23"
+msgid "11.0.5.24"
 msgstr ""
 
 #. type: TH

@@ -93,14 +93,15 @@ atomic_replace() {
 # modules.  Comparing the writable status with this baseline on the next run
 # separates real session dpkg changes from the previously synthesized database.
 if [ -n "$CHANGES" ] && [ -d "$CHANGES" ]; then
-    STATE_DIR="$CHANGES/var/lib/dpkg/.minios-merge"
+    # Write through the union; changing a mounted upper behind OverlayFS breaks copy-up.
+    STATE_DIR="$DPKG_DIR/.minios-merge"
     if [ -L "$STATE_DIR" ]; then
         echo "Refusing symlink dpkg merge state directory: $STATE_DIR" >&2
         exit 1
     fi
     mkdir -p -- "$STATE_DIR" || exit 1
     [ -d "$STATE_DIR" ] && [ ! -L "$STATE_DIR" ] || exit 1
-    BASELINE_STATUS="$STATE_DIR/status.base"
+    BASELINE_STATUS="$CHANGES/var/lib/dpkg/.minios-merge/status.base"
 fi
 
 # Preserve the historical statoverride merge behavior.  Unlike status, its
@@ -139,6 +140,6 @@ fi
     "$CHANGES_INFO" "$TEMP_BASE" "$TEMP_STATUS" || exit 1
 
 atomic_replace "$TEMP_STATUS" "$DPKG_STATUS_FILE" 0644 || exit 1
-if [ -n "$BASELINE_STATUS" ]; then
-    atomic_replace "$TEMP_BASE" "$BASELINE_STATUS" 0600 || exit 1
+if [ -n "$STATE_DIR" ]; then
+    atomic_replace "$TEMP_BASE" "$STATE_DIR/status.base" 0600 || exit 1
 fi

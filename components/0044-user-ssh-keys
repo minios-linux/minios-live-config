@@ -24,7 +24,7 @@ Cmdline() {
         from=*)
             FROM="${_PARAMETER#*from=}"
             ;;
-        toram)
+        toram | toram=trim | toram=full)
             TORAM="true"
             ;;
         live-config.username=* | username=*)

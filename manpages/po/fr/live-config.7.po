@@ -33,8 +33,8 @@ msgstr "2026-09-25"
 #. type: TH
 #: en/live-config.7:11
 #, no-wrap
-msgid "11.0.5.23"
-msgstr "11.0.5.23"
+msgid "11.0.5.24"
+msgstr "11.0.5.24"
 
 #. type: TH
 #: en/live-config.7:11
