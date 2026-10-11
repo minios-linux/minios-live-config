@@ -40,6 +40,9 @@ export LC_ALL=C
 # Input parameters: bundles directory and optional changes directory
 BUNDLES="$1"
 CHANGES="${2:-}" # If not provided, defaults to empty
+if [ -n "$CHANGES" ] && [ -d "$CHANGES/changes" ] && [ -d "$CHANGES/workdir" ]; then
+    CHANGES="$CHANGES/changes"
+fi
 
 # Define core bundle settings
 CORE_BUNDLE_PREFIX="00-core"

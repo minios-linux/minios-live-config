@@ -1,3 +1,11 @@
+minios-live-config (11.0.5.25) unstable; urgency=medium
+
+  * Preserve live user account data when merging a standard OverlayFS
+    persistence directory containing changes and workdir subdirectories.
+  * Cover direct AUFS and standard OverlayFS account merge layouts.
+
+ -- crims0n <crims0n@minios.dev>  Sun, 11 Oct 2026 03:12:04 +0300
+
 minios-live-config (11.0.5.24) unstable; urgency=medium
 
   * Write dpkg merge state through the union filesystem instead of modifying
